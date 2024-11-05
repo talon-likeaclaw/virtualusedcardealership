@@ -48,9 +48,9 @@ public class VehicleManager {
    * Method that searches for a vehicle in the inventory or database.
    * 
    * @param v vehicle that we are searching for.
-   * @return void
+   * @return List<Vehicle> list of filtered vehicles.
    */
-  public void searchVehicle(Vehicle v) {
+  public List<Vehicle> searchVehicle(IFilter criteria) {
     throw new UnsupportedOperationException("Not written yet");
   }
 
