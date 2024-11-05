@@ -1,3 +1,10 @@
+/**
+ * Manages the Dealership
+ * 
+ * @author Talon Dunbar - 2131651
+ * @version 11/4/2024
+ */
+
 package usedcardealership;
 import java.util.*;
 
@@ -11,9 +18,9 @@ public class DealershipManager {
   /**
    * DealershipManager Constructor
    * Initializes the dealership's name and account balance.
+   * 
    * @param name dealership's name.
    * @param accountBalance dealership's finacial account balanace.
-   * @constructor
    */
   public DealershipManager(String name, double accountBalance) {
     throw new UnsupportedOperationException("Not written yet");
@@ -21,6 +28,7 @@ public class DealershipManager {
 
   /**
    * Getter for dealership's name.
+   * 
    * @return String representing dealership's name.
    */
   public String getName() {
@@ -29,6 +37,7 @@ public class DealershipManager {
 
   /**
    * Getter for dealership account balance.
+   * 
    * @return double representing dealership financial account balance.
    */
   public double getBalance() {
@@ -37,7 +46,9 @@ public class DealershipManager {
 
   /**
    * Method for adding or removing money from the dealership's account balance.
+   * 
    * @param balanceChange the amount that the account balance will change (negative or postive).
+   * @return void
    */
   public void updateAccountBalance(double balanceChange) {
     throw new UnsupportedOperationException("Not written yet");
