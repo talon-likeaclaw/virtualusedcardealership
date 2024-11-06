@@ -25,7 +25,7 @@ public abstract class Transaction {
      * @param customer
      * @param vehicle
      * 
-     * Sets all fields using parameters
+     * Initialize all fields using parameters
      */
     public Transaction(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
         throw new UnsupportedOperationException("Not written yet");

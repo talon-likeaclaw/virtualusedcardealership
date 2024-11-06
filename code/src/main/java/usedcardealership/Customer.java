@@ -18,7 +18,22 @@ public abstract class Customer {
     private double accountBalance;
     private List<Vehicle> vehicles;
 
-    
+
+    /**
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param birthday
+     * @param phoneNumber
+     * @param address
+     * @param accountBalance
+     * @param vehicles
+     * 
+     * Initialize all fields using parameters
+     */
+    public Customer(int id, String firstName, String lastName, String birthday, String phoneNumber, String address, double accountBalance, List<Vehicle> vehicles){
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
     /** 
      * Overrides toString method
      * 
