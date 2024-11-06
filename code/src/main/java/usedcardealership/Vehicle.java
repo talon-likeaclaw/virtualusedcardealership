@@ -7,6 +7,7 @@
 
 package usedcardealership;
 
+
 public abstract class Vehicle {
   private int id;
   private String make;
@@ -26,10 +27,10 @@ public abstract class Vehicle {
    * Vehicle Constructor
    * Initializes the Vehcile fields
    * 
-   * @param id           the vehicle's unique identifier
+   * @param id           the Vehicle's unique identifier
    * @param make         the company that makes the Vehicle
    * @param model        the name of the Vehicle's model
-   * @param year         the year the Vehicile was released
+   * @param year         the year the Vehicle was released
    * @param price        the initial price of the Vehicle
    * @param color        the color of the Vehicle's paint
    * @param transmission the type of transmission (Auto, Manual, CVT)
