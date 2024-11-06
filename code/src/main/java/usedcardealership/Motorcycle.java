@@ -38,20 +38,10 @@ public class Motorcycle extends Vehicle {
         throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * EngineCC Getter
-   * 
-   * @return double - the Motorcycle's engineCC field
-   */
   public double getEngineCC() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * HandlebarType Getter
-   * 
-   * @return String - the Motorcycle's handlebarType field
-   */
   public String getHandleType() {
     throw new UnsupportedOperationException("Not written yet");
   }
