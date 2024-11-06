@@ -7,8 +7,6 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public abstract class Vehicle {
   private int id;
   private String make;
