@@ -13,7 +13,7 @@ public abstract class EnclosedVehicle extends Vehicle {
   private boolean hasSunRoof;
 
   /**
-   * EncloseVehicle Constructor
+   * EnclosedVehicle Constructor
    * Initializes the EnclosedVehicle fields
    * 
    * @param id           the EnclosedVehicle's unique identifier
