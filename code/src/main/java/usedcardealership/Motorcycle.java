@@ -34,8 +34,14 @@ public class Motorcycle extends Vehicle {
   public Motorcycle(int id, String make, String model, int year, double price, String color, String transmission,
       String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
       double engineCC, String handlebarType) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage, isElectric);
-        throw new UnsupportedOperationException("Not written yet");
+    super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
+        isElectric);
+    throw new UnsupportedOperationException("Not written yet");
+  }
+
+  @Override
+  public String toString() {
+    throw new UnsupportedOperationException("Not written yet");
   }
 
   public double getEngineCC() {
