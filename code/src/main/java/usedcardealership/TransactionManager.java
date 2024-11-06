@@ -17,7 +17,7 @@ public class TransactionManager {
      * @param transactionHistory a List<Transaction> 
      */
     public TransactionManager(List<Transactions> transactionHistory){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -28,7 +28,7 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction sellVehicle(Vehicle vehicle, Customer customer){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -39,7 +39,7 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction buyVehicle(Vehicle vehicle, Customer customer){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -49,7 +49,7 @@ public class TransactionManager {
      * @return List<Transaction>
      */
     public List<Transaction> searchTransaction(IFilter criteria){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -59,8 +59,8 @@ public class TransactionManager {
      */
 
     //is it meant to be a private helper method?
-    public void processTransaction(){
-        throw new UnsupportedOperationException();
+    private void processTransaction(){
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     

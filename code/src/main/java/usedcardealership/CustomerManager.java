@@ -19,7 +19,7 @@ public class CustomerManager {
      * @param customerList a List<Customer> with all customers 
      */
     public CustomerManager(List<Customer> customerList){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -29,17 +29,17 @@ public class CustomerManager {
      * @return void
      */
     public void addCustomer(Customer customer){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
      * Function checks if the customerList List<Customer> contains a Customer object
      * 
      * @param customer a Customer object
-     * @return void
+     * @return boolean
      */
-    public void searchCustomer(Customer customer){
-        throw new UnsupportedOperationException();
+    public boolean searchCustomer(Customer customer){
+        throw new UnsupportedOperationException("Not Written Yet");
     }
 
     /**
@@ -49,7 +49,7 @@ public class CustomerManager {
      * @return void
      */
     public void updateCustomer(Customer customer){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not Written Yet");
     }
     
 }
