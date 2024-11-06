@@ -38,7 +38,7 @@ public abstract class Vehicle {
    * @param horsepower   the Vehicle's engine's horsepower
    * @param weight       the weight of the Vehicle
    * @param mileage      the number of kilometers the Vehicle has on the gauge
-   * @param damage       the damage of the Vehcile (00.00 - 100.00)
+   * @param damage       the damage of the Vehicle (00.00 - 100.00)
    * @param isElectric   if the Vehicle is electric of not
    */
   public Vehicle(int id, String make, String model, int year, double price, String color, String transmission,
