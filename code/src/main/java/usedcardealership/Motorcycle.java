@@ -7,7 +7,7 @@
 
 package usedcardealership;
 
-public class Motorcycle {
+public class Motorcycle extends Vehicle {
   private double engineCC;
   private String handlebarType;
 
@@ -34,7 +34,8 @@ public class Motorcycle {
   public Motorcycle(int id, String make, String model, int year, double price, String color, String transmission,
       String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
       double engineCC, String handlebarType) {
-    throw new UnsupportedOperationException("Not written yet");
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage, isElectric);
+        throw new UnsupportedOperationException("Not written yet");
   }
 
   /**
