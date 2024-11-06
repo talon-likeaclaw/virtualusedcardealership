@@ -46,129 +46,59 @@ public abstract class Vehicle {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Vehicle toString method override
-   * 
-   * @return String - formatted string of Vehicle's information
-   */
   @Override
   public String toString() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * ID Getter
-   * 
-   * @return int - the vehicle's unique identifier
-   */
   public int getID() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Make Getter
-   * 
-   * @return String - the Vehicle's make field
-   */
   public String getMake() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Model Getter
-   * 
-   * @return String -  the Vehicle's model field
-   */
   public String getModel() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Year Getter
-   * 
-   * @return int - the Vehicle's year field
-   */
   public int getYear() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Price Getter
-   * 
-   * @return double - the Vehicle's price field
-   */
   public double getPrice() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Color Getter
-   * 
-   * @return String - the Vehicle's color field
-   */
   public String getColor() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Transmission Getter
-   * 
-   * @return String - the Vehicle's transmission field
-   */
   public String getTransmission() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Drive Type Getter
-   * 
-   * @return String - the Vehicle's driveType field
-   */
   public String getDriveType() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Horsepower Getter
-   * 
-   * @return int - the Vehcile's horsepower field
-   */
   public int getHorsepower() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Weight Getter
-   * 
-   * @return double - the Vehicle's weight field
-   */
   public double getWeight() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Mileage Getter
-   * 
-   * @return double -  the Vehicle's mileage field
-   */
   public double getMileage() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * IsElectric Getter
-   * 
-   * @return boolean - the Vehcile's isElectric field
-   */
   public boolean getIsElectric() {
     throw new UnsupportedOperationException("Not written yet");
   }
 
-  /**
-   * Sets the Vehicle's price field
-   * 
-   * @return void
-   */
   public void setPrice() {
     throw new UnsupportedOperationException("Not written yet");
   }
