@@ -2,7 +2,7 @@
  * Manages the Dealership
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/4/2024
+ * @version 11/9/2024
  */
 
 package usedcardealership;
@@ -23,7 +23,19 @@ public class DealershipManager {
    * @param accountBalance dealership's finacial account balanace.
    */
   public DealershipManager(String name, double accountBalance) {
-    throw new UnsupportedOperationException("Not written yet");
+    this.name = name;
+    this.accountBalance = accountBalance;
+
+    // TODO: Need to implement data handling strategy
+    List<Transaction> transactions = loadTransactions(dataHandler);
+    List<Vehicle> vehicleInventory = loadVehicles(dataHandler);
+    List<Vehicle> vehicleDatabase = loadVehicles(dataHandler);
+    List<Customer> customers = loadCustomers(dataHandler);
+
+
+    this.transactionManager = new TransactionManager(transactions);
+    this.vehicleManager = new VehicleManager(vehicleInventory, vehicleDatabase);
+    this.customerManager = new CustomerManager(customers);
   }
 
   /**
@@ -32,7 +44,7 @@ public class DealershipManager {
    * @return String representing dealership's name.
    */
   public String getName() {
-    throw new UnsupportedOperationException("Not written yet");
+    return this.name;
   }
 
   /**
@@ -41,7 +53,7 @@ public class DealershipManager {
    * @return double representing dealership financial account balance.
    */
   public double getBalance() {
-    throw new UnsupportedOperationException("Not written yet");
+    return this.accountBalance;
   }
 
   /**
@@ -51,6 +63,7 @@ public class DealershipManager {
    * @return void
    */
   public void updateAccountBalance(double balanceChange) {
-    throw new UnsupportedOperationException("Not written yet");
+    this.accountBalance += balanceChange;
   }
+
 }
