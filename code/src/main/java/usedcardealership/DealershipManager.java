@@ -6,6 +6,7 @@
  */
 
 package usedcardealership;
+
 import java.util.*;
 
 public class DealershipManager {
@@ -19,22 +20,22 @@ public class DealershipManager {
    * DealershipManager Constructor
    * Initializes the dealership's name and account balance.
    * 
-   * @param name dealership's name.
+   * @param name           dealership's name.
    * @param accountBalance dealership's finacial account balanace.
+   * @param transactions   list of transactions for TransactionManager.
+   * @param inventory      list of vehicles in dealership's inventory.
+   * @param database       list of vehicles in dealership's database.
+   * @param customers      list of customers for CustomerManager.
    */
-  public DealershipManager(String name, double accountBalance) {
+  public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
+      List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
     this.name = name;
     this.accountBalance = accountBalance;
 
-    // TODO: Need to implement data handling strategy
-    List<Transaction> transactions = loadTransactions(dataHandler);
-    List<Vehicle> vehicleInventory = loadVehicles(dataHandler);
-    List<Vehicle> vehicleDatabase = loadVehicles(dataHandler);
-    List<Customer> customers = loadCustomers(dataHandler);
-
-
+    // TODO: Need to implement data handling Strategy
+    // Still not 100% about the implementation yet, estimating still until more clear
     this.transactionManager = new TransactionManager(transactions);
-    this.vehicleManager = new VehicleManager(vehicleInventory, vehicleDatabase);
+    this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
   }
 
@@ -59,11 +60,11 @@ public class DealershipManager {
   /**
    * Method for adding or removing money from the dealership's account balance.
    * 
-   * @param balanceChange the amount that the account balance will change (negative or postive).
+   * @param balanceChange the amount that the account balance will change
+   *                      (negative or postive).
    * @return void
    */
   public void updateAccountBalance(double balanceChange) {
     this.accountBalance += balanceChange;
   }
-
 }
