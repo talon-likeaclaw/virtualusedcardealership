@@ -39,20 +39,10 @@ public class DealershipManager {
     this.customerManager = new CustomerManager(customers);
   }
 
-  /**
-   * Getter for dealership's name.
-   * 
-   * @return String representing dealership's name.
-   */
   public String getName() {
     return this.name;
   }
 
-  /**
-   * Getter for dealership account balance.
-   * 
-   * @return double representing dealership financial account balance.
-   */
   public double getBalance() {
     return this.accountBalance;
   }
