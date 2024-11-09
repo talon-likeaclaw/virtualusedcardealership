@@ -21,7 +21,7 @@ public class DealershipManager {
    * Initializes the dealership's name and account balance.
    * 
    * @param name           dealership's name.
-   * @param accountBalance dealership's finacial account balanace.
+   * @param accountBalance dealership's financial account balanace.
    * @param transactions   list of transactions for TransactionManager.
    * @param inventory      list of vehicles in dealership's inventory.
    * @param database       list of vehicles in dealership's database.
@@ -52,7 +52,6 @@ public class DealershipManager {
    * 
    * @param balanceChange the amount that the account balance will change
    *                      (negative or postive).
-   * @return void
    */
   public void updateAccountBalance(double balanceChange) {
     this.accountBalance += balanceChange;

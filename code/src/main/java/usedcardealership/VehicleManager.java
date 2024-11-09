@@ -29,7 +29,6 @@ public class VehicleManager {
    * Method for adding a vehicle to the dealership's inventory or database.
    * 
    * @param v the vehicle that is being added.
-   * @return void
    */
   public void addVehicle(Vehicle v) {
     // TODO: Need to override Vehicle equals method
@@ -45,7 +44,6 @@ public class VehicleManager {
    * Method that removes a vehicle from the dealership's inventory.
    * 
    * @param v the vehcile that is being removed.
-   * @return void
    */
   public void removeVehicle(Vehicle v) {
     inventory.remove(v);
@@ -88,7 +86,6 @@ public class VehicleManager {
    * Method that allows us to update a vehicles mutable fields.
    * 
    * @param v vehicle with updated data.
-   * @return void
    */
   public void updateVehicle(Vehicle v) {
     for (int i = 0; i < inventory.size(); i++) {
