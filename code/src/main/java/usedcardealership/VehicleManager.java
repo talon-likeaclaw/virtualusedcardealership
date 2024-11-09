@@ -77,7 +77,6 @@ public class VehicleManager {
   public List<Vehicle> searchDatabase(IFilter criteria) {
     List<Vehicle> result = new ArrayList<>();
     for (Vehicle v : database) {
-      // TODO: Need to create IFilter Strategy with matches overrides for criteria
       if (criteria.matches(v))  {
         result.add(v);
       }
@@ -94,13 +93,14 @@ public class VehicleManager {
   public void updateVehicle(Vehicle v) {
     for (int i = 0; i < inventory.size(); i++) {
       if (inventory.get(i).equals(v)) {
-        inventory.set(i, v);
+        // TODO: Create copy constructor in Vehicle
+        inventory.set(i, new Vehicle(v));
         break;
       }
     }
     for (int i = 0; i < database.size(); i++) {
       if (database.get(i).equals(v)) {
-        database.set(i, v);
+        database.set(i, new Vehicle(v));
         break;
       }
     }
