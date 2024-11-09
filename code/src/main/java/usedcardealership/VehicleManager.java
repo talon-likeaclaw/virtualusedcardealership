@@ -2,7 +2,7 @@
  * Manages all Vehicles, inventory and database.
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/4/2024
+ * @version 11/9/2024
  */
 
 package usedcardealership;
@@ -21,7 +21,8 @@ public class VehicleManager {
    * @param database list of vehicles dealership has seen before.
    */
   public VehicleManager(List<Vehicle> inventory, List<Vehicle> database) {
-    throw new UnsupportedOperationException("Not written yet");
+    this.inventory = inventory;
+    this.database = database;
   }
 
   /**
@@ -31,7 +32,13 @@ public class VehicleManager {
    * @return void
    */
   public void addVehicle(Vehicle v) {
-    throw new UnsupportedOperationException("Not written yet");
+    // TODO: Need to override Vehicle equals method
+    if (!inventory.contains(v)) {
+      inventory.add(v);
+    }
+    if (!database.contains(v)) {
+      database.add(v);
+    }
   }
 
   /**
@@ -41,26 +48,61 @@ public class VehicleManager {
    * @return void
    */
   public void removeVehicle(Vehicle v) {
-    throw new UnsupportedOperationException("Not written yet");
+    inventory.remove(v);
   }
 
   /** 
-   * Method that searches for a vehicle in the inventory or database.
+   * Method that searches for a vehicle in the inventory.
+   * 
+   * @param criteria a IFilter sub-type object to determine filtering criteria.
+   * @return List<Vehicle> list of filtered vehicles based on criteria input.
+   */
+  public List<Vehicle> searchInventory(IFilter criteria) {
+    List<Vehicle> result = new ArrayList<>();
+    for (Vehicle v : inventory) {
+      // TODO: Need to create IFilter Strategy with matches overrides for criteria
+      if (criteria.matches(v))  {
+        result.add(v);
+      }
+    }
+    return result;
+  }
+
+  /** 
+   * Method that searches for a vehicle in the database.
    * 
    * @param criteria a IFilter sub-type object
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
    */
-  public List<Vehicle> searchVehicle(IFilter criteria) {
-    throw new UnsupportedOperationException("Not written yet");
+  public List<Vehicle> searchDatabase(IFilter criteria) {
+    List<Vehicle> result = new ArrayList<>();
+    for (Vehicle v : database) {
+      // TODO: Need to create IFilter Strategy with matches overrides for criteria
+      if (criteria.matches(v))  {
+        result.add(v);
+      }
+    }
+    return result;
   }
 
   /**
    * Method that allows us to update a vehicles mutable fields.
    * 
-   * @param v vehicle that we are updating the mutable fields of.
+   * @param v vehicle with updated data.
    * @return void
    */
   public void updateVehicle(Vehicle v) {
-    throw new UnsupportedOperationException("Not written yet");
+    for (int i = 0; i < inventory.size(); i++) {
+      if (inventory.get(i).equals(v)) {
+        inventory.set(i, v);
+        break;
+      }
+    }
+    for (int i = 0; i < database.size(); i++) {
+      if (database.get(i).equals(v)) {
+        database.set(i, v);
+        break;
+      }
+    }
   }
 }
