@@ -43,7 +43,7 @@ public class VehicleManager {
   /**
    * Method that removes a vehicle from the dealership's inventory.
    * 
-   * @param v the vehcile that is being removed.
+   * @param v the vehicle that is being removed.
    */
   public void removeVehicle(Vehicle v) {
     inventory.remove(v);
