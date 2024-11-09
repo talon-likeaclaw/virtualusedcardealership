@@ -50,7 +50,7 @@ public class VehicleManager {
   }
 
   /** 
-   * Method that searches for a vehicle in the inventory.
+   * Method that searches for vehciles in the inventory based on specific criteria.
    * 
    * @param criteria a IFilter sub-type object to determine filtering criteria.
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
@@ -67,7 +67,7 @@ public class VehicleManager {
   }
 
   /** 
-   * Method that searches for a vehicle in the database.
+   * Method that searches for a vehicles in the database based on specific criteria.
    * 
    * @param criteria a IFilter sub-type object
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
