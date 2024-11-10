@@ -1,11 +1,12 @@
 /**
  * Vehicle Abstract type.
  * 
- * @author Talon Dunbar - 2131651
- * @version 11/6/2024
+ * @version 11/9/2024
  */
 
 package usedcardealership;
+
+import java.time.*;
 
 public abstract class Vehicle {
     private int id;
@@ -18,13 +19,13 @@ public abstract class Vehicle {
     private String driveType;
     private int horsepower;
     private double weight;
-    private double mileage;
+    private double kilometerage;
     private double damage;
     private boolean isElectric;
 
     /**
      * Vehicle Constructor
-     * Initializes the Vehcile fields
+     * Initializes the Vehicle fields
      * 
      * @param id           the Vehicle's unique identifier
      * @param make         the company that makes the Vehicle
@@ -36,107 +37,193 @@ public abstract class Vehicle {
      * @param driveType    the drive type of the Vehicle (front wheel, all wheel)
      * @param horsepower   the Vehicle's engine's horsepower
      * @param weight       the weight of the Vehicle
-     * @param mileage      the number of kilometers the Vehicle has on the gauge
-     * @param damage       the damage of the Vehicle (00.00 - 100.00)
-     * @param isElectric   if the Vehicle is electric of not
+     * @param kilometerage the number of kilometers the Vehicle has on the gauge
+     * @param damage       the damage of the Vehicle (0.00 - 100.00)
+     * @param isElectric   if the Vehicle is electric or not
      */
-    public Vehicle(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric) {
-        throw new UnsupportedOperationException("Not written yet");
+    public Vehicle(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double kilometerage,
+            double damage,
+            boolean isElectric) {
+        this.id = id;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        this.color = color;
+        this.transmission = transmission;
+        this.driveType = driveType;
+        this.horsepower = horsepower;
+        this.weight = weight;
+        this.kilometerage = kilometerage;
+        this.damage = damage;
+        this.isElectric = isElectric;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Vehicle ID: " + this.id + ", " + this.make + " " + this.model + " (" + year + "), $" + calculateTotalPrice();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Vehicle) {
+            Vehicle v = (Vehicle) o;
+            return v.id == this.id && v.kilometerage == this.kilometerage;
+        }
+        return false;
     }
 
     public int getID() {
-        throw new UnsupportedOperationException("Not written yet");
+        return id;
     }
 
     public String getMake() {
-        throw new UnsupportedOperationException("Not written yet");
+        return make;
     }
 
     public String getModel() {
-        throw new UnsupportedOperationException("Not written yet");
+        return model;
     }
 
     public int getYear() {
-        throw new UnsupportedOperationException("Not written yet");
+        return year;
     }
 
     public double getPrice() {
-        throw new UnsupportedOperationException("Not written yet");
+        return price;
     }
 
     public String getColor() {
-        throw new UnsupportedOperationException("Not written yet");
+        return color;
     }
 
     public String getTransmission() {
-        throw new UnsupportedOperationException("Not written yet");
+        return transmission;
     }
 
     public String getDriveType() {
-        throw new UnsupportedOperationException("Not written yet");
+        return driveType;
     }
 
     public int getHorsepower() {
-        throw new UnsupportedOperationException("Not written yet");
+        return horsepower;
     }
 
     public double getWeight() {
-        throw new UnsupportedOperationException("Not written yet");
+        return weight;
     }
 
-    public double getMileage() {
-        throw new UnsupportedOperationException("Not written yet");
+    public double getKilometerage() {
+        return kilometerage;
+    }
+
+    public double getDamage() {
+        return damage;
     }
 
     public boolean getIsElectric() {
-        throw new UnsupportedOperationException("Not written yet");
+        return isElectric;
     }
 
-    public void setPrice() {
-        throw new UnsupportedOperationException("Not written yet");
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     /**
-     * Function to add kilometers to the Vehicle's mileage gauge
+     * Adds kilometers to the Vehicle's kilometerage gauge.
      * 
-     * @param miles - the amount of milegae to add to the Vehcile's mileage field
-     *              (must be positive)
+     * @param kilometers - the amount of kilometers to add to the Vehicle's
+     *                   kilometerage (must be positive)
      */
-    public void addMileage(double miles) {
-        throw new UnsupportedOperationException("Not written yet");
+    public void addKilometerage(double kilometers) {
+        if (kilometers > 0) {
+            this.kilometerage += kilometers;
+        } else {
+            throw new IllegalArgumentException("Cannot remove kilometers for Vehicle.");
+        }
     }
 
     /**
-     * Function to add damage to the Vehcile's damage modifier
+     * Adds damage to the Vehicle's damage modifier.
      * 
-     * @param damage - the amount of damage (total cannot be over 100 or less than
-     *               0)
+     * @param damage - the amount of damage to add (total cannot exceed 100 or go
+     *               below 0)
      */
     public void addDamage(double damage) {
-        throw new UnsupportedOperationException("Not written yet");
+        double newDamage = this.damage + damage;
+        if (newDamage >= 0 && newDamage <= 100) {
+            this.damage = newDamage;
+        } else if (newDamage < 0) {
+            throw new IllegalArgumentException("Vehicle damage may not be below zero.");
+        } else {
+            throw new IllegalArgumentException("Vehicle damage may not exceed one hundred.");
+        }
     }
 
     /**
-     * Function for calculating the total price based on damage, year, milegae.
+     * Calculates the total price based on depreciation from age, mileage, and
+     * damage.
      * 
-     * @return double - the price of the vehicle after depreciation
+     * @return the price of the vehicle after depreciation.
      */
     public double calculateTotalPrice() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.price - calculateDepreciation();
     }
 
     /**
-     * Helper method for calculating depreciation based on damage, year, mileage
+     * Calculates depreciation based on damage, year, and mileage.
      * 
-     * @return double - the amount of money to take off of the Vehicle's price
+     * @return the amount of money to deduct from the Vehicle's price.
+     *         If depreciation exceeds the Vehicle's price, returns the full price.
      */
     private double calculateDepreciation() {
-        throw new UnsupportedOperationException("Not written yet");
+        double totalDepreciation = 0.0;
+        totalDepreciation += calculateAgeDepreciation();
+        totalDepreciation += calculateKilometerageDepreciation();
+        totalDepreciation += calculateDamageDepreciation();
+        // Cap depreciation at the vehicle's full price
+        return totalDepreciation >= this.price ? this.price : totalDepreciation;
+    }
+
+    /**
+     * Calculates the depreciation based on the age of the vehicle.
+     * 
+     * @return the amount to deduct from the vehicle's price due to age.
+     */
+    private double calculateAgeDepreciation() {
+        int currentYear = Year.now().getValue();
+        double percentage = 0.05;
+        return (currentYear - this.year) * percentage * this.price; // 5% per year
+    }
+
+    /**
+     * Calculates the depreciation based on the vehicle's kilometerage .
+     * 
+     * @return the amount to deduct from the vehicle's price due to kilometerage.
+     */
+    private double calculateKilometerageDepreciation() {
+        double percentage = 0.02;
+        return this.kilometerage * percentage; // $0.02 per kilometer
+    }
+
+    /**
+     * Calculates the depreciation based on the vehicle's damage percentage.
+     * 
+     * @return the amount to deduct from the vehicle's price due to damage.
+     */
+    private double calculateDamageDepreciation() {
+        double percentage = 0.50;
+        return (this.damage / 100) * this.price * percentage; // 50% impact of damage on price
     }
 }
