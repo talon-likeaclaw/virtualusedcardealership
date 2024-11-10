@@ -33,22 +33,47 @@ public abstract class EnclosedVehicle extends Vehicle {
      * @param numDoor      the number of doors of the EnclosedVehicle
      * @param hasSunRoof   if the EnclosedVehicle has a sunroof or not
      */
-    public EnclosedVehicle(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            int numSeats, int numDoors, boolean hasSunRoof) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage, isElectric);
-        throw new UnsupportedOperationException("Not written yet");
+    public EnclosedVehicle(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double mileage,
+            double damage,
+            boolean isElectric,
+            int numSeats,
+            int numDoors,
+            boolean hasSunRoof) {
+        super(id, make, model, year, price, color, transmission, driveType,
+                horsepower, weight, mileage, damage, isElectric);
+        this.numSeats = numSeats;
+        this.numDoors = numDoors;
+        this.hasSunRoof = hasSunRoof;
+    }
+
+    @Override
+    public String getCommonDetails() {
+        return super.getCommonDetails() + "\n" +
+                "Seats: " + this.numSeats + "\n" +
+                "Doors: " + this.numDoors + "\n" +
+                "Sunroof: " + (this.hasSunRoof ? "Yes" : "No");
     }
 
     public int getNumSeats() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.numSeats;
     }
 
     public int getNumDoors() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.numDoors;
     }
 
-    public boolean getHasSunRoof() {
-        throw new UnsupportedOperationException("Not written yet");
+    public boolean hasSunRoof() {
+        return this.hasSunRoof;
     }
 }
