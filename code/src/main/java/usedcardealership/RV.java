@@ -34,24 +34,44 @@ public class RV extends EnclosedVehicle {
      * @param sleepCapacity the amount of people who can sleep in the RV
      * @param hasBathroom   if the RV has a bathroom or not
      */
-    public RV(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            int numSeats, int numDoors, boolean hasSunRoof, int sleepCapacity, boolean hasBathroom) {
+    public RV(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double mileage,
+            double damage,
+            boolean isElectric,
+            int numSeats,
+            int numDoors,
+            boolean hasSunRoof,
+            int sleepCapacity,
+            boolean hasBathroom) {
         super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
-        throw new UnsupportedOperationException("Not written yet");
+        this.sleepCapacity = sleepCapacity;
+        this.hasBathroom = hasBathroom;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: Recreational Vehicle\n" +
+                getCommonDetails() + "\n" +
+                "Sleep Capacity: " + this.sleepCapacity + "\n" +
+                "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
     }
 
     public int getSleepCapacity() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.sleepCapacity;
     }
 
-    public boolean getHasBathroom() {
-        throw new UnsupportedOperationException("Not written yet");
+    public boolean hasBathroom() {
+        return this.hasBathroom;
     }
 }
