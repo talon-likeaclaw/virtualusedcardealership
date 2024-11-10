@@ -83,21 +83,26 @@ public class VehicleManager {
   }
 
   /**
-   * Method that allows us to update a vehicles mutable fields.
+   * Method that allows us to update a vehicles mutable fields in both inventory and database.
    * 
    * @param v vehicle with updated data.
    */
   public void updateVehicle(Vehicle v) {
-    for (int i = 0; i < inventory.size(); i++) {
-      if (inventory.get(i).equals(v)) {
+    updateVehicleInList(inventory, v);
+    updateVehicleInList(database, v);
+  }
+
+  /**
+   * Helper method that updates a vehicle's information within a given list.
+   * 
+   * @param vehicleList the list of vehicles.
+   * @param updatedVehicle the vehicle with updated data.
+   */
+  private void updateVehicleInList(List<Vehicle> vehicleList, Vehicle updatedVehicle) {
+    for (int i = 0; i < vehicleList.size(); i++) {
+      if (vehicleList.get(i).equals(updatedVehicle)) {
         // TODO: Create copy constructor in Vehicle
-        inventory.set(i, new Vehicle(v));
-        break;
-      }
-    }
-    for (int i = 0; i < database.size(); i++) {
-      if (database.get(i).equals(v)) {
-        database.set(i, new Vehicle(v));
+        vehicleList.set(i, new Vehicle(updatedVehicle));
         break;
       }
     }
