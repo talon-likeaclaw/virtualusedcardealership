@@ -75,8 +75,9 @@ public abstract class Vehicle {
         return getCommonDetails();
     }
 
-    private String getCommonDetails() {
-        return "Make: " + this.make + "\n" +
+    public String getCommonDetails() {
+        return "ID: " + this.id + "\n" +
+                "Make: " + this.make + "\n" +
                 "Model: " + this.model + "\n" +
                 "Year: " + this.year + "\n" +
                 "Price: $" + calculateTotalPrice() + "\n" +
@@ -84,8 +85,8 @@ public abstract class Vehicle {
                 "Transmission: " + this.transmission + "\n" +
                 "Drive Type: " + this.driveType + "\n" +
                 "Horsepower: " + this.horsepower + "\n" +
-                "Weight: " + this.weight + "lbs\n" +
-                "Kilometerage: " + this.kilometerage + "km\n" +
+                "Weight: " + this.weight + " lbs\n" +
+                "Kilometerage: " + this.kilometerage + " km\n" +
                 "Damage: " + this.damage + "%\n" +
                 "Electric: " + (this.isElectric ? "True" : "False");
     }
