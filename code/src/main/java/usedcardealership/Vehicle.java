@@ -72,7 +72,8 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle ID: " + this.id + ", " + this.make + " " + this.model + " (" + year + "), $" + calculateTotalPrice();
+        return "Vehicle ID: " + this.id + ", " + this.make + " " + this.model + " (" + year + "), $"
+                + calculateTotalPrice();
     }
 
     @Override
@@ -132,7 +133,7 @@ public abstract class Vehicle {
         return damage;
     }
 
-    public boolean getIsElectric() {
+    public boolean isElectric() {
         return isElectric;
     }
 
@@ -155,10 +156,9 @@ public abstract class Vehicle {
     }
 
     /**
-     * Adds damage to the Vehicle's damage modifier.
+     * Changes amount of damage to the Vehicle's damage modifier field.
      * 
-     * @param damage - the amount of damage to add (total cannot exceed 100 or go
-     *               below 0)
+     * @param damage - the amount of damage to add (postive or negative)
      */
     public void addDamage(double damage) {
         double newDamage = this.damage + damage;
@@ -203,8 +203,8 @@ public abstract class Vehicle {
      */
     private double calculateAgeDepreciation() {
         int currentYear = Year.now().getValue();
-        double percentage = 0.05;
-        return (currentYear - this.year) * percentage * this.price; // 5% per year
+        final double AGE_DEPRECIATION_RATE = 0.05;
+        return (currentYear - this.year) * AGE_DEPRECIATION_RATE * this.price; // 5% per year
     }
 
     /**
@@ -213,8 +213,8 @@ public abstract class Vehicle {
      * @return the amount to deduct from the vehicle's price due to kilometerage.
      */
     private double calculateKilometerageDepreciation() {
-        double percentage = 0.02;
-        return this.kilometerage * percentage; // $0.02 per kilometer
+        final double KILOMETER_DEPRECIATION_RATE = 0.02;
+        return this.kilometerage * KILOMETER_DEPRECIATION_RATE; // $0.02 per kilometer
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class Vehicle {
      * @return the amount to deduct from the vehicle's price due to damage.
      */
     private double calculateDamageDepreciation() {
-        double percentage = 0.50;
-        return (this.damage / 100) * this.price * percentage; // 50% impact of damage on price
+        final double DAMAGE_DEPRECIATION_RATE = 0.50;
+        return (this.damage / 100) * this.price * DAMAGE_DEPRECIATION_RATE; // 50% impact of damage on price
     }
 }
