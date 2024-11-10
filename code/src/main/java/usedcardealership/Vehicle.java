@@ -72,8 +72,22 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle ID: " + this.id + ", " + this.make + " " +
-                this.model + " (" + this.year + "), $" + calculateTotalPrice();
+        return getCommonDetails();
+    }
+
+    private String getCommonDetails() {
+        return "Make: " + this.make + "\n" +
+                "Model: " + this.model + "\n" +
+                "Year: " + this.year + "\n" +
+                "Price: $" + calculateTotalPrice() + "\n" +
+                "Color: " + this.color + "\n" +
+                "Transmission: " + this.transmission + "\n" +
+                "Drive Type: " + this.driveType + "\n" +
+                "Horsepower: " + this.horsepower + "\n" +
+                "Weight: " + this.weight + "lbs\n" +
+                "Kilometerage: " + this.kilometerage + "km\n" +
+                "Damage: " + this.damage + "%\n" +
+                "Electric: " + (this.isElectric ? "True" : "False");
     }
 
     @Override
