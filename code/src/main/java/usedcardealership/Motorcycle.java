@@ -31,23 +31,41 @@ public class Motorcycle extends Vehicle {
      * @param engineCC      the Motorcycle engine's capcity
      * @param handlebarType the Motorcycle's handlebar type
      */
-    public Motorcycle(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            double engineCC, String handlebarType) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage, isElectric);
-        throw new UnsupportedOperationException("Not written yet");
+    public Motorcycle(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double mileage,
+            double damage,
+            boolean isElectric,
+            double engineCC,
+            String handlebarType) {
+        super(id, make, model, year, price, color, transmission,
+                driveType, horsepower, weight, mileage, damage, isElectric);
+        this.engineCC = engineCC;
+        this.handlebarType = handlebarType;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: Motorcycle\n" + 
+                getCommonDetails() + 
+                "Engine Capcity: " + this.engineCC + " cc\n" +
+                "Handlebar Type: " + this.handlebarType;
     }
 
     public double getEngineCC() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.engineCC;
     }
 
     public String getHandleType() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.handlebarType;
     }
 }
