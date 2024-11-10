@@ -1,7 +1,7 @@
 /**
  * Vehicle Abstract type.
  * 
- * @version 11/9/2024
+ * @version 11/10/2024
  */
 
 package usedcardealership;
@@ -72,8 +72,8 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle ID: " + this.id + ", " + this.make + " " + this.model + " (" + year + "), $"
-                + calculateTotalPrice();
+        return "Vehicle ID: " + this.id + ", " + this.make + " " +
+                this.model + " (" + this.year + "), $" + calculateTotalPrice();
     }
 
     @Override
@@ -151,7 +151,7 @@ public abstract class Vehicle {
         if (kilometers > 0) {
             this.kilometerage += kilometers;
         } else {
-            throw new IllegalArgumentException("Cannot remove kilometers for Vehicle.");
+            throw new IllegalArgumentException("Kilometers must be greater than zero.");
         }
     }
 
