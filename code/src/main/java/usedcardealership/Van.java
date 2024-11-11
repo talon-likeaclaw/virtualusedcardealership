@@ -52,14 +52,14 @@ public class Van extends CargoCapacity {
             boolean hasSunRoof,
             double cargoCapacity,
             boolean hasSlidingDoors) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
-                isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, 
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
         this.hasSlidingDoors = hasSlidingDoors;
     }
 
     @Override
     public String toString() {
-        return "Type: Van" + "\n" +
+        return "Type: Van\n" +
                 getCommonDetails() + "\n" +
                 "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
     }
