@@ -27,8 +27,8 @@ public class UsedCarDealership {
                 749.0, // engineCC
                 "Cruiser" // handlebarType
         );
-        System.out.println(harleyDavidsonStreet);
-        System.out.println();
+        // System.out.println(harleyDavidsonStreet);
+        // System.out.println();
 
         // RV
         RV winnebagoVoyage = new RV(
@@ -51,8 +51,8 @@ public class UsedCarDealership {
                 4, // sleepCapacity
                 true // hasBathroom
         );
-        System.out.println(winnebagoVoyage);
-        System.out.println();
+        // System.out.println(winnebagoVoyage);
+        // System.out.println();
 
         // CAR
         Car mitsubishiLancer = new Car(
@@ -75,8 +75,8 @@ public class UsedCarDealership {
                 false // isConvertible
         );
         mitsubishiLancer.addDamage(25.7); // Got into a little crash
-        System.out.println(mitsubishiLancer);
-        System.out.println();
+        // System.out.println(mitsubishiLancer);
+        // System.out.println();
 
         // SUV
         SUV hyundaiKona = new SUV(
@@ -99,8 +99,8 @@ public class UsedCarDealership {
                 false // hasThirdRowSeating
         );
         hyundaiKona.addKilometerage(30000);
-        System.out.println(hyundaiKona);
-        System.out.println();
+        // System.out.println(hyundaiKona);
+        // System.out.println();
 
         // VAN
         Van fordTransit = new Van(
@@ -123,7 +123,7 @@ public class UsedCarDealership {
                 487.3, // cargoCapacity in cubic feet
                 true // hasSlidingDoors
         );
-        System.out.println(fordTransit);
+        // System.out.println(fordTransit);
         System.out.println();
 
         // PICKUP TRUCK
@@ -148,18 +148,22 @@ public class UsedCarDealership {
                 5.5, // bedLength in feet
                 10000.0 // towingCapacity in lbs
         );
-        System.out.println(f150Lightning);
+        // System.out.println(f150Lightning);
 
+        // VehicleManager Testing
         List<Vehicle> vehicles = new ArrayList<>();
-        vehicles.add(harleyDavidsonStreet);
-        vehicles.add(winnebagoVoyage);
         vehicles.add(mitsubishiLancer);
         vehicles.add(hyundaiKona);
-        vehicles.add(fordTransit);
-        vehicles.add(f150Lightning);
 
+        System.out.println("Before winning the lottery:\n");
         VehicleManager testVehicles = new VehicleManager(vehicles, vehicles);
+        testVehicles.printVehicles(testVehicles.getInventory());
+
+        System.out.println("After winning the lottery:\n");
+        testVehicles.addVehicle(harleyDavidsonStreet);
+        testVehicles.addVehicle(winnebagoVoyage);
+        testVehicles.addVehicle(fordTransit);
+        testVehicles.addVehicle(f150Lightning);
+        testVehicles.printVehicles(testVehicles.getInventory());
     }
-
-
 }
