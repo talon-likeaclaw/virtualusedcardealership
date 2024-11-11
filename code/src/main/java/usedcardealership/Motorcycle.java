@@ -2,7 +2,7 @@
  * Represents Motorcycle objects.
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/6/2024
+ * @version 11/10/2024
  */
 
 package usedcardealership;
@@ -25,29 +25,59 @@ public class Motorcycle extends Vehicle {
      * @param driveType     the drive type of the Motorcycle
      * @param horsepower    the Motorcycle's engine's horsepower
      * @param weight        the weight of the Motorcycle
-     * @param mileage       the number of kilometers the Motorcycle has on the gauge
+     * @param kilometerage  the number of kilometers the Motorcycle has on the gauge
      * @param damage        the damage of the Motorcycle (00.00 - 100.00)
      * @param isElectric    if the Motorcycle is electric of not
      * @param engineCC      the Motorcycle engine's capcity
      * @param handlebarType the Motorcycle's handlebar type
      */
-    public Motorcycle(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            double engineCC, String handlebarType) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage, isElectric);
-        throw new UnsupportedOperationException("Not written yet");
+    public Motorcycle(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double kilometerage,
+            double damage,
+            boolean isElectric,
+            double engineCC,
+            String handlebarType) {
+        super(id, make, model, year, price, color, transmission, driveType,
+                horsepower, weight, kilometerage, damage, isElectric);
+        this.engineCC = engineCC;
+        this.handlebarType = handlebarType;
+    }
+
+    /**
+     * Copy constructor for Motorcycle.
+     * Creates a new Motorcycle instance with the same values as input.
+     * 
+     * @param m the Motorcycle to copy
+     */
+    public Motorcycle(Motorcycle m) {
+        super(m);
+        this.engineCC = m.engineCC;
+        this.handlebarType = m.handlebarType;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: Motorcycle\n" +
+                getCommonDetails() + "\n" +
+                "Engine Capacity: " + this.engineCC + " cc\n" +
+                "Handlebar Type: " + this.handlebarType;
     }
 
     public double getEngineCC() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.engineCC;
     }
 
     public String getHandleType() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.handlebarType;
     }
 }
