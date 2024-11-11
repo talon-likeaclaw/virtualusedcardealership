@@ -137,6 +137,25 @@ public abstract class Vehicle {
                 "Electric: " + (this.isElectric ? "True" : "False");
     }
 
+    /**
+     * Provides a formatted string containing the important details of the vehicle.
+     * 
+     * @return String - a formatted string with the vehicle's important details:
+     * 
+     *         ID: <vehicle id>
+     *         Make: <vehicle make>
+     *         Model: <vehicle model>
+     *         Year: <vehicle year>
+     *         Price: $<calculated total price>
+     */
+    public String getImportantDetails() {
+        return "ID: " + this.id + "\n" +
+                "Make: " + this.make + "\n" +
+                "Model: " + this.model + "\n" +
+                "Year: " + this.year + "\n" +
+                "Price: $" + calculateTotalPrice() + "\n";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Vehicle) {
