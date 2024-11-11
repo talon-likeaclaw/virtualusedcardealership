@@ -32,20 +32,37 @@ public class Car extends EnclosedVehicle {
      * @param hasSunRoof    if the Car has a sunroof or not
      * @param isConvertible if the Car is able to remove roof
      */
-    public Car(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            int numSeats, int numDoors, boolean hasSunRoof, boolean isConvertible) {
+    public Car(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double mileage,
+            double damage,
+            boolean isElectric,
+            int numSeats,
+            int numDoors,
+            boolean hasSunRoof,
+            boolean isConvertible) {
         super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
-        throw new UnsupportedOperationException("Not written yet");
+        this.isConvertible = isConvertible;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: Car\n" +
+                getCommonDetails() + "\n" +
+                "Convertible: " + (this.isConvertible ? "Yes" : "No");
     }
 
-    public boolean getIsConvertible() {
-        throw new UnsupportedOperationException("Not written yet");
+    public boolean isConvertible() {
+        return this.isConvertible;
     }
 }
