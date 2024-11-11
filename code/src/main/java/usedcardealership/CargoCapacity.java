@@ -56,6 +56,17 @@ public abstract class CargoCapacity extends EnclosedVehicle {
     }
 
     /**
+     * Copy constructor for CargoCapacity.
+     * Creates a new CargoCapacity instance with the same values as input.
+     * 
+     * @param c the CargoCapacity instance to copy
+     */
+    public CargoCapacity(CargoCapacity c) {
+        super(c);
+        this.cargoCapacity = c.cargoCapacity;
+    }
+
+    /**
      * Provides a formatted string containing the
      * common details of the CargoCapacity Vehicles
      * 

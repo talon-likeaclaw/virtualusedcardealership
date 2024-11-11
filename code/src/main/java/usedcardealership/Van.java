@@ -52,9 +52,20 @@ public class Van extends CargoCapacity {
             boolean hasSunRoof,
             double cargoCapacity,
             boolean hasSlidingDoors) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, 
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
                 kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
         this.hasSlidingDoors = hasSlidingDoors;
+    }
+
+    /**
+     * Copy constructor for Van.
+     * Creates a new Van instance with the same values as the given Van.
+     * 
+     * @param v the Van to copy
+     */
+    public Van(Van v) {
+        super(v);
+        this.hasSlidingDoors = v.hasSlidingDoors;
     }
 
     @Override

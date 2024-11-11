@@ -55,6 +55,17 @@ public class SUV extends EnclosedVehicle {
         this.hasThirdRowSeating = hasThirdRowSeating;
     }
 
+    /**
+     * Copy constructor for SUV.
+     * Creates a new SUV instance with the same values as the given SUV.
+     * 
+     * @param s the SUV to copy
+     */
+    public SUV(SUV s) {
+        super(s);
+        this.hasThirdRowSeating = s.hasThirdRowSeating;
+    }
+
     @Override
     public String toString() {
         return "Type: SUV\n" +

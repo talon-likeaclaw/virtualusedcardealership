@@ -58,6 +58,19 @@ public abstract class EnclosedVehicle extends Vehicle {
     }
 
     /**
+     * Copy constructor for EnclosedVehicle.
+     * Creates a new EnclosedVehicle instance with the same values as input.
+     * 
+     * @param e the EnclosedVehicle to copy
+     */
+    public EnclosedVehicle(EnclosedVehicle e) {
+        super(e);
+        this.numSeats = e.numSeats;
+        this.numDoors = e.numDoors;
+        this.hasSunRoof = e.hasSunRoof;
+    }
+
+    /**
      * Provides a formatted string containing
      * the common details of the EnclosedVehicle.
      * 

@@ -53,6 +53,18 @@ public class Motorcycle extends Vehicle {
         this.handlebarType = handlebarType;
     }
 
+    /**
+     * Copy constructor for Motorcycle.
+     * Creates a new Motorcycle instance with the same values as input.
+     * 
+     * @param m the Motorcycle to copy
+     */
+    public Motorcycle(Motorcycle m) {
+        super(m);
+        this.engineCC = m.engineCC;
+        this.handlebarType = m.handlebarType;
+    }
+
     @Override
     public String toString() {
         return "Type: Motorcycle\n" +

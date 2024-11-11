@@ -61,6 +61,18 @@ public class PickupTruck extends CargoCapacity {
         this.towingCapacity = towingCapacity;
     }
 
+    /**
+     * Copy constructor for PickupTruck.
+     * Creates a new PickupTruck instance with the same values as the input.
+     * 
+     * @param p the PickupTruck to copy
+     */
+    public PickupTruck(PickupTruck p) {
+        super(p);
+        this.bedLength = p.bedLength;
+        this.towingCapacity = p.towingCapacity;
+    }
+
     @Override
     public String toString() {
         return "Type: Pickup Truck\n" +

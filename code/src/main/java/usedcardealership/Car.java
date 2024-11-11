@@ -55,6 +55,17 @@ public class Car extends EnclosedVehicle {
         this.isConvertible = isConvertible;
     }
 
+    /**
+     * Copy constructor for Car.
+     * Creates a new Car instance with the same values as the given Car.
+     * 
+     * @param c the Car to copy
+     */
+    public Car(Car c) {
+        super(c);
+        this.isConvertible = c.isConvertible;
+    }
+
     @Override
     public String toString() {
         return "Type: Car\n" +

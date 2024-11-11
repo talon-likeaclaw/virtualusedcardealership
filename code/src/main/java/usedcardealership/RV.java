@@ -59,6 +59,18 @@ public class RV extends EnclosedVehicle {
         this.hasBathroom = hasBathroom;
     }
 
+    /**
+     * Copy constructor for RV.
+     * Creates a new RV instance with the same values as the given RV.
+     * 
+     * @param r the RV to copy
+     */
+    public RV(RV r) {
+        super(r);
+        this.sleepCapacity = r.sleepCapacity;
+        this.hasBathroom = r.hasBathroom;
+    }
+
     @Override
     public String toString() {
         return "Type: Recreational Vehicle\n" +
