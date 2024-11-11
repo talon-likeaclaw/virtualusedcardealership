@@ -66,4 +66,45 @@ public class VehicleManagerTest {
         assertEquals(expectedOutput, outContent.toString().toString());
         System.setOut(System.out);
     }
+
+    @Test
+    public void testAddVehicle_addsNewVehicleToInventoryAndDatabase() {
+        // Arrange
+        List<Vehicle> inventory = new ArrayList<>();
+        List<Vehicle> database = new ArrayList<>();
+        VehicleManager test = new VehicleManager(inventory, database);
+
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
+                "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
+
+        // Act
+        test.addVehicle(car);
+
+        // Assert
+        assertEquals(1, inventory.size());
+        assertEquals(1, database.size());
+        assertEquals(car, inventory.get(0));
+        assertEquals(car, database.get(0));
+    }
+
+    @Test
+    public void testAddVehicle_doesNotAddDuplicateVehicles() {
+        // Arrange
+        List<Vehicle> inventory = new ArrayList<>();
+        List<Vehicle> database = new ArrayList<>();
+        VehicleManager test = new VehicleManager(inventory, database);
+
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
+                "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
+
+        // Act
+        test.addVehicle(car);
+        test.addVehicle(car);
+
+        // Assert
+        assertEquals(1, inventory.size());
+        assertEquals(1, database.size());
+        assertEquals(car, inventory.get(0));
+        assertEquals(car, database.get(0));
+    }
 }
