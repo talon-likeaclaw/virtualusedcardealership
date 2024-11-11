@@ -1,13 +1,16 @@
 package usedcardealership;
 
+import java.util.*;
+
 import usedcardealership.*;
 
 public class UsedCarDealership {
     public static void main(String[] args) {
+
         // Vehicle Testing
 
         // MOTORCYCLE
-        Motorcycle m = new Motorcycle(
+        Motorcycle harleyDavidsonStreet = new Motorcycle(
                 101, // id
                 "Harley-Davidson", // make
                 "Street 750", // model
@@ -24,11 +27,11 @@ public class UsedCarDealership {
                 749.0, // engineCC
                 "Cruiser" // handlebarType
         );
-        System.out.println(m);
+        System.out.println(harleyDavidsonStreet);
         System.out.println();
 
         // RV
-        RV myRV = new RV(
+        RV winnebagoVoyage = new RV(
                 202, // id
                 "Winnebago", // make
                 "Voyage", // model
@@ -48,7 +51,7 @@ public class UsedCarDealership {
                 4, // sleepCapacity
                 true // hasBathroom
         );
-        System.out.println(myRV);
+        System.out.println(winnebagoVoyage);
         System.out.println();
 
         // CAR
@@ -146,5 +149,17 @@ public class UsedCarDealership {
                 10000.0 // towingCapacity in lbs
         );
         System.out.println(f150Lightning);
+
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(harleyDavidsonStreet);
+        vehicles.add(winnebagoVoyage);
+        vehicles.add(mitsubishiLancer);
+        vehicles.add(hyundaiKona);
+        vehicles.add(fordTransit);
+        vehicles.add(f150Lightning);
+
+        VehicleManager testVehicles = new VehicleManager(vehicles, vehicles);
     }
+
+
 }
