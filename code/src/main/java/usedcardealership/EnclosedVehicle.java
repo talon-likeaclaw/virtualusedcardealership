@@ -57,6 +57,29 @@ public abstract class EnclosedVehicle extends Vehicle {
         this.hasSunRoof = hasSunRoof;
     }
 
+    /**
+     * Provides a formatted string containing
+     * the common details of the EnclosedVehicle.
+     * 
+     * @return String - a formatted string with EnclosedVehicle's common details:
+     * 
+     *         ID: <vehicle id>
+     *         Make: <vehicle make>
+     *         Model: <vehicle model>
+     *         Year: <vehicle year>
+     *         Price: $<calculated total price>
+     *         Color: <vehicle color>
+     *         Transmission: <transmission type>
+     *         Drive Type: <drive type>
+     *         Horsepower: <horsepower>
+     *         Weight: <weight> lbs
+     *         Kilometerage: <kilometerage> km
+     *         Damage: <damage>%
+     *         Electric: <True/False>
+     *         Seats: <number of seats>
+     *         Doors: <number of doors>
+     *         Sunroof: <Yes/No>
+     */
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +

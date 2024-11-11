@@ -2,7 +2,7 @@
  * CargoCapacity Abstract type.
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/6/2024
+ * @version 11/10/2024
  */
 
 package usedcardealership;
@@ -55,10 +55,34 @@ public abstract class CargoCapacity extends EnclosedVehicle {
         this.cargoCapacity = cargoCapacity;
     }
 
+    /**
+     * Provides a formatted string containing the
+     * common details of the CargoCapacity Vehicles
+     * 
+     * @return String - a formatted string with CargoCapacity details:
+     * 
+     *         ID: <vehicle id>
+     *         Make: <vehicle make>
+     *         Model: <vehicle model>
+     *         Year: <vehicle year>
+     *         Price: $<calculated total price>
+     *         Color: <vehicle color>
+     *         Transmission: <transmission type>
+     *         Drive Type: <drive type>
+     *         Horsepower: <horsepower>
+     *         Weight: <weight> lbs
+     *         Kilometerage: <kilometerage> km
+     *         Damage: <damage>%
+     *         Electric: <True/False>
+     *         Seats: <number of seats>
+     *         Doors: <number of doors>
+     *         Sunroof: <Yes/No>
+     *         Cargo Capacity: <cargo capacity> cu ft
+     */
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +
-                "Cargo Capacity: " + this.cargoCapacity + " cubic feet";
+                "Cargo Capacity: " + this.cargoCapacity + " cu ft";
     }
 
     public double getCargoCapacity() {

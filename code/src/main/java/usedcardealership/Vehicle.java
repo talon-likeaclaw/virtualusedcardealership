@@ -75,6 +75,25 @@ public abstract class Vehicle {
         return getCommonDetails();
     }
 
+    /**
+     * Provides a formatted string containing the common details of the vehicle.
+     * 
+     * @return String - a formatted string with the vehicle's common details:
+     * 
+     *         ID: <vehicle id>
+     *         Make: <vehicle make>
+     *         Model: <vehicle model>
+     *         Year: <vehicle year>
+     *         Price: $<calculated total price>
+     *         Color: <vehicle color>
+     *         Transmission: <transmission type>
+     *         Drive Type: <drive type>
+     *         Horsepower: <horsepower>
+     *         Weight: <weight> lbs
+     *         Kilometerage: <kilometerage> km
+     *         Damage: <damage>%
+     *         Electric: <True/False>
+     */
     public String getCommonDetails() {
         return "ID: " + this.id + "\n" +
                 "Make: " + this.make + "\n" +
