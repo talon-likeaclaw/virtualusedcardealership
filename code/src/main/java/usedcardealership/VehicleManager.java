@@ -76,14 +76,7 @@ public class VehicleManager {
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
    */
   public List<Vehicle> searchInventory(IFilter criteria) {
-    List<Vehicle> result = new ArrayList<>();
-    for (Vehicle v : inventory) {
-      // TODO: Need to create IFilter Strategy with matches overrides for criteria
-      if (criteria.matches(v)) {
-        result.add(v);
-      }
-    }
-    return result;
+    return searchList(criteria, this.inventory);
   }
 
   /**
@@ -93,8 +86,17 @@ public class VehicleManager {
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
    */
   public List<Vehicle> searchDatabase(IFilter criteria) {
+    return searchList(criteria, this.database);
+  }
+
+  /**
+   * Helper method for searching within a list for specific criteria
+   * 
+   * @param v
+   */
+  public List<Vehicle> searchList(IFilter criteria, List<Vehicle> list) {
     List<Vehicle> result = new ArrayList<>();
-    for (Vehicle v : database) {
+    for (Vehicle v : list) {
       if (criteria.matches(v)) {
         result.add(v);
       }
