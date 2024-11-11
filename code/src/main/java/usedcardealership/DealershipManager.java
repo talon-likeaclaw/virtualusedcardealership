@@ -2,10 +2,11 @@
  * Manages the Dealership
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/4/2024
+ * @version 11/9/2024
  */
 
 package usedcardealership;
+
 import java.util.*;
 
 public class DealershipManager {
@@ -19,38 +20,40 @@ public class DealershipManager {
    * DealershipManager Constructor
    * Initializes the dealership's name and account balance.
    * 
-   * @param name dealership's name.
-   * @param accountBalance dealership's finacial account balanace.
+   * @param name           dealership's name.
+   * @param accountBalance dealership's financial account balanace.
+   * @param transactions   list of transactions for TransactionManager.
+   * @param inventory      list of vehicles in dealership's inventory.
+   * @param database       list of vehicles in dealership's database.
+   * @param customers      list of customers for CustomerManager.
    */
-  public DealershipManager(String name, double accountBalance) {
-    throw new UnsupportedOperationException("Not written yet");
+  public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
+      List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
+    this.name = name;
+    this.accountBalance = accountBalance;
+
+    // TODO: Need to implement data handling Strategy
+    // Still not 100% about the implementation yet, estimating still until more clear
+    this.transactionManager = new TransactionManager(transactions);
+    this.vehicleManager = new VehicleManager(inventory, database);
+    this.customerManager = new CustomerManager(customers);
   }
 
-  /**
-   * Getter for dealership's name.
-   * 
-   * @return String representing dealership's name.
-   */
   public String getName() {
-    throw new UnsupportedOperationException("Not written yet");
+    return this.name;
   }
 
-  /**
-   * Getter for dealership account balance.
-   * 
-   * @return double representing dealership financial account balance.
-   */
   public double getBalance() {
-    throw new UnsupportedOperationException("Not written yet");
+    return this.accountBalance;
   }
 
   /**
    * Method for adding or removing money from the dealership's account balance.
    * 
-   * @param balanceChange the amount that the account balance will change (negative or postive).
-   * @return void
+   * @param balanceChange the amount that the account balance will change
+   *                      (negative or postive).
    */
   public void updateAccountBalance(double balanceChange) {
-    throw new UnsupportedOperationException("Not written yet");
+    this.accountBalance += balanceChange;
   }
 }
