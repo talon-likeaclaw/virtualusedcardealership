@@ -2,7 +2,7 @@
  * Represents Pickup Truck objects,
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/6/2024
+ * @version 11/10/2024
  */
 
 package usedcardealership;
@@ -25,7 +25,7 @@ public class PickupTruck extends CargoCapacity {
      * @param driveType      the drive type of the PickupTruck
      * @param horsepower     the PickupTruck's engine's horsepower
      * @param weight         the weight of the PickupTruck
-     * @param mileage        the number of kilometers the PickupTruck has
+     * @param kilometerage   the number of kilometers the PickupTruck has
      * @param damage         the damage of the PickupTruck (00.00 - 100.00)
      * @param isElectric     if the PickupTruck is electric of not
      * @param numSeats       the number of seats of the PickupTruck
@@ -35,24 +35,45 @@ public class PickupTruck extends CargoCapacity {
      * @param bedLength      the length of the PickupTruck's flat bed
      * @param towingCapacity the weight the PickupTruck can tow
      */
-    public PickupTruck(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            int numSeats, int numDoors, boolean hasSunRoof, double cargoCapacity, double bedLength, double towingCapacity) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
-                isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
-        throw new UnsupportedOperationException("Not written yet");
+    public PickupTruck(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double kilometerage,
+            double damage,
+            boolean isElectric,
+            int numSeats,
+            int numDoors,
+            boolean hasSunRoof,
+            double cargoCapacity,
+            double bedLength,
+            double towingCapacity) {
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
+        this.bedLength = bedLength;
+        this.towingCapacity = towingCapacity;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: Pickup Truck\n" +
+                getCommonDetails() + "\n" +
+                "Bed Length: " + this.bedLength + " feet\n" +
+                "Towing Capacity: " + this.towingCapacity + " lbs";
     }
 
     public double getBedLength() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.bedLength;
     }
 
     public double getTowingCapacity() {
-        throw new UnsupportedOperationException("Not written yet");
+        return this.towingCapacity;
     }
 }
