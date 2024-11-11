@@ -2,10 +2,11 @@
  * Manages all Vehicles, inventory and database.
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/9/2024
+ * @version 11/10/2024
  */
 
 package usedcardealership;
+import usedcardealership.Vehicle;
 import java.util.*;
 
 public class VehicleManager {
@@ -31,7 +32,6 @@ public class VehicleManager {
    * @param v the vehicle that is being added.
    */
   public void addVehicle(Vehicle v) {
-    // TODO: Need to override Vehicle equals method
     if (!inventory.contains(v)) {
       inventory.add(v);
     }
