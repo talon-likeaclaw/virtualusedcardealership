@@ -73,6 +73,30 @@ public abstract class Vehicle {
         this.isElectric = isElectric;
     }
 
+    /**
+     * Copy constructor for Vehicle.
+     * Creates a new Vehicle instance with the same values as the given Vehicle.
+     * 
+     * @param v the Vehicle to copy
+     */
+    public Vehicle(Vehicle v) {
+        this(
+                v.id,
+                v.make,
+                v.model,
+                v.year,
+                v.price,
+                v.color,
+                v.transmission,
+                v.driveType,
+                v.horsepower,
+                v.weight,
+                v.kilometerage,
+                v.damage,
+                v.isElectric);
+        this.rng = new Random();
+    }
+
     @Override
     public String toString() {
         return getCommonDetails();
