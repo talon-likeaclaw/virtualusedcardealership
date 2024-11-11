@@ -30,61 +30,31 @@ public abstract class Transaction {
     public Transaction(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
         throw new UnsupportedOperationException("Not written yet");
     }
-    /**
-     * @return int
-     */
     public int getID() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    /**
-     * @return String
-     */
     public String getType() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    /**
-     * @return String
-     */
     public String getDate() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    
-    /** 
-     * @return double
-     */
     public double getPrice() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    
-    /** 
-     * @return double
-     */
     public double getTax() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    
-    /** 
-     * @return Customer
-     */
     public Customer getCustomer() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    
-    /** 
-     * @return Vehicle
-     */
     public Vehicle getVehicle() {
         throw new UnsupportedOperationException("Not written yet");
     }
-
-    
     /** 
+     * Calculates the total (negative or positive) of the transaction 
+     * car value - depreciation + tax
+     * 
      * @return double
      */
     public double calculateTotal() {

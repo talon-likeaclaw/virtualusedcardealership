@@ -1,5 +1,5 @@
 /**
- * Manages all Customers
+ * Represents a Customer
  * 
  * @author Juan Sebastian Badel - 2338127
  * @version 11/6/2024
