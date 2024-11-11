@@ -26,7 +26,7 @@ public abstract class EnclosedVehicle extends Vehicle {
      * @param driveType    the drive type of the EnclosedVehicle
      * @param horsepower   the EnclosedVehicle's engine's horsepower
      * @param weight       the weight of the EnclosedVehicle
-     * @param mileage      the number of kilometers the EnclosedVehicle has
+     * @param kilometerage the number of kilometers the EnclosedVehicle has
      * @param damage       the damage of the EnclosedVehicle (00.00 - 100.00)
      * @param isElectric   if the EnclosedVehicle is electric of not
      * @param numSeats     the number of seats of the EnclosedVehicle
@@ -44,14 +44,14 @@ public abstract class EnclosedVehicle extends Vehicle {
             String driveType,
             int horsepower,
             double weight,
-            double mileage,
+            double kilometerage,
             double damage,
             boolean isElectric,
             int numSeats,
             int numDoors,
             boolean hasSunRoof) {
         super(id, make, model, year, price, color, transmission, driveType,
-                horsepower, weight, mileage, damage, isElectric);
+                horsepower, weight, kilometerage, damage, isElectric);
         this.numSeats = numSeats;
         this.numDoors = numDoors;
         this.hasSunRoof = hasSunRoof;

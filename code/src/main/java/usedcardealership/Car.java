@@ -24,7 +24,7 @@ public class Car extends EnclosedVehicle {
      * @param driveType     the drive type of the Car
      * @param horsepower    the Car's engine's horsepower
      * @param weight        the weight of the Car
-     * @param mileage       the number of kilometers the Car has
+     * @param kilometerage  the number of kilometers the Car has
      * @param damage        the damage of the Car (00.00 - 100.00)
      * @param isElectric    if the Car is electric of not
      * @param numSeats      the number of seats of the Car
@@ -43,14 +43,14 @@ public class Car extends EnclosedVehicle {
             String driveType,
             int horsepower,
             double weight,
-            double mileage,
+            double kilometerage,
             double damage,
             boolean isElectric,
             int numSeats,
             int numDoors,
             boolean hasSunRoof,
             boolean isConvertible) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
         this.isConvertible = isConvertible;
     }

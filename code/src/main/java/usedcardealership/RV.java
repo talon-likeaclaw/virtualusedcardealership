@@ -25,7 +25,7 @@ public class RV extends EnclosedVehicle {
      * @param driveType     the drive type of the RV
      * @param horsepower    the RV's engine's horsepower
      * @param weight        the weight of the RV
-     * @param mileage       the number of kilometers the RV has
+     * @param kilometerage  the number of kilometers the RV has
      * @param damage        the damage of the RV (00.00 - 100.00)
      * @param isElectric    if the RV is electric of not
      * @param numSeats      the number of seats of the RV
@@ -45,7 +45,7 @@ public class RV extends EnclosedVehicle {
             String driveType,
             int horsepower,
             double weight,
-            double mileage,
+            double kilometerage,
             double damage,
             boolean isElectric,
             int numSeats,
@@ -53,7 +53,7 @@ public class RV extends EnclosedVehicle {
             boolean hasSunRoof,
             int sleepCapacity,
             boolean hasBathroom) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
         this.sleepCapacity = sleepCapacity;
         this.hasBathroom = hasBathroom;

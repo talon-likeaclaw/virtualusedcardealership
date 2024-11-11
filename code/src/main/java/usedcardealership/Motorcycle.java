@@ -25,7 +25,7 @@ public class Motorcycle extends Vehicle {
      * @param driveType     the drive type of the Motorcycle
      * @param horsepower    the Motorcycle's engine's horsepower
      * @param weight        the weight of the Motorcycle
-     * @param mileage       the number of kilometers the Motorcycle has on the gauge
+     * @param kilometerage  the number of kilometers the Motorcycle has on the gauge
      * @param damage        the damage of the Motorcycle (00.00 - 100.00)
      * @param isElectric    if the Motorcycle is electric of not
      * @param engineCC      the Motorcycle engine's capcity
@@ -42,20 +42,20 @@ public class Motorcycle extends Vehicle {
             String driveType,
             int horsepower,
             double weight,
-            double mileage,
+            double kilometerage,
             double damage,
             boolean isElectric,
             double engineCC,
             String handlebarType) {
         super(id, make, model, year, price, color, transmission,
-                driveType, horsepower, weight, mileage, damage, isElectric);
+                driveType, horsepower, weight, kilometerage, damage, isElectric);
         this.engineCC = engineCC;
         this.handlebarType = handlebarType;
     }
 
     @Override
     public String toString() {
-        return "Type: Motorcycle\n" + 
+        return "Type: Motorcycle\n" +
                 getCommonDetails() + "\n" +
                 "Engine Capacity: " + this.engineCC + " cc\n" +
                 "Handlebar Type: " + this.handlebarType;

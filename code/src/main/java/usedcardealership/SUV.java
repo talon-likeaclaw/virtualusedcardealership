@@ -24,7 +24,7 @@ public class SUV extends EnclosedVehicle {
      * @param driveType          the drive type of the SUV
      * @param horsepower         the SUV's engine's horsepower
      * @param weight             the weight of the SUV
-     * @param mileage            the number of kilometers the SUV has
+     * @param kilometerage       the number of kilometers the SUV has
      * @param damage             the damage of the SUV (00.00 - 100.00)
      * @param isElectric         if the SUV is electric of not
      * @param numSeats           the number of seats of the SUV
@@ -43,14 +43,14 @@ public class SUV extends EnclosedVehicle {
             String driveType,
             int horsepower,
             double weight,
-            double mileage,
+            double kilometerage,
             double damage,
             boolean isElectric,
             int numSeats,
             int numDoors,
             boolean hasSunRoof,
             boolean hasThirdRowSeating) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
+        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
         this.hasThirdRowSeating = hasThirdRowSeating;
     }
