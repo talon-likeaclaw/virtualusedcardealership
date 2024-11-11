@@ -7,8 +7,10 @@
 package usedcardealership;
 
 import java.time.*;
+import java.util.*;
 
 public abstract class Vehicle {
+    private Random rng;
     private int id;
     private String make;
     private String model;
@@ -55,6 +57,7 @@ public abstract class Vehicle {
             double kilometerage,
             double damage,
             boolean isElectric) {
+        this.rng = new Random();
         this.id = id;
         this.make = make;
         this.model = model;
@@ -198,10 +201,10 @@ public abstract class Vehicle {
         double newDamage = this.damage + damage;
         if (newDamage >= 0 && newDamage <= 100) {
             this.damage = newDamage;
-        } else if (newDamage < 0) {
-            throw new IllegalArgumentException("Vehicle damage may not be below zero.");
+        } else if (newDamage > 100) {
+            this.damage = 100;
         } else {
-            throw new IllegalArgumentException("Vehicle damage may not exceed one hundred.");
+            throw new IllegalArgumentException("Vehicle damage may not be below zero.");
         }
     }
 
@@ -213,6 +216,41 @@ public abstract class Vehicle {
      */
     public double calculateTotalPrice() {
         return this.price - calculateDepreciation();
+    }
+
+    /**
+     * Performs a virtual test drive for Vehicle with random chance of crashing.
+     * Applies random damage and kilometerage to the Vehicle.
+     */
+    public void testDrive() {
+        final double MAX_DAMAGE = 1.0;
+        final double MAX_KILOMETER = 50.0;
+        final double CRASH_PROBABILITY = 0.01;
+        final double MAX_CRASH_DAMAGE = 90.0;
+        final double MIN_CRASH_DAMAGE = 10.0;
+
+        // Generate random damage and kilometers
+        double randomDamage = rng.nextDouble() * MAX_DAMAGE;
+        double randomKilometers = rng.nextDouble() * MAX_KILOMETER;
+
+        // Check for crash
+        boolean hasCrashed = rng.nextDouble() < CRASH_PROBABILITY;
+        if (hasCrashed) {
+            // Generate crash damage multiplier
+            double multiplierRange = MAX_CRASH_DAMAGE - MIN_CRASH_DAMAGE;
+            double crashMultiplier = MIN_CRASH_DAMAGE + (rng.nextDouble() * multiplierRange);
+            randomDamage *= crashMultiplier;
+            System.out.println("You crashed the vehicle during the test drive!");
+            System.out.println("Damage increased by " + crashMultiplier + "%");
+        }
+
+        // Apply damage
+        addDamage(randomDamage);
+        addKilometerage(randomKilometers);
+
+        System.out.println("Test drive completed:");
+        System.out.println("Damage applied: " + randomDamage);
+        System.out.println("Kilometers driven: " + randomKilometers + " km");
     }
 
     /**
