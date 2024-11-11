@@ -1,6 +1,7 @@
 /**
  * Vehicle Abstract type.
  * 
+ * @author Talon Dunbar - 2131651
  * @version 11/10/2024
  */
 
@@ -166,55 +167,55 @@ public abstract class Vehicle {
     }
 
     public int getID() {
-        return id;
+        return this.id;
     }
 
     public String getMake() {
-        return make;
+        return this.make;
     }
 
     public String getModel() {
-        return model;
+        return this.model;
     }
 
     public int getYear() {
-        return year;
+        return this.year;
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     public String getTransmission() {
-        return transmission;
+        return this.transmission;
     }
 
     public String getDriveType() {
-        return driveType;
+        return this.driveType;
     }
 
     public int getHorsepower() {
-        return horsepower;
+        return this.horsepower;
     }
 
     public double getWeight() {
-        return weight;
+        return this.weight;
     }
 
     public double getKilometerage() {
-        return kilometerage;
+        return this.kilometerage;
     }
 
     public double getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public boolean isElectric() {
-        return isElectric;
+        return this.isElectric;
     }
 
     public void setPrice(double price) {
