@@ -26,6 +26,25 @@ public class VehicleManager {
     this.database = database;
   }
 
+  public List<Vehicle> getInventory() {
+    return this.inventory;
+  }
+
+  public List<Vehicle> getDatabase() {
+    return this.database;
+  }
+
+  /**
+   * Prints each vehicle in the specified list.
+   * 
+   * @param vehicleList the list of vehicles to print.
+   */
+  public void printVehicles(List<Vehicle> vehicleList) {
+    for (Vehicle v : vehicleList) {
+      System.out.println(v.getImportantDetails());
+    }
+  }
+
   /**
    * Method for adding a vehicle to the dealership's inventory or database.
    * Only adds if it doesn't already exitst.
