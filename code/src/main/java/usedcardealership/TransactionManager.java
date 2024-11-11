@@ -28,7 +28,10 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction sellVehicle(Vehicle vehicle, Customer customer){
-        throw new UnsupportedOperationException("Not Written Yet");
+        // throw new UnsupportedOperationException("Not Written Yet");
+        Transaction sale = new Sale(vehicle, customer);  // Since Sale is a subclass of Transaction
+        processTransaction(sale);
+        return sale;
     }
 
     /**
@@ -39,11 +42,14 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction buyVehicle(Vehicle vehicle, Customer customer){
-        throw new UnsupportedOperationException("Not Written Yet");
+        // throw new UnsupportedOperationException("Not Written Yet");
+        Transaction purchase = new Purchase(vehicle, customer);  // Assume Purchase is a subclass of Transaction
+        processTransaction(purchase);
+        return purchase;
     }
 
     /**
-     * Function searches transactions based on specified criteria (e.g., filter or sorting criteria 
+     * Function searches transactions based on specified criteria (e.g., filter or sorting criteria )
      * 
      * @param criteria a IFilter sub-type object
      * @return List<Transaction>
@@ -57,8 +63,9 @@ public class TransactionManager {
      * 
      * @return void
      */
-    private void processTransaction(){
-        throw new UnsupportedOperationException("Not Written Yet");
+    private void processTransaction(Transaction transaction){
+        //throw new UnsupportedOperationException("Not Written Yet");
+        transactionHistory.add(transaction);
     }
 
     

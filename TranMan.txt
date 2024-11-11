@@ -1,0 +1,73 @@
+package usedcardealership;
+
+import java.util.List;
+import java.util.ArrayList;
+
+/**
+ * Manages all Transactions, has a List<Transaction>
+ * 
+ * @author Juan Sebastian Badel
+ * @version 11/4/2024
+ */
+public class TransactionManager {
+    private List<Transaction> transactionHistory;
+
+    /**
+     * Constructor, Initializes the field transactionHistory
+     * 
+     * @param transactionHistory a List<Transaction> 
+     */
+    public TransactionManager(List<Transaction> transactionHistory) {
+        this.transactionHistory = transactionHistory != null ? transactionHistory : new ArrayList<>();
+    }
+
+    /**
+     * Function sells Vehicle to a Customer, updates the transactionHistory
+     * 
+     * @param vehicle a Vehicle object
+     * @param customer a Customer object
+     * @return Transaction
+     */
+    public Transaction sellVehicle(Vehicle vehicle, Customer customer) {
+        Transaction sale = new Sale(vehicle, customer);  // Assume Sale is a subclass of Transaction
+        processTransaction(sale);
+        return sale;
+    }
+
+    /**
+     * Function allows Customer to buy a Vehicle, updates the transactionHistory
+     * 
+     * @param vehicle a Vehicle object
+     * @param customer a Customer object
+     * @return Transaction
+     */
+    public Transaction buyVehicle(Vehicle vehicle, Customer customer) {
+        Transaction purchase = new Purchase(vehicle, customer);  // Assume Purchase is a subclass of Transaction
+        processTransaction(purchase);
+        return purchase;
+    }
+
+    /**
+     * Function searches transactions based on specified criteria (e.g., filter or sorting criteria)
+     * 
+     * @param criteria an IFilter sub-type object
+     * @return List<Transaction>
+     */
+    public List<Transaction> searchTransaction(IFilter criteria) {
+        List<Transaction> filteredTransactions = new ArrayList<>();
+        for (Transaction transaction : transactionHistory) {
+            if (criteria.apply(transaction)) {  // Assuming IFilter has an apply method for filtering
+                filteredTransactions.add(transaction);
+            }
+        }
+        return filteredTransactions;
+    }
+
+    /**
+     * Function processes a transaction
+     */
+    private void processTransaction(Transaction transaction) {
+        transaction.process();  // Assuming Transaction has a process method for handling transaction-specific logic
+        transactionHistory.add(transaction);
+    }
+}
