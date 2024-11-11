@@ -47,8 +47,8 @@ public class Motorcycle extends Vehicle {
             boolean isElectric,
             double engineCC,
             String handlebarType) {
-        super(id, make, model, year, price, color, transmission,
-                driveType, horsepower, weight, kilometerage, damage, isElectric);
+        super(id, make, model, year, price, color, transmission, driveType,
+                horsepower, weight, kilometerage, damage, isElectric);
         this.engineCC = engineCC;
         this.handlebarType = handlebarType;
     }

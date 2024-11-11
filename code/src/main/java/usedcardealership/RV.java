@@ -53,8 +53,8 @@ public class RV extends EnclosedVehicle {
             boolean hasSunRoof,
             int sleepCapacity,
             boolean hasBathroom) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
-                isElectric, numSeats, numDoors, hasSunRoof);
+        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.sleepCapacity = sleepCapacity;
         this.hasBathroom = hasBathroom;
     }

@@ -50,8 +50,8 @@ public class Car extends EnclosedVehicle {
             int numDoors,
             boolean hasSunRoof,
             boolean isConvertible) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
-                isElectric, numSeats, numDoors, hasSunRoof);
+        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.isConvertible = isConvertible;
     }
 

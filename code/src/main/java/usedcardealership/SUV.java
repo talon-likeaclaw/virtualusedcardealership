@@ -50,8 +50,8 @@ public class SUV extends EnclosedVehicle {
             int numDoors,
             boolean hasSunRoof,
             boolean hasThirdRowSeating) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, kilometerage, damage,
-                isElectric, numSeats, numDoors, hasSunRoof);
+        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.hasThirdRowSeating = hasThirdRowSeating;
     }
 
