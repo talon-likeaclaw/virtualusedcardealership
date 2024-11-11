@@ -123,11 +123,7 @@ public abstract class Vehicle {
      *         Electric: <True/False>
      */
     public String getCommonDetails() {
-        return "ID: " + this.id + "\n" +
-                "Make: " + this.make + "\n" +
-                "Model: " + this.model + "\n" +
-                "Year: " + this.year + "\n" +
-                "Price: $" + calculateTotalPrice() + "\n" +
+        return getImportantDetails() +
                 "Color: " + this.color + "\n" +
                 "Transmission: " + this.transmission + "\n" +
                 "Drive Type: " + this.driveType + "\n" +
@@ -229,10 +225,10 @@ public abstract class Vehicle {
      *                   kilometerage (must be positive)
      */
     public void addKilometerage(double kilometers) {
-        if (kilometers > 0) {
+        if (kilometers >= 0) {
             this.kilometerage += kilometers;
         } else {
-            throw new IllegalArgumentException("Kilometers must be greater than zero.");
+            throw new IllegalArgumentException("Kilometers must be greater than or equal to zero.");
         }
     }
 
@@ -250,16 +246,6 @@ public abstract class Vehicle {
         } else {
             throw new IllegalArgumentException("Vehicle damage may not be below zero.");
         }
-    }
-
-    /**
-     * Calculates the total price based on depreciation from age, mileage, and
-     * damage.
-     * 
-     * @return the price of the vehicle after depreciation.
-     */
-    public double calculateTotalPrice() {
-        return this.price - calculateDepreciation();
     }
 
     /**
@@ -295,6 +281,16 @@ public abstract class Vehicle {
         System.out.println("Test drive completed:");
         System.out.println("Damage applied: " + randomDamage);
         System.out.println("Kilometers driven: " + randomKilometers + " km");
+    }
+
+    /**
+     * Calculates the total price based on depreciation from age, mileage, and
+     * damage.
+     * 
+     * @return the price of the vehicle after depreciation.
+     */
+    public double calculateTotalPrice() {
+        return this.price - calculateDepreciation();
     }
 
     /**
