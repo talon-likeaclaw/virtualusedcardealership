@@ -32,20 +32,37 @@ public class SUV extends EnclosedVehicle {
      * @param hasSunRoof         if the SUV has a sunroof or not
      * @param hasThirdRowSeating if the SUV has a third row of seats
      */
-    public SUV(int id, String make, String model, int year, double price, String color, String transmission,
-            String driveType, int horsepower, double weight, double mileage, double damage, boolean isElectric,
-            int numSeats, int numDoors, boolean hasSunRoof, boolean hasThirdRowSeating) {
+    public SUV(
+            int id,
+            String make,
+            String model,
+            int year,
+            double price,
+            String color,
+            String transmission,
+            String driveType,
+            int horsepower,
+            double weight,
+            double mileage,
+            double damage,
+            boolean isElectric,
+            int numSeats,
+            int numDoors,
+            boolean hasSunRoof,
+            boolean hasThirdRowSeating) {
         super(id, make, model, year, price, color, transmission, driveType, horsepower, weight, mileage, damage,
                 isElectric, numSeats, numDoors, hasSunRoof);
-        throw new UnsupportedOperationException("Not written yet");
+        this.hasThirdRowSeating = hasThirdRowSeating;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not written yet");
+        return "Type: SUV\n" +
+                getCommonDetails() + "\n" +
+                "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");
     }
 
-    public boolean getHasThirdRowSeating() {
-        throw new UnsupportedOperationException("Not written yet");
+    public boolean hasThirdRowSeating() {
+        return this.hasThirdRowSeating;
     }
 }
