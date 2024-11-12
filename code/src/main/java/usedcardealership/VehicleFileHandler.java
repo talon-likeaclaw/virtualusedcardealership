@@ -36,8 +36,8 @@ public class VehicleFileHandler implements IDataHandler<Vehicle> {
     try {
       List<String> allLines = Files.readAllLines(this.filePath);
       for (String line : allLines) {
-        String[] fields = line.split(",");
-        Vehicle vehicle = VehicleHelper.parseVehicle(fields);
+        String[] vehicleFields = line.split(",");
+        Vehicle vehicle = VehicleHelper.parseVehicle(vehicleFields);
         if (vehicle != null) {
           vehicles.add(vehicle);
         }
