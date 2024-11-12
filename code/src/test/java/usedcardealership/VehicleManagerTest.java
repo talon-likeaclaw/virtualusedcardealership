@@ -21,11 +21,10 @@ public class VehicleManagerTest {
         List<Vehicle> expectedDatabase = new ArrayList<>();
 
         // Populate the lists with sample vehicles
-        expectedInventory
-                .add(new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
-                        5.0, false, 5, 4, false, false));
-        expectedDatabase.add(new SUV(2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD", 250, 2000.0,
-                15000.0, 10.0, false, 7, 4, true, false));
+        expectedInventory.add(new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD",
+                200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false));
+        expectedDatabase.add(new SUV(2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
+                250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false));
 
         // Act
         VehicleManager test = new VehicleManager(expectedInventory, expectedDatabase);
