@@ -57,4 +57,47 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
     }
     return transactions;
   }
+
+  /**
+   * Converts a List of Transactions into CSV and saves to file
+   * 
+   * @param transactions - List of transactions to write to file.
+   */
+  public void save(List<Transaction> transactions) {
+    List<String> lines = new ArrayList<>();
+
+    for (Transaction transaction : transactions) {
+      // Convert Transaction info.
+      String transactionLine = String.join(",",
+          String.valueOf(transaction.getID()),
+          transaction.getType(),
+          transaction.getDate(),
+          String.valueOf(transaction.getPrice()),
+          String.valueOf(transaction.getTax()));
+
+      // Convert Customer info.
+      Customer customer = transaction.getCustomer();
+      String customerLine = String.join(",",
+          String.valueOf(customer.getID()),
+          customer.getFirstName(),
+          customer.getLastName(),
+          customer.getBirthday(),
+          customer.getPhoneNumber(),
+          customer.getAddress(),
+          String.valueOf(customer.getAccountBalance()));
+
+      //Convert Vehicle info.
+      Vehicle vehicle = transaction.getVehicle();
+      String vehicleLine = VehicleHelper.convertVehicleToCSV(vehicle);
+
+      // Combine into one line.
+      String fullLine = String.join(",", transactionLine, customerLine, vehicleLine);
+      lines.add(fullLine);
+    }
+    try {
+      Files.write(this.filePath, lines);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
