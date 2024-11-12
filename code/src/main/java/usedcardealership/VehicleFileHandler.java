@@ -22,7 +22,6 @@ public class VehicleFileHandler implements IDataHandler<Vehicle> {
   @Override
   public List<Vehicle> load() {
     List<Vehicle> vehicles = new ArrayList<>();
-
     try {
       List<String> allLines = Files.readAllLines(filePath);
       for (String line : allLines) {
@@ -54,52 +53,167 @@ public class VehicleFileHandler implements IDataHandler<Vehicle> {
     boolean isElectric = Boolean.parseBoolean(fields[13]);
 
     if (type == "Motorcycle") {
-      double engineCC = Double.parseDouble(fields[14]);
-      String handlebarType = fields[15];
-      return new Motorcycle(id, make, model, year, price, color, transmission, driveType,
-          horsepower, weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+      return createMotorcycle(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else if (type == "RV") {
-      int numSeats = Integer.parseInt(fields[14]);
-      int numDoors = Integer.parseInt(fields[15]);
-      boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-      int sleepCapacity = Integer.parseInt(fields[17]);
-      boolean hasBathroom = Boolean.parseBoolean(fields[18]);
-      return new RV(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
-          kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+      return createRV(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else if (type == "Car") {
-      int numSeats = Integer.parseInt(fields[14]);
-      int numDoors = Integer.parseInt(fields[15]);
-      boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-      boolean isConvertible = Boolean.parseBoolean(fields[17]);
-      return new Car(id, make, model, year, price, color, transmission, driveType, horsepower,
-          weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
+      return createCar(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else if (type == "SUV") {
-      int numSeats = Integer.parseInt(fields[14]);
-      int numDoors = Integer.parseInt(fields[15]);
-      boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-      boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
-      return new SUV(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
-          kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
+      return createSUV(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else if (type == "PickupTruck") {
-      int numSeats = Integer.parseInt(fields[14]);
-      int numDoors = Integer.parseInt(fields[15]);
-      boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-      double cargoCapacity = Double.parseDouble(fields[17]);
-      double bedLength = Double.parseDouble(fields[18]);
-      double towingCapacity = Double.parseDouble(fields[19]);
-      return new PickupTruck(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
-          kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity, bedLength, towingCapacity);
+      return createPickupTruck(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else if (type == "Van") {
-      int numSeats = Integer.parseInt(fields[14]);
-      int numDoors = Integer.parseInt(fields[15]);
-      boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-      double cargoCapacity = Double.parseDouble(fields[17]);
-      boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
-      return new Van(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
-          kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity, hasSlidingDoors);
+      return createVan(fields, id, make, model, year, price, color, transmission, driveType,
+          horsepower, weight, kilometerage, damage, isElectric);
     } else {
       return null;
     }
+  }
+
+  private Motorcycle createMotorcycle(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    double engineCC = Double.parseDouble(fields[14]);
+    String handlebarType = fields[15];
+    return new Motorcycle(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+  }
+
+  private RV createRV(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    int numSeats = Integer.parseInt(fields[14]);
+    int numDoors = Integer.parseInt(fields[15]);
+    boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+    int sleepCapacity = Integer.parseInt(fields[17]);
+    boolean hasBathroom = Boolean.parseBoolean(fields[18]);
+    return new RV(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+  }
+
+  private Car createCar(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    int numSeats = Integer.parseInt(fields[14]);
+    int numDoors = Integer.parseInt(fields[15]);
+    boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+    boolean isConvertible = Boolean.parseBoolean(fields[17]);
+    return new Car(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
+  }
+
+  private SUV createSUV(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    int numSeats = Integer.parseInt(fields[14]);
+    int numDoors = Integer.parseInt(fields[15]);
+    boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+    boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
+    return new SUV(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
+  }
+
+  private PickupTruck createPickupTruck(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    int numSeats = Integer.parseInt(fields[14]);
+    int numDoors = Integer.parseInt(fields[15]);
+    boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+    double cargoCapacity = Double.parseDouble(fields[17]);
+    double bedLength = Double.parseDouble(fields[18]);
+    double towingCapacity = Double.parseDouble(fields[19]);
+    return new PickupTruck(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof,
+        cargoCapacity, bedLength, towingCapacity);
+  }
+
+  private Van createVan(
+      String[] fields,
+      int id,
+      String make,
+      String model,
+      int year,
+      double price,
+      String color,
+      String transmission,
+      String driveType,
+      int horsepower,
+      double weight,
+      double kilometerage,
+      double damage,
+      boolean isElectric) {
+    int numSeats = Integer.parseInt(fields[14]);
+    int numDoors = Integer.parseInt(fields[15]);
+    boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+    double cargoCapacity = Double.parseDouble(fields[17]);
+    boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
+    return new Van(id, make, model, year, price, color, transmission, driveType, horsepower,
+        weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity, hasSlidingDoors);
   }
 
   @Override
