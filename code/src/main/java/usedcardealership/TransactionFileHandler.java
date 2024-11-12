@@ -45,7 +45,7 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
         double price = Double.parseDouble(transactionFields[3]);
         double tax = Double.parseDouble(transactionFields[4]);
         String[] customerFields = transactionFields[5].split(",");
-        Customer customer = parseCustomer(customerFields); // TODO: parseCustomer()
+        Customer customer = parseCustomer(customerFields);
         String[] vehicleFields = transactionFields[6].split(",");
         Vehicle vehicle = VehicleHelper.parseVehicle(vehicleFields);
 
@@ -99,5 +99,25 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Helper method for converting a String[] of fields into Customer object.
+   * 
+   * @param customerFields - the String[] of Customer fields.
+   * @return Customer - the parsed Customer object.
+   */
+  private Customer parseCustomer(String[] customerFields) {
+    int id = Integer.parseInt(customerFields[0]);
+    String firstName = customerFields[1];
+    String lastName = customerFields[2];
+    String birthday = customerFields[3];
+    String phoneNumber = customerFields[4];
+    String address = customerFields[5];
+    double accountBalance = Double.parseDouble(customerFields[6]);
+
+    // Not worth including vehicle list for Customers in Transaction CSV
+    return new Customer(id, firstName, lastName, birthday, phoneNumber,
+        address, accountBalance, new ArrayList<>());
   }
 }
