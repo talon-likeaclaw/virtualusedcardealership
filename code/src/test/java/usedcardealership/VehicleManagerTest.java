@@ -112,8 +112,8 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
-                5.0, false, 5, 4, false, false);
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 
+            200, 1500.0, 10000.0,5.0, false, 5, 4, false, false);
         inventory.add(car);
         VehicleManager test = new VehicleManager(inventory, database);
 
