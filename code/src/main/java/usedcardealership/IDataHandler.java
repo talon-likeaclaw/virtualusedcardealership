@@ -1,4 +1,3 @@
-
 /**
  * Interface representing a generic data handler strategy for loading and saving items.
  *
