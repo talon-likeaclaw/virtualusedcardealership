@@ -1,7 +1,7 @@
 /**
  * Class for handling reading and writing Customers from/to files
  *
- * @param <Customer> the input vehicle list
+ * @param <Customer> the input Customer list
  * @author Talon Dunbar
  * @version 11/12/2024
  */
@@ -21,12 +21,12 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
      * @param String filePath - The path to the file containing Customer data.
      * @throws IOException
      */
-    public CustomerFileHandler(String filePath, VehicleManager vehicleManager) {
+    public CustomerFileHandler(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
     /**
-     * Loads Customers from the file and returns them as a list.
+     * Loads Customers from the file and returns them as a list of Customer objects.
      * 
      * @return List<Customer> - A list of Customers loaded from the file.
      */
@@ -47,7 +47,8 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
                 String vehiclesList = customerFields[7];
                 List<Vehicle> vehicles = parseVehicles(vehiclesList);
 
-                Customer customer = new Customer(id, firstName, lastName, birthday, phoneNumber, address, accountBalance, vehicles);
+                Customer customer = new Customer(id, firstName, lastName, birthday, phoneNumber, address,
+                        accountBalance, vehicles);
                 customers.add(customer);
             }
         } catch (IOException e) {
@@ -57,7 +58,45 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
     }
 
     /**
-     * Parses a nested CSV vehcileList into a list of Vehicle objects.
+     * Saves the list of Customers to the file in CSV format.
+     * 
+     * @param customers List of Customer objects to save.
+     */
+    @Override
+    public void save(List<Customer> customers) {
+        List<String> lines = new ArrayList<>();
+
+        for (Customer customer : customers) {
+            // Convert Customer information to CSV format
+            String customerLine = String.join(",",
+                    String.valueOf(customer.getID()),
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    customer.getBirthday(),
+                    customer.getPhoneNumber(),
+                    customer.getAddress(),
+                    String.valueOf(customer.getAccountBalance()));
+
+            // Convert each vehicle in the customer's list to CSV format
+            List<String> vehicleStrings = new ArrayList<>();
+            for (Vehicle vehicle : customer.getVehicles()) {
+                vehicleStrings.add(VehicleHelper.convertVehicleToCSV(vehicle));
+            }
+            // Add [ and ] to outside of vehicle list and delimit each vehicle with #
+            String vehiclesField = "[" + String.join("#", vehicleStrings) + "]";
+            // Add vehicles to customer CSV string and add to List<String> lines
+            customerLine += "," + vehiclesField;
+            lines.add(customerLine);
+        }
+        try {
+            Files.write(this.filePath, lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Parses a nested CSV vehicleList into a list of Vehicle objects.
      * 
      * @param vehicleList - A string representing Customer's vehicles delimiter #.
      * @return List<Vehicle> - The list of Vehicle objects.
