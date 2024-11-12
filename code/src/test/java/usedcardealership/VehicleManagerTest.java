@@ -107,4 +107,71 @@ public class VehicleManagerTest {
         assertEquals(car, inventory.get(0));
         assertEquals(car, database.get(0));
     }
+
+    @Test
+    public void testRemoveVehicle_removesExistingVehicle() {
+        // Arrange
+        List<Vehicle> inventory = new ArrayList<>();
+        List<Vehicle> database = new ArrayList<>();
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+                5.0, false, 5, 4, false, false);
+        inventory.add(car);
+        VehicleManager test = new VehicleManager(inventory, database);
+
+        // Act
+        test.removeVehicle(car);
+
+        // Assert
+        assertEquals(0, inventory.size());
+        assertEquals(true, !inventory.contains(car));
+    }
+
+    @Test
+    public void testRemoveVehicle_doesNothingForNonExistingVehicle() {
+        // Arrange
+        List<Vehicle> inventory = new ArrayList<>();
+        List<Vehicle> database = new ArrayList<>();
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+                5.0, false, 5, 4, false, false);
+        Vehicle truck = new PickupTruck(2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic", "AWD", 400, 2500.0,
+                20000.0, 15.0, false, 5, 4, false, 60.0, 6.5, 10000.0);
+        inventory.add(truck);
+        VehicleManager test = new VehicleManager(inventory, database);
+
+        // Act
+        test.removeVehicle(car);
+
+        // Assert
+        assertEquals(1, inventory.size());
+        assertEquals(true, inventory.contains(truck));
+    }
+
+    // The following tests require the ICriteria Strategy to be implmented
+    // TODO: Need to test searchInventory
+
+    // TODO: Need to test searchDatabase
+
+    // TODO: Need to test searchList
+
+    @Test
+    public void testUpdateVehicle_updatesVehicleInBothLists() {
+        // Arrange
+        List<Vehicle> inventory = new ArrayList<>();
+        List<Vehicle> database = new ArrayList<>();
+        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+                5.0, false, 5, 4, false, false);
+        inventory.add(car);
+        database.add(car);
+        VehicleManager test = new VehicleManager(inventory, database);
+
+        Vehicle updatedCar = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Red", "Automatic", "FWD", 200, 1500.0,
+                12000.0, 5.0, false, 5, 4, false, false);
+
+        // Act
+        test.updateVehicle(updatedCar);
+
+        // Assert
+        assertEquals(updatedCar, inventory.get(0));
+        assertEquals(updatedCar, database.get(0));
+    }
 }
