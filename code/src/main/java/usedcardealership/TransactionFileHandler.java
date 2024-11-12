@@ -37,16 +37,23 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
       List<String> allLines = Files.readAllLines(this.filePath);
 
       for (String line : allLines) {
-        String[] transactionFields = line.split(",");
+        // Split transaction, customer, and vehicle sections using # delimiter
+        String[] sections = line.split("#");
 
+        // Transaction section
+        String[] transactionFields = sections[0].split(",");
         int id = Integer.parseInt(transactionFields[0]);
         String type = transactionFields[1];
         String date = transactionFields[2];
         double price = Double.parseDouble(transactionFields[3]);
         double tax = Double.parseDouble(transactionFields[4]);
-        String[] customerFields = transactionFields[5].split(",");
+
+        // Customer section
+        String[] customerFields = sections[1].split(",");
         Customer customer = parseCustomer(customerFields);
-        String[] vehicleFields = transactionFields[6].split(",");
+
+        // Vehicle section
+        String[] vehicleFields = sections[2].split(",");
         Vehicle vehicle = VehicleHelper.parseVehicle(vehicleFields);
 
         Transaction transaction = new Transaction(id, type, date, price, tax, customer, vehicle);
@@ -91,7 +98,7 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
       String vehicleLine = VehicleHelper.convertVehicleToCSV(vehicle);
 
       // Combine into one line.
-      String fullLine = String.join(",", transactionLine, customerLine, vehicleLine);
+      String fullLine = String.join("#", transactionLine, customerLine, vehicleLine);
       lines.add(fullLine);
     }
     try {
