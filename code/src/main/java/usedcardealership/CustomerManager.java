@@ -33,7 +33,6 @@ public class CustomerManager {
      * @return void
      */
     public void addCustomer(Customer customer){
-        //OVERRIDE CONTAINS IN CUSTOMER
         if (!this.customerList.contains(customer)) {
             this.customerList.add(customer);
         }
@@ -58,7 +57,6 @@ public class CustomerManager {
     public void updateCustomer(Customer customer){
         for (int i = 0; i < this.customerList.size(); i++) {
             if (this.customerList.get(i).equals(customer)) {
-                // CREATE COPY CONSTRUCTOR IN CUSTOMER
                 this.customerList.set(i, new Customer(customer));
                 break;
             }

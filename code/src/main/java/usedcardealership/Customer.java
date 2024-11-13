@@ -6,9 +6,10 @@
  */
 package usedcardealership;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Customer {
+public class Customer {
     private int id;
     private String firstName;
     private String lastName;
@@ -40,7 +41,16 @@ public abstract class Customer {
         this.accountBalance = accountBalance;
         this.vehicles = vehicles;
     }
-
+    public Customer(Customer c) {
+        this(c.id, 
+             c.firstName, 
+             c.lastName, 
+             c.birthday, 
+             c.phoneNumber, 
+             c.address, 
+             c.accountBalance, 
+             c.vehicles);
+    }
     /** 
      * Overrides toString method
      * 
@@ -104,5 +114,20 @@ public abstract class Customer {
 
     public void setAddress(String address){
         this.address = address;
+    }
+
+     /** 
+     * Overrides toString method
+     * 
+     * @return String
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+        if(!(o instanceof Customer)){
+            return false;
+        }
+        Customer c = (Customer) o;
+        return (this.id == c.id);
     }
 }
