@@ -31,9 +31,9 @@ public class Buyer extends Customer{
      * 
      * @return void
     */
-    public void requestTestDrive(int index){
-        this.vehicles.get(index).requestTestDrive();
-    }
+    // public void requestTestDrive(int index){
+    //     this.vehicles.get(index).requestTestDrive();
+    // }
     /** 
      * Gets a trade in value Buyer exchanges pieces/vehicle for a vehicle
      * 

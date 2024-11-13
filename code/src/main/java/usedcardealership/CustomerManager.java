@@ -8,10 +8,7 @@
  */
 
 package usedcardealership;
-
 import java.util.*;
-
-import usedcardealership;
 
 public class CustomerManager {
 
