@@ -1,14 +1,55 @@
 package usedcardealership;
 
+import java.io.IOException;
 import java.util.*;
 
 import usedcardealership.*;
 
 public class UsedCarDealership {
     public static void main(String[] args) {
+        testVehicleFileHandling();
+    }
 
-        // Vehicle Testing
+    public static void testVehicleFileHandling() {
+        String databasePath = "resources/database.csv";
+        String inventoryPath = "resources/inventory.csv";
+        String testWritePath = "resources/testWrite.csv";
+        try {
+            VehicleFileHandler vehicleDatabaseHandler = new VehicleFileHandler(databasePath);
+            VehicleFileHandler vehicleInventoryHandler = new VehicleFileHandler(inventoryPath);
+            VehicleFileHandler vehicleWriteHandler = new VehicleFileHandler(testWritePath);
+            List<Vehicle> database = vehicleDatabaseHandler.load();
+            List<Vehicle> inventory = vehicleInventoryHandler.load();
+            VehicleManager manager = new VehicleManager(inventory, database);
+            manager.printVehicles(inventory); // WOOOOOO IT WORKS!!
+            Car mitsubishiLancer = new Car(
+                    999, // id
+                    "Mitsubishi", // make
+                    "Lancer", // model
+                    2018, // year
+                    18000.0, // price
+                    "White", // color
+                    "Manual", // transmission
+                    "FWD", // driveType
+                    168, // horsepower
+                    2900.0, // weight in lbs
+                    45000.0, // mileage in kilometers
+                    4.5, // damage percentage
+                    false, // isElectric
+                    5, // numSeats
+                    4, // numDoors
+                    false, // hasSunRoof
+                    false // isConvertible
+            );
+            manager.addVehicle(mitsubishiLancer);
+            vehicleWriteHandler.save(manager.getInventory()); // I can't believe it works!!!
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void testVehicles() {
         // MOTORCYCLE
         Motorcycle harleyDavidsonStreet = new Motorcycle(
                 101, // id
@@ -165,5 +206,6 @@ public class UsedCarDealership {
         testVehicles.addVehicle(fordTransit);
         testVehicles.addVehicle(f150Lightning);
         testVehicles.printVehicles(testVehicles.getInventory());
+
     }
 }

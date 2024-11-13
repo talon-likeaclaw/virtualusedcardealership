@@ -1,0 +1,60 @@
+Motorcycle,1,Honda,CBR600RR,2020,12000,Red,Manual,Chain,120,200,5000,0.1,false,599,Sport
+Motorcycle,2,Yamaha,MT-07,2019,8000,Blue,Manual,Chain,75,180,12000,0.0,false,689,Standard
+Motorcycle,3,Kawasaki,Z650,2018,7500,Green,Manual,Chain,68,190,15000,0.05,false,649,Naked
+Motorcycle,4,Suzuki,GSX-R750,2021,13000,White,Manual,Chain,150,210,3000,0.02,false,750,Sport
+Motorcycle,5,Ducati,Monster,2017,9500,Black,Manual,Chain,100,185,20000,0.1,false,821,Sport
+Motorcycle,6,BMW,F850GS,2018,12000,Yellow,Manual,Chain,90,230,10000,0.05,false,853,Adventure
+Motorcycle,7,Harley-Davidson,Iron 883,2016,9000,Black,Manual,Belt,50,250,22000,0.15,false,883,Cruiser
+Motorcycle,8,Triumph,Bonneville,2019,11500,Blue,Manual,Chain,78,220,14000,0.0,false,900,Classic
+Motorcycle,9,Indian,Scout,2020,13000,Red,Manual,Belt,100,240,8000,0.1,false,1133,Cruiser
+Motorcycle,10,KTM,390 Duke,2021,5500,Orange,Manual,Chain,44,150,3000,0.0,false,373,Naked
+RV,11,Winnebago,Outlook,2021,60000,White,Automatic,RWD,300,8000,5000,0.05,false,6,2,true,4,true
+RV,12,Thor,Chateau,2020,75000,Silver,Automatic,RWD,320,9500,7000,0.1,false,8,2,true,6,true
+RV,13,Forest River,Sunseeker,2019,85000,White,Automatic,RWD,350,10000,9000,0.2,false,7,2,false,8,false
+RV,14,Coachmen,Freelander,2018,50000,Gray,Automatic,RWD,290,8500,12000,0.15,false,6,2,true,4,false
+RV,15,Winnebago,Minnie Winnie,2019,80000,Blue,Automatic,RWD,330,9000,15000,0.1,false,8,3,true,5,true
+RV,16,Gulf Stream,Conquest,2020,70000,White,Automatic,RWD,310,8700,11000,0.0,false,7,2,false,7,false
+RV,17,Jayco,Redhawk,2017,65000,Green,Automatic,RWD,300,7800,20000,0.05,false,6,3,true,4,true
+RV,18,Coachmen,Orion,2021,90000,White,Automatic,RWD,340,9300,6000,0.02,false,8,2,true,8,true
+RV,19,Thor,Compass,2022,95000,Silver,Automatic,RWD,330,8900,4000,0.01,false,6,2,true,6,false
+RV,20,Entegra,Odyssey,2018,70000,Black,Automatic,RWD,320,9200,17000,0.1,false,7,3,false,6,true
+Car,21,Toyota,Corolla,2021,20000,White,Automatic,FWD,139,2800,15000,0.02,false,5,4,true,false
+Car,22,Honda,Civic,2020,22000,Blue,Automatic,FWD,158,2700,20000,0.1,false,5,4,false,true
+Car,23,Ford,Mustang,2019,35000,Red,Manual,RWD,450,3700,8000,0.05,false,4,2,true,true
+Car,24,Chevrolet,Malibu,2018,23000,Gray,Automatic,FWD,160,3100,25000,0.2,false,5,4,false,false
+Car,25,Nissan,Altima,2021,25000,Silver,Automatic,FWD,188,3200,10000,0.0,false,5,4,true,false
+Car,26,Hyundai,Elantra,2020,21000,Black,Automatic,FWD,147,2800,12000,0.1,false,5,4,false,false
+Car,27,BMW,3 Series,2019,40000,Blue,Automatic,RWD,255,3600,14000,0.05,false,5,4,true,true
+Car,28,Mercedes,C-Class,2020,45000,White,Automatic,RWD,255,3700,13000,0.02,false,5,4,true,false
+Car,29,Audi,A4,2018,42000,Gray,Automatic,AWD,248,3500,16000,0.1,false,5,4,true,true
+Car,30,Volkswagen,Passat,2019,27000,Black,Automatic,FWD,174,3300,11000,0.0,false,5,4,false,false
+SUV,31,Toyota,RAV4,2021,30000,Silver,Automatic,AWD,203,3400,15000,0.0,false,5,4,true,false
+SUV,32,Honda,CR-V,2020,32000,Gray,Automatic,AWD,190,3500,20000,0.05,false,5,4,true,false
+SUV,33,Ford,Explorer,2019,45000,Blue,Automatic,AWD,300,4500,25000,0.1,false,7,4,false,true
+SUV,34,Chevrolet,Tahoe,2018,50000,Black,Automatic,AWD,355,5300,30000,0.15,false,7,4,true,true
+SUV,35,Jeep,Grand Cherokee,2021,40000,Red,Automatic,AWD,295,4300,12000,0.02,false,5,4,true,false
+SUV,36,Hyundai,Santa Fe,2020,35000,White,Automatic,AWD,235,3800,17000,0.05,false,5,4,true,true
+SUV,37,BMW,X5,2019,60000,Blue,Automatic,AWD,335,4600,8000,0.0,false,5,4,true,true
+SUV,38,Mercedes,GLC,2021,65000,Silver,Automatic,AWD,255,4200,5000,0.01,false,5,4,false,true
+SUV,39,Subaru,Outback,2022,35000,Green,Automatic,AWD,182,3600,6000,0.0,false,5,4,true,false
+SUV,40,Audi,Q5,2018,48000,Gray,Automatic,AWD,248,4000,14000,0.1,false,5,4,false,true
+PickupTruck,41,Ford,F-150,2021,45000,Blue,Automatic,4WD,400,6000,15000,0.05,false,5,4,true,3000,5.5,10000
+PickupTruck,42,Chevrolet,Silverado,2020,47000,Black,Automatic,4WD,355,6200,20000,0.1,false,6,4,false,3200,6.0,12000
+PickupTruck,43,RAM,1500,2019,46000,Gray,Automatic,4WD,395,6400,25000,0.2,false,5,4,true,3300,5.7,11000
+PickupTruck,44,Toyota,Tundra,2018,48000,Silver,Automatic,4WD,381,6400,30000,0.15,false,5,4,false,3400,5.5,10500
+PickupTruck,45,GMC,Sierra,2021,50000,Red,Automatic,4WD,355,6200,12000,0.0,false,5,4,true,3000,6.0,11500
+PickupTruck,46,Nissan,Titan,2020,45000,Blue,Automatic,4WD,400,6500,17000,0.1,false,5,4,false,3200,5.5,12000
+PickupTruck,47,Ford,Ranger,2019,35000,Gray,Automatic,4WD,270,5500,8000,0.05,false,4,4,true,2000,5.0,7500
+PickupTruck,48,Cybertruck,Tesla,2021,65000,White,Automatic,AWD,800,7500,5000,0.0,true,6,4,true,3500,6.5,14000
+PickupTruck,49,Rivian,R1T,2021,75000,Green,Automatic,AWD,700,7000,4000,0.01,true,5,4,false,3000,6.0,11000
+PickupTruck,50,Jeep,Gladiator,2020,50000,Black,Manual,4WD,285,5600,7000,0.1,false,5,4,true,2800,5.0,8000
+Van,51,Honda,Odyssey,2021,35000,Silver,Automatic,FWD,280,4500,10000,0.0,false,8,4,true,144,true
+Van,52,Toyota,Sienna,2020,34000,Gray,Automatic,FWD,245,4400,12000,0.05,false,8,4,true,160,false
+Van,53,Chrysler,Pacifica,2019,32000,Blue,Automatic,FWD,287,4300,20000,0.1,false,8,4,false,140,true
+Van,54,Kia,Carnival,2021,37000,White,Automatic,FWD,290,4500,8000,0.0,false,8,4,true,145,true
+Van,55,Dodge,Grand Caravan,2018,25000,Red,Automatic,FWD,283,4200,30000,0.2,false,7,4,false,130,false
+Van,56,Mercedes,Metris,2019,38000,Black,Automatic,RWD,208,4000,15000,0.05,false,7,4,true,135,true
+Van,57,Ford,Transit,2020,45000,White,Automatic,RWD,275,5000,9000,0.1,false,10,4,true,200,true
+Van,58,Nissan,NV3500,2018,37000,Blue,Automatic,RWD,375,5200,30000,0.15,false,12,4,false,220,true
+Van,59,Chevrolet,Express,2021,40000,Gray,Automatic,RWD,280,5300,6000,0.0,false,15,4,true,250,false
+Van,60,Ram,ProMaster,2019,36000,Green,Automatic,FWD,280,5000,12000,0.1,false,8,4,false,140,true
