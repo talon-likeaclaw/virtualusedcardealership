@@ -6,7 +6,9 @@
  */
 package usedcardealership;
 
-public class Sale {
+import java.time.*;
+
+public class Sale extends Transaction{
     
     /**
      * @param id
@@ -18,40 +20,43 @@ public class Sale {
      * @param vehicle
      * 
      * Constructor: uses parent constructor
-     */
+    */
     public Sale(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
         super(id, type, date, price, tax, customer, vehicle);
-    }
-    /** 
-     * Gives user a test drive of the vehicle they wish to buy
-     * 
-     * @return void
+    } 
+
+    /* 
+    * Applies a discount to the sale price.
+    * 
+    * @param discount the discount amount to apply to the sale price
     */
-    public void requestTestDrive(){
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void applyDiscount(double discount) {
+        if (discount >= this.getPrice()) {
+            this.setPrice(0);
+        } else {
+            this.setPrice(this.getPrice() - discount);
+        }
     }
-    /** 
-     * Gets user's trade in value if they exchange pieces/vehicle for a vehicle
-     * 
-     * @return double
-     */
-    public double getTradeInValue(){
-        throw new UnsupportedOperationException("Not yet implemented");
+
+   /**
+    * Initializes the sale by performing necessary setup operations
+    * such as updating sale status or preparing sale details.
+    */
+
+    public void initializeSale() {
+        if (this.getDate() == null) {
+            this.setDate(LocalDate.now().toString());
+        }
     }
-    /** 
-     * Makes user a trade offer
-     * 
-     * @return void
-     */
-    public void makeOffer(){
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-    /** 
-     * Dealership sells vehicle
-     * 
-     * @return void
-     */
-    public void sellVehicle(Vehicle vehicle){
-        throw new UnsupportedOperationException("Not yet implemented");
+
+   /**
+    * Verifies the sale details to ensure all necessary information
+    * and conditions are met before finalizing the sale.
+    */
+    public void verifySale() {
+        if (this.getCustomer().getAccountBalance() < this.getVehicle().calculateTotalPrice()) {
+            //check this later
+            throw new RuntimeException("Can't afford, sorry");
+        }
     }
 }

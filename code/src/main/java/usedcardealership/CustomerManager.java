@@ -3,11 +3,15 @@
  * 
  * @author Juan Sebastian Badel - 2338127
  * @version 11/4/2024
+ * 
+ * @version 11/11/2024
  */
 
 package usedcardealership;
 
 import java.util.*;
+
+import usedcardealership;
 
 public class CustomerManager {
 
@@ -19,7 +23,7 @@ public class CustomerManager {
      * @param customerList a List<Customer> with all customers 
      */
     public CustomerManager(List<Customer> customerList){
-        throw new UnsupportedOperationException("Not Written Yet");
+        this.customerList = customerList;
     }
 
     /**
@@ -29,7 +33,9 @@ public class CustomerManager {
      * @return void
      */
     public void addCustomer(Customer customer){
-        throw new UnsupportedOperationException("Not Written Yet");
+        if (!this.customerList.contains(customer)) {
+            this.customerList.add(customer);
+        }
     }
 
     /**
@@ -39,17 +45,22 @@ public class CustomerManager {
      * @return boolean
      */
     public boolean searchCustomer(Customer customer){
-        throw new UnsupportedOperationException("Not Written Yet");
+        return this.customerList.contains(customer);
     }
 
     /**
-     * Function updates the customerList List<Customer> to add a Customer object
+     * Function updates a Cutomer's field
      * 
      * @param customer a Customer object
      * @return void
      */
     public void updateCustomer(Customer customer){
-        throw new UnsupportedOperationException("Not Written Yet");
+        for (int i = 0; i < this.customerList.size(); i++) {
+            if (this.customerList.get(i).equals(customer)) {
+                this.customerList.set(i, new Customer(customer));
+                break;
+            }
+        }
     }
     
 }

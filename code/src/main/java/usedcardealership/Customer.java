@@ -6,9 +6,10 @@
  */
 package usedcardealership;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Customer {
+public class Customer {
     private int id;
     private String firstName;
     private String lastName;
@@ -17,7 +18,6 @@ public abstract class Customer {
     private String address;
     private double accountBalance;
     private List<Vehicle> vehicles;
-
 
     /**
      * @param id
@@ -32,55 +32,102 @@ public abstract class Customer {
      * Initialize all fields using parameters
      */
     public Customer(int id, String firstName, String lastName, String birthday, String phoneNumber, String address, double accountBalance, List<Vehicle> vehicles){
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.accountBalance = accountBalance;
+        this.vehicles = vehicles;
+    }
+    public Customer(Customer c) {
+        this(c.id, 
+             c.firstName, 
+             c.lastName, 
+             c.birthday, 
+             c.phoneNumber, 
+             c.address, 
+             c.accountBalance, 
+             c.vehicles);
     }
     /** 
      * Overrides toString method
      * 
      * @return String
      */
+    @Override
     public String toString(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return "Customer ID: " + id + "\n" +
+               "Name: " + firstName + " " + lastName + "\n" +
+               "Birthday: " + birthday + "\n" +
+               "Phone: " + phoneNumber + "\n" +
+               "Address: " + address + "\n" +
+               "Account Balance: $" + accountBalance;
     }
     
     public int getID(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.id;
     }
+
     public String getFirstName(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.firstName;
     }
+
     public String getLastName(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.lastName;
     }
+
     public String getBirthday(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.birthday;
     }
+
     public String getPhoneNumber(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.phoneNumber;
     }
+
     public String getAddress(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.address;
     }
+
     public double getAccountBalance(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.accountBalance;
     }
+
     public List<Vehicle> getVehicles(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        return this.vehicles;
     }
+
     /**
      * Updates the customers balance after making a transaction
      * 
-     * @param fee
+     * @param amount (positive or negative)
      * @return void
      */
     public void updateAccountBalance(double amount){
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-    public void setPhoneNumber(String number){
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-    public void setAddress(String address){
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.accountBalance += amount;
     }
 
+    public void setPhoneNumber(String number){
+        this.phoneNumber = number;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+     /** 
+     * Overrides toString method
+     * 
+     * @return String
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+        if(!(o instanceof Customer)){
+            return false;
+        }
+        Customer c = (Customer) o;
+        return (this.id == c.id);
+    }
 }

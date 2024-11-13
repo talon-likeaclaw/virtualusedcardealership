@@ -27,7 +27,7 @@ public class Purchase extends Transaction{
      * @return void
      */
     public void initializePurchase(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        //?
     }
     /**
      * Verifies the purchase
@@ -35,6 +35,6 @@ public class Purchase extends Transaction{
      * @return void
      */
     public void verifyPurchase(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        //?
     }
 }
