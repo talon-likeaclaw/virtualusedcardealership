@@ -44,7 +44,7 @@ public class TransactionManager {
      */
     public Transaction buyVehicle(Vehicle vehicle, Customer customer){
 
-        Transaction purchase = new Purchase(vehicle, customer); 
+        Transaction purchase = new Purchase(vehicle, customer);
         processTransaction(purchase);
         return purchase;
     }

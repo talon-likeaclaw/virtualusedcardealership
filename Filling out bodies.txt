@@ -1,8 +1,10 @@
 Filling out bodies:
 
-Done:
-CustomerManager.java
-TransactionManager.java
 
-In work:
+To do:
+Seller.java
+Buyer.java
+
+Check
 Sale.java
+Purchase.java

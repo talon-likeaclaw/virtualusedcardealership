@@ -6,11 +6,15 @@
  */
 package usedcardealership;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
     private List<Vehicles> productsList;
 
+    public ShoppingCart(){
+        this.productsList = new ArrayList<Vehicles>();
+    }
     /**
      * Adds a vehicle taken as input to productsList
      * 
@@ -18,7 +22,7 @@ public class ShoppingCart {
      * @return void
      */
     public void addVehicle(Vehicle vehicle){
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.productsList.add(new Vehicle(vehicle));
     }
     /**
      * Removes vehicle from the productsList at selected index
@@ -26,7 +30,7 @@ public class ShoppingCart {
      * @return void
      */
     public void removeVehicle(int index){
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.productsList.remove(index);
     }
     /**
      * Removes every element from the productsList
@@ -34,6 +38,8 @@ public class ShoppingCart {
      * @return void
      */
     public void emptyCart(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        for(int i = 0; i < this.productsList.size(); i++){
+            this.productsList.remove(i);
+        }
     }
 }

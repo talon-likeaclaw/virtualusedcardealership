@@ -18,16 +18,16 @@ public class Seller {
      * @param vehicle
      * @return void
      */
-    public void sellVehicle(Vehicle vehicle){
-        throw new UnsupportedOperationException("Not yet implemented");
+    public Vehicle sellVehicle(Vehicle vehicle){
+        return vehicle;
     }
     /**
      * Customer negociates a Price
      * 
      * @return void
     */
-    public void negotiatePrice(){
-        throw new UnsupportedOperationException("Not yet implemented");
+    public double negotiatePrice(double offer){
+        return offer;
     }
     /**
      * Completes sale
@@ -35,6 +35,6 @@ public class Seller {
      * @return void
     */
     public void finalizeSale(){
-        throw new UnsupportedOperationException("Not yet implemented");
+        //...
     }
 }

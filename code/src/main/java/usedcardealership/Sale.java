@@ -45,9 +45,8 @@ public class Sale extends Transaction{
 
     public void initializeSale() {
         if (this.getDate() == null) {
-            this.setDate(LocalDate.now().toString());  // Set current date as a string
+            this.setDate(LocalDate.now().toString());
         }
-        //?
     }
 
    /**
