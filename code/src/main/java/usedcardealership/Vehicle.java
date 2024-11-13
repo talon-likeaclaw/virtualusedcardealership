@@ -157,7 +157,7 @@ public abstract class Vehicle {
     public boolean equals(Object o) {
         if (o instanceof Vehicle) {
             Vehicle v = (Vehicle) o;
-            return v.id == this.id && v.kilometerage == this.kilometerage;
+            return v.id == this.id;
         }
         return false;
     }
