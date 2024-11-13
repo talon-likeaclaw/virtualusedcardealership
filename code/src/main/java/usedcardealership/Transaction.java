@@ -79,5 +79,8 @@ public abstract class Transaction {
      * 
      * @return double
      */
-    public abstract double calculateTotal();
+    public double calculateTotal() {
+        double depreciation = this.getVehicle().calculateDepreciation();
+        return (this.getPrice() - depreciation) * this.getTax();
+    }
 }

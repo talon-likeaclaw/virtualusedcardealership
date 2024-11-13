@@ -57,13 +57,7 @@ public class Sale extends Transaction{
     public void verifySale() {
         if (this.getCustomer().getAccountBalance() < this.getVehicle().calculateTotalPrice()) {
             //check this later
-            throw new Exception("Can't afford, sorry");
+            throw new RuntimeException("Can't afford, sorry");
         }
-    }
-
-    @Override
-    public double calculateTotal() {
-        double depreciation = this.getVehicle().calculateDepreciation();
-        return (this.getPrice() - depreciation) * this.getTax();
     }
 }
