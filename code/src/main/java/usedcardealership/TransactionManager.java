@@ -6,18 +6,19 @@
  */
 package usedcardealership;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionManager {
-    private List<Transactions> transactionHistory;
+    private List<Transaction> transactionHistory;
 
     /**
      * Constructor, Initializes the field transactionHistory
      * 
      * @param transactionHistory a List<Transaction> 
      */
-    public TransactionManager(List<Transactions> transactionHistory){
-        throw new UnsupportedOperationException("Not Written Yet");
+    public TransactionManager(List<Transaction> transactionHistory){
+        this.transactionHistory = transactionHistory;
     }
 
     /**
@@ -28,8 +29,8 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction sellVehicle(Vehicle vehicle, Customer customer){
-        // throw new UnsupportedOperationException("Not Written Yet");
-        Transaction sale = new Sale(vehicle, customer);  // Since Sale is a subclass of Transaction
+
+        Transaction sale = new Sale(vehicle, customer);
         processTransaction(sale);
         return sale;
     }
@@ -42,8 +43,8 @@ public class TransactionManager {
      * @return Transaction
      */
     public Transaction buyVehicle(Vehicle vehicle, Customer customer){
-        // throw new UnsupportedOperationException("Not Written Yet");
-        Transaction purchase = new Purchase(vehicle, customer);  // Assume Purchase is a subclass of Transaction
+
+        Transaction purchase = new Purchase(vehicle, customer); 
         processTransaction(purchase);
         return purchase;
     }
@@ -55,7 +56,13 @@ public class TransactionManager {
      * @return List<Transaction>
      */
     public List<Transaction> searchTransaction(IFilter criteria){
-        throw new UnsupportedOperationException("Not Written Yet");
+        List<Transaction> result = new ArrayList<>();
+        for (Transaction t : transactionHistory) {
+            if (criteria.matches(t)) {
+            result.add(t);
+            }
+        }
+        return result;
     }
 
     /**
@@ -63,8 +70,8 @@ public class TransactionManager {
      * 
      * @return void
      */
+    //how exactly is Transaction processed?
     private void processTransaction(Transaction transaction){
-        //throw new UnsupportedOperationException("Not Written Yet");
         transactionHistory.add(transaction);
     }
 
