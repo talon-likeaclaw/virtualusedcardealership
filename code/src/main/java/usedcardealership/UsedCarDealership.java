@@ -19,7 +19,7 @@ public class UsedCarDealership {
             List<Vehicle> database = vehicleDatabaseHandler.load();
             List<Vehicle> inventory = vehicleInventoryHandler.load();
             VehicleManager manager = new VehicleManager(inventory, database);
-            manager.printVehicles(inventory); // WOOOOOO IT WORKS!!
+            // manager.printVehicles(inventory); // WOOOOOO IT WORKS!!
             Car mitsubishiLancer = new Car(
                     "Car",
                     999, // id
@@ -41,6 +41,32 @@ public class UsedCarDealership {
                     false // isConvertible
             );
             manager.addVehicle(mitsubishiLancer);
+            // Test filters
+            IFilter<Vehicle> colorFilter = new VehicleColorFilter("Yellow");
+            printGreen("\nVehicles that are Yellow:");
+            manager.printVehiclesFull(manager.searchInventory(colorFilter));
+            IFilter<Vehicle> driveFilter = new VehicleDriveFilter("AWD");
+            printGreen("\nVehicles that are All Wheel Drive:");
+            manager.printVehiclesFull(manager.searchInventory(driveFilter));
+            IFilter<Vehicle> kilometerageFilter = new VehicleKilometerageRangeFilter(10000, 20000);
+            printGreen("\nVehicles between 10,000km and 20,000km:");
+            manager.printVehiclesFull(manager.searchInventory(kilometerageFilter));
+            IFilter<Vehicle> makeFilter = new VehicleMakeFilter("Hyundai");
+            printGreen("\nVehicles made by Hyundai:");
+            manager.printVehiclesFull(manager.searchInventory(makeFilter));
+            IFilter<Vehicle> priceFilter = new VehiclePriceRangeFilter(10000, 20000);
+            printGreen("\nVehicles between $10,000 and $20,000:");
+            manager.printVehiclesFull(manager.searchInventory(priceFilter));
+            IFilter<Vehicle> transmissionFilter = new VehicleTransmissionFilter("Manual");
+            printGreen("\nVehicles that have a Manual transmission:");
+            manager.printVehiclesFull(manager.searchInventory(transmissionFilter));
+            IFilter<Vehicle> typeFilter = new VehicleTypeFilter("PickupTruck");
+            printGreen("\nVehicles that are PickupTrucks");
+            manager.printVehiclesFull(manager.searchInventory(typeFilter));
+            IFilter<Vehicle> yearFilter = new VehicleYearRangeFilter(2020, 2021);
+            printGreen("\nVehicles that are from years 2020 and 2021:");
+            manager.printVehiclesFull(manager.searchInventory(yearFilter));
+
             vehicleWriteHandler.save(manager.getInventory()); // I can't believe it works!!!
 
         } catch (IOException e) {
@@ -68,8 +94,8 @@ public class UsedCarDealership {
                 749.0, // engineCC
                 "Cruiser" // handlebarType
         );
-        // System.out.println(harleyDavidsonStreet);
-        // System.out.println();
+        System.out.println(harleyDavidsonStreet);
+        System.out.println();
 
         // RV
         RV winnebagoVoyage = new RV(
@@ -93,8 +119,8 @@ public class UsedCarDealership {
                 4, // sleepCapacity
                 true // hasBathroom
         );
-        // System.out.println(winnebagoVoyage);
-        // System.out.println();
+        System.out.println(winnebagoVoyage);
+        System.out.println();
 
         // CAR
         Car mitsubishiLancer = new Car(
@@ -118,8 +144,8 @@ public class UsedCarDealership {
                 false // isConvertible
         );
         mitsubishiLancer.addDamage(25.7); // Got into a little crash
-        // System.out.println(mitsubishiLancer);
-        // System.out.println();
+        System.out.println(mitsubishiLancer);
+        System.out.println();
 
         // SUV
         SUV hyundaiKona = new SUV(
@@ -143,8 +169,8 @@ public class UsedCarDealership {
                 false // hasThirdRowSeating
         );
         hyundaiKona.addKilometerage(30000);
-        // System.out.println(hyundaiKona);
-        // System.out.println();
+        System.out.println(hyundaiKona);
+        System.out.println();
 
         // VAN
         Van fordTransit = new Van(
@@ -168,7 +194,7 @@ public class UsedCarDealership {
                 487.3, // cargoCapacity in cubic feet
                 true // hasSlidingDoors
         );
-        // System.out.println(fordTransit);
+        System.out.println(fordTransit);
         System.out.println();
 
         // PICKUP TRUCK
@@ -194,23 +220,47 @@ public class UsedCarDealership {
                 5.5, // bedLength in feet
                 10000.0 // towingCapacity in lbs
         );
-        // System.out.println(f150Lightning);
+        System.out.println(f150Lightning);
+        System.out.println();
 
         // VehicleManager Testing
         List<Vehicle> vehicles = new ArrayList<>();
         vehicles.add(mitsubishiLancer);
         vehicles.add(hyundaiKona);
 
-        System.out.println("Before winning the lottery:\n");
+        printGreen("Before winning the lottery:\n");
         VehicleManager testVehicles = new VehicleManager(vehicles, vehicles);
-        testVehicles.printVehicles(testVehicles.getInventory());
+        testVehicles.printVehiclesShort(testVehicles.getInventory());
 
-        System.out.println("After winning the lottery:\n");
+        printGreen("After winning the lottery:\n");
         testVehicles.addVehicle(harleyDavidsonStreet);
         testVehicles.addVehicle(winnebagoVoyage);
         testVehicles.addVehicle(fordTransit);
         testVehicles.addVehicle(f150Lightning);
-        testVehicles.printVehicles(testVehicles.getInventory());
+        testVehicles.printVehiclesShort(testVehicles.getInventory());
 
     }
+
+    /**
+     * Prints message in color
+     * 
+     * @param color   Color of message
+     * @param message Message to be printed
+     */
+    private static void printColor(String color, String message) {
+        final String ANSI_RESET = "\u001B[0m";
+
+        System.out.println(color + message + ANSI_RESET);
+    }
+
+    /**
+     * Prints in greem
+     * 
+     * @param message String message to be printed in red
+     */
+    private static void printGreen(String message) {
+        final String ANSI_GREEN = "\u001B[32m";
+        printColor(ANSI_GREEN, message);
+    }
+
 }
