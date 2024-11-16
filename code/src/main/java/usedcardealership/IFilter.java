@@ -10,9 +10,9 @@ package usedcardealership;
 public interface IFilter<T> {
 
     /**
-     * Determines if given item matches the filter's criteria.
+     * Determines if given Object matches the filter's criteria.
      * 
-     * @param items the iteam to check
+     * @param item the Generic Object to check
      * @return true if matches, false otherwise
      */
     boolean filter(T item);

@@ -50,12 +50,12 @@ public class VehicleManagerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        test.printVehicles(vehicleList);
+        test.printVehiclesShort(vehicleList);
 
         // Act
 
         // Expected output
-        String expectedOutput = "Type: Car\n" +
+        String expectedOutput = "\nType: Car\n" +
                 "ID: 1\n" +
                 "Make: Toyota\n" +
                 "Model: Camry\n" +

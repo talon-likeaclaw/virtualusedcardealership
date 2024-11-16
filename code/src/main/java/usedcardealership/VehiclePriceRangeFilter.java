@@ -23,7 +23,7 @@ public class VehiclePriceRangeFilter extends VehicleFilter {
     }
     
     /**
-     * Checks if Vehcile's price (current value) is within specified range
+     * Checks if Vehicle's price (current value) is within specified range
      * 
      * @param vehicles - the Vehicle object to check
      * @return true if within price range, false otherwise

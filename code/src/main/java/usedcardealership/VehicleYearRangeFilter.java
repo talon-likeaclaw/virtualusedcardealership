@@ -23,7 +23,7 @@ public class VehicleYearRangeFilter extends VehicleFilter {
     }
 
     /**
-     * Checks if Vehcile's year is within specified range
+     * Checks if Vehicle's year is within specified range
      * 
      * @param vehicles - the Vehicle object to check
      * @return true if within year range, false otherwise

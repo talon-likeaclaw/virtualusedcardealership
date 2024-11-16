@@ -10,10 +10,10 @@ package usedcardealership;
 public abstract class VehicleFilter implements IFilter<Vehicle> {
 
     /**
-     * Abstract method to filter a list of Vehicle objects based on parameter
+     * Abstract method check a Vehicle object matches filter criteria
      * 
      * @param vehicle - the Vehicle object to check
-     * @return true if the Vehicle mathces the filter criteria, false otherwise
+     * @return true if the Vehicle matches the filter criteria, false otherwise
      */
     @Override
     public abstract boolean filter(Vehicle vehicle);
