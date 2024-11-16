@@ -7,28 +7,29 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleYearRangeFilter extends VehicleFilter {
+    private double minYear;
+    private double maxYear;
 
-  /**
-   * Filters the provided list of Vehicle by specified year range
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the year range to filter by in array form
-   * @return a list of Vehicle objects with the matching year range
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    int[] yearRange = (int[]) param; // Expecting [minYear, maxYear]
-    double minYear = yearRange[0];
-    double maxYear = yearRange[1];
-    List<Vehicle> inYearRange = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (v.getYear() >= minYear && v.getYear() <= maxYear) {
-        inYearRange.add(v);
-      }
+    /**
+     * Constructs a VehicleYearRangeFilter object
+     * 
+     * @param minYear the minimum year to filter by
+     * @param maxYear the maximum year to filter by
+     */
+    public VehicleYearRangeFilter(double minYear, double maxYear) {
+        this.minYear = minYear;
+        this.maxYear = maxYear;
     }
-    return inYearRange;
-  }
+
+    /**
+     * Checks if Vehcile's year is within specified range
+     * 
+     * @param vehicles - the Vehicle object to check
+     * @return true if within year range, false otherwise
+     */
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getYear() >= minYear && vehicle.getYear() <= maxYear;
+    }
 }

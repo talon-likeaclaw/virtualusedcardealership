@@ -7,26 +7,26 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleMakeFilter extends VehicleFilter {
+    private String make;
 
     /**
-     * Filters the provided list of Vehicle by specified make
+     * Constructs a VehicleMakeFilter with specified make
      * 
-     * @param vehicles - the list of Vehicle objects to filter
-     * @param param    - the make to filter by
-     * @return a list of Vehicle objects with the matching make field
+     * @param make - the make to filter by
+     */
+    public VehicleMakeFilter(String make) {
+        this.make = make;
+    }
+
+    /**
+     * Determines if Vehicle matches filter's make crieria
+     * 
+     * @param vehicle - the Vehicle object to check
+     * @return true if Vehicle's make matches, false otherwise
      */
     @Override
-    public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-        String make = (String) param;
-        List<Vehicle> filteredMakes = new ArrayList<>();
-        for (Vehicle v : vehicles) {
-            if (make != null && v.getMake().equals(make)) {
-                filteredMakes.add(v);
-            }
-        }
-        return filteredMakes;
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getMake().equals(this.make);
     }
 }

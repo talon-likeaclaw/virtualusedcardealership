@@ -7,26 +7,26 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleDriveFilter extends VehicleFilter {
+    private String driveType;
 
-  /**
-   * Filters the provided list of Vehicle by specified drive type
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the drive type to filter by
-   * @return a list of Vehicle objects with the matching drive type field
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    String driveType = (String) param;
-    List<Vehicle> filteredDriveTypes = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (driveType != null && v.getDriveType().equals(driveType)) {
-        filteredDriveTypes.add(v);
-      }
+    /**
+     * Constructs a VehicleDriveFilter with specified drive type
+     * 
+     * @param driveType - the driveType to filter by
+     */
+    public VehicleDriveFilter(String driveType) {
+        this.driveType = driveType;
     }
-    return filteredDriveTypes;
-  }
+
+    /**
+     * Determines if Vehicle matches filter's drive type crieria
+     * 
+     * @param vehicle - the Vehicle object to check
+     * @return true if Vehicle's drive type matches, false otherwise
+     */
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getDriveType().equals(this.driveType);
+    }
 }

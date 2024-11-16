@@ -7,26 +7,26 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleTypeFilter extends VehicleFilter {
+    private String type;
 
-  /**
-   * Filters the provided list of Vehicle by specified type.
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the type to filter by
-   * @return a list of Vehicle objects with the matching type field
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    String type = (String) param;
-    List<Vehicle> filteredTypes = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (type != null && v.getType().equals(type)) {
-        filteredTypes.add(v);
-      }
+    /**
+     * Constructs a VehicleTypeFilter with specified type
+     * 
+     * @param type - the type to filter by
+     */
+    public VehicleTypeFilter(String type) {
+        this.type = type;
     }
-    return filteredTypes;
-  }
+
+    /**
+     * Determines if Vehicle matches filter's type crieria
+     * 
+     * @param vehicle - the Vehicle object to check
+     * @return true if Vehicle's type matches, false otherwise
+     */
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getType().equals(this.type);
+    }
 }

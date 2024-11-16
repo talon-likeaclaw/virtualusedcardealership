@@ -7,17 +7,14 @@
 
 package usedcardealership;
 
-import java.util.*;
-
-public abstract class VehicleFilter implements IFilter<Vehicle, Object> {
+public abstract class VehicleFilter implements IFilter<Vehicle> {
 
     /**
      * Abstract method to filter a list of Vehicle objects based on parameter
      * 
-     * @param vehicles - the list of Vehicle objects to filter
-     * @param param    - the param to filter by
-     * @return a list of Vehicle objects with the matching parameter
+     * @param vehicle - the Vehicle object to check
+     * @return true if the Vehicle mathces the filter criteria, false otherwise
      */
     @Override
-    public abstract List<Vehicle> filter(List<Vehicle> vehicles, Object param);
+    public abstract boolean filter(Vehicle vehicle);
 }

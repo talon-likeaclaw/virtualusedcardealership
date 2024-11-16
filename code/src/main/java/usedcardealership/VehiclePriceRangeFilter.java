@@ -7,28 +7,29 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehiclePriceRangeFilter extends VehicleFilter {
+    private double minPrice;
+    private double maxPrice;
 
-  /**
-   * Filters the provided list of Vehicle by specified price range
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the price range to filter by in array form
-   * @return a list of Vehicle objects with the matching price range
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    double[] priceRange = (double[]) param; // Expecting [minPrice, maxPrice]
-    double minPrice = priceRange[0];
-    double maxPrice = priceRange[1];
-    List<Vehicle> inPriceRange = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (v.calculateTotalPrice() >= minPrice && v.calculateTotalPrice() <= maxPrice) {
-        inPriceRange.add(v);
-      }
+    /**
+     * Constructs a VehiclePriceRangeFilter object
+     * 
+     * @param minPrice the minimum price to filter by
+     * @param maxPrice the maximum price to filter by
+     */
+    public VehiclePriceRangeFilter(double minPrice, double maxPrice) {
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
     }
-    return inPriceRange;
-  }
+    
+    /**
+     * Checks if Vehcile's price (current value) is within specified range
+     * 
+     * @param vehicles - the Vehicle object to check
+     * @return true if within price range, false otherwise
+     */
+    @Override public boolean filter(Vehicle vehicle) {
+        double totalPrice = vehicle.calculateTotalPrice();
+        return totalPrice >= minPrice && totalPrice <= maxPrice;
+    }
 }

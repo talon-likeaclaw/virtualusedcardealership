@@ -7,16 +7,13 @@
 
 package usedcardealership;
 
-import java.util.*;
-
-public interface IFilter<T, Param> {
+public interface IFilter<T> {
 
     /**
-     * Filters a list of items based on a given parameter.
+     * Determines if given item matches the filter's criteria.
      * 
-     * @param items the list of items to filter
-     * @param param the parameter to filter the items by
-     * @return a filtered list of items matching the parameter
+     * @param items the iteam to check
+     * @return true if matches, false otherwise
      */
-    List<T> filter(List<T> items, Param param);
+    boolean filter(T item);
 }

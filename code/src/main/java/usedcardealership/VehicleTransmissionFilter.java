@@ -7,26 +7,26 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleTransmissionFilter extends VehicleFilter {
+    private String transmission;
 
-  /**
-   * Filters the provided list of Vehicle by specified transmission
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the transmission to filter by
-   * @return a list of Vehicle objects with the matching transmission field
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    String transmission = (String) param;
-    List<Vehicle> filteredTransmissions = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (transmission != null && v.getTransmission().equals(transmission)) {
-        filteredTransmissions.add(v);
-      }
+    /**
+     * Constructs a VehicleTransmissionFilter with specified transmission
+     * 
+     * @param transmission - the transmission to filter by
+     */
+    public VehicleTransmissionFilter(String transmission) {
+        this.transmission = transmission;
     }
-    return filteredTransmissions;
-  }
+
+    /**
+     * Determines if Vehicle matches filter's transmission crieria
+     * 
+     * @param vehicle - the Vehicle object to check
+     * @return true if Vehicle's transmission matches, false otherwise
+     */
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getTransmission().equals(this.transmission);
+    }
 }

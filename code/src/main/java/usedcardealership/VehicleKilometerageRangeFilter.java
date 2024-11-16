@@ -7,28 +7,29 @@
 
 package usedcardealership;
 
-import java.util.*;
-
 public class VehicleKilometerageRangeFilter extends VehicleFilter {
+    private double minKilometerage;
+    private double maxKilometerage;
 
-  /**
-   * Filters the provided list of Vehicle by specified kilometerage range
-   * 
-   * @param vehicles - the list of Vehicle objects to filter
-   * @param param    - the kilometerage range to filter by in array form
-   * @return a list of Vehicle objects with the matching kilometerage range
-   */
-  @Override
-  public List<Vehicle> filter(List<Vehicle> vehicles, Object param) {
-    double[] kilometerageRange = (double[]) param; // Expecting [minKilometerage, maxKilometerage]
-    double minKilometerage = kilometerageRange[0];
-    double maxKilometerage = kilometerageRange[1];
-    List<Vehicle> inKilometerageRange = new ArrayList<>();
-    for (Vehicle v : vehicles) {
-      if (v.getKilometerage() >= minKilometerage && v.getKilometerage() <= maxKilometerage) {
-        inKilometerageRange.add(v);
-      }
+    /**
+     * Constructs a VehicleKilometerageRangeFilter object
+     * 
+     * @param minKilometerage the minimum kilometerage to filter by
+     * @param maxKilometerage the maximum kilometerage to filter by
+     */
+    public VehicleKilometerageRangeFilter(double minKilometerage, double maxKilometerage) {
+        this.minKilometerage = minKilometerage;
+        this.maxKilometerage = maxKilometerage;
     }
-    return inKilometerageRange;
-  }
+
+    /**
+     * Checks if Vehcile's kilometerage is within specified range
+     * 
+     * @param vehicles - the Vehicle object to check
+     * @return true if within kilometerage range, false otherwise
+     */
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        return vehicle.getKilometerage() >= minKilometerage && vehicle.getKilometerage() <= maxKilometerage;
+    }
 }
