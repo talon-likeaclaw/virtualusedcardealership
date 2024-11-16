@@ -34,13 +34,24 @@ public class VehicleManager {
   }
 
   /**
-   * Prints each vehicle in the specified list.
+   * Prints each vehicle in the specified list in short form.
    * 
    * @param vehicleList the list of vehicles to print.
    */
-  public void printVehicles(List<Vehicle> vehicleList) {
+  public void printVehiclesShort(List<Vehicle> vehicleList) {
     for (Vehicle v : vehicleList) {
       System.out.println(v.getImportantDetails());
+    }
+  }
+
+  /**
+   * Prints each vehicle in the specified list in short form.
+   * 
+   * @param vehicleList the list of vehicles to print.
+   */
+  public void printVehiclesFull(List<Vehicle> vehicleList) {
+    for (Vehicle v : vehicleList) {
+      System.out.println(v);
     }
   }
 

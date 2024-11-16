@@ -151,7 +151,7 @@ public abstract class Vehicle {
      *         Price: $<calculated total price>
      */
     public String getImportantDetails() {
-        return "Type: " + this.type + "\n" +
+        return "\nType: " + this.type + "\n" +
                 "ID: " + this.id + "\n" +
                 "Make: " + this.make + "\n" +
                 "Model: " + this.model + "\n" +
