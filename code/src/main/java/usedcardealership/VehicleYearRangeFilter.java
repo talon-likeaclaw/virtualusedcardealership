@@ -8,8 +8,8 @@
 package usedcardealership;
 
 public class VehicleYearRangeFilter extends VehicleFilter {
-    private double minYear;
-    private double maxYear;
+    private int minYear;
+    private int maxYear;
 
     /**
      * Constructs a VehicleYearRangeFilter object
@@ -17,7 +17,7 @@ public class VehicleYearRangeFilter extends VehicleFilter {
      * @param minYear the minimum year to filter by
      * @param maxYear the maximum year to filter by
      */
-    public VehicleYearRangeFilter(double minYear, double maxYear) {
+    public VehicleYearRangeFilter(int minYear, int maxYear) {
         this.minYear = minYear;
         this.maxYear = maxYear;
     }
