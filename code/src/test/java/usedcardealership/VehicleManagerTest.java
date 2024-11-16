@@ -21,9 +21,9 @@ public class VehicleManagerTest {
         List<Vehicle> expectedDatabase = new ArrayList<>();
 
         // Populate the lists with sample vehicles
-        expectedInventory.add(new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD",
+        expectedInventory.add(new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD",
                 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false));
-        expectedDatabase.add(new SUV(2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
+        expectedDatabase.add(new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
                 250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false));
 
         // Act
@@ -38,7 +38,7 @@ public class VehicleManagerTest {
     public void testPrintVehicles_outputsCorrectDetails() {
         // Arrange
         List<Vehicle> vehicleList = new ArrayList<>();
-        Car car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
+        Car car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
                 "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
         vehicleList.add(car);
 
@@ -55,7 +55,8 @@ public class VehicleManagerTest {
         // Act
 
         // Expected output
-        String expectedOutput = "ID: 1\n" +
+        String expectedOutput = "Type: Car\n" +
+                "ID: 1\n" +
                 "Make: Toyota\n" +
                 "Model: Camry\n" +
                 "Year: 2021\n" +
@@ -73,7 +74,7 @@ public class VehicleManagerTest {
         List<Vehicle> database = new ArrayList<>();
         VehicleManager test = new VehicleManager(inventory, database);
 
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
                 "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
 
         // Act
@@ -93,7 +94,7 @@ public class VehicleManagerTest {
         List<Vehicle> database = new ArrayList<>();
         VehicleManager test = new VehicleManager(inventory, database);
 
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
                 "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
 
         // Act
@@ -112,7 +113,7 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 
             200, 1500.0, 10000.0,5.0, false, 5, 4, false, false);
         inventory.add(car);
         VehicleManager test = new VehicleManager(inventory, database);
@@ -130,9 +131,9 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
                 5.0, false, 5, 4, false, false);
-        Vehicle truck = new PickupTruck(2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic", "AWD", 400, 2500.0,
+        Vehicle truck = new PickupTruck("PickupTruck", 2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic", "AWD", 400, 2500.0,
                 20000.0, 15.0, false, 5, 4, false, 60.0, 6.5, 10000.0);
         inventory.add(truck);
         VehicleManager test = new VehicleManager(inventory, database);
@@ -157,13 +158,13 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
                 5.0, false, 5, 4, false, false);
         inventory.add(car);
         database.add(car);
         VehicleManager test = new VehicleManager(inventory, database);
 
-        Vehicle updatedCar = new Car(1, "Toyota", "Camry", 2021, 30000.0, "Red", "Automatic", "FWD", 200, 1500.0,
+        Vehicle updatedCar = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Red", "Automatic", "FWD", 200, 1500.0,
                 12000.0, 5.0, false, 5, 4, false, false);
 
         // Act

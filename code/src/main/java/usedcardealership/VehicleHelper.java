@@ -35,7 +35,7 @@ public class VehicleHelper {
         if (type.equals("Motorcycle")) {
             double engineCC = Double.parseDouble(fields[14]);
             String handlebarType = fields[15];
-            return new Motorcycle(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new Motorcycle(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, engineCC, handlebarType);
         } else if (type.equals("RV")) {
             int numSeats = Integer.parseInt(fields[14]);
@@ -43,7 +43,7 @@ public class VehicleHelper {
             boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
             int sleepCapacity = Integer.parseInt(fields[17]);
             boolean hasBathroom = Boolean.parseBoolean(fields[18]);
-            return new RV(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new RV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity,
                     hasBathroom);
         } else if (type.equals("Car")) {
@@ -51,14 +51,14 @@ public class VehicleHelper {
             int numDoors = Integer.parseInt(fields[15]);
             boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
             boolean isConvertible = Boolean.parseBoolean(fields[17]);
-            return new Car(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new Car(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
         } else if (type.equals("SUV")) {
             int numSeats = Integer.parseInt(fields[14]);
             int numDoors = Integer.parseInt(fields[15]);
             boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
             boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
-            return new SUV(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new SUV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
         } else if (type.equals("PickupTruck")) {
             int numSeats = Integer.parseInt(fields[14]);
@@ -67,7 +67,7 @@ public class VehicleHelper {
             double cargoCapacity = Double.parseDouble(fields[17]);
             double bedLength = Double.parseDouble(fields[18]);
             double towingCapacity = Double.parseDouble(fields[19]);
-            return new PickupTruck(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new PickupTruck(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof,
                     cargoCapacity, bedLength, towingCapacity);
         } else if (type.equals("Van")) {
@@ -76,7 +76,7 @@ public class VehicleHelper {
             boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
             double cargoCapacity = Double.parseDouble(fields[17]);
             boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
-            return new Van(id, make, model, year, price, color, transmission, driveType, horsepower,
+            return new Van(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                     weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity,
                     hasSlidingDoors);
         } else {
@@ -91,10 +91,10 @@ public class VehicleHelper {
      * @return String - A CSV string representation of the vehicle.
      */
     public static String convertVehicleToCSV(Vehicle vehicle) {
-        if (vehicle instanceof Motorcycle) {
+        if (vehicle.getType().equals("Motorcycle")) {
             Motorcycle m = (Motorcycle) vehicle;
             return String.join(",",
-                    "Motorcycle",
+                    m.getType(),
                     String.valueOf(m.getID()),
                     m.getMake(),
                     m.getModel(),
@@ -110,10 +110,10 @@ public class VehicleHelper {
                     String.valueOf(m.isElectric()),
                     String.valueOf(m.getEngineCC()),
                     m.getHandleType());
-        } else if (vehicle instanceof RV) {
+        } else if (vehicle.getType().equals("RV")) {
             RV rv = (RV) vehicle;
             return String.join(",",
-                    "RV",
+                    rv.getType(),
                     String.valueOf(rv.getID()),
                     rv.getMake(),
                     rv.getModel(),
@@ -132,10 +132,10 @@ public class VehicleHelper {
                     String.valueOf(rv.hasSunRoof()),
                     String.valueOf(rv.getSleepCapacity()),
                     String.valueOf(rv.hasBathroom()));
-        } else if (vehicle instanceof Car) {
+        } else if (vehicle.getType().equals("Car")) {
             Car car = (Car) vehicle;
             return String.join(",",
-                    "Car",
+                    car.getType(),
                     String.valueOf(car.getID()),
                     car.getMake(),
                     car.getModel(),
@@ -153,10 +153,10 @@ public class VehicleHelper {
                     String.valueOf(car.getNumDoors()),
                     String.valueOf(car.hasSunRoof()),
                     String.valueOf(car.isConvertible()));
-        } else if (vehicle instanceof SUV) {
+        } else if (vehicle.getType().equals("SUV")) {
             SUV suv = (SUV) vehicle;
             return String.join(",",
-                    "SUV",
+                    suv.getType(),
                     String.valueOf(suv.getID()),
                     suv.getMake(),
                     suv.getModel(),
@@ -174,10 +174,10 @@ public class VehicleHelper {
                     String.valueOf(suv.getNumDoors()),
                     String.valueOf(suv.hasSunRoof()),
                     String.valueOf(suv.hasThirdRowSeating()));
-        } else if (vehicle instanceof PickupTruck) {
+        } else if (vehicle.getType().equals("PickupTruck")) {
             PickupTruck truck = (PickupTruck) vehicle;
             return String.join(",",
-                    "PickupTruck",
+                    truck.getType(),
                     String.valueOf(truck.getID()),
                     truck.getMake(),
                     truck.getModel(),
@@ -197,10 +197,10 @@ public class VehicleHelper {
                     String.valueOf(truck.getCargoCapacity()),
                     String.valueOf(truck.getBedLength()),
                     String.valueOf(truck.getTowingCapacity()));
-        } else if (vehicle instanceof Van) {
+        } else if (vehicle.getType().equals("Van")) {
             Van van = (Van) vehicle;
             return String.join(",",
-                    "Van",
+                    van.getType(),
                     String.valueOf(van.getID()),
                     van.getMake(),
                     van.getModel(),

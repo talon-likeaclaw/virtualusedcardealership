@@ -15,6 +15,7 @@ public class Motorcycle extends Vehicle {
      * Motorcycle Constructor
      * Initializes the Motorcycle fields
      * 
+     * @param type          the Motorcycle's type
      * @param id            the Motorcycle's unique identifier
      * @param make          the company that makes the Motorcycle
      * @param model         the name of the Motorcycle's model
@@ -32,6 +33,7 @@ public class Motorcycle extends Vehicle {
      * @param handlebarType the Motorcycle's handlebar type
      */
     public Motorcycle(
+            String type,
             int id,
             String make,
             String model,
@@ -47,7 +49,7 @@ public class Motorcycle extends Vehicle {
             boolean isElectric,
             double engineCC,
             String handlebarType) {
-        super(id, make, model, year, price, color, transmission, driveType,
+        super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
         this.engineCC = engineCC;
         this.handlebarType = handlebarType;

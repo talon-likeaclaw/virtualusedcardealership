@@ -14,6 +14,7 @@ public class SUV extends EnclosedVehicle {
      * SUV Constructor
      * Initializes the SUV fields
      * 
+     * @param type               the SUV's type
      * @param id                 the SUV's unique identifier
      * @param make               the company that makes the SUV
      * @param model              the name of the SUV's model
@@ -33,6 +34,7 @@ public class SUV extends EnclosedVehicle {
      * @param hasThirdRowSeating if the SUV has a third row of seats
      */
     public SUV(
+            String type,
             int id,
             String make,
             String model,
@@ -50,7 +52,7 @@ public class SUV extends EnclosedVehicle {
             int numDoors,
             boolean hasSunRoof,
             boolean hasThirdRowSeating) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.hasThirdRowSeating = hasThirdRowSeating;
     }

@@ -12,6 +12,7 @@ import java.util.*;
 
 public abstract class Vehicle {
     private Random rng;
+    private String type;
     private int id;
     private String make;
     private String model;
@@ -30,6 +31,7 @@ public abstract class Vehicle {
      * Vehicle Constructor
      * Initializes the Vehicle fields
      * 
+     * @param type         the Vehicle's type
      * @param id           the Vehicle's unique identifier
      * @param make         the company that makes the Vehicle
      * @param model        the name of the Vehicle's model
@@ -45,6 +47,7 @@ public abstract class Vehicle {
      * @param isElectric   if the Vehicle is electric or not
      */
     public Vehicle(
+            String type,
             int id,
             String make,
             String model,
@@ -59,6 +62,7 @@ public abstract class Vehicle {
             double damage,
             boolean isElectric) {
         this.rng = new Random();
+        this.type = type;
         this.id = id;
         this.make = make;
         this.model = model;
@@ -82,6 +86,7 @@ public abstract class Vehicle {
      */
     public Vehicle(Vehicle v) {
         this(
+                v.type,
                 v.id,
                 v.make,
                 v.model,
@@ -146,7 +151,8 @@ public abstract class Vehicle {
      *         Price: $<calculated total price>
      */
     public String getImportantDetails() {
-        return "ID: " + this.id + "\n" +
+        return "Type: " + this.type + "\n" +
+                "ID: " + this.id + "\n" +
                 "Make: " + this.make + "\n" +
                 "Model: " + this.model + "\n" +
                 "Year: " + this.year + "\n" +
@@ -160,6 +166,10 @@ public abstract class Vehicle {
             return v.id == this.id;
         }
         return false;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public int getID() {

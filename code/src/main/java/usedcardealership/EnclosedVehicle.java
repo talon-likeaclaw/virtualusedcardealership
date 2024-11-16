@@ -16,6 +16,7 @@ public abstract class EnclosedVehicle extends Vehicle {
      * EnclosedVehicle Constructor
      * Initializes the EnclosedVehicle fields
      * 
+     * @param type         the EnclosedVehicle's type
      * @param id           the EnclosedVehicle's unique identifier
      * @param make         the company that makes the EnclosedVehicle
      * @param model        the name of the EnclosedVehicle's model
@@ -34,6 +35,7 @@ public abstract class EnclosedVehicle extends Vehicle {
      * @param hasSunRoof   if the EnclosedVehicle has a sunroof or not
      */
     public EnclosedVehicle(
+            String type,
             int id,
             String make,
             String model,
@@ -50,7 +52,7 @@ public abstract class EnclosedVehicle extends Vehicle {
             int numSeats,
             int numDoors,
             boolean hasSunRoof) {
-        super(id, make, model, year, price, color, transmission, driveType,
+        super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
         this.numSeats = numSeats;
         this.numDoors = numDoors;

@@ -97,7 +97,7 @@ public class VehicleManager {
   public List<Vehicle> searchList(IFilter criteria, List<Vehicle> list) {
     List<Vehicle> result = new ArrayList<>();
     for (Vehicle v : list) {
-      if (criteria.matches(v)) {
+      if (criteria.filter(v)) {
         result.add(v);
       }
     }
