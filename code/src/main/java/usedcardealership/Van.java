@@ -72,8 +72,7 @@ public class Van extends CargoCapacity {
 
     @Override
     public String toString() {
-        return "Type: Van\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
     }
 

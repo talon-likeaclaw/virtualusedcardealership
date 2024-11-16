@@ -77,8 +77,7 @@ public class PickupTruck extends CargoCapacity {
 
     @Override
     public String toString() {
-        return "Type: Pickup Truck\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Bed Length: " + this.bedLength + " feet\n" +
                 "Towing Capacity: " + this.towingCapacity + " lbs";
     }

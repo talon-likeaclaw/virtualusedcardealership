@@ -75,8 +75,7 @@ public class RV extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return "Type: Recreational Vehicle\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Sleep Capacity: " + this.sleepCapacity + "\n" +
                 "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
     }

@@ -3,8 +3,6 @@ package usedcardealership;
 import java.io.IOException;
 import java.util.*;
 
-import usedcardealership.*;
-
 public class UsedCarDealership {
     public static void main(String[] args) {
         testVehicleFileHandling();
@@ -23,6 +21,7 @@ public class UsedCarDealership {
             VehicleManager manager = new VehicleManager(inventory, database);
             manager.printVehicles(inventory); // WOOOOOO IT WORKS!!
             Car mitsubishiLancer = new Car(
+                    "Car",
                     999, // id
                     "Mitsubishi", // make
                     "Lancer", // model
@@ -52,6 +51,7 @@ public class UsedCarDealership {
     public static void testVehicles() {
         // MOTORCYCLE
         Motorcycle harleyDavidsonStreet = new Motorcycle(
+                "Motorcycle",
                 101, // id
                 "Harley-Davidson", // make
                 "Street 750", // model
@@ -73,6 +73,7 @@ public class UsedCarDealership {
 
         // RV
         RV winnebagoVoyage = new RV(
+                "RV",
                 202, // id
                 "Winnebago", // make
                 "Voyage", // model
@@ -97,6 +98,7 @@ public class UsedCarDealership {
 
         // CAR
         Car mitsubishiLancer = new Car(
+                "Car",
                 505, // id
                 "Mitsubishi", // make
                 "Lancer", // model
@@ -121,6 +123,7 @@ public class UsedCarDealership {
 
         // SUV
         SUV hyundaiKona = new SUV(
+                "SUV",
                 404, // id
                 "Hyundai", // make
                 "Kona", // model
@@ -145,6 +148,7 @@ public class UsedCarDealership {
 
         // VAN
         Van fordTransit = new Van(
+                "Van",
                 606, // id
                 "Ford", // make
                 "Transit", // model
@@ -169,6 +173,7 @@ public class UsedCarDealership {
 
         // PICKUP TRUCK
         PickupTruck f150Lightning = new PickupTruck(
+                "PickupTruck",
                 707, // id
                 "Ford", // make
                 "F-150 Lightning", // model

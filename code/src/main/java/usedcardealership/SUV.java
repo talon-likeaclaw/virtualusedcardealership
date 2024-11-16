@@ -70,8 +70,7 @@ public class SUV extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return "Type: SUV\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");
     }
 

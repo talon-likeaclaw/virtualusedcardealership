@@ -7,7 +7,6 @@
 
 package usedcardealership;
 
-import usedcardealership.Vehicle;
 import java.util.*;
 
 public class VehicleManager {
@@ -75,7 +74,7 @@ public class VehicleManager {
    * @param criteria a IFilter sub-type object to determine filtering criteria.
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
    */
-  public List<Vehicle> searchInventory(IFilter criteria) {
+  public List<Vehicle> searchInventory(IFilter<Vehicle> criteria) {
     return searchList(criteria, this.inventory);
   }
 
@@ -85,7 +84,7 @@ public class VehicleManager {
    * @param criteria a IFilter sub-type object
    * @return List<Vehicle> list of filtered vehicles based on criteria input.
    */
-  public List<Vehicle> searchDatabase(IFilter criteria) {
+  public List<Vehicle> searchDatabase(IFilter<Vehicle> criteria) {
     return searchList(criteria, this.database);
   }
 
@@ -94,7 +93,7 @@ public class VehicleManager {
    * 
    * @param v
    */
-  public List<Vehicle> searchList(IFilter criteria, List<Vehicle> list) {
+  public List<Vehicle> searchList(IFilter<Vehicle> criteria, List<Vehicle> list) {
     List<Vehicle> result = new ArrayList<>();
     for (Vehicle v : list) {
       if (criteria.filter(v)) {
