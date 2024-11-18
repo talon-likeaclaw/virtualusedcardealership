@@ -8,7 +8,7 @@ package usedcardealership;
 
 import java.util.List;
 
-public class Seller {
+public class Seller extends Customer{
     public Seller(int id, String firstName, String lastName, String birthday, String phoneNumber, String address, double accountBalance, List<Vehicle> vehicles){
         super(id, firstName, lastName, birthday, phoneNumber, address, accountBalance, vehicles);
     }

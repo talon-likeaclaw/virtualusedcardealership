@@ -8,6 +8,7 @@ package usedcardealership;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.*;
 
 public class TransactionManager {
     private List<Transaction> transactionHistory;
@@ -30,7 +31,7 @@ public class TransactionManager {
      */
     public Transaction sellVehicle(Vehicle vehicle, Customer customer){
 
-        Transaction sale = new Sale(vehicle, customer);
+        Transaction sale = new Sale();
         processTransaction(sale);
         return sale;
     }
@@ -44,7 +45,7 @@ public class TransactionManager {
      */
     public Transaction buyVehicle(Vehicle vehicle, Customer customer){
 
-        Transaction purchase = new Purchase(vehicle, customer);
+        Transaction purchase = new Purchase();
         processTransaction(purchase);
         return purchase;
     }
