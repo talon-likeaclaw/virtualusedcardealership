@@ -10,6 +10,7 @@ package usedcardealership;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import usedcardealership.business.manager.*;
 
 public class DealershipManagerTest {
 
