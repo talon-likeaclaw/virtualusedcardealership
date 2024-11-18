@@ -6,7 +6,7 @@
  */
 package usedcardealership;
 
-public abstract class Transaction {
+public class Transaction {
     private int id;
     private String type;
     private String date;
@@ -26,6 +26,7 @@ public abstract class Transaction {
      * 
      * Initialize all fields using parameters
      */
+    public Transaction(){};
     public Transaction(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle) {
         this.id = id;
         this.type = type;
@@ -79,8 +80,8 @@ public abstract class Transaction {
      * 
      * @return double
      */
-    public double calculateTotal() {
-        double depreciation = this.getVehicle().calculateDepreciation();
-        return (this.getPrice() - depreciation) * this.getTax();
-    }
+    // public double calculateTotal() {
+    //     double depreciation = this.getVehicle().calculateDepreciation();
+    //     return (this.getPrice() - depreciation) * this.getTax();
+    // }
 }

@@ -21,6 +21,7 @@ public class Purchase extends Transaction{
     public Purchase(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
         super(id, type, date, price, tax, customer, vehicle);
     }
+    public Purchase(){}
     /**
      * Initializes the transaction
      * 

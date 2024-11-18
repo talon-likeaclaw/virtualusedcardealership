@@ -23,7 +23,8 @@ public class Sale extends Transaction{
     */
     public Sale(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
         super(id, type, date, price, tax, customer, vehicle);
-    } 
+    }
+    public Sale(){}
 
     /* 
     * Applies a discount to the sale price.

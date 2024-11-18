@@ -8,12 +8,13 @@ package usedcardealership;
 
 import java.util.ArrayList;
 import java.util.List;
+import usedcardealership.Vehicle;
 
 public class ShoppingCart {
-    private List<Vehicles> productsList;
+    private List<Vehicle> productsList;
 
     public ShoppingCart(){
-        this.productsList = new ArrayList<Vehicles>();
+        this.productsList = new ArrayList<Vehicle>();
     }
     /**
      * Adds a vehicle taken as input to productsList
@@ -21,8 +22,9 @@ public class ShoppingCart {
      * @param vehicle
      * @return void
      */
+    //NOT A DEEP COPY IN CART
     public void addVehicle(Vehicle vehicle){
-        this.productsList.add(new Vehicle(vehicle));
+        this.productsList.add(vehicle);
     }
     /**
      * Removes vehicle from the productsList at selected index
