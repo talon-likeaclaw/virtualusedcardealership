@@ -11,6 +11,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.io.*;
 import java.util.*;
+import usedcardealership.business.manager.VehicleManager;
+import usedcardealership.data.vehicle.*;
 
 public class VehicleManagerTest {
 
@@ -113,8 +115,8 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 
-            200, 1500.0, 10000.0,5.0, false, 5, 4, false, false);
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD",
+                200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
         inventory.add(car);
         VehicleManager test = new VehicleManager(inventory, database);
 
@@ -131,9 +133,11 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0,
+                10000.0,
                 5.0, false, 5, 4, false, false);
-        Vehicle truck = new PickupTruck("PickupTruck", 2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic", "AWD", 400, 2500.0,
+        Vehicle truck = new PickupTruck("PickupTruck", 2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic", "AWD",
+                400, 2500.0,
                 20000.0, 15.0, false, 5, 4, false, 60.0, 6.5, 10000.0);
         inventory.add(truck);
         VehicleManager test = new VehicleManager(inventory, database);
@@ -158,7 +162,8 @@ public class VehicleManagerTest {
         // Arrange
         List<Vehicle> inventory = new ArrayList<>();
         List<Vehicle> database = new ArrayList<>();
-        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0, 10000.0,
+        Vehicle car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic", "FWD", 200, 1500.0,
+                10000.0,
                 5.0, false, 5, 4, false, false);
         inventory.add(car);
         database.add(car);
