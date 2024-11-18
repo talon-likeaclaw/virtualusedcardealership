@@ -14,6 +14,7 @@ public class Van extends CargoCapacity {
      * Van Constructor
      * Initializes the Van fields
      * 
+     * @param type            the Van's type
      * @param id              the Van's unique identifier
      * @param make            the company that makes the Van
      * @param model           the name of the Van's model
@@ -34,6 +35,7 @@ public class Van extends CargoCapacity {
      * @param hasSlidingDoors if the Van has sliding doors or not
      */
     public Van(
+            String type,
             int id,
             String make,
             String model,
@@ -52,7 +54,7 @@ public class Van extends CargoCapacity {
             boolean hasSunRoof,
             double cargoCapacity,
             boolean hasSlidingDoors) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
                 kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
         this.hasSlidingDoors = hasSlidingDoors;
     }
@@ -70,8 +72,7 @@ public class Van extends CargoCapacity {
 
     @Override
     public String toString() {
-        return "Type: Van\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
     }
 

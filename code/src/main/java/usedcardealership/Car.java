@@ -14,6 +14,7 @@ public class Car extends EnclosedVehicle {
      * Car Constructor
      * Initializes the Car fields
      * 
+     * @param type          the Car's type
      * @param id            the Car's unique identifier
      * @param make          the company that makes the Car
      * @param model         the name of the Car's model
@@ -33,6 +34,7 @@ public class Car extends EnclosedVehicle {
      * @param isConvertible if the Car is able to remove roof
      */
     public Car(
+            String type,
             int id,
             String make,
             String model,
@@ -50,7 +52,7 @@ public class Car extends EnclosedVehicle {
             int numDoors,
             boolean hasSunRoof,
             boolean isConvertible) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.isConvertible = isConvertible;
     }
@@ -68,8 +70,7 @@ public class Car extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return "Type: Car\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Convertible: " + (this.isConvertible ? "Yes" : "No");
     }
 

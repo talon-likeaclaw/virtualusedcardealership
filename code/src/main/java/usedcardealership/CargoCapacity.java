@@ -14,6 +14,7 @@ public abstract class CargoCapacity extends EnclosedVehicle {
      * CargoCapacity Constructor
      * Initializes the CargoCapacity fields
      * 
+     * @param type          the CargoCapacity's type
      * @param id            the CargoCapacity's unique identifier
      * @param make          the company that makes the CargoCapacity
      * @param model         the name of the CargoCapacity's model
@@ -33,6 +34,7 @@ public abstract class CargoCapacity extends EnclosedVehicle {
      * @param cargoCapacity the CargoCapacity's cargo capacity
      */
     public CargoCapacity(
+            String type,
             int id,
             String make,
             String model,
@@ -50,7 +52,7 @@ public abstract class CargoCapacity extends EnclosedVehicle {
             int numDoors,
             boolean hasSunRoof,
             double cargoCapacity) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.cargoCapacity = cargoCapacity;
     }

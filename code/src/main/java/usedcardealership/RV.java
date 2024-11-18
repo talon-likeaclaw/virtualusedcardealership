@@ -15,6 +15,7 @@ public class RV extends EnclosedVehicle {
      * RV Constructor
      * Initializes the RV fields
      * 
+     * @param type          the RV's type
      * @param id            the RV's unique identifier
      * @param make          the company that makes the RV
      * @param model         the name of the RV's model
@@ -35,6 +36,7 @@ public class RV extends EnclosedVehicle {
      * @param hasBathroom   if the RV has a bathroom or not
      */
     public RV(
+            String type,
             int id,
             String make,
             String model,
@@ -53,7 +55,7 @@ public class RV extends EnclosedVehicle {
             boolean hasSunRoof,
             int sleepCapacity,
             boolean hasBathroom) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
         this.sleepCapacity = sleepCapacity;
         this.hasBathroom = hasBathroom;
@@ -73,8 +75,7 @@ public class RV extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return "Type: Recreational Vehicle\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Sleep Capacity: " + this.sleepCapacity + "\n" +
                 "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
     }

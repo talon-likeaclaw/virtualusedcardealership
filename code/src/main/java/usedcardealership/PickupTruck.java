@@ -15,6 +15,7 @@ public class PickupTruck extends CargoCapacity {
      * PickupTruck Constructor
      * Initializes the PickupTruck fields
      * 
+     * @param type           the PickupTruck's type
      * @param id             the PickupTruck's unique identifier
      * @param make           the company that makes the PickupTruck
      * @param model          the name of the PickupTruck's model
@@ -36,6 +37,7 @@ public class PickupTruck extends CargoCapacity {
      * @param towingCapacity the weight the PickupTruck can tow
      */
     public PickupTruck(
+            String type,
             int id,
             String make,
             String model,
@@ -55,7 +57,7 @@ public class PickupTruck extends CargoCapacity {
             double cargoCapacity,
             double bedLength,
             double towingCapacity) {
-        super(id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+        super(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
                 kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
         this.bedLength = bedLength;
         this.towingCapacity = towingCapacity;
@@ -75,8 +77,7 @@ public class PickupTruck extends CargoCapacity {
 
     @Override
     public String toString() {
-        return "Type: Pickup Truck\n" +
-                getCommonDetails() + "\n" +
+        return getCommonDetails() + "\n" +
                 "Bed Length: " + this.bedLength + " feet\n" +
                 "Towing Capacity: " + this.towingCapacity + " lbs";
     }
