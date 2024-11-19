@@ -159,5 +159,6 @@ public class UsedCarDealership {
         transactionSaver.save(transactions);
 
         System.out.println("\nShutting down. Please come again! :)");
+        prompter.close();
     }
 }
