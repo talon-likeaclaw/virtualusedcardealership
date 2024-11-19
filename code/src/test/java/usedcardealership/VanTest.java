@@ -7,7 +7,7 @@ import usedcardealership.data.vehicle.*;
 
 public class VanTest {
     @Test
-    public void testConstructor_initializesPickupTruck() {
+    public void testConstructor_initializesVan() {
         // Arrange
         String expectedType = "Van";
         int expectedId = 51;
