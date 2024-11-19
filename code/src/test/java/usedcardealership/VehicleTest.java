@@ -1,8 +1,17 @@
+/**
+ * Test class for Vehicle abstract type
+ * 
+ * @author Talon Dunbar
+ * @version 11/19/2024
+ */
+
 package usedcardealership;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import java.time.*;
 import org.junit.Test;
+
 import usedcardealership.data.vehicle.Car;
 import usedcardealership.data.vehicle.Vehicle;
 
@@ -153,5 +162,111 @@ public class VehicleTest {
         } catch (IllegalArgumentException e) {
 
         }
+    }
+
+    @Test
+    public void testAddDamage_addsPositiveDamage() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+        double damageToAdd = 3.0;
+        double expectedDamage = test.getDamage() + damageToAdd;
+
+        // Act
+        test.addDamage(damageToAdd);
+
+        // Assert
+        assertEquals(expectedDamage, test.getDamage(), 0.001);
+    }
+
+    @Test
+    public void testAddDamage_throwsExceptionForNegativeResultingDamage() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        // Act
+        try {
+            test.addDamage(-10.0);
+            fail("IllegalArgumentException was not thrown.");
+        } catch (IllegalArgumentException e) {
+
+        }
+    }
+
+    @Test
+    public void testCalculateTotalPrice_returnsCorrectValue() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                Year.now().getValue() - 5,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                50000.00,
+                10.0,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        // Depreciation calculations:
+        double ageDepreciation = 18000.00 * 0.05 * 5; // 5% per year
+        double kilometerageDepreciation = 50000.00 * 0.02; // $0.02 per km
+        double damageDepreciation = 18000.00 * (10.0 / 100) * 0.50; // 50% damage rate
+        double totalDepreciation = ageDepreciation + kilometerageDepreciation + damageDepreciation;
+
+        if (totalDepreciation > 18000.00) {
+            totalDepreciation = 18000.00;
+        }
+
+        double expectedTotalPrice = 18000.00 - totalDepreciation;
+
+        // Act
+        double actualTotalPrice = test.calculateTotalPrice();
+
+        // Assert
+        assertEquals(expectedTotalPrice, actualTotalPrice, 0.001);
     }
 }
