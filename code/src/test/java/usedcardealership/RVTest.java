@@ -74,6 +74,55 @@ public class RVTest {
     }
 
     @Test
+    public void testCopyConstructor_copiesRV() {
+        // Arrange
+        RV original = new RV(
+                "RV",
+                11,
+                "Winnebago",
+                "Outlook",
+                2021,
+                60000.00,
+                "White",
+                "Automatic",
+                "RWD",
+                320,
+                9500.00,
+                5000.00,
+                0.05,
+                false,
+                6,
+                2,
+                true,
+                4,
+                true);
+
+        // Act
+        RV copy = new RV(original);
+
+        // Assert
+        assertEquals(original.getType(), copy.getType());
+        assertEquals(original.getID(), copy.getID());
+        assertEquals(original.getMake(), copy.getMake());
+        assertEquals(original.getModel(), copy.getModel());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getPrice(), copy.getPrice(), 0.001);
+        assertEquals(original.getColor(), copy.getColor());
+        assertEquals(original.getTransmission(), copy.getTransmission());
+        assertEquals(original.getDriveType(), copy.getDriveType());
+        assertEquals(original.getHorsepower(), copy.getHorsepower());
+        assertEquals(original.getWeight(), copy.getWeight(), 0.001);
+        assertEquals(original.getKilometerage(), copy.getKilometerage(), 0.001);
+        assertEquals(original.getDamage(), copy.getDamage(), 0.001);
+        assertEquals(original.isElectric(), copy.isElectric());
+        assertEquals(original.getNumSeats(), copy.getNumSeats());
+        assertEquals(original.getNumDoors(), copy.getNumDoors());
+        assertEquals(original.hasSunRoof(), copy.hasSunRoof());
+        assertEquals(original.getSleepCapacity(), copy.getSleepCapacity());
+        assertEquals(original.hasBathroom(), copy.hasBathroom());
+    }
+
+    @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
         RV test = new RV(

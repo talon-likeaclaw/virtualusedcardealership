@@ -74,6 +74,55 @@ public class VanTest {
     }
 
     @Test
+    public void testCopyConstructor_copiesVan() {
+        // Arrange
+        Van original = new Van(
+                "Van",
+                51,
+                "Honda",
+                "Odyssey",
+                2021,
+                35000.00,
+                "Silver",
+                "Automatic",
+                "FWD",
+                280,
+                4500.0,
+                10000.0,
+                0.0,
+                false,
+                8,
+                4,
+                true,
+                14.0,
+                true);
+
+        // Act
+        Van copy = new Van(original);
+
+        // Assert
+        assertEquals(original.getType(), copy.getType());
+        assertEquals(original.getID(), copy.getID());
+        assertEquals(original.getMake(), copy.getMake());
+        assertEquals(original.getModel(), copy.getModel());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getPrice(), copy.getPrice(), 0.001);
+        assertEquals(original.getColor(), copy.getColor());
+        assertEquals(original.getTransmission(), copy.getTransmission());
+        assertEquals(original.getDriveType(), copy.getDriveType());
+        assertEquals(original.getHorsepower(), copy.getHorsepower());
+        assertEquals(original.getWeight(), copy.getWeight(), 0.001);
+        assertEquals(original.getKilometerage(), copy.getKilometerage(), 0.001);
+        assertEquals(original.getDamage(), copy.getDamage(), 0.001);
+        assertEquals(original.isElectric(), copy.isElectric());
+        assertEquals(original.getNumSeats(), copy.getNumSeats());
+        assertEquals(original.getNumDoors(), copy.getNumDoors());
+        assertEquals(original.hasSunRoof(), copy.hasSunRoof());
+        assertEquals(original.getCargoCapacity(), copy.getCargoCapacity(), 0.001);
+        assertEquals(original.hasSlidingDoors(), copy.hasSlidingDoors());
+    }
+
+    @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
         Van test = new Van(

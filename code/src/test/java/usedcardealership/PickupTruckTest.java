@@ -77,6 +77,57 @@ public class PickupTruckTest {
     }
 
     @Test
+    public void testCopyConstructor_copiesPickupTruck() {
+        // Arrange
+        PickupTruck original = new PickupTruck(
+                "PickupTruck",
+                1,
+                "Ford",
+                "F-150",
+                2021,
+                45000.00,
+                "Blue",
+                "Automatic",
+                "4WD",
+                400,
+                6000.00,
+                15000.00,
+                0.05,
+                false,
+                5,
+                4,
+                true,
+                3000.0,
+                5.5,
+                1000.00);
+
+        // Act
+        PickupTruck copy = new PickupTruck(original);
+
+        // Assert
+        assertEquals(original.getType(), copy.getType());
+        assertEquals(original.getID(), copy.getID());
+        assertEquals(original.getMake(), copy.getMake());
+        assertEquals(original.getModel(), copy.getModel());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getPrice(), copy.getPrice(), 0.001);
+        assertEquals(original.getColor(), copy.getColor());
+        assertEquals(original.getTransmission(), copy.getTransmission());
+        assertEquals(original.getDriveType(), copy.getDriveType());
+        assertEquals(original.getHorsepower(), copy.getHorsepower());
+        assertEquals(original.getWeight(), copy.getWeight(), 0.001);
+        assertEquals(original.getKilometerage(), copy.getKilometerage(), 0.001);
+        assertEquals(original.getDamage(), copy.getDamage(), 0.001);
+        assertEquals(original.isElectric(), copy.isElectric());
+        assertEquals(original.getNumSeats(), copy.getNumSeats());
+        assertEquals(original.getNumDoors(), copy.getNumDoors());
+        assertEquals(original.hasSunRoof(), copy.hasSunRoof());
+        assertEquals(original.getCargoCapacity(), copy.getCargoCapacity(), 0.001);
+        assertEquals(original.getBedLength(), copy.getBedLength(), 0.001);
+        assertEquals(original.getTowingCapacity(), copy.getTowingCapacity(), 0.001);
+    }
+
+    @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
         PickupTruck test = new PickupTruck(

@@ -47,6 +47,49 @@ public class MotorcycleTest {
     }
 
     @Test
+    public void testCopyConstructor_copiesMotorcycle() {
+        // Arrange
+        Motorcycle original = new Motorcycle(
+                "Motorcycle",
+                1,
+                "Honda",
+                "CBR600RR",
+                2020,
+                12000.00,
+                "Red",
+                "Manual",
+                "Chain",
+                120,
+                200.00,
+                5000.00,
+                0.1,
+                false,
+                599.00,
+                "Sport");
+
+        // Act
+        Motorcycle copy = new Motorcycle(original);
+
+        // Assert
+        assertEquals(original.getType(), copy.getType());
+        assertEquals(original.getID(), copy.getID());
+        assertEquals(original.getMake(), copy.getMake());
+        assertEquals(original.getModel(), copy.getModel());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getPrice(), copy.getPrice(), 0.001);
+        assertEquals(original.getColor(), copy.getColor());
+        assertEquals(original.getTransmission(), copy.getTransmission());
+        assertEquals(original.getDriveType(), copy.getDriveType());
+        assertEquals(original.getHorsepower(), copy.getHorsepower());
+        assertEquals(original.getWeight(), copy.getWeight(), 0.001);
+        assertEquals(original.getKilometerage(), copy.getKilometerage(), 0.001);
+        assertEquals(original.getDamage(), copy.getDamage(), 0.001);
+        assertEquals(original.isElectric(), copy.isElectric());
+        assertEquals(original.getEngineCC(), copy.getEngineCC(), 0.001);
+        assertEquals(original.getHandleType(), copy.getHandleType());
+    }
+
+    @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
         Motorcycle test = new Motorcycle(

@@ -71,6 +71,53 @@ public class SUVTest {
     }
 
     @Test
+    public void testCopyConstructor_copiesSUV() {
+        // Arrange
+        SUV original = new SUV(
+                "SUV",
+                404,
+                "Hyundai",
+                "Kona",
+                2022,
+                21000.00,
+                "White",
+                "Automatic",
+                "AWD",
+                147,
+                3200.00,
+                10000.00,
+                2.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        // Act
+        SUV copy = new SUV(original);
+
+        // Assert
+        assertEquals(original.getType(), copy.getType());
+        assertEquals(original.getID(), copy.getID());
+        assertEquals(original.getMake(), copy.getMake());
+        assertEquals(original.getModel(), copy.getModel());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getPrice(), copy.getPrice(), 0.001);
+        assertEquals(original.getColor(), copy.getColor());
+        assertEquals(original.getTransmission(), copy.getTransmission());
+        assertEquals(original.getDriveType(), copy.getDriveType());
+        assertEquals(original.getHorsepower(), copy.getHorsepower());
+        assertEquals(original.getWeight(), copy.getWeight(), 0.001);
+        assertEquals(original.getKilometerage(), copy.getKilometerage(), 0.001);
+        assertEquals(original.getDamage(), copy.getDamage(), 0.001);
+        assertEquals(original.isElectric(), copy.isElectric());
+        assertEquals(original.getNumSeats(), copy.getNumSeats());
+        assertEquals(original.getNumDoors(), copy.getNumDoors());
+        assertEquals(original.hasSunRoof(), copy.hasSunRoof());
+        assertEquals(original.hasThirdRowSeating(), copy.hasThirdRowSeating());
+    }
+
+    @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
         SUV test = new SUV(
