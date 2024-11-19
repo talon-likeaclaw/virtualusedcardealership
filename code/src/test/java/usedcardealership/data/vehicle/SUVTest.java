@@ -14,66 +14,46 @@ import java.time.*;
 public class SUVTest {
     @Test
     public void testConstructor_initializesSUV() {
-        // Arrange
-        String expectedType = "SUV";
-        int expectedId = 404;
-        String expectedMake = "Hyundai";
-        String expectedModel = "Kona";
-        int expectedYear = 2022;
-        double expectedPrice = 21000.00;
-        String expectedColor = "White";
-        String expectedTransmission = "Automatic";
-        String expectedDriveType = "AWD";
-        int expectedHorsepower = 147;
-        double expectedWeight = 3200.00;
-        double expectedKilometerage = 10000.00;
-        double expectedDamage = 2.5;
-        boolean expectedElectric = false;
-        int expectedNumSeats = 5;
-        int expectedNumDoors = 4;
-        boolean expectedSunRoof = true;
-        boolean expectedThirdRow = false;
-
         // Act
         SUV test = new SUV(
-                expectedType,
-                expectedId,
-                expectedMake,
-                expectedModel,
-                expectedYear,
-                expectedPrice,
-                expectedColor,
-                expectedTransmission,
-                expectedDriveType,
-                expectedHorsepower,
-                expectedWeight,
-                expectedKilometerage,
-                expectedDamage,
-                expectedElectric,
-                expectedNumSeats,
-                expectedNumDoors,
-                expectedSunRoof,
-                expectedThirdRow);
+                "SUV",
+                404,
+                "Hyundai",
+                "Kona",
+                2022,
+                21000.00,
+                "White",
+                "Automatic",
+                "AWD",
+                147,
+                3200.00,
+                10000.00,
+                2.5,
+                false,
+                5,
+                4,
+                true,
+                false);
 
         // Assert
-        assertEquals(expectedType, test.getType());
-        assertEquals(expectedId, test.getID());
-        assertEquals(expectedMake, test.getMake());
-        assertEquals(expectedModel, test.getModel());
-        assertEquals(expectedYear, test.getYear());
-        assertEquals(expectedPrice, test.getPrice(), 0.001);
-        assertEquals(expectedColor, test.getColor());
-        assertEquals(expectedTransmission, test.getTransmission());
-        assertEquals(expectedDriveType, test.getDriveType());
-        assertEquals(expectedHorsepower, test.getHorsepower());
-        assertEquals(expectedWeight, test.getWeight(), 0.001);
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-        assertEquals(expectedDamage, test.getDamage(), 0.001);
-        assertEquals(expectedElectric, test.isElectric());
-        assertEquals(expectedNumSeats, test.getNumSeats());
-        assertEquals(expectedNumDoors, test.getNumDoors());
-        assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedThirdRow, test.hasThirdRowSeating());
+        assertEquals("SUV", test.getType());
+        assertEquals(404, test.getID());
+        assertEquals("Hyundai", test.getMake());
+        assertEquals("Kona", test.getModel());
+        assertEquals(2022, test.getYear());
+        assertEquals(21000.00, test.getPrice(), 0.001);
+        assertEquals("White", test.getColor());
+        assertEquals("Automatic", test.getTransmission());
+        assertEquals("AWD", test.getDriveType());
+        assertEquals(147, test.getHorsepower());
+        assertEquals(3200.00, test.getWeight(), 0.001);
+        assertEquals(10000.00, test.getKilometerage(), 0.001);
+        assertEquals(2.5, test.getDamage(), 0.001);
+        assertEquals(false, test.isElectric());
+        assertEquals(5, test.getNumSeats());
+        assertEquals(4, test.getNumDoors());
+        assertEquals(true, test.hasSunRoof());
+        assertEquals(false, test.hasThirdRowSeating());
     }
 
     @Test

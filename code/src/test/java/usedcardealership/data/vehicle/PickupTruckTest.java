@@ -14,72 +14,50 @@ import java.time.*;
 public class PickupTruckTest {
     @Test
     public void testConstructor_initializesPickupTruck() {
-        // Arrange
-        String expectedType = "PickupTruck";
-        int expectedId = 41;
-        String expectedMake = "Ford";
-        String expectedModel = "F-150";
-        int expectedYear = 2021;
-        double expectedPrice = 45000.00;
-        String expectedColor = "Blue";
-        String expectedTransmission = "Automatic";
-        String expectedDriveType = "4WD";
-        int expectedHorsepower = 400;
-        double expectedWeight = 6000.00;
-        double expectedKilometerage = 15000.00;
-        double expectedDamage = 0.05;
-        boolean expectedElectric = false;
-        int expectedNumSeats = 5;
-        int expectedNumDoors = 4;
-        boolean expectedSunRoof = true;
-        double expectedCargoCapacity = 3000.0;
-        double expectedBedLength = 5.5;
-        double expectedTowingCapacity = 1000.00;
-
         // Act
         PickupTruck test = new PickupTruck(
-                expectedType,
-                expectedId,
-                expectedMake,
-                expectedModel,
-                expectedYear,
-                expectedPrice,
-                expectedColor,
-                expectedTransmission,
-                expectedDriveType,
-                expectedHorsepower,
-                expectedWeight,
-                expectedKilometerage,
-                expectedDamage,
-                expectedElectric,
-                expectedNumSeats,
-                expectedNumDoors,
-                expectedSunRoof,
-                expectedCargoCapacity,
-                expectedBedLength,
-                expectedTowingCapacity);
+                "PickupTruck",
+                41,
+                "Ford",
+                "F-150",
+                2021,
+                45000.00,
+                "Blue",
+                "Automatic",
+                "4WD",
+                400,
+                6000.00,
+                15000.00,
+                0.05,
+                false,
+                5,
+                4,
+                true,
+                3000.0,
+                5.5,
+                1000.00);
 
         // Assert
-        assertEquals(expectedType, test.getType());
-        assertEquals(expectedId, test.getID());
-        assertEquals(expectedMake, test.getMake());
-        assertEquals(expectedModel, test.getModel());
-        assertEquals(expectedYear, test.getYear());
-        assertEquals(expectedPrice, test.getPrice(), 0.001);
-        assertEquals(expectedColor, test.getColor());
-        assertEquals(expectedTransmission, test.getTransmission());
-        assertEquals(expectedDriveType, test.getDriveType());
-        assertEquals(expectedHorsepower, test.getHorsepower());
-        assertEquals(expectedWeight, test.getWeight(), 0.001);
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-        assertEquals(expectedDamage, test.getDamage(), 0.001);
-        assertEquals(expectedElectric, test.isElectric());
-        assertEquals(expectedNumSeats, test.getNumSeats());
-        assertEquals(expectedNumDoors, test.getNumDoors());
-        assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedCargoCapacity, test.getCargoCapacity(), 0.001);
-        assertEquals(expectedBedLength, test.getBedLength(), 0.001);
-        assertEquals(expectedTowingCapacity, test.getTowingCapacity(), 0.001);
+        assertEquals("PickupTruck", test.getType());
+        assertEquals(41, test.getID());
+        assertEquals("Ford", test.getMake());
+        assertEquals("F-150", test.getModel());
+        assertEquals(2021, test.getYear());
+        assertEquals(45000.00, test.getPrice(), 0.001);
+        assertEquals("Blue", test.getColor());
+        assertEquals("Automatic", test.getTransmission());
+        assertEquals("4WD", test.getDriveType());
+        assertEquals(400, test.getHorsepower());
+        assertEquals(6000.00, test.getWeight(), 0.001);
+        assertEquals(15000.00, test.getKilometerage(), 0.001);
+        assertEquals(0.05, test.getDamage(), 0.001);
+        assertEquals(false, test.isElectric());
+        assertEquals(5, test.getNumSeats());
+        assertEquals(4, test.getNumDoors());
+        assertEquals(true, test.hasSunRoof());
+        assertEquals(3000.0, test.getCargoCapacity(), 0.001);
+        assertEquals(5.5, test.getBedLength(), 0.001);
+        assertEquals(1000.00, test.getTowingCapacity(), 0.001);
     }
 
     @Test

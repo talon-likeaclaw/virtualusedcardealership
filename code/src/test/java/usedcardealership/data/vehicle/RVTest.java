@@ -14,69 +14,48 @@ import java.time.*;
 public class RVTest {
     @Test
     public void testConstructor_initializesRV() {
-        // Arrange
-        String expectedType = "RV";
-        int expectedId = 11;
-        String expectedMake = "Winnebago";
-        String expectedModel = "Outlook";
-        int expectedYear = 2021;
-        double expectedPrice = 60000.00;
-        String expectedColor = "White";
-        String expectedTransmission = "Automatic";
-        String expectedDriveType = "RWD";
-        int expectedHorsepower = 320;
-        double expectedWeight = 9500.00;
-        double expectedKilometerage = 5000.00;
-        double expectedDamage = 0.05;
-        boolean expectedElectric = false;
-        int expectedNumSeats = 6;
-        int expectedNumDoors = 2;
-        boolean expectedSunRoof = true;
-        int expectedSleepCapacity = 4;
-        boolean expectedBathroom = true;
-
         // Act
         RV test = new RV(
-                expectedType,
-                expectedId,
-                expectedMake,
-                expectedModel,
-                expectedYear,
-                expectedPrice,
-                expectedColor,
-                expectedTransmission,
-                expectedDriveType,
-                expectedHorsepower,
-                expectedWeight,
-                expectedKilometerage,
-                expectedDamage,
-                expectedElectric,
-                expectedNumSeats,
-                expectedNumDoors,
-                expectedSunRoof,
-                expectedSleepCapacity,
-                expectedBathroom);
+                "RV",
+                11,
+                "Winnebago",
+                "Outlook",
+                2021,
+                60000.00,
+                "White",
+                "Automatic",
+                "RWD",
+                320,
+                9500.00,
+                5000.00,
+                0.05,
+                false,
+                6,
+                2,
+                true,
+                4,
+                true);
 
         // Assert
-        assertEquals(expectedType, test.getType());
-        assertEquals(expectedId, test.getID());
-        assertEquals(expectedMake, test.getMake());
-        assertEquals(expectedModel, test.getModel());
-        assertEquals(expectedYear, test.getYear());
-        assertEquals(expectedPrice, test.getPrice(), 0.001);
-        assertEquals(expectedColor, test.getColor());
-        assertEquals(expectedTransmission, test.getTransmission());
-        assertEquals(expectedDriveType, test.getDriveType());
-        assertEquals(expectedHorsepower, test.getHorsepower());
-        assertEquals(expectedWeight, test.getWeight(), 0.001);
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-        assertEquals(expectedDamage, test.getDamage(), 0.001);
-        assertEquals(expectedElectric, test.isElectric());
-        assertEquals(expectedNumSeats, test.getNumSeats());
-        assertEquals(expectedNumDoors, test.getNumDoors());
-        assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedSleepCapacity, test.getSleepCapacity());
-        assertEquals(expectedBathroom, test.hasBathroom());
+        assertEquals("RV", test.getType());
+        assertEquals(11, test.getID());
+        assertEquals("Winnebago", test.getMake());
+        assertEquals("Outlook", test.getModel());
+        assertEquals(2021, test.getYear());
+        assertEquals(60000.00, test.getPrice(), 0.001);
+        assertEquals("White", test.getColor());
+        assertEquals("Automatic", test.getTransmission());
+        assertEquals("RWD", test.getDriveType());
+        assertEquals(320, test.getHorsepower());
+        assertEquals(9500.00, test.getWeight(), 0.001);
+        assertEquals(5000.00, test.getKilometerage(), 0.001);
+        assertEquals(0.05, test.getDamage(), 0.001);
+        assertEquals(false, test.isElectric());
+        assertEquals(6, test.getNumSeats());
+        assertEquals(2, test.getNumDoors());
+        assertEquals(true, test.hasSunRoof());
+        assertEquals(4, test.getSleepCapacity());
+        assertEquals(true, test.hasBathroom());
     }
 
     @Test

@@ -14,69 +14,48 @@ import java.time.*;
 public class VanTest {
     @Test
     public void testConstructor_initializesVan() {
-        // Arrange
-        String expectedType = "Van";
-        int expectedId = 51;
-        String expectedMake = "Honda";
-        String expectedModel = "Odyssey";
-        int expectedYear = 2021;
-        double expectedPrice = 35000.00;
-        String expectedColor = "Silver";
-        String expectedTransmission = "Automatic";
-        String expectedDriveType = "FWD";
-        int expectedHorsepower = 280;
-        double expectedWeight = 4500;
-        double expectedKilometerage = 10000.00;
-        double expectedDamage = 0.0;
-        boolean expectedElectric = false;
-        int expectedNumSeats = 8;
-        int expectedNumDoors = 4;
-        boolean expectedSunRoof = true;
-        double expectedCargoCapacity = 14.0;
-        boolean expectedSlidingDoors = true;
-
         // Act
         Van test = new Van(
-                expectedType,
-                expectedId,
-                expectedMake,
-                expectedModel,
-                expectedYear,
-                expectedPrice,
-                expectedColor,
-                expectedTransmission,
-                expectedDriveType,
-                expectedHorsepower,
-                expectedWeight,
-                expectedKilometerage,
-                expectedDamage,
-                expectedElectric,
-                expectedNumSeats,
-                expectedNumDoors,
-                expectedSunRoof,
-                expectedCargoCapacity,
-                expectedSlidingDoors);
+                "Van",
+                51,
+                "Honda",
+                "Odyssey",
+                2021,
+                35000.00,
+                "Silver",
+                "Automatic",
+                "FWD",
+                280,
+                4500.00,
+                10000.00,
+                0.0,
+                false,
+                8,
+                4,
+                true,
+                14.0,
+                true);
 
         // Assert
-        assertEquals(expectedType, test.getType());
-        assertEquals(expectedId, test.getID());
-        assertEquals(expectedMake, test.getMake());
-        assertEquals(expectedModel, test.getModel());
-        assertEquals(expectedYear, test.getYear());
-        assertEquals(expectedPrice, test.getPrice(), 0.001);
-        assertEquals(expectedColor, test.getColor());
-        assertEquals(expectedTransmission, test.getTransmission());
-        assertEquals(expectedDriveType, test.getDriveType());
-        assertEquals(expectedHorsepower, test.getHorsepower());
-        assertEquals(expectedWeight, test.getWeight(), 0.001);
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-        assertEquals(expectedDamage, test.getDamage(), 0.001);
-        assertEquals(expectedElectric, test.isElectric());
-        assertEquals(expectedNumSeats, test.getNumSeats());
-        assertEquals(expectedNumDoors, test.getNumDoors());
-        assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedCargoCapacity, test.getCargoCapacity(), 0.001);
-        assertEquals(expectedSlidingDoors, test.hasSlidingDoors());
+        assertEquals("Van", test.getType());
+        assertEquals(51, test.getID());
+        assertEquals("Honda", test.getMake());
+        assertEquals("Odyssey", test.getModel());
+        assertEquals(2021, test.getYear());
+        assertEquals(35000.00, test.getPrice(), 0.001);
+        assertEquals("Silver", test.getColor());
+        assertEquals("Automatic", test.getTransmission());
+        assertEquals("FWD", test.getDriveType());
+        assertEquals(280, test.getHorsepower());
+        assertEquals(4500.00, test.getWeight(), 0.001);
+        assertEquals(10000.00, test.getKilometerage(), 0.001);
+        assertEquals(0.0, test.getDamage(), 0.001);
+        assertEquals(false, test.isElectric());
+        assertEquals(8, test.getNumSeats());
+        assertEquals(4, test.getNumDoors());
+        assertEquals(true, test.hasSunRoof());
+        assertEquals(14.0, test.getCargoCapacity(), 0.001);
+        assertEquals(true, test.hasSlidingDoors());
     }
 
     @Test
