@@ -1,6 +1,7 @@
 package usedcardealership;
 
 import java.util.*;
+import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
@@ -8,15 +9,35 @@ import usedcardealership.data.transaction.*;
 import usedcardealership.business.manager.*;
 
 public class UsedCarDealership {
-
+    private static Prompter prompter;
     public static void main(String[] args) {
+        prompter = new Prompter();
         DealershipManager dealership = initialize();
         mainMenuView(dealership);
         shutdown();
     }
 
     private static void mainMenuView(DealershipManager dealership) {
+        boolean inPage = true;
         System.out.println("Welcome to " + dealership.getName() + "!");
+        System.out.println("\nPlease select an option:");
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "1: Browse Vehicles.\n2: View Account and Owned Vehicles.\n3: Sell Vehicle to Dealership.\n0: Exit.", 3)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    // browseVehicleView()
+                    break;
+                case 2:
+                    // viewAccountView()
+                    break;
+                case 3:
+                    // sellVehicleView()
+                    break;
+            }
+        }
     }
 
     /**
@@ -29,27 +50,22 @@ public class UsedCarDealership {
         double dealershipAccountBalance = 567234.54;
 
         // Load vehicles
-        System.out.println("Initializing dealership database and inventory.");
         String vehicleDatabasePath = "resources/database.csv";
         String vehicleInventoryPath = "resources/inventory.csv";
         List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
         List<Vehicle> inventory = initializeListVehicle(vehicleInventoryPath);
 
         // Load customers
-        System.out.println("Initializing customers.");
         String customerPath = "resources/customers.csv";
         List<Customer> customers = initializeListCustomer(customerPath);
 
         // Load transactions
-        System.out.println("Initializing transactions.\n");
         String transactionPath = "resources/transactions.csv";
         List<Transaction> transactions = initializeListTransaction(transactionPath);
 
-        // Initialize the DealershipManager
+        // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
-
-        System.out.println("Dealership successfully initilized.\n");
         return dealership;
     }
 
