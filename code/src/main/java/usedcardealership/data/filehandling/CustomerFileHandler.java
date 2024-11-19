@@ -21,7 +21,6 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
      * Constructs a CustomerFileHandler with the specified file path.
      * 
      * @param String filePath - The path to the file containing Customer data.
-     * @throws IOException
      */
     public CustomerFileHandler(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -38,7 +37,24 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
         try {
             List<String> allLines = Files.readAllLines(this.filePath);
             for (String line : allLines) {
-                String[] customerFields = line.split(",");
+                // Find indices of vehicle list
+                int startOfVehicles = line.indexOf("[");
+                int endOfVehicles = line.lastIndexOf("]");
+                String[] customerFields;
+                String vehicleList;
+                List<Vehicle> vehicles;
+
+                if (startOfVehicles == endOfVehicles - 1) {
+                    customerFields = line.substring(0, startOfVehicles).split(",");
+                    vehicles = new ArrayList<>();
+                } else {
+                    customerFields = line.substring(0, startOfVehicles).split(",");
+                    vehicleList = line.substring(startOfVehicles + 1, endOfVehicles);
+                    vehicles = parseVehicles(vehicleList);
+                }
+                // Split customer fields prior to vehicle list
+
+                // Parse customer fields
                 int id = Integer.parseInt(customerFields[0]);
                 String firstName = customerFields[1];
                 String lastName = customerFields[2];
@@ -46,8 +62,6 @@ public class CustomerFileHandler implements IDataHandler<Customer> {
                 String phoneNumber = customerFields[4];
                 String address = customerFields[5];
                 double accountBalance = Double.parseDouble(customerFields[6]);
-                String vehiclesList = customerFields[7];
-                List<Vehicle> vehicles = parseVehicles(vehiclesList);
 
                 Customer customer = new Customer(id, firstName, lastName, birthday, phoneNumber, address,
                         accountBalance, vehicles);

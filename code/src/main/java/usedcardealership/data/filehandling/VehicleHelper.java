@@ -18,6 +18,9 @@ public class VehicleHelper {
      * @return a Vehicle instance or null if the type is not valid.
      */
     public static Vehicle parseVehicle(String[] fields) {
+        if (fields[0].equals("[]")) {
+            return null;
+        }
         // Fill common fields.
         String type = fields[0];
         int id = Integer.parseInt(fields[1]);

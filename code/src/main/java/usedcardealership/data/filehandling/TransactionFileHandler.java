@@ -22,9 +22,8 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
    * Constructs a TransactionFileHandler with the specified file path.
    * 
    * @param String filePath - The path to the file containing Transaction data.
-   * @throws IOException
    */
-  public TransactionFileHandler(String filePath) {
+  public TransactionFileHandler(String filePath)  {
     this.filePath = Paths.get(filePath);
   }
 

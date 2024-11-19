@@ -20,9 +20,8 @@ public class VehicleFileHandler implements IDataHandler<Vehicle> {
    * Constructs a VehicleFileHandler with the specified file path.
    * 
    * @param String filePath - The path to the file containing Vehicle data.
-   * @throws IOException
    */
-  public VehicleFileHandler(String filePath) throws IOException {
+  public VehicleFileHandler(String filePath) {
     this.filePath = Paths.get(filePath);
   }
 
