@@ -25,6 +25,10 @@ public class TransactionManager {
         this.transactionHistory = transactionHistory;
     }
 
+    public List<Transaction> getTransactions() {
+        return this.transactionHistory;
+    }
+
     /**
      * Function sells Vehicle to a Customer, updates the transactionHistory
      * 

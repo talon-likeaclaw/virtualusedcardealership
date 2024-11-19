@@ -51,6 +51,22 @@ public class DealershipManager {
     return this.accountBalance;
   }
 
+  public List<Customer> getCustomers() {
+    return this.customerManager.getCustomers();
+  }
+
+  public List<Transaction> getTransactions() {
+    return this.transactionManager.getTransactions();
+  }
+
+  public List<Vehicle> getInventory() {
+    return this.vehicleManager.getInventory();
+  }
+
+  public List<Vehicle> getDatabase() {
+    return this.vehicleManager.getDatabase();
+  }
+
   /**
    * Method for adding or removing money from the dealership's account balance.
    * 
