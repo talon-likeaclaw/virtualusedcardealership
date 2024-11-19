@@ -5,12 +5,11 @@
  * @version 11/18/2024
  */
 
-package usedcardealership;
+package usedcardealership.data.vehicle;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.*;
-import usedcardealership.data.vehicle.*;
 
 public class MotorcycleTest {
     @Test

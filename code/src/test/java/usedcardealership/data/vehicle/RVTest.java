@@ -1,44 +1,42 @@
 /**
- * Test class for PickupTruck type
+ * Test class for RV type
  * 
  * @author Talon Dunbar
  * @version 11/18/2024
  */
 
-package usedcardealership;
+package usedcardealership.data.vehicle;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.*;
-import usedcardealership.data.vehicle.*;
 
-public class PickupTruckTest {
+public class RVTest {
     @Test
-    public void testConstructor_initializesPickupTruck() {
+    public void testConstructor_initializesRV() {
         // Arrange
-        String expectedType = "PickupTruck";
-        int expectedId = 41;
-        String expectedMake = "Ford";
-        String expectedModel = "F-150";
+        String expectedType = "RV";
+        int expectedId = 11;
+        String expectedMake = "Winnebago";
+        String expectedModel = "Outlook";
         int expectedYear = 2021;
-        double expectedPrice = 45000.00;
-        String expectedColor = "Blue";
+        double expectedPrice = 60000.00;
+        String expectedColor = "White";
         String expectedTransmission = "Automatic";
-        String expectedDriveType = "4WD";
-        int expectedHorsepower = 400;
-        double expectedWeight = 6000.00;
-        double expectedKilometerage = 15000.00;
+        String expectedDriveType = "RWD";
+        int expectedHorsepower = 320;
+        double expectedWeight = 9500.00;
+        double expectedKilometerage = 5000.00;
         double expectedDamage = 0.05;
         boolean expectedElectric = false;
-        int expectedNumSeats = 5;
-        int expectedNumDoors = 4;
+        int expectedNumSeats = 6;
+        int expectedNumDoors = 2;
         boolean expectedSunRoof = true;
-        double expectedCargoCapacity = 3000.0;
-        double expectedBedLength = 5.5;
-        double expectedTowingCapacity = 1000.00;
+        int expectedSleepCapacity = 4;
+        boolean expectedBathroom = true;
 
         // Act
-        PickupTruck test = new PickupTruck(
+        RV test = new RV(
                 expectedType,
                 expectedId,
                 expectedMake,
@@ -56,9 +54,8 @@ public class PickupTruckTest {
                 expectedNumSeats,
                 expectedNumDoors,
                 expectedSunRoof,
-                expectedCargoCapacity,
-                expectedBedLength,
-                expectedTowingCapacity);
+                expectedSleepCapacity,
+                expectedBathroom);
 
         // Assert
         assertEquals(expectedType, test.getType());
@@ -78,38 +75,36 @@ public class PickupTruckTest {
         assertEquals(expectedNumSeats, test.getNumSeats());
         assertEquals(expectedNumDoors, test.getNumDoors());
         assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedCargoCapacity, test.getCargoCapacity(), 0.001);
-        assertEquals(expectedBedLength, test.getBedLength(), 0.001);
-        assertEquals(expectedTowingCapacity, test.getTowingCapacity(), 0.001);
+        assertEquals(expectedSleepCapacity, test.getSleepCapacity());
+        assertEquals(expectedBathroom, test.hasBathroom());
     }
 
     @Test
-    public void testCopyConstructor_copiesPickupTruck() {
+    public void testCopyConstructor_copiesRV() {
         // Arrange
-        PickupTruck original = new PickupTruck(
-                "PickupTruck",
-                1,
-                "Ford",
-                "F-150",
+        RV original = new RV(
+                "RV",
+                11,
+                "Winnebago",
+                "Outlook",
                 2021,
-                45000.00,
-                "Blue",
+                60000.00,
+                "White",
                 "Automatic",
-                "4WD",
-                400,
-                6000.00,
-                15000.00,
+                "RWD",
+                320,
+                9500.00,
+                5000.00,
                 0.05,
                 false,
-                5,
-                4,
+                6,
+                2,
                 true,
-                3000.0,
-                5.5,
-                1000.00);
+                4,
+                true);
 
         // Act
-        PickupTruck copy = new PickupTruck(original);
+        RV copy = new RV(original);
 
         // Assert
         assertEquals(original.getType(), copy.getType());
@@ -129,56 +124,53 @@ public class PickupTruckTest {
         assertEquals(original.getNumSeats(), copy.getNumSeats());
         assertEquals(original.getNumDoors(), copy.getNumDoors());
         assertEquals(original.hasSunRoof(), copy.hasSunRoof());
-        assertEquals(original.getCargoCapacity(), copy.getCargoCapacity(), 0.001);
-        assertEquals(original.getBedLength(), copy.getBedLength(), 0.001);
-        assertEquals(original.getTowingCapacity(), copy.getTowingCapacity(), 0.001);
+        assertEquals(original.getSleepCapacity(), copy.getSleepCapacity());
+        assertEquals(original.hasBathroom(), copy.hasBathroom());
     }
 
     @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
-        PickupTruck test = new PickupTruck(
-                "PickupTruck",
-                41,
-                "Ford",
-                "F-150",
+        RV test = new RV(
+                "RV",
+                11,
+                "Winnebago",
+                "Outlook",
                 Year.now().getValue(),
-                45000.00,
-                "Blue",
+                60000.00,
+                "White",
                 "Automatic",
-                "4WD",
-                400,
-                6000.00,
+                "RWD",
+                320,
+                9500.00,
                 0.0,
                 0.0,
                 false,
-                5,
-                4,
+                6,
+                2,
                 true,
-                3000.0,
-                5.5,
-                1000.00);
+                4,
+                true);
 
-        String expectedOutput = "Type: PickupTruck\n" +
-                "ID: 41\n" +
-                "Make: Ford\n" +
-                "Model: F-150\n" +
+        String expectedOutput = "Type: RV\n" +
+                "ID: 11\n" +
+                "Make: Winnebago\n" +
+                "Model: Outlook\n" +
                 "Year: " + Year.now().getValue() + "\n" +
-                "Price: $45000.0\n" +
-                "Color: Blue\n" +
+                "Price: $60000.0\n" +
+                "Color: White\n" +
                 "Transmission: Automatic\n" +
-                "Drive Type: 4WD\n" +
-                "Horsepower: 400\n" +
-                "Weight: 6000.0 lbs\n" +
+                "Drive Type: RWD\n" +
+                "Horsepower: 320\n" +
+                "Weight: 9500.0 lbs\n" +
                 "Kilometerage: 0.0 km\n" +
                 "Damage: 0.0%\n" +
                 "Electric: False\n" +
-                "Seats: 5\n" +
-                "Doors: 4\n" +
+                "Seats: 6\n" +
+                "Doors: 2\n" +
                 "Sunroof: Yes\n" +
-                "Cargo Capacity: 3000.0 cu ft\n" +
-                "Bed Length: 5.5 feet\n" +
-                "Towing Capacity: 1000.0 lbs";
+                "Sleep Capacity: 4\n" +
+                "Bathroom: Yes";
 
         // Act
         String actualOutput = test.toString();

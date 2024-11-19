@@ -5,16 +5,13 @@
  * @version 11/19/2024
  */
 
-package usedcardealership;
+package usedcardealership.data.vehicle;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.time.*;
 import org.junit.Test;
-
-import usedcardealership.data.vehicle.Car;
-import usedcardealership.data.vehicle.Vehicle;
 
 public class VehicleTest {
     @Test

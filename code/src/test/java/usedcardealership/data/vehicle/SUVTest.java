@@ -1,43 +1,41 @@
 /**
- * Test class for Van type
+ * Test class for SUV type
  * 
  * @author Talon Dunbar
  * @version 11/18/2024
  */
 
-package usedcardealership;
+package usedcardealership.data.vehicle;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.*;
-import usedcardealership.data.vehicle.*;
 
-public class VanTest {
+public class SUVTest {
     @Test
-    public void testConstructor_initializesVan() {
+    public void testConstructor_initializesSUV() {
         // Arrange
-        String expectedType = "Van";
-        int expectedId = 51;
-        String expectedMake = "Honda";
-        String expectedModel = "Odyssey";
-        int expectedYear = 2021;
-        double expectedPrice = 35000.00;
-        String expectedColor = "Silver";
+        String expectedType = "SUV";
+        int expectedId = 404;
+        String expectedMake = "Hyundai";
+        String expectedModel = "Kona";
+        int expectedYear = 2022;
+        double expectedPrice = 21000.00;
+        String expectedColor = "White";
         String expectedTransmission = "Automatic";
-        String expectedDriveType = "FWD";
-        int expectedHorsepower = 280;
-        double expectedWeight = 4500;
+        String expectedDriveType = "AWD";
+        int expectedHorsepower = 147;
+        double expectedWeight = 3200.00;
         double expectedKilometerage = 10000.00;
-        double expectedDamage = 0.0;
+        double expectedDamage = 2.5;
         boolean expectedElectric = false;
-        int expectedNumSeats = 8;
+        int expectedNumSeats = 5;
         int expectedNumDoors = 4;
         boolean expectedSunRoof = true;
-        double expectedCargoCapacity = 14.0;
-        boolean expectedSlidingDoors = true;
+        boolean expectedThirdRow = false;
 
         // Act
-        Van test = new Van(
+        SUV test = new SUV(
                 expectedType,
                 expectedId,
                 expectedMake,
@@ -55,8 +53,7 @@ public class VanTest {
                 expectedNumSeats,
                 expectedNumDoors,
                 expectedSunRoof,
-                expectedCargoCapacity,
-                expectedSlidingDoors);
+                expectedThirdRow);
 
         // Assert
         assertEquals(expectedType, test.getType());
@@ -76,36 +73,34 @@ public class VanTest {
         assertEquals(expectedNumSeats, test.getNumSeats());
         assertEquals(expectedNumDoors, test.getNumDoors());
         assertEquals(expectedSunRoof, test.hasSunRoof());
-        assertEquals(expectedCargoCapacity, test.getCargoCapacity(), 0.001);
-        assertEquals(expectedSlidingDoors, test.hasSlidingDoors());
+        assertEquals(expectedThirdRow, test.hasThirdRowSeating());
     }
 
     @Test
-    public void testCopyConstructor_copiesVan() {
+    public void testCopyConstructor_copiesSUV() {
         // Arrange
-        Van original = new Van(
-                "Van",
-                51,
-                "Honda",
-                "Odyssey",
-                2021,
-                35000.00,
-                "Silver",
+        SUV original = new SUV(
+                "SUV",
+                404,
+                "Hyundai",
+                "Kona",
+                2022,
+                21000.00,
+                "White",
                 "Automatic",
-                "FWD",
-                280,
-                4500.0,
-                10000.0,
-                0.0,
+                "AWD",
+                147,
+                3200.00,
+                10000.00,
+                2.5,
                 false,
-                8,
+                5,
                 4,
                 true,
-                14.0,
-                true);
+                false);
 
         // Act
-        Van copy = new Van(original);
+        SUV copy = new SUV(original);
 
         // Assert
         assertEquals(original.getType(), copy.getType());
@@ -125,53 +120,50 @@ public class VanTest {
         assertEquals(original.getNumSeats(), copy.getNumSeats());
         assertEquals(original.getNumDoors(), copy.getNumDoors());
         assertEquals(original.hasSunRoof(), copy.hasSunRoof());
-        assertEquals(original.getCargoCapacity(), copy.getCargoCapacity(), 0.001);
-        assertEquals(original.hasSlidingDoors(), copy.hasSlidingDoors());
+        assertEquals(original.hasThirdRowSeating(), copy.hasThirdRowSeating());
     }
 
     @Test
     public void testToString_outputsCorrectDetails() {
         // Arrange
-        Van test = new Van(
-                "Van",
-                51,
-                "Honda",
-                "Odyssey",
+        SUV test = new SUV(
+                "SUV",
+                404,
+                "Hyundai",
+                "Kona",
                 Year.now().getValue(),
-                35000.00,
-                "Silver",
+                21000.00,
+                "White",
                 "Automatic",
-                "FWD",
-                280,
-                4500.0,
+                "AWD",
+                147,
+                3200.00,
                 0.0,
                 0.0,
                 false,
-                8,
+                5,
                 4,
                 true,
-                14.0,
-                true);
+                false);
 
-        String expectedOutput = "Type: Van\n" +
-                "ID: 51\n" +
-                "Make: Honda\n" +
-                "Model: Odyssey\n" +
+        String expectedOutput = "Type: SUV\n" +
+                "ID: 404\n" +
+                "Make: Hyundai\n" +
+                "Model: Kona\n" +
                 "Year: " + Year.now().getValue() + "\n" +
-                "Price: $35000.0\n" +
-                "Color: Silver\n" +
+                "Price: $21000.0\n" +
+                "Color: White\n" +
                 "Transmission: Automatic\n" +
-                "Drive Type: FWD\n" +
-                "Horsepower: 280\n" +
-                "Weight: 4500.0 lbs\n" +
+                "Drive Type: AWD\n" +
+                "Horsepower: 147\n" +
+                "Weight: 3200.0 lbs\n" +
                 "Kilometerage: 0.0 km\n" +
                 "Damage: 0.0%\n" +
                 "Electric: False\n" +
-                "Seats: 8\n" +
+                "Seats: 5\n" +
                 "Doors: 4\n" +
                 "Sunroof: Yes\n" +
-                "Cargo Capacity: 14.0 cu ft\n" +
-                "Sliding Doors: Yes";
+                "Third Row Seating: No";
 
         // Act
         String actualOutput = test.toString();
