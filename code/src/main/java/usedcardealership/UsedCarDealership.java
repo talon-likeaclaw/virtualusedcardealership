@@ -15,7 +15,7 @@ public class UsedCarDealership {
         prompter = new Prompter();
         DealershipManager dealership = initialize();
         mainMenuView(dealership);
-        shutdown();
+        shutdown(dealership);
     }
 
     /**
@@ -98,17 +98,19 @@ public class UsedCarDealership {
 
         // Load vehicles
         String vehicleDatabasePath = "resources/database.csv";
-        String vehicleInventoryPath = "resources/inventory.csv";
         List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
+        String vehicleInventoryPath = "resources/inventory.csv";
         List<Vehicle> inventory = initializeListVehicle(vehicleInventoryPath);
 
         // Load customers
         String customerPath = "resources/customers.csv";
-        List<Customer> customers = initializeListCustomer(customerPath);
+        CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
+        List<Customer> customers = customerLoader.load();
 
         // Load transactions
         String transactionPath = "resources/transactions.csv";
-        List<Transaction> transactions = initializeListTransaction(transactionPath);
+        TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
+        List<Transaction> transactions = transactionLoader.load();
 
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
@@ -128,27 +130,34 @@ public class UsedCarDealership {
     }
 
     /**
-     * Initilizes a CustomerFileHanlder and loads from file path
+     * Shuts down the program, saving the dealerships database, inventory,
+     * customerlist, and transactionhistory to csv files
      * 
-     * @param filePath the file path to load from
-     * @return a list of customers loaded from file
+     * @param dealership the DealershipManager object
      */
-    private static List<Customer> initializeListCustomer(String filePath) {
-        CustomerFileHandler customerLoader = new CustomerFileHandler(filePath);
-        return customerLoader.load();
-    }
+    private static void shutdown(DealershipManager dealership) {
+        // Save inventory and database
+        String vehicleDatabasePath = "resources/database.csv";
+        String vehicleInventoryPath = "resources/inventory.csv";
+        List<Vehicle> database = dealership.getDatabase();
+        List<Vehicle> inventory = dealership.getInventory();
+        VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
+        VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
+        vehicleDatabaseSaver.save(database);
+        vehicleInventorySaver.save(inventory);
 
-    /**
-     * Initilizes a TransactionFileHanlder and loads from file path
-     * 
-     * @param filePath the file path to load from
-     * @return a list of transactions loaded from file
-     */
-    private static List<Transaction> initializeListTransaction(String filePath) {
-        TransactionFileHandler transactionLoader = new TransactionFileHandler(filePath);
-        return transactionLoader.load();
-    }
+        // Save customers
+        String customerPath = "resources/customers.csv";
+        List<Customer> customers = dealership.getCustomers();
+        CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
+        customerSaver.save(customers);
 
-    private static void shutdown() {
+        // Save transactions
+        String transactionPath = "resources/transactions.csv";
+        List<Transaction> transactions = dealership.getTransactions();
+        TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
+        transactionSaver.save(transactions);
+
+        System.out.println("\nShutting down. Please come again! :)");
     }
 }
