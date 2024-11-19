@@ -99,38 +99,6 @@ public class VehicleTest {
     }
 
     @Test
-    public void testAddKilometerage_addsPositiveKilometers() {
-        // Arrange
-        Vehicle test = new Car(
-                "Car",
-                505,
-                "Mitsubishi",
-                "Lancer",
-                2018,
-                18000.00,
-                "White",
-                "Manual",
-                "FWD",
-                168,
-                2900.00,
-                45000.00,
-                4.5,
-                false,
-                5,
-                4,
-                true,
-                false);
-        double kilometersToAdd = 150.0;
-        double expectedKilometerage = test.getKilometerage() + kilometersToAdd;
-
-        // Act
-        test.addKilometerage(kilometersToAdd);
-
-        // Assert
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-    }
-
-    @Test
     public void testEqualsOverride_returnsTrue() {
         // Arrange
         Vehicle test = new Car(
@@ -161,7 +129,6 @@ public class VehicleTest {
         // Assert
         assertEquals(expectedResult, actualResult);
     }
-
 
     @Test
     public void testEqualsOverride_returnsFalse() {
@@ -260,6 +227,38 @@ public class VehicleTest {
         double maxPossibleDamage = initialDamage + MAX_DAMAGE * MAX_CRASH_DAMAGE;
         assertTrue("Damage should increase within the expected range",
                 resultingDamage >= initialDamage && resultingDamage <= maxPossibleDamage);
+    }
+
+    @Test
+    public void testAddKilometerage_addsPositiveKilometers() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+        double kilometersToAdd = 150.0;
+        double expectedKilometerage = test.getKilometerage() + kilometersToAdd;
+
+        // Act
+        test.addKilometerage(kilometersToAdd);
+
+        // Assert
+        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
     }
 
     @Test
