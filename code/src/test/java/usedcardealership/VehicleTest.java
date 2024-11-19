@@ -8,6 +8,7 @@
 package usedcardealership;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.time.*;
 import org.junit.Test;
@@ -130,6 +131,138 @@ public class VehicleTest {
 
         // Assert
         assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
+    }
+
+    @Test
+    public void testEqualsOverride_returnsTrue() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        boolean expectedResult = true;
+
+        // Act
+        Boolean actualResult = test.equals(test);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testEqualsOverride_returnsFalse() {
+        // Arrange
+        Vehicle testOne = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        Vehicle testTwo = new Car(
+                "Car",
+                24,
+                "Chevrolet",
+                "Malibu",
+                2018,
+                23000.00,
+                "Gray",
+                "Automatic",
+                "FWD",
+                160,
+                3100.00,
+                25000.00,
+                0.1,
+                false,
+                5,
+                4,
+                false,
+                false);
+
+        boolean expectedResult = false;
+
+        // Act
+        Boolean actualResult = testOne.equals(testTwo);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testTestDrive_addsKilometerDamageRange() {
+        // Arrange
+        Vehicle test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                2018,
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                45000.00,
+                4.5,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        final double MAX_DAMAGE = 1.0;
+        final double MAX_KILOMETER = 50.0;
+        final double MAX_CRASH_DAMAGE = 90.0;
+        double initialDamage = test.getDamage();
+        double initialKilometerage = test.getKilometerage();
+
+        // Act
+        test.testDrive();
+        double resultingDamage = test.getDamage();
+        double resultingKilometerage = test.getKilometerage();
+
+        // Assert
+        // Validate that kilometerage is within the range
+        double maxPossibleKilometerage = initialKilometerage + MAX_KILOMETER;
+        assertTrue("Kilometerage should increase within the expected range",
+                resultingKilometerage >= initialKilometerage &&
+                        resultingKilometerage <= maxPossibleKilometerage);
+
+        // Validate that damage is within the range (with crash)
+        double maxPossibleDamage = initialDamage + MAX_DAMAGE * MAX_CRASH_DAMAGE;
+        assertTrue("Damage should increase within the expected range",
+                resultingDamage >= initialDamage && resultingDamage <= maxPossibleDamage);
     }
 
     @Test
