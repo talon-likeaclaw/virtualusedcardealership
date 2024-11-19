@@ -8,64 +8,6 @@ import usedcardealership.data.vehicle.*;
 public class MotorcycleTest {
     @Test
     public void testConstructor_initializesMotorcycle() {
-        // Arrange
-        String expectedType = "Motorcycle";
-        int expectedId = 1;
-        String expectedMake = "Honda";
-        String expectedModel = "CBR600RR";
-        int expectedYear = 2020;
-        double expectedPrice = 12000.00;
-        String expectedColor = "Red";
-        String expectedTransmission = "Manual";
-        String expectedDriveType = "Chain";
-        int expectedHorsepower = 120;
-        double expectedWeight = 200.00;
-        double expectedKilometerage = 5000.00;
-        double expectedDamage = 0.1;
-        boolean expectedElectric = false;
-        double expectedCC = 599.00;
-        String expectedHandleType = "Sport";
-
-        // Act
-        Motorcycle test = new Motorcycle(
-                expectedType,
-                expectedId,
-                expectedMake,
-                expectedModel,
-                expectedYear,
-                expectedPrice,
-                expectedColor,
-                expectedTransmission,
-                expectedDriveType,
-                expectedHorsepower,
-                expectedWeight,
-                expectedKilometerage,
-                expectedDamage,
-                expectedElectric,
-                expectedCC,
-                expectedHandleType);
-
-        // Assert
-        assertEquals(expectedType, test.getType());
-        assertEquals(expectedId, test.getID());
-        assertEquals(expectedMake, test.getMake());
-        assertEquals(expectedModel, test.getModel());
-        assertEquals(expectedYear, test.getYear());
-        assertEquals(expectedPrice, test.getPrice(), 0.001);
-        assertEquals(expectedColor, test.getColor());
-        assertEquals(expectedTransmission, test.getTransmission());
-        assertEquals(expectedDriveType, test.getDriveType());
-        assertEquals(expectedHorsepower, test.getHorsepower());
-        assertEquals(expectedWeight, test.getWeight(), 0.001);
-        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
-        assertEquals(expectedDamage, test.getDamage(), 0.001);
-        assertEquals(expectedElectric, test.isElectric());
-        assertEquals(expectedCC, test.getEngineCC(), 0.001);
-        assertEquals(expectedHandleType, test.getHandleType());
-    }
-
-    @Test
-    public void testConstructor_initializesMotorcycle() {
         // Act
         Motorcycle test = new Motorcycle(
                 "Motorcycle",
