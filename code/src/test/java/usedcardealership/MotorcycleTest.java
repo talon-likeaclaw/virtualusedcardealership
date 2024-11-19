@@ -1,0 +1,151 @@
+package usedcardealership;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.time.*;
+import usedcardealership.data.vehicle.*;
+
+public class MotorcycleTest {
+    @Test
+    public void testConstructor_initializesMotorcycle() {
+        // Arrange
+        String expectedType = "Motorcycle";
+        int expectedId = 1;
+        String expectedMake = "Honda";
+        String expectedModel = "CBR600RR";
+        int expectedYear = 2020;
+        double expectedPrice = 12000.00;
+        String expectedColor = "Red";
+        String expectedTransmission = "Manual";
+        String expectedDriveType = "Chain";
+        int expectedHorsepower = 120;
+        double expectedWeight = 200.00;
+        double expectedKilometerage = 5000.00;
+        double expectedDamage = 0.1;
+        boolean expectedElectric = false;
+        double expectedCC = 599.00;
+        String expectedHandleType = "Sport";
+
+        // Act
+        Motorcycle test = new Motorcycle(
+                expectedType,
+                expectedId,
+                expectedMake,
+                expectedModel,
+                expectedYear,
+                expectedPrice,
+                expectedColor,
+                expectedTransmission,
+                expectedDriveType,
+                expectedHorsepower,
+                expectedWeight,
+                expectedKilometerage,
+                expectedDamage,
+                expectedElectric,
+                expectedCC,
+                expectedHandleType);
+
+        // Assert
+        assertEquals(expectedType, test.getType());
+        assertEquals(expectedId, test.getID());
+        assertEquals(expectedMake, test.getMake());
+        assertEquals(expectedModel, test.getModel());
+        assertEquals(expectedYear, test.getYear());
+        assertEquals(expectedPrice, test.getPrice(), 0.001);
+        assertEquals(expectedColor, test.getColor());
+        assertEquals(expectedTransmission, test.getTransmission());
+        assertEquals(expectedDriveType, test.getDriveType());
+        assertEquals(expectedHorsepower, test.getHorsepower());
+        assertEquals(expectedWeight, test.getWeight(), 0.001);
+        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
+        assertEquals(expectedDamage, test.getDamage(), 0.001);
+        assertEquals(expectedElectric, test.isElectric());
+        assertEquals(expectedCC, test.getEngineCC(), 0.001);
+        assertEquals(expectedHandleType, test.getHandleType());
+    }
+
+    @Test
+    public void testConstructor_initializesMotorcycle() {
+        // Act
+        Motorcycle test = new Motorcycle(
+                "Motorcycle",
+                1,
+                "Honda",
+                "CBR600RR",
+                2020,
+                12000.00,
+                "Red",
+                "Manual",
+                "Chain",
+                120,
+                200.00,
+                5000.00,
+                0.1,
+                false,
+                599.00,
+                "Sport");
+
+        // Assert
+        assertEquals("Motorcycle", test.getType());
+        assertEquals(1, test.getID());
+        assertEquals("Honda", test.getMake());
+        assertEquals("CBR600RR", test.getModel());
+        assertEquals(2020, test.getYear());
+        assertEquals(12000.00, test.getPrice(), 0.001);
+        assertEquals("Red", test.getColor());
+        assertEquals("Manual", test.getTransmission());
+        assertEquals("Chain", test.getDriveType());
+        assertEquals(120, test.getHorsepower());
+        assertEquals(200.00, test.getWeight(), 0.001);
+        assertEquals(5000.00, test.getKilometerage(), 0.001);
+        assertEquals(0.1, test.getDamage(), 0.001);
+        assertEquals(false, test.isElectric());
+        assertEquals(599.00, test.getEngineCC(), 0.001);
+        assertEquals("Sport", test.getHandleType());
+    }
+
+    @Test
+    public void testToString_outputsCorrectDetails() {
+        // Arrange
+        Motorcycle test = new Motorcycle(
+                "Motorcycle",
+                1,
+                "Honda",
+                "CBR600RR",
+                Year.now().getValue(),
+                12000.00,
+                "Red",
+                "Manual",
+                "Chain",
+                120,
+                200.00,
+                0.0,
+                0.0,
+                false,
+                599.00,
+                "Sport");
+
+        String expectedOutput = "Type: Motorcycle\n" +
+                "ID: 1\n" +
+                "Make: Honda\n" +
+                "Model: CBR600RR\n" +
+                "Year: " + Year.now().getValue() + "\n" +
+                "Price: $12000.0\n" +
+                "Color: Red\n" +
+                "Transmission: Manual\n" +
+                "Drive Type: Chain\n" +
+                "Horsepower: 120\n" +
+                "Weight: 200.0 lbs\n" +
+                "Kilometerage: 0.0 km\n" +
+                "Damage: 0.0%\n" +
+                "Electric: False\n" +
+                "Engine Capacity: 599.0 cc\n" +
+                "Handlebar Type: Sport";
+
+        // Act
+        String actualOutput = test.toString();
+
+        // Assert
+        assertEquals(expectedOutput.trim(), actualOutput.trim());
+    }
+}
