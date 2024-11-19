@@ -1,3 +1,10 @@
+/**
+ * Test class for SUV type
+ * 
+ * @author Talon Dunbar
+ * @version 11/18/2024
+ */
+
 package usedcardealership;
 
 import org.junit.Test;
