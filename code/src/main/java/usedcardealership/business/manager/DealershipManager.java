@@ -35,9 +35,6 @@ public class DealershipManager {
       List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
     this.name = name;
     this.accountBalance = accountBalance;
-
-    // TODO: Need to implement data handling Strategy
-    // Still not 100% about the implementation yet, estimating still until more clear
     this.transactionManager = new TransactionManager(transactions);
     this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
