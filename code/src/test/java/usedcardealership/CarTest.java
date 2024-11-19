@@ -1,0 +1,121 @@
+package usedcardealership;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.time.*;
+import usedcardealership.data.vehicle.*;
+
+public class CarTest {
+    @Test
+    public void testConstructor_initializesCar() {
+        // Arrange
+        String expectedType = "Car";
+        int expectedId = 505;
+        String expectedMake = "Mitsubishi";
+        String expectedModel = "Lancer";
+        int expectedYear = 2018;
+        double expectedPrice = 18000.00;
+        String expectedColor = "White";
+        String expectedTransmission = "Manual";
+        String expectedDriveType = "FWD";
+        int expectedHorsepower = 168;
+        double expectedWeight = 2900.00;
+        double expectedKilometerage = 45000.00;
+        double expectedDamage = 4.5;
+        boolean expectedElectric = false;
+        int expectedNumSeats = 5;
+        int expectedNumDoors = 4;
+        boolean expectedSunRoof = true;
+        boolean expectedConvertible = false;
+
+        // Act
+        Car test = new Car(
+                expectedType,
+                expectedId,
+                expectedMake,
+                expectedModel,
+                expectedYear,
+                expectedPrice,
+                expectedColor,
+                expectedTransmission,
+                expectedDriveType,
+                expectedHorsepower,
+                expectedWeight,
+                expectedKilometerage,
+                expectedDamage,
+                expectedElectric,
+                expectedNumSeats,
+                expectedNumDoors,
+                expectedSunRoof,
+                expectedConvertible);
+
+        // Assert
+        assertEquals(expectedType, test.getType());
+        assertEquals(expectedId, test.getID());
+        assertEquals(expectedMake, test.getMake());
+        assertEquals(expectedModel, test.getModel());
+        assertEquals(expectedYear, test.getYear());
+        assertEquals(expectedPrice, test.getPrice(), 0.001);
+        assertEquals(expectedColor, test.getColor());
+        assertEquals(expectedTransmission, test.getTransmission());
+        assertEquals(expectedDriveType, test.getDriveType());
+        assertEquals(expectedHorsepower, test.getHorsepower());
+        assertEquals(expectedWeight, test.getWeight(), 0.001);
+        assertEquals(expectedKilometerage, test.getKilometerage(), 0.001);
+        assertEquals(expectedDamage, test.getDamage(), 0.001);
+        assertEquals(expectedElectric, test.isElectric());
+        assertEquals(expectedNumSeats, test.getNumSeats());
+        assertEquals(expectedNumDoors, test.getNumDoors());
+        assertEquals(expectedSunRoof, test.hasSunRoof());
+        assertEquals(expectedConvertible, test.isConvertible());
+    }
+
+    @Test
+    public void testToString_outputsCorrectDetails() {
+        // Arrange
+        Car test = new Car(
+                "Car",
+                505,
+                "Mitsubishi",
+                "Lancer",
+                Year.now().getValue(),
+                18000.00,
+                "White",
+                "Manual",
+                "FWD",
+                168,
+                2900.00,
+                0.0,
+                0.0,
+                false,
+                5,
+                4,
+                true,
+                false);
+
+        String expectedOutput = "Type: Car\n" +
+                "ID: 505\n" +
+                "Make: Mitsubishi\n" +
+                "Model: Lancer\n" +
+                "Year: " + Year.now().getValue() + "\n" +
+                "Price: $18000.0\n" +
+                "Color: White\n" +
+                "Transmission: Manual\n" +
+                "Drive Type: FWD\n" +
+                "Horsepower: 168\n" +
+                "Weight: 2900.0 lbs\n" +
+                "Kilometerage: 0.0 km\n" +
+                "Damage: 0.0%\n" +
+                "Electric: False\n" +
+                "Seats: 5\n" +
+                "Doors: 4\n" +
+                "Sunroof: Yes\n" +
+                "Convertible: No";
+
+        // Act
+        String actualOutput = test.toString();
+
+        // Assert
+        assertEquals(expectedOutput.trim(), actualOutput.trim());
+    }
+}
