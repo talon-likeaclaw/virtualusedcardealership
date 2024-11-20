@@ -168,6 +168,8 @@ public abstract class Vehicle {
         return false;
     }
 
+    public abstract String getFullDetails();
+
     public String getType() {
         return this.type;
     }
