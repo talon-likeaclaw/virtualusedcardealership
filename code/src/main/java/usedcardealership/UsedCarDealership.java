@@ -142,7 +142,7 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: int vehilceID = selectVehicle();
+                    int vehicleID = selectVehicle();
                     // TODO: viewVehicleDetails(vehicleID);
                     break;
             }
@@ -152,12 +152,10 @@ public class UsedCarDealership {
     /**
      * Allows the user to select a vehicle by ID
      * 
-     * @param dealership the DealershipManager object
      * @return the selected ID of the vehicle they want more details on
      */
-    private static int selectVehicle(DealershipManager dealership) {
-        // TODO: Implement logic to select vehicle by ID to enter detailed view
-        return 0;
+    private static int selectVehicle() {
+        return prompter.promptVehicleId();
     }
 
     /**
@@ -165,7 +163,7 @@ public class UsedCarDealership {
      * 
      * @param vehicleID the ID of the Vehicle to print details for
      */
-    private static void viewVehicleDetails(int vehicleID) {
+    private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
         // TODO: Print vehicle's full details
         // TODO: Create a getFullDetails method for each Vehicle type
         // vehicleDetailsMenu():
