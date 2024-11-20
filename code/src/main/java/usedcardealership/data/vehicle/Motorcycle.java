@@ -69,9 +69,7 @@ public class Motorcycle extends Vehicle {
 
     @Override
     public String toString() {
-        return getCommonDetails() + "\n" +
-                "Engine Capacity: " + this.engineCC + " cc\n" +
-                "Handlebar Type: " + this.handlebarType;
+        return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
     public double getEngineCC() {

@@ -105,7 +105,7 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return getCommonDetails();
+        return this.id + " " + this.make + " " + this.model + " " + this.year + " - " + this.transmission + ", " + this.driveType;
     }
 
     /**

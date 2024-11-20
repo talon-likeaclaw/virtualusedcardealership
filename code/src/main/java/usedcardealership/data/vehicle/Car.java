@@ -70,8 +70,7 @@ public class Car extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return getCommonDetails() + "\n" +
-                "Convertible: " + (this.isConvertible ? "Yes" : "No");
+        return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
     public boolean isConvertible() {

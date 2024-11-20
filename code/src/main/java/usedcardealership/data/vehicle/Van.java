@@ -72,8 +72,7 @@ public class Van extends CargoCapacity {
 
     @Override
     public String toString() {
-        return getCommonDetails() + "\n" +
-                "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
+        return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
     public boolean hasSlidingDoors() {
