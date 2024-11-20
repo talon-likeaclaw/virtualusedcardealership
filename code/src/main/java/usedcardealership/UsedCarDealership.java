@@ -38,10 +38,10 @@ public class UsedCarDealership {
                     browseVehiclesView(dealership);
                     break;
                 case 2:
-                    // viewAccountView()
+                    // TODO: viewAccountView()
                     break;
                 case 3:
-                    // sellVehicleView()
+                    // TODO: sellVehicleView()
                     break;
             }
         }
@@ -63,30 +63,93 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    // viewCars()
+                    // TODO: viewCars()
                     break;
                 case 2:
-                    // viewSUVs()
+                    // TODO: viewSUVs()
                     break;
                 case 3:
-                    // viewTrucks()
+                    // TODO: viewTrucks()
                     break;
                 case 4:
-                    // viewVans()
+                    // TODO: viewVans()
                     break;
                 case 5:
-                    // viewRVs()
+                    // TODO: viewRVs()
                     break;
                 case 6:
-                    // viewMotorcycles()
+                    // TODO: viewMotorcycles()
                     break;
                 case 7:
-                    // viewAllVehicles()
+                    // TODO: viewAllVehicles()
                     break;
             }
         }
     }
 
+    /**
+     *  Gets and views a list of all of the Cars available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewCars(DealershipManager dealership) {
+        // TODO: dealership.getCars();
+    }
+
+    /**
+     *  Gets and views a list of all of the SUVs available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewSUVs(DealershipManager dealership) {
+        // TODO: dealership.getSUVs();
+    }
+    
+    /**
+     *  Gets and views a list of all of the Trucks available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewTrucks(DealershipManager dealership) {
+        // TODO: dealership.getSUVs();
+    }
+
+    /**
+     *  Gets and views a list of all of the Vans available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewVans(DealershipManager dealership) {
+        // TODO: dealership.getVans();
+    }
+
+    /**
+     *  Gets and views a list of all of the RVs available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewRVs(DealershipManager dealership) {
+        // TODO: dealership.getRVs();
+    }
+
+    /**
+     *  Gets and views a list of all of the Motorcycles available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewMotorcycles(DealershipManager dealership) {
+        // TODO: dealership.getMotorcycless();
+    }
+
+    /**
+     *  Gets and views a list of all of the vehicles available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewAllVehicles(DealershipManager dealership) {
+        // TODO: dealership.getAllVehicles();
+    }
+    
     /**
      * Initializes the DealershipManager by loading all data from files
      * 
