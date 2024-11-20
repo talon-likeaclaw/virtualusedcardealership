@@ -1,270 +1,227 @@
 package usedcardealership;
 
-import java.io.IOException;
 import java.util.*;
-import usedcardealership.business.filter.*;
-import usedcardealership.business.manager.*;
+import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.data.customer.*;
+import usedcardealership.data.transaction.*;
+import usedcardealership.business.manager.*;
 
 public class UsedCarDealership {
+    private static Prompter prompter;
+
     public static void main(String[] args) {
-        testVehicleFileHandling();
+        prompter = new Prompter();
+        DealershipManager dealership = initialize();
+        mainMenuView(dealership);
+        shutdown(dealership);
     }
 
-    public static void testVehicleFileHandling() {
-        String databasePath = "resources/database.csv";
-        String inventoryPath = "resources/inventory.csv";
-        String testWritePath = "resources/testWrite.csv";
-        try {
-            VehicleFileHandler vehicleDatabaseHandler = new VehicleFileHandler(databasePath);
-            VehicleFileHandler vehicleInventoryHandler = new VehicleFileHandler(inventoryPath);
-            VehicleFileHandler vehicleWriteHandler = new VehicleFileHandler(testWritePath);
-            List<Vehicle> database = vehicleDatabaseHandler.load();
-            List<Vehicle> inventory = vehicleInventoryHandler.load();
-            VehicleManager manager = new VehicleManager(inventory, database);
-            // manager.printVehicles(inventory); // WOOOOOO IT WORKS!!
-            Car mitsubishiLancer = new Car(
-                    "Car",
-                    999, // id
-                    "Mitsubishi", // make
-                    "Lancer", // model
-                    2018, // year
-                    18000.0, // price
-                    "White", // color
-                    "Manual", // transmission
-                    "FWD", // driveType
-                    168, // horsepower
-                    2900.0, // weight in lbs
-                    45000.0, // mileage in kilometers
-                    4.5, // damage percentage
-                    false, // isElectric
-                    5, // numSeats
-                    4, // numDoors
-                    false, // hasSunRoof
-                    false // isConvertible
-            );
-            manager.addVehicle(mitsubishiLancer);
-            // Test filters
-            IFilter<Vehicle> colorFilter = new VehicleColorFilter("Yellow");
-            printGreen("\nVehicles that are Yellow:");
-            manager.printVehiclesFull(manager.searchInventory(colorFilter));
-            IFilter<Vehicle> driveFilter = new VehicleDriveFilter("AWD");
-            printGreen("\nVehicles that are All Wheel Drive:");
-            manager.printVehiclesFull(manager.searchInventory(driveFilter));
-            IFilter<Vehicle> kilometerageFilter = new VehicleKilometerageRangeFilter(10000, 20000);
-            printGreen("\nVehicles between 10,000km and 20,000km:");
-            manager.printVehiclesFull(manager.searchInventory(kilometerageFilter));
-            IFilter<Vehicle> makeFilter = new VehicleMakeFilter("Hyundai");
-            printGreen("\nVehicles made by Hyundai:");
-            manager.printVehiclesFull(manager.searchInventory(makeFilter));
-            IFilter<Vehicle> priceFilter = new VehiclePriceRangeFilter(10000, 20000);
-            printGreen("\nVehicles between $10,000 and $20,000:");
-            manager.printVehiclesFull(manager.searchInventory(priceFilter));
-            IFilter<Vehicle> transmissionFilter = new VehicleTransmissionFilter("Manual");
-            printGreen("\nVehicles that have a Manual transmission:");
-            manager.printVehiclesFull(manager.searchInventory(transmissionFilter));
-            IFilter<Vehicle> typeFilter = new VehicleTypeFilter("PickupTruck");
-            printGreen("\nVehicles that are PickupTrucks");
-            manager.printVehiclesFull(manager.searchInventory(typeFilter));
-            IFilter<Vehicle> yearFilter = new VehicleYearRangeFilter(2020, 2021);
-            printGreen("\nVehicles that are from years 2020 and 2021:");
-            manager.printVehiclesFull(manager.searchInventory(yearFilter));
-
-            vehicleWriteHandler.save(manager.getInventory()); // I can't believe it works!!!
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    /**
+     * Main menu that allows user to choose what to do
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void mainMenuView(DealershipManager dealership) {
+        boolean inPage = true;
+        System.out.println("Welcome to " + dealership.getName() + "!");
+        System.out.println("\nPlease select an option:");
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n0: Exit",
+                    3)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    browseVehiclesView(dealership);
+                    break;
+                case 2:
+                    // TODO: viewAccountView()
+                    break;
+                case 3:
+                    // TODO: sellVehicleView()
+                    break;
+            }
         }
     }
 
-    public static void testVehicles() {
-        // MOTORCYCLE
-        Motorcycle harleyDavidsonStreet = new Motorcycle(
-                "Motorcycle",
-                101, // id
-                "Harley-Davidson", // make
-                "Street 750", // model
-                2020, // year
-                7500.0, // price
-                "Black", // color
-                "Manual", // transmission
-                "RWD", // driveType
-                53, // horsepower
-                233.0, // weight in lbs
-                15000.0, // mileage in kilometers
-                5.0, // damage percentage
-                false, // isElectric
-                749.0, // engineCC
-                "Cruiser" // handlebarType
-        );
-        System.out.println(harleyDavidsonStreet);
-        System.out.println();
-
-        // RV
-        RV winnebagoVoyage = new RV(
-                "RV",
-                202, // id
-                "Winnebago", // make
-                "Voyage", // model
-                2022, // year
-                75000.0, // price
-                "White", // color
-                "Automatic", // transmission
-                "4WD", // driveType
-                300, // horsepower
-                12000.0, // weight in lbs
-                20000.0, // mileage in kilometers
-                10.0, // damage percentage
-                false, // isElectric
-                6, // numSeats
-                2, // numDoors
-                false, // hasSunRoof
-                4, // sleepCapacity
-                true // hasBathroom
-        );
-        System.out.println(winnebagoVoyage);
-        System.out.println();
-
-        // CAR
-        Car mitsubishiLancer = new Car(
-                "Car",
-                505, // id
-                "Mitsubishi", // make
-                "Lancer", // model
-                2018, // year
-                18000.0, // price
-                "White", // color
-                "Manual", // transmission
-                "FWD", // driveType
-                168, // horsepower
-                2900.0, // weight in lbs
-                45000.0, // mileage in kilometers
-                4.5, // damage percentage
-                false, // isElectric
-                5, // numSeats
-                4, // numDoors
-                false, // hasSunRoof
-                false // isConvertible
-        );
-        mitsubishiLancer.addDamage(25.7); // Got into a little crash
-        System.out.println(mitsubishiLancer);
-        System.out.println();
-
-        // SUV
-        SUV hyundaiKona = new SUV(
-                "SUV",
-                404, // id
-                "Hyundai", // make
-                "Kona", // model
-                2022, // year
-                21000.0, // price
-                "White", // color
-                "Automatic", // transmission
-                "AWD", // driveType
-                147, // horsepower
-                3200.0, // weight in lbs
-                10000.0, // mileage in kilometers
-                2.5, // damage percentage
-                false, // isElectric
-                5, // numSeats
-                4, // numDoors
-                false, // hasSunRoof
-                false // hasThirdRowSeating
-        );
-        hyundaiKona.addKilometerage(30000);
-        System.out.println(hyundaiKona);
-        System.out.println();
-
-        // VAN
-        Van fordTransit = new Van(
-                "Van",
-                606, // id
-                "Ford", // make
-                "Transit", // model
-                2020, // year
-                35000.0, // price
-                "White", // color
-                "Automatic", // transmission
-                "RWD", // driveType
-                275, // horsepower
-                5000.0, // weight in lbs
-                40000.0, // kilometerage in kilometers
-                3.0, // damage percentage
-                false, // isElectric
-                2, // numSeats
-                4, // numDoors
-                false, // hasSunRoof
-                487.3, // cargoCapacity in cubic feet
-                true // hasSlidingDoors
-        );
-        System.out.println(fordTransit);
-        System.out.println();
-
-        // PICKUP TRUCK
-        PickupTruck f150Lightning = new PickupTruck(
-                "PickupTruck",
-                707, // id
-                "Ford", // make
-                "F-150 Lightning", // model
-                2022, // year
-                45000.0, // price
-                "Blue", // color
-                "Automatic", // transmission
-                "AWD", // driveType
-                563, // horsepower
-                6400.0, // weight in lbs
-                5000.0, // kilometerage in kilometers
-                2.0, // damage percentage
-                true, // isElectric
-                5, // numSeats
-                4, // numDoors
-                false, // hasSunRoof
-                52.8, // cargoCapacity in cubic feet
-                5.5, // bedLength in feet
-                10000.0 // towingCapacity in lbs
-        );
-        System.out.println(f150Lightning);
-        System.out.println();
-
-        // VehicleManager Testing
-        List<Vehicle> vehicles = new ArrayList<>();
-        vehicles.add(mitsubishiLancer);
-        vehicles.add(hyundaiKona);
-
-        printGreen("Before winning the lottery:\n");
-        VehicleManager testVehicles = new VehicleManager(vehicles, vehicles);
-        testVehicles.printVehiclesShort(testVehicles.getInventory());
-
-        printGreen("After winning the lottery:\n");
-        testVehicles.addVehicle(harleyDavidsonStreet);
-        testVehicles.addVehicle(winnebagoVoyage);
-        testVehicles.addVehicle(fordTransit);
-        testVehicles.addVehicle(f150Lightning);
-        testVehicles.printVehiclesShort(testVehicles.getInventory());
-
+    /**
+     * Menu that allows user to choose between vehicle type
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void browseVehiclesView(DealershipManager dealership) {
+        boolean inPage = true;
+        System.out.println("\nSelect Vehicle Type:");
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "1: Car\n2: SUV\n3: Pickup Truck\n4: Van\n5: RV\n6: Motorcycle\n7: All\n0: Return to Main Menu",
+                    7)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    // TODO: viewCars()
+                    break;
+                case 2:
+                    // TODO: viewSUVs()
+                    break;
+                case 3:
+                    // TODO: viewTrucks()
+                    break;
+                case 4:
+                    // TODO: viewVans()
+                    break;
+                case 5:
+                    // TODO: viewRVs()
+                    break;
+                case 6:
+                    // TODO: viewMotorcycles()
+                    break;
+                case 7:
+                    // TODO: viewAllVehicles()
+                    break;
+            }
+        }
     }
 
     /**
-     * Prints message in color
+     *  Gets and views a list of all of the Cars available in inventory
      * 
-     * @param color   Color of message
-     * @param message Message to be printed
+     * @param dealership the DealershipManager object
      */
-    private static void printColor(String color, String message) {
-        final String ANSI_RESET = "\u001B[0m";
-
-        System.out.println(color + message + ANSI_RESET);
+    private static void viewCars(DealershipManager dealership) {
+        // TODO: dealership.getCars();
     }
 
     /**
-     * Prints in greem
+     *  Gets and views a list of all of the SUVs available in inventory
      * 
-     * @param message String message to be printed in red
+     * @param dealership the DealershipManager object
      */
-    private static void printGreen(String message) {
-        final String ANSI_GREEN = "\u001B[32m";
-        printColor(ANSI_GREEN, message);
+    private static void viewSUVs(DealershipManager dealership) {
+        // TODO: dealership.getSUVs();
+    }
+    
+    /**
+     *  Gets and views a list of all of the Trucks available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewTrucks(DealershipManager dealership) {
+        // TODO: dealership.getSUVs();
     }
 
+    /**
+     *  Gets and views a list of all of the Vans available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewVans(DealershipManager dealership) {
+        // TODO: dealership.getVans();
+    }
+
+    /**
+     *  Gets and views a list of all of the RVs available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewRVs(DealershipManager dealership) {
+        // TODO: dealership.getRVs();
+    }
+
+    /**
+     *  Gets and views a list of all of the Motorcycles available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewMotorcycles(DealershipManager dealership) {
+        // TODO: dealership.getMotorcycless();
+    }
+
+    /**
+     *  Gets and views a list of all of the vehicles available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewAllVehicles(DealershipManager dealership) {
+        // TODO: dealership.getAllVehicles();
+    }
+    
+    /**
+     * Initializes the DealershipManager by loading all data from files
+     * 
+     * @return the DealershipManager object that was initialized
+     */
+    private static DealershipManager initialize() {
+        String dealershipName = "Talon & Juan's Used Car Emporium";
+        double dealershipAccountBalance = 567234.54;
+
+        // Load vehicles
+        String vehicleDatabasePath = "resources/database.csv";
+        List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
+        String vehicleInventoryPath = "resources/inventory.csv";
+        List<Vehicle> inventory = initializeListVehicle(vehicleInventoryPath);
+
+        // Load customers
+        String customerPath = "resources/customers.csv";
+        CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
+        List<Customer> customers = customerLoader.load();
+
+        // Load transactions
+        String transactionPath = "resources/transactions.csv";
+        TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
+        List<Transaction> transactions = transactionLoader.load();
+
+        // Initialize and return the DealershipManager
+        DealershipManager dealership = new DealershipManager(
+                dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+        return dealership;
+    }
+
+    /**
+     * Initilizes a VehicleFileLoader and loads from file path
+     * 
+     * @param filePath the file path to load from
+     * @return a list of vehicles loaded from file
+     */
+    private static List<Vehicle> initializeListVehicle(String filePath) {
+        VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
+        return vehicleLoader.load();
+    }
+
+    /**
+     * Shuts down the program, saving the dealerships database, inventory,
+     * customerlist, and transactionhistory to csv files
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void shutdown(DealershipManager dealership) {
+        // Save inventory and database
+        String vehicleDatabasePath = "resources/database.csv";
+        String vehicleInventoryPath = "resources/inventory.csv";
+        List<Vehicle> database = dealership.getDatabase();
+        List<Vehicle> inventory = dealership.getInventory();
+        VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
+        VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
+        vehicleDatabaseSaver.save(database);
+        vehicleInventorySaver.save(inventory);
+
+        // Save customers
+        String customerPath = "resources/customers.csv";
+        List<Customer> customers = dealership.getCustomers();
+        CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
+        customerSaver.save(customers);
+
+        // Save transactions
+        String transactionPath = "resources/transactions.csv";
+        List<Transaction> transactions = dealership.getTransactions();
+        TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
+        transactionSaver.save(transactions);
+
+        System.out.println("\nShutting down. Please come again! :)");
+        prompter.close();
+    }
 }

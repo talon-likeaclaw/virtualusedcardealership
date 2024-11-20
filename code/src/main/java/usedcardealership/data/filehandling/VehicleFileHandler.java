@@ -3,7 +3,7 @@
  *
  * @param <Vehicle> the input vehicle list
  * @author Talon Dunbar
- * @version 11/12/2024
+ * @version 11/19/2024
  */
 
 package usedcardealership.data.filehandling;
@@ -20,9 +20,8 @@ public class VehicleFileHandler implements IDataHandler<Vehicle> {
    * Constructs a VehicleFileHandler with the specified file path.
    * 
    * @param String filePath - The path to the file containing Vehicle data.
-   * @throws IOException
    */
-  public VehicleFileHandler(String filePath) throws IOException {
+  public VehicleFileHandler(String filePath) {
     this.filePath = Paths.get(filePath);
   }
 

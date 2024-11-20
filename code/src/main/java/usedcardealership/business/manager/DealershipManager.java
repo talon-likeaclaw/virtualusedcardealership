@@ -2,7 +2,7 @@
  * Manages the Dealership
  * 
  * @author Talon Dunbar - 2131651
- * @version 11/10/2024
+ * @version 11/19/2024
  */
 
 package usedcardealership.business.manager;
@@ -35,9 +35,6 @@ public class DealershipManager {
       List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
     this.name = name;
     this.accountBalance = accountBalance;
-
-    // TODO: Need to implement data handling Strategy
-    // Still not 100% about the implementation yet, estimating still until more clear
     this.transactionManager = new TransactionManager(transactions);
     this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
@@ -49,6 +46,22 @@ public class DealershipManager {
 
   public double getBalance() {
     return this.accountBalance;
+  }
+
+  public List<Customer> getCustomers() {
+    return this.customerManager.getCustomers();
+  }
+
+  public List<Transaction> getTransactions() {
+    return this.transactionManager.getTransactions();
+  }
+
+  public List<Vehicle> getInventory() {
+    return this.vehicleManager.getInventory();
+  }
+
+  public List<Vehicle> getDatabase() {
+    return this.vehicleManager.getDatabase();
   }
 
   /**
