@@ -38,6 +38,8 @@ public class TransactionManager {
      */
     public Transaction sellVehicle(Vehicle vehicle, Customer customer){
 
+        int newId = transactionHistory.size() + 1;
+
         Transaction sale = new Sale();
         processTransaction(sale);
         return sale;

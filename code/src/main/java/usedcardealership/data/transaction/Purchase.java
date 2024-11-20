@@ -22,9 +22,8 @@ public class Purchase extends Transaction{
      * Constructor: uses parent constructor
      */
     public Purchase(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
-        super(id, type, date, price, tax, customer, vehicle);
+        super(id, "Purchase", date, price, tax, customer, vehicle);
     }
-    public Purchase(){}
     /**
      * Initializes the transaction
      * 

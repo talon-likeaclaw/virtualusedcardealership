@@ -10,6 +10,8 @@ import usedcardealership.business.manager.*;
 
 public class UsedCarDealership {
     private static Prompter prompter;
+    private static Customer currentCustomer;
+    private static Random rand;
 
     public static void main(String[] args) {
         prompter = new Prompter();
@@ -39,7 +41,7 @@ public class UsedCarDealership {
                     browseVehiclesView(dealership);
                     break;
                 case 2:
-                    // TODO: viewAccountView()
+                    //viewAccountView(dealership);
                     break;
                 case 3:
                     // TODO: sellVehicleView()
@@ -192,6 +194,10 @@ public class UsedCarDealership {
         String dealershipName = "Talon & Juan's Used Car Emporium";
         double dealershipAccountBalance = 567234.54;
 
+        rand = new Random();
+        
+        
+
         // Load vehicles
         String vehicleDatabasePath = "resources/database.csv";
         List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
@@ -267,6 +273,11 @@ public class UsedCarDealership {
      */
     public static void wipe() {
         System.out.print("\033[H\033[2J");
+    }
+
+
+    private static void viewAccountView(DealershipManager dealer){
+        throw new UnsupportedOperationException();
     }
 
 }
