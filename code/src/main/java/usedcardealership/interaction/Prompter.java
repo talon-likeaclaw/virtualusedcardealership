@@ -57,12 +57,17 @@ public class Prompter {
     /**
      * Gets an int and only an int from the user
      * 
-     * @return Int
+     * @return the int the user chose
      */
     public int promptInt() {
         return promptOption("", 0);
     }
 
+    /**
+     * Prompts user to input vehicle ID
+     * 
+     * @return the vehicle ID the user chose
+     */
     public int promptVehicleId() {
         System.out.println("\nSelect a Vehicle ID:");
         return promptInt();

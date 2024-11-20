@@ -89,6 +89,12 @@ public class UsedCarDealership {
         }
     }
 
+    /**
+     * Prints the list of vehicles by chosen type
+     * 
+     * @param dealership the DealershipManager object
+     * @param vehicleType the type of vehicle to get a list of
+     */
     private static void viewVehicles(DealershipManager dealership, String vehicleType) {
         List<Vehicle> vehicles = new ArrayList<>();
 
