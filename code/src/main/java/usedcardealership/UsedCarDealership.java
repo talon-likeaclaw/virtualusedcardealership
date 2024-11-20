@@ -65,101 +65,67 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    viewAllVehicles(dealership);
+                    viewVehicles(dealership, "All");
                     break;
                 case 2:
-                    // TODO: viewCars()
+                    viewVehicles(dealership, "Car");
                     break;
                 case 3:
-                    // TODO: viewSUVs()
+                    viewVehicles(dealership, "SUV");
                     break;
                 case 4:
-                    // TODO: viewVans()
+                    viewVehicles(dealership, "Van");
                     break;
                 case 5:
-                    // TODO: viewRVs()
+                    viewVehicles(dealership, "RV");
                     break;
                 case 6:
-                    // TODO: viewMotorcycles()
+                    viewVehicles(dealership, "Motorcycle");
                     break;
                 case 7:
-                    // TODO: viewTrucks()
+                    viewVehicles(dealership, "Truck");
                     break;
             }
         }
     }
 
-    /**
-     * Gets and views a list of all of the vehicles available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewAllVehicles(DealershipManager dealership) {
-        wipe();
-        List<Vehicle> vehicles = dealership.getInventory();
-        // TODO: sort vehicles by ID
-        for (Vehicle v : vehicles) {
-            System.out.println(v);
+    private static void viewVehicles(DealershipManager dealership, String vehicleType) {
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        if (vehicleType.equals("All")) {
+            vehicles = dealership.getInventory();
+        } else {
+            switch (vehicleType) {
+                case "Car":
+                    vehicles = dealership.getCars();
+                    break;
+                case "SUV":
+                    vehicles = dealership.getSUVs();
+                    break;
+                case "Van":
+                    vehicles = dealership.getVans();
+                    break;
+                case "RV":
+                    vehicles = dealership.getRVs();
+                    break;
+                case "Motorcycle":
+                    vehicles = dealership.getMotorcycles();
+                    break;
+                case "Truck":
+                    vehicles = dealership.getTrucks();
+                    break;
+            }
         }
-        vehicleViewMenu();
-    }
-
-    /*
-     * Might be a better idea to use a switch case for the dealer.getType() calls.
-     * Will refactor once the underlying logic is implemented for each filter of Type
-     */
-    /**
-     * Gets and views a list of all of the Cars available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewCars(DealershipManager dealership) {
-        // TODO: dealership.getCars();
-    }
-
-    /**
-     * Gets and views a list of all of the SUVs available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewSUVs(DealershipManager dealership) {
-        // TODO: dealership.getSUVs();
-    }
-
-    /**
-     * Gets and views a list of all of the Trucks available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewTrucks(DealershipManager dealership) {
-        // TODO: dealership.getSUVs();
-    }
-
-    /**
-     * Gets and views a list of all of the Vans available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewVans(DealershipManager dealership) {
-        // TODO: dealership.getVans();
-    }
-
-    /**
-     * Gets and views a list of all of the RVs available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewRVs(DealershipManager dealership) {
-        // TODO: dealership.getRVs();
-    }
-
-    /**
-     * Gets and views a list of all of the Motorcycles available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewMotorcycles(DealershipManager dealership) {
-        // TODO: dealership.getMotorcycless();
+        if (vehicles.isEmpty()) {
+            System.out.println("No vehicles available in inventory.");
+        } else {
+            // TODO: sort vehicles by ID
+            wipe();
+            for (Vehicle v : vehicles) {
+                System.out.println(v);
+            }
+            vehicleViewMenu();
+        }
     }
 
     /**
