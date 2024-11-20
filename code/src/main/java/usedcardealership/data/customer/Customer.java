@@ -42,6 +42,9 @@ public class Customer {
         this.accountBalance = accountBalance;
         this.vehicles = vehicles;
     }
+    /** 
+     * Copy constructor
+    */
     public Customer(Customer c) {
         this(c.id, 
              c.firstName, 
