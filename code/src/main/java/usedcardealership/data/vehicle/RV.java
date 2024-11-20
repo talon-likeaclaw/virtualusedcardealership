@@ -78,6 +78,12 @@ public class RV extends EnclosedVehicle {
         return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
+    public String getFullDetails() {
+        return getCommonDetails() + "\n" +
+        "Sleep Capacity: " + this.sleepCapacity + "\n" +
+        "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
+    }
+
     public int getSleepCapacity() {
         return this.sleepCapacity;
     }

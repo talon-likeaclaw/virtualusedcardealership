@@ -75,6 +75,11 @@ public class Van extends CargoCapacity {
         return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
+    public String getFullDetails() {
+        return getCommonDetails() + "\n" +
+        "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
+    }
+
     public boolean hasSlidingDoors() {
         return this.hasSlidingDoors;
     }
