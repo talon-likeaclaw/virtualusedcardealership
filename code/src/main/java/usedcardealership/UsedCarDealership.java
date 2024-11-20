@@ -54,22 +54,23 @@ public class UsedCarDealership {
      */
     private static void browseVehiclesView(DealershipManager dealership) {
         boolean inPage = true;
+        wipe();
         System.out.println("\nSelect Vehicle Type:");
         while (inPage) {
             switch (prompter.promptOption(
-                    "1: Car\n2: SUV\n3: Pickup Truck\n4: Van\n5: RV\n6: Motorcycle\n7: All\n0: Return to Main Menu",
+                    "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Main Menu",
                     7)) {
                 case 0:
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: viewCars()
+                    viewAllVehicles(dealership);
                     break;
                 case 2:
-                    // TODO: viewSUVs()
+                    // TODO: viewCars()
                     break;
                 case 3:
-                    // TODO: viewTrucks()
+                    // TODO: viewSUVs()
                     break;
                 case 4:
                     // TODO: viewVans()
@@ -81,14 +82,28 @@ public class UsedCarDealership {
                     // TODO: viewMotorcycles()
                     break;
                 case 7:
-                    // TODO: viewAllVehicles()
+                    // TODO: viewTrucks()
                     break;
             }
         }
     }
 
     /**
-     *  Gets and views a list of all of the Cars available in inventory
+     * Gets and views a list of all of the vehicles available in inventory
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void viewAllVehicles(DealershipManager dealership) {
+        wipe();
+        List<Vehicle> vehicles = dealership.getInventory();
+        for (Vehicle v : vehicles) {
+            System.out.println(v);
+        }
+        vehicleViewMenu();
+    }
+
+    /**
+     * Gets and views a list of all of the Cars available in inventory
      * 
      * @param dealership the DealershipManager object
      */
@@ -97,16 +112,16 @@ public class UsedCarDealership {
     }
 
     /**
-     *  Gets and views a list of all of the SUVs available in inventory
+     * Gets and views a list of all of the SUVs available in inventory
      * 
      * @param dealership the DealershipManager object
      */
     private static void viewSUVs(DealershipManager dealership) {
         // TODO: dealership.getSUVs();
     }
-    
+
     /**
-     *  Gets and views a list of all of the Trucks available in inventory
+     * Gets and views a list of all of the Trucks available in inventory
      * 
      * @param dealership the DealershipManager object
      */
@@ -115,7 +130,7 @@ public class UsedCarDealership {
     }
 
     /**
-     *  Gets and views a list of all of the Vans available in inventory
+     * Gets and views a list of all of the Vans available in inventory
      * 
      * @param dealership the DealershipManager object
      */
@@ -124,7 +139,7 @@ public class UsedCarDealership {
     }
 
     /**
-     *  Gets and views a list of all of the RVs available in inventory
+     * Gets and views a list of all of the RVs available in inventory
      * 
      * @param dealership the DealershipManager object
      */
@@ -133,7 +148,7 @@ public class UsedCarDealership {
     }
 
     /**
-     *  Gets and views a list of all of the Motorcycles available in inventory
+     * Gets and views a list of all of the Motorcycles available in inventory
      * 
      * @param dealership the DealershipManager object
      */
@@ -142,14 +157,56 @@ public class UsedCarDealership {
     }
 
     /**
-     *  Gets and views a list of all of the vehicles available in inventory
+     * Menu that allows user to select a vehicle or exit
+     * 
+     */
+    private static void vehicleViewMenu() {
+        boolean inPage = true;
+        System.out.println("\nPlease select an option:");
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "1: Select Vehicle\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    // TODO: int vehilceID = selectVehicle();
+                    // TODO: viewVehicleDetails(vehicleID);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Allows the user to select a vehicle by ID
      * 
      * @param dealership the DealershipManager object
+     * @return the selected ID of the vehicle they want more details on
      */
-    private static void viewAllVehicles(DealershipManager dealership) {
-        // TODO: dealership.getAllVehicles();
+    private static int selectVehicle(DealershipManager dealership) {
+        // TODO: Implement logic to select vehicle by ID to enter detailed view
     }
-    
+
+    /**
+     * Gets and prints the Vehicle's full details
+     * 
+     * @param vehicleID
+     * @return
+     */
+    private static int viewVehicleDetails(int vehicleID) {
+        // TODO: Print vehicle's full details
+        // TODO: Create a getFullDetails method for each Vehicle type
+        // vehicleDetailsMenu():
+    }
+
+    /**
+     * Menu that asks user if they want to purchase vehicle or go back
+     * 
+     */
+    private static void vehicleDetailsMenu() {
+        // TODO: Create a menu that allows for purchase, go back, or go to main menu
+    }
+
     /**
      * Initializes the DealershipManager by loading all data from files
      * 
@@ -169,6 +226,10 @@ public class UsedCarDealership {
         String customerPath = "resources/customers.csv";
         CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
         List<Customer> customers = customerLoader.load();
+        // TODO: Select a random customer from the list to assign the the currentUser on
+        // init
+        // Thought it would be cool if each time you start up the program you are a
+        // random customer
 
         // Load transactions
         String transactionPath = "resources/transactions.csv";
@@ -224,4 +285,12 @@ public class UsedCarDealership {
         System.out.println("\nShutting down. Please come again! :)");
         prompter.close();
     }
+
+    /**
+     * Wipes the console screen
+     */
+    public static void wipe() {
+        System.out.print("\033[H\033[2J");
+    }
+
 }
