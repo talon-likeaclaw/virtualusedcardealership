@@ -26,10 +26,7 @@ public class Transaction {
      * @param tax
      * @param customer
      * @param vehicle
-     * 
-     * Initialize all fields using parameters
      */
-    public Transaction(){};
     public Transaction(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle) {
         this.id = id;
         this.type = type;
@@ -68,7 +65,7 @@ public class Transaction {
         return this.vehicle;
     }
 
-    //Adding necessary setters
+    // Adding necessary setters
     public void setDate(String date) {
         this.date = date;
     }
@@ -77,14 +74,18 @@ public class Transaction {
         this.price = price;
     }
 
-    /** 
-     * Calculates the total (negative or positive) of the transaction 
+    public String toString() {
+        return "******************************\nTransaction ID: " + this.id + "\nType: " + this.type + "\nDate: " + this.date + "\nPrice: " + this.price + "\n\nCustomer:\n" + this.customer + "\n\nVehicle:" + this.vehicle + "\n******************************";
+    }
+
+    /**
+     * Calculates the total (negative or positive) of the transaction
      * car value - depreciation + tax
      * 
      * @return double
      */
     // public double calculateTotal() {
-    //     double depreciation = this.getVehicle().calculateDepreciation();
-    //     return (this.getPrice() - depreciation) * this.getTax();
+    // double depreciation = this.getVehicle().calculateDepreciation();
+    // return (this.getPrice() - depreciation) * this.getTax();
     // }
 }

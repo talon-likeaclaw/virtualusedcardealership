@@ -5,12 +5,11 @@
  * @version 11/11/2024
  */
 
-package usedcardealership;
+package usedcardealership.business.manager;
 
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import usedcardealership.business.manager.*;
 
 public class DealershipManagerTest {
 
