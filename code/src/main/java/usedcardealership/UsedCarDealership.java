@@ -30,8 +30,8 @@ public class UsedCarDealership {
             System.out.println("Welcome to " + dealership.getName() + "!");
             System.out.println("\nPlease select an option:");
             switch (prompter.promptOption(
-                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n0: Exit",
-                    3)) {
+                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
+                    4)) {
                 case 0:
                     inPage = false;
                     break;
@@ -42,6 +42,9 @@ public class UsedCarDealership {
                     // TODO: viewAccountView()
                     break;
                 case 3:
+                    // TODO: viewShoppingCart()
+                    break;
+                case 4:
                     // TODO: sellVehicleView()
                     break;
             }
@@ -189,12 +192,12 @@ public class UsedCarDealership {
         while (inPage) {
             System.out.println("\nWould you like to:");
             switch (prompter.promptOption(
-                    "1: Purchase this Vehicle\n0: Return to Vehicle List", 1)) {
+                    "1: Add Vehicle to Cart\n0: Return to Vehicle List", 1)) {
                 case 0:
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: Implement method for initiating purchase
+                    // TODO: Implement method to add vehicle to cart
                     break;
             }
         }
