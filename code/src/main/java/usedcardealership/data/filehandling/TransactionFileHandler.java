@@ -3,7 +3,7 @@
  *
  * @param <Transaction> the input Transaction list
  * @author Talon Dunbar
- * @version 11/12/2024
+ * @version 11/19/2024
  */
 
 package usedcardealership.data.filehandling;
@@ -22,9 +22,8 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
    * Constructs a TransactionFileHandler with the specified file path.
    * 
    * @param String filePath - The path to the file containing Transaction data.
-   * @throws IOException
    */
-  public TransactionFileHandler(String filePath) {
+  public TransactionFileHandler(String filePath)  {
     this.filePath = Paths.get(filePath);
   }
 

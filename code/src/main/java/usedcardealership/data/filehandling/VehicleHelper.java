@@ -3,7 +3,7 @@
  * Reduces code duplication Vehicle and Customer loading.
  *
  * @author Talon Dunbar
- * @version 11/12/2024
+ * @version 11/19/2024
  */
 
 package usedcardealership.data.filehandling;
@@ -18,6 +18,9 @@ public class VehicleHelper {
      * @return a Vehicle instance or null if the type is not valid.
      */
     public static Vehicle parseVehicle(String[] fields) {
+        if (fields[0].equals("[]")) {
+            return null;
+        }
         // Fill common fields.
         String type = fields[0];
         int id = Integer.parseInt(fields[1]);

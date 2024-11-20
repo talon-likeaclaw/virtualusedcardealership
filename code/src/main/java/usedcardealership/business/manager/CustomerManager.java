@@ -25,6 +25,10 @@ public class CustomerManager {
         this.customerList = customerList;
     }
 
+    public List<Customer> getCustomers() {
+        return this.customerList;
+    }
+
     /**
      * Function updates the customerList List<Customer> to add a Customer object
      * 
