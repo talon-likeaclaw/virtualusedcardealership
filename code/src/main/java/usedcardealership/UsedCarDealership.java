@@ -104,6 +104,10 @@ public class UsedCarDealership {
         vehicleViewMenu();
     }
 
+    /*
+     * Might be a better idea to use a switch case for the dealer.getType() calls.
+     * Will refactor once the underlying logic is implemented for each filter of Type
+     */
     /**
      * Gets and views a list of all of the Cars available in inventory
      * 
