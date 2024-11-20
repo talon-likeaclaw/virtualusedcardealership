@@ -25,9 +25,10 @@ public class UsedCarDealership {
      */
     private static void mainMenuView(DealershipManager dealership) {
         boolean inPage = true;
-        System.out.println("Welcome to " + dealership.getName() + "!");
-        System.out.println("\nPlease select an option:");
         while (inPage) {
+            wipe();
+            System.out.println("Welcome to " + dealership.getName() + "!");
+            System.out.println("\nPlease select an option:");
             switch (prompter.promptOption(
                     "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n0: Exit",
                     3)) {
@@ -54,9 +55,9 @@ public class UsedCarDealership {
      */
     private static void browseVehiclesView(DealershipManager dealership) {
         boolean inPage = true;
-        wipe();
-        System.out.println("\nSelect Vehicle Type:");
         while (inPage) {
+            wipe();
+            System.out.println("Select Vehicle Type:");
             switch (prompter.promptOption(
                     "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Main Menu",
                     7)) {
@@ -96,6 +97,7 @@ public class UsedCarDealership {
     private static void viewAllVehicles(DealershipManager dealership) {
         wipe();
         List<Vehicle> vehicles = dealership.getInventory();
+        // TODO: sort vehicles by ID
         for (Vehicle v : vehicles) {
             System.out.println(v);
         }
@@ -162,8 +164,8 @@ public class UsedCarDealership {
      */
     private static void vehicleViewMenu() {
         boolean inPage = true;
-        System.out.println("\nPlease select an option:");
         while (inPage) {
+            System.out.println("\nPlease select an option:");
             switch (prompter.promptOption(
                     "1: Select Vehicle\n0: Exit", 1)) {
                 case 0:
@@ -185,15 +187,15 @@ public class UsedCarDealership {
      */
     private static int selectVehicle(DealershipManager dealership) {
         // TODO: Implement logic to select vehicle by ID to enter detailed view
+        return 0;
     }
 
     /**
      * Gets and prints the Vehicle's full details
      * 
-     * @param vehicleID
-     * @return
+     * @param vehicleID the ID of the Vehicle to print details for
      */
-    private static int viewVehicleDetails(int vehicleID) {
+    private static void viewVehicleDetails(int vehicleID) {
         // TODO: Print vehicle's full details
         // TODO: Create a getFullDetails method for each Vehicle type
         // vehicleDetailsMenu():
