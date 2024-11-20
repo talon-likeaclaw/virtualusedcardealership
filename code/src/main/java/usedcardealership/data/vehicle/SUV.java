@@ -73,6 +73,7 @@ public class SUV extends EnclosedVehicle {
         return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
+    @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
         "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");

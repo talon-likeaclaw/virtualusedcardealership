@@ -80,6 +80,7 @@ public class PickupTruck extends CargoCapacity {
         return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
+    @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
         "Bed Length: " + this.bedLength + " feet\n" +

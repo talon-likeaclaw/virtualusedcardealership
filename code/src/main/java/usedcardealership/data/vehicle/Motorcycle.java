@@ -72,6 +72,7 @@ public class Motorcycle extends Vehicle {
         return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
     }
 
+    @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
         "Engine Capacity: " + this.engineCC + " cc\n" +
