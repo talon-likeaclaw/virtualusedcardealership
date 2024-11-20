@@ -95,6 +95,15 @@ public class DealershipManager {
     return this.vehicleManager.searchInventory(truckFilter);
   }
 
+  public Vehicle getVehicleById(int vehicleId) {
+    for (Vehicle v : this.getInventory()) {
+      if (v.getID() == vehicleId) {
+        return v;
+      }
+    }
+    return null;
+  }
+
   /**
    * Method for adding or removing money from the dealership's account balance.
    * 
