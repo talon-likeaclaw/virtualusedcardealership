@@ -35,7 +35,7 @@ public class Prompter {
             System.out.println(question);
         }
 
-        while(invalidValue) {
+        while (invalidValue) {
             String input = prompt();
             try {
                 if (!input.equals("")) {
@@ -71,5 +71,22 @@ public class Prompter {
     public int promptVehicleId() {
         System.out.println("\nSelect a Vehicle ID:");
         return promptInt();
+    }
+
+    /**
+     * Makes the user press Enter to continue
+     */
+    public void promptEnter() {
+        System.out.println("\nPress ENTER to continue:");
+        reader.nextLine();
+    }
+
+    /**
+     * Gets a yes or answer from the user
+     * 
+     * @return Boolean of user's answer. Yes: true, No: false
+     */
+    public boolean promptYesNo() {
+        return (promptOption("1: Yes.\n2: No.", 2) == 1);
     }
 }
