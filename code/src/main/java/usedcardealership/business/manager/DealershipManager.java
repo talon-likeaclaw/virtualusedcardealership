@@ -7,7 +7,6 @@
 
 package usedcardealership.business.manager;
 
-import usedcardealership.business.filter.VehicleTypeFilter;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
