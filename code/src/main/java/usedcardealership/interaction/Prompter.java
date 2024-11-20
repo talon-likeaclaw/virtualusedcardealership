@@ -40,7 +40,7 @@ public class Prompter {
             try {
                 if (!input.equals("")) {
                     int pendingValue = Integer.parseInt(input);
-                    if ((pendingValue >= 0 && pendingValue <= optionCap)) {
+                    if ((pendingValue >= 0 && pendingValue <= optionCap) || optionCap == 0) {
                         value = pendingValue;
                         invalidValue = false;
                     } else {
@@ -52,5 +52,19 @@ public class Prompter {
             }
         }
         return value;
+    }
+
+    /**
+     * Gets an int and only an int from the user
+     * 
+     * @return Int
+     */
+    public int promptInt() {
+        return promptOption("", 0);
+    }
+
+    public int promptVehicleId() {
+        System.out.println("\nSelect a Vehicle ID:");
+        return promptInt();
     }
 }
