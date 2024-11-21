@@ -36,6 +36,7 @@ public class Prompter {
 
         if (!question.equals("")) {
             System.out.println(question);
+            System.out.println("\nPlease select a number:");
         }
 
         while (invalidValue) {
