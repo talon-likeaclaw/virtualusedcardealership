@@ -33,7 +33,7 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    browseVehiclesView(dealership);
+                    chooseVehicleFilterView(dealership);
                     break;
                 case 2:
                     // TODO: viewAccountView()
@@ -49,11 +49,64 @@ public class UsedCarDealership {
     }
 
     /**
+     * View to let customer choose how to filter Vehicles
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void chooseVehicleFilterView(DealershipManager dealership) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            System.out.println("Filter by:");
+            System.out.println("**************");
+            switch (Prompter.promptOption(
+                    "1: Type\n" + 
+                    "2: Make\n" + 
+                    "3: Color\n" +
+                    "4: Year Range\n" +
+                    "5: Drive Type\n" +
+                    "6: Price Range\n" +
+                    "7: Kiometrage Range\n" +
+                    "8: Transmission Type\n" +
+                    "0: Exit",
+                    8)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    vehicleTypeView(dealership);
+                    break;
+                case 2:
+                    // TODO: vehicleMakeView(dealership);
+                    break;
+                case 3:
+                    // TODO: vehicleColorView(dealership)
+                    break;
+                case 4:
+                    // TODO: vehicleYearRangeView(dealership);
+                    break;
+                case 5:
+                    // TODO: vehicleDriveView(dealership);
+                    break;
+                case 6:
+                    // TODO: vehiclePriceRangeView(dealership);
+                    break;
+                case 7:
+                    // TODO: vehicleKilometrageRangeView(dealership);
+                    break;
+                case 8:
+                    // TODO: vehicleTransmissionView(dealership);
+                    break;
+            }
+        }
+    }
+
+    /**
      * Menu that allows user to choose between vehicle type
      * 
      * @param dealership the DealershipManager object
      */
-    private static void browseVehiclesView(DealershipManager dealership) {
+    private static void vehicleTypeView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
             wipe();
@@ -142,7 +195,7 @@ public class UsedCarDealership {
                         int vehicleID = selectVehicle(vehicles);
                         if (vehicleID == -1) {
                             System.out.println("\nInvalid Vehicle ID!");
-                            Prompter.promptEnter(); 
+                            Prompter.promptEnter();
                         } else {
                             viewVehicleDetails(dealership, vehicleID);
                         }
