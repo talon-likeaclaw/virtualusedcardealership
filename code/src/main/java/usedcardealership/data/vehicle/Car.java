@@ -70,7 +70,7 @@ public class Car extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return this.getID() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - "
+        return this.getID() + " " + this.getColor() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - "
                 + this.getTransmission() + ", " + this.getDriveType();
     }
 
