@@ -93,10 +93,10 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "price");
                     break;
                 case 7:
-                    // TODO: genericFilterView(dealership, "kilo");
+                    genericFilterView(dealership, "kilo");
                     break;
                 case 8:
-                    // TODO: genericFilterView(dealership, "trans");
+                    genericFilterView(dealership, "trans");
                     break;
             }
         }
@@ -119,7 +119,7 @@ public class UsedCarDealership {
             String filterPrompt = getFilterPrompt(filterType);
             System.out.println(filterPrompt);
             if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
-                System.out.println("Enter the range in the format `min-max`");
+                System.out.println("Enter the range in the format `min-max`.");
                 String rangeInput = Prompter.promptString();
                 if (rangeInput == null) {
                     inPage = false;
@@ -204,6 +204,11 @@ public class UsedCarDealership {
                     criteriaSet.add(v.getDriveType());
                 }
                 break;
+            case "trans":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getTransmission());
+                }
+                break;
             default:
                 System.out.println("No available criteria to display for this filter.");
                 Prompter.promptEnter();
@@ -242,6 +247,10 @@ public class UsedCarDealership {
                 return "\nEnter vehicle drive type or press Enter to go back:";
             case "price":
                 return "\nEnter vehicle price range or press Enter to go back:";
+            case "kilo":
+                return "\nEnter vehicle kilometrage range or press Enter to go back:";
+            case "trans":
+                return "\nEnter vehicle transmission type or press Enter to go back:";
             default:
                 return "\nEnter filter criteria or press Enter to go back:";
         }
@@ -265,6 +274,8 @@ public class UsedCarDealership {
                 return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
             case "drive":
                 return dealership.getVehicleManager().searchInventory(new VehicleDriveFilter(criteria));
+            case "trans":
+                return dealership.getVehicleManager().searchInventory(new VehicleTransmissionFilter(criteria));
             default:
                 return new ArrayList<>();
         }
@@ -282,10 +293,8 @@ public class UsedCarDealership {
     private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min, String max) {
         switch (filterType) {
             case "year":
-                // TODO: Sort by year
                 return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
             case "price":
-                // TODO: Sort by price
                 return dealership.getVehicleManager().searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             case "kilo":
                 return dealership.getVehicleManager().searchInventory(new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
@@ -308,6 +317,8 @@ public class UsedCarDealership {
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
+            // TODO: possibly could add type based menu option for sorting by filter type
+            // For example: price, kilometrage, year, id, etc
             System.out.println("\nPlease select an option:");
             switch (Prompter.promptOption(
                     "1: Select Vehicle by ID\n0: Exit", 1)) {

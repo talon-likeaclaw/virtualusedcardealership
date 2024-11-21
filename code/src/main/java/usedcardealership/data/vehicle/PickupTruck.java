@@ -79,7 +79,7 @@ public class PickupTruck extends CargoCapacity {
     public String toString() {
         return this.getID() + " " + this.getColor() + " " + this.getMake() + " " + this.getModel() + " "
                 + this.getYear() + " - $" + this.calculateTotalPrice() + " - " + this.getTransmission() + ", "
-                + this.getDriveType();
+                + this.getDriveType() + " - " + this.getKilometerage() + "km";
     }
 
     @Override
