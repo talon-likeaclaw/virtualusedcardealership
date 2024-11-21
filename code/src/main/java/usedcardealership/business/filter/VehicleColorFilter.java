@@ -18,7 +18,7 @@ public class VehicleColorFilter extends VehicleFilter {
      * @param color - the color to filter by
      */
     public VehicleColorFilter(String color) {
-        this.color = color;
+        this.color = color.toLowerCase();
     }
 
     /**
@@ -29,6 +29,6 @@ public class VehicleColorFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
-        return vehicle.getColor().equals(this.color);
+        return vehicle.getColor().toLowerCase().equals(this.color);
     }
 }
