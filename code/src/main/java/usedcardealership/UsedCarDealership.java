@@ -118,25 +118,25 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    viewVehicles(dealership, "All");
+                    printVehiclesByType(dealership, "All");
                     break;
                 case 2:
-                    viewVehicles(dealership, "Car");
+                    printVehiclesByType(dealership, "Car");
                     break;
                 case 3:
-                    viewVehicles(dealership, "SUV");
+                    printVehiclesByType(dealership, "SUV");
                     break;
                 case 4:
-                    viewVehicles(dealership, "Van");
+                    printVehiclesByType(dealership, "Van");
                     break;
                 case 5:
-                    viewVehicles(dealership, "RV");
+                    printVehiclesByType(dealership, "RV");
                     break;
                 case 6:
-                    viewVehicles(dealership, "Motorcycle");
+                    printVehiclesByType(dealership, "Motorcycle");
                     break;
                 case 7:
-                    viewVehicles(dealership, "Truck");
+                    printVehiclesByType(dealership, "Truck");
                     break;
             }
         }
@@ -148,7 +148,7 @@ public class UsedCarDealership {
      * @param dealership  the DealershipManager object
      * @param vehicleType the type of vehicle to get a list of
      */
-    private static void viewVehicles(DealershipManager dealership, String vehicleType) {
+    private static void printVehiclesByType(DealershipManager dealership, String vehicleType) {
         List<Vehicle> vehicles = new ArrayList<>();
 
         if (vehicleType.equals("All")) {
@@ -178,6 +178,11 @@ public class UsedCarDealership {
         if (vehicles.isEmpty()) {
             System.out.println("No vehicles available in inventory.");
         } else {
+            selectVehiclesFromList(dealership, vehicles);
+        }
+    }
+
+    private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
             boolean inPage = true;
             while (inPage) {
                 wipe();
@@ -202,7 +207,6 @@ public class UsedCarDealership {
                         break;
                 }
             }
-        }
     }
 
     /**
