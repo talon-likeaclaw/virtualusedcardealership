@@ -18,7 +18,7 @@ public class VehicleTypeFilter extends VehicleFilter {
      * @param type - the type to filter by
      */
     public VehicleTypeFilter(String type) {
-        this.type = type;
+        this.type = type.toLowerCase();
     }
 
     /**
@@ -29,6 +29,6 @@ public class VehicleTypeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
-        return vehicle.getType().equals(this.type);
+        return vehicle.getType().toLowerCase().equals(this.type);
     }
 }
