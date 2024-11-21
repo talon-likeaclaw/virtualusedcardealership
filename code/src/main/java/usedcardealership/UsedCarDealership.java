@@ -1,18 +1,17 @@
 package usedcardealership;
 
-import java.util.*;
 import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
 
-public class UsedCarDealership {
-    private static Prompter prompter;
+import java.util.*;
 
+public class UsedCarDealership {
     public static void main(String[] args) {
-        prompter = new Prompter();
         DealershipManager dealership = initialize();
         mainMenuView(dealership);
         shutdown(dealership);
@@ -25,17 +24,18 @@ public class UsedCarDealership {
      */
     private static void mainMenuView(DealershipManager dealership) {
         boolean inPage = true;
-        System.out.println("Welcome to " + dealership.getName() + "!");
-        System.out.println("\nPlease select an option:");
         while (inPage) {
-            switch (prompter.promptOption(
-                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n0: Exit",
-                    3)) {
+            wipe();
+            System.out.println("Welcome to " + dealership.getName() + "!");
+            System.out.println("\nWould you like to:");
+            switch (Prompter.promptOption(
+                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
+                    4)) {
                 case 0:
                     inPage = false;
                     break;
                 case 1:
-                    browseVehiclesView(dealership);
+                    chooseVehicleFilterView(dealership);
                     break;
                 case 2:
                     // TODO: viewAccountView()
@@ -43,113 +43,272 @@ public class UsedCarDealership {
                 case 3:
                     // TODO: sellVehicleView()
                     break;
+                case 4:
+                    // TODO: viewShoppingCart()
+                    break;
             }
         }
     }
 
     /**
-     * Menu that allows user to choose between vehicle type
+     * View to let customer choose how to filter Vehicles
      * 
      * @param dealership the DealershipManager object
      */
-    private static void browseVehiclesView(DealershipManager dealership) {
+    private static void chooseVehicleFilterView(DealershipManager dealership) {
         boolean inPage = true;
-        System.out.println("\nSelect Vehicle Type:");
         while (inPage) {
-            switch (prompter.promptOption(
-                    "1: Car\n2: SUV\n3: Pickup Truck\n4: Van\n5: RV\n6: Motorcycle\n7: All\n0: Return to Main Menu",
-                    7)) {
+            wipe();
+            System.out.println("Filter by:");
+            switch (Prompter.promptOption(
+                    "1: Type\n" +
+                            "2: Make\n" +
+                            "3: Color\n" +
+                            "4: Year Range\n" +
+                            "5: Drive Type\n" +
+                            "6: Price Range\n" +
+                            "7: Kilometrage Range\n" +
+                            "8: Transmission Type\n" +
+                            "0: Exit",
+                    8)) {
                 case 0:
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: viewCars()
+                    genericFilterView(dealership, "type");
                     break;
                 case 2:
-                    // TODO: viewSUVs()
+                    genericFilterView(dealership, "make");
                     break;
                 case 3:
-                    // TODO: viewTrucks()
+                    genericFilterView(dealership, "color");
                     break;
                 case 4:
-                    // TODO: viewVans()
+                    // TODO: genericFilterView(dealership, "year");
                     break;
                 case 5:
-                    // TODO: viewRVs()
+                    // TODO: genericFilterView(dealership, "drive");
                     break;
                 case 6:
-                    // TODO: viewMotorcycles()
+                    // TODO: genericFilterView(dealership, "price");
                     break;
                 case 7:
-                    // TODO: viewAllVehicles()
+                    // TODO: genericFilterView(dealership, "kilo");
+                    break;
+                case 8:
+                    // TODO: genericFilterView(dealership, "trans");
                     break;
             }
         }
     }
 
     /**
-     *  Gets and views a list of all of the Cars available in inventory
+     * Generic view for allowing user to choose from filtered criteria
      * 
      * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by (type, make, color, etc)
      */
-    private static void viewCars(DealershipManager dealership) {
-        // TODO: dealership.getCars();
+    private static void genericFilterView(DealershipManager dealership, String filterType) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            // Display all availble criteria and prompt user to choose one
+            displayAvailableCriteria(dealership, filterType);
+            String filterPrompt = getFilterPrompt(filterType);
+            System.out.println(filterPrompt);
+            String criteria = Prompter.promptString();
+            // If criteria null go back
+            if (criteria == null) {
+                inPage = false;
+                break;
+            }
+            // Apply user input filter to get list of filtered vehicles
+            List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
+            // If no vehicles print warning and prompt enter
+            if (filteredVehicles.size() == 0) {
+                System.out.println("\nNo vehicles match your criteria!");
+                Prompter.promptEnter();
+            } else {
+                // Allow user to choose a vehicle by ID for more details
+                selectVehiclesFromList(dealership, filteredVehicles);
+            }
+        }
     }
 
     /**
-     *  Gets and views a list of all of the SUVs available in inventory
+     * Displays the all of the unique available criteria to choose from
      * 
      * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
      */
-    private static void viewSUVs(DealershipManager dealership) {
-        // TODO: dealership.getSUVs();
-    }
-    
-    /**
-     *  Gets and views a list of all of the Trucks available in inventory
-     * 
-     * @param dealership the DealershipManager object
-     */
-    private static void viewTrucks(DealershipManager dealership) {
-        // TODO: dealership.getSUVs();
+    private static void displayAvailableCriteria(DealershipManager dealership, String filterType) {
+        // Create String hash set for unique values only
+        HashSet<String> criteriaSet = new HashSet<>();
+        // Depending on filterType, print unique values to choose from
+        switch (filterType) {
+            case "type":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getType());
+                }
+                break;
+            case "make":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getMake());
+                }
+                break;
+            case "color":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getColor());
+                }
+                break;
+            default:
+                System.out.println("No available criteria to display for this filter.");
+                Prompter.promptEnter();
+                return;
+        }
+        // If there are no options to choose from print warning
+        if (criteriaSet.size() == 0) {
+            System.out.println("No options available.");
+            Prompter.promptEnter();
+        } else {
+            // Print unique available options to choose from
+            System.out.println("Available options:");
+            for (String criteria : criteriaSet) {
+                System.out.println(criteria);
+            }
+        }
     }
 
     /**
-     *  Gets and views a list of all of the Vans available in inventory
+     * Returns a unique prompt depending on the filter type
      * 
-     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @return the prompt from the particular type of filter
      */
-    private static void viewVans(DealershipManager dealership) {
-        // TODO: dealership.getVans();
+    private static String getFilterPrompt(String filterType) {
+        switch (filterType) {
+            case "type":
+                return "\nEnter vehicle type or press Enter to go back:";
+            case "make":
+                return "\nEnter vehicle make or press Enter to go back:";
+            case "color":
+                return "\nEnter vehicle color or press Enter to go back:";
+            default:
+                return "\nEnter filter criteria or press Enter to go back:";
+        }
     }
 
     /**
-     *  Gets and views a list of all of the RVs available in inventory
+     * Applies the filter to the dealership inventory using searchInventory
      * 
      * @param dealership the DealershipManager object
+     * @param filterType the method we are filter by
+     * @param criteria the user input criteria to pass into the filter
+     * @return a list of Vehicles that are filtered by user input
      */
-    private static void viewRVs(DealershipManager dealership) {
-        // TODO: dealership.getRVs();
+    private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
+        switch (filterType) {
+            case "type":
+                return dealership.getVehicleManager().searchInventory(new VehicleTypeFilter(criteria));
+            case "make":
+                return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
+            case "color":
+                return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+            default:
+                return new ArrayList<>();
+        }
     }
 
     /**
-     *  Gets and views a list of all of the Motorcycles available in inventory
+     * Allows customer to select vehicle from list by ID
      * 
      * @param dealership the DealershipManager object
+     * @param vehicles   the list of vehicles to select from
      */
-    private static void viewMotorcycles(DealershipManager dealership) {
-        // TODO: dealership.getMotorcycless();
+    private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            // TODO: sort vehicles numerically by ID
+            for (Vehicle v : vehicles) {
+                System.out.println(v);
+            }
+            System.out.println("\nPlease select an option:");
+            switch (Prompter.promptOption(
+                    "1: Select Vehicle by ID\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    int vehicleID = selectVehicle(vehicles);
+                    if (vehicleID == -1) {
+                        System.out.println("\nInvalid Vehicle ID!");
+                        Prompter.promptEnter();
+                    } else {
+                        viewVehicleDetails(dealership, vehicleID);
+                    }
+                    break;
+            }
+        }
     }
 
     /**
-     *  Gets and views a list of all of the vehicles available in inventory
+     * Allows the user to select a vehicle by ID
+     * 
+     * @return the selected ID of the vehicle they want more details on
+     */
+    private static int selectVehicle(List<Vehicle> vehicles) {
+        if (vehicles.size() == 1) {
+            return vehicles.get(0).getID();
+        }
+        int chosenId = Prompter.promptVehicleId();
+        for (Vehicle v : vehicles) {
+            if (chosenId == v.getID()) {
+                return chosenId;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Gets and prints the Vehicle's full details
+     * 
+     * @param vehicleID the ID of the Vehicle to print details for
+     */
+    private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
+        Vehicle vehicle = dealership.getVehicleById(vehicleID);
+        wipe();
+        System.out.println(vehicle.getFullDetails());
+        vehicleDetailsMenu(dealership);
+    }
+
+    /**
+     * Menu that asks user if they want to purchase vehicle or go back
      * 
      * @param dealership the DealershipManager object
      */
-    private static void viewAllVehicles(DealershipManager dealership) {
-        // TODO: dealership.getAllVehicles();
+    private static void vehicleDetailsMenu(DealershipManager dealership) {
+        boolean inPage = true;
+        while (inPage) {
+            System.out.println("\nWould you like to:");
+            switch (Prompter.promptOption(
+                    "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    // TODO: Implement method to test drive vehicle
+                    break;
+                case 2:
+                    // TODO: Implement method to add vehicle to cart
+                    break;
+            }
+        }
     }
-    
+
     /**
      * Initializes the DealershipManager by loading all data from files
      * 
@@ -169,6 +328,10 @@ public class UsedCarDealership {
         String customerPath = "resources/customers.csv";
         CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
         List<Customer> customers = customerLoader.load();
+        // TODO: Select a random customer from the list to assign the the currentUser on
+        // init
+        // Thought it would be cool if each time you start up the program you are a
+        // random customer
 
         // Load transactions
         String transactionPath = "resources/transactions.csv";
@@ -222,6 +385,14 @@ public class UsedCarDealership {
         transactionSaver.save(transactions);
 
         System.out.println("\nShutting down. Please come again! :)");
-        prompter.close();
+        Prompter.close();
     }
+
+    /**
+     * Wipes the console screen
+     */
+    public static void wipe() {
+        System.out.print("\033[H\033[2J");
+    }
+
 }

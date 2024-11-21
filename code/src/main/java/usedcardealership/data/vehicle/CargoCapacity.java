@@ -98,6 +98,8 @@ public abstract class CargoCapacity extends EnclosedVehicle {
                 "Cargo Capacity: " + this.cargoCapacity + " cu ft";
     }
 
+    public abstract String getFullDetails();
+
     public double getCargoCapacity() {
         return this.cargoCapacity;
     }

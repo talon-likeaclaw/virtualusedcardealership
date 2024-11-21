@@ -105,7 +105,7 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return getCommonDetails();
+        return this.id + " " + this.color + " " + this.make + " " + this.model + " " + this.year + " - " + this.transmission + ", " + this.driveType;
     }
 
     /**
@@ -167,6 +167,8 @@ public abstract class Vehicle {
         }
         return false;
     }
+
+    public abstract String getFullDetails();
 
     public String getType() {
         return this.type;
