@@ -9,10 +9,7 @@ import usedcardealership.data.transaction.*;
 import usedcardealership.business.manager.*;
 
 public class UsedCarDealership {
-    private static Prompter prompter;
-
     public static void main(String[] args) {
-        prompter = new Prompter();
         DealershipManager dealership = initialize();
         mainMenuView(dealership);
         shutdown(dealership);
@@ -29,7 +26,7 @@ public class UsedCarDealership {
             wipe();
             System.out.println("Welcome to " + dealership.getName() + "!");
             System.out.println("\nPlease select an option:");
-            switch (prompter.promptOption(
+            switch (Prompter.promptOption(
                     "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
                     4)) {
                 case 0:
@@ -42,10 +39,10 @@ public class UsedCarDealership {
                     // TODO: viewAccountView()
                     break;
                 case 3:
-                    // TODO: viewShoppingCart()
+                    // TODO: sellVehicleView()
                     break;
                 case 4:
-                    // TODO: sellVehicleView()
+                    // TODO: viewShoppingCart()
                     break;
             }
         }
@@ -61,7 +58,7 @@ public class UsedCarDealership {
         while (inPage) {
             wipe();
             System.out.println("Select Vehicle Type:");
-            switch (prompter.promptOption(
+            switch (Prompter.promptOption(
                     "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Return to Main Menu",
                     7)) {
                 case 0:
@@ -136,7 +133,7 @@ public class UsedCarDealership {
                     System.out.println(v);
                 }
                 System.out.println("\nPlease select an option:");
-                switch (prompter.promptOption(
+                switch (Prompter.promptOption(
                         "1: Select Vehicle by ID\n0: Exit", 1)) {
                     case 0:
                         inPage = false;
@@ -145,7 +142,7 @@ public class UsedCarDealership {
                         int vehicleID = selectVehicle(vehicles);
                         if (vehicleID == -1) {
                             System.out.println("\nInvalid Vehicle ID!");
-                            prompter.promptEnter(); 
+                            Prompter.promptEnter(); 
                         } else {
                             viewVehicleDetails(dealership, vehicleID);
                         }
@@ -161,7 +158,7 @@ public class UsedCarDealership {
      * @return the selected ID of the vehicle they want more details on
      */
     private static int selectVehicle(List<Vehicle> vehicles) {
-        int chosenId = prompter.promptVehicleId();
+        int chosenId = Prompter.promptVehicleId();
         for (Vehicle v : vehicles) {
             if (chosenId == v.getID()) {
                 return chosenId;
@@ -191,7 +188,7 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             System.out.println("\nWould you like to:");
-            switch (prompter.promptOption(
+            switch (Prompter.promptOption(
                     "1: Add Vehicle to Cart\n0: Return to Vehicle List", 1)) {
                 case 0:
                     inPage = false;
@@ -279,7 +276,7 @@ public class UsedCarDealership {
         transactionSaver.save(transactions);
 
         System.out.println("\nShutting down. Please come again! :)");
-        prompter.close();
+        Prompter.close();
     }
 
     /**
