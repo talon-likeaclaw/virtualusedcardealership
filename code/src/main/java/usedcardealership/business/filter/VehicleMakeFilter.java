@@ -18,7 +18,7 @@ public class VehicleMakeFilter extends VehicleFilter {
      * @param make - the make to filter by
      */
     public VehicleMakeFilter(String make) {
-        this.make = make;
+        this.make = make.toLowerCase();
     }
 
     /**
@@ -29,6 +29,6 @@ public class VehicleMakeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
-        return vehicle.getMake().equals(this.make);
+        return vehicle.getMake().toLowerCase().equals(this.make);
     }
 }

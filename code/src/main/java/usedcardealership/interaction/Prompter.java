@@ -47,7 +47,8 @@ public class Prompter {
                         value = pendingValue;
                         invalidValue = false;
                     } else {
-                        System.out.println("Invalid input! Please choose a valid option.");
+                        System.out.println("\nInvalid input! Please choose a valid option.");
+                        promptEnter();
                     }
                 }
             } catch (NumberFormatException e) {
@@ -82,7 +83,7 @@ public class Prompter {
      * @return the String the user input
      */
     public static String promptVehicleMake() {
-        System.out.println("\nEnter Make: (Honda, Hyundai, Ford, etc)");
+        System.out.println("\nEnter Make:");
         return promptString();
     }
 
@@ -114,7 +115,7 @@ public class Prompter {
         if (removeSpace(input) == null) {
             return null;
         }
-        return input;
+        return input.toLowerCase();
     }
 
 
