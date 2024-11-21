@@ -23,6 +23,13 @@ public class Prompter {
         return reader.nextLine();
     }
 
+    /**
+     * Prompts users with a list of options and validates input
+     * 
+     * @param question the question/menu options
+     * @param optionCap the total amount of options (that are not 0)
+     * @return the number the user has chosen
+     */
     public static int promptOption(String question, int optionCap) {
         int value = -1;
         boolean invalidValue = true;
@@ -69,8 +76,23 @@ public class Prompter {
         return promptInt();
     }
 
+    /**
+     * Prompts user to input a vehicle Make
+     * 
+     * @return the String the user input
+     */
     public static String promptVehicleMake() {
         System.out.println("\nEnter Make: (Honda, Hyundai, Ford, etc)");
+        return promptString();
+    }
+
+    /**
+     * Prompts user to input a vehicle Color
+     * 
+     * @return the String the user input
+     */
+    public static String promptVehicleColor() {
+        System.out.println("\nEnter Color: (Red, Blue, Green)");
         return promptString();
     }
 
