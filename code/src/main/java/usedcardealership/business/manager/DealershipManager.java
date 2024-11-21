@@ -100,6 +100,11 @@ public class DealershipManager {
     return this.vehicleManager.searchInventory(makeFilter);
   }
 
+  public List<Vehicle> getVehiclesByColor(String color) {
+    IFilter<Vehicle> colorFilter = new VehicleColorFilter(color);
+    return this.vehicleManager.searchInventory(colorFilter);
+  }
+
   public Vehicle getVehicleById(int vehicleId) {
     for (Vehicle v : this.getInventory()) {
       if (v.getID() == vehicleId) {
