@@ -3,18 +3,14 @@ package usedcardealership.interaction;
 import java.util.*;
 
 public class Prompter {
-    private Scanner reader;
-
-    public Prompter() {
-        this.reader = new Scanner(System.in);
-    }
+    private static Scanner reader = new Scanner(System.in);
 
     /**
      * Closes the reader
      * To be used at end of program.
      */
-    public void close() {
-        this.reader.close();
+    public static void close() {
+        reader.close();
     }
 
     /**
@@ -22,12 +18,12 @@ public class Prompter {
      * 
      * @return String - user input
      */
-    private String prompt() {
+    private static String prompt() {
         System.out.print("> ");
         return reader.nextLine();
     }
 
-    public int promptOption(String question, int optionCap) {
+    public static int promptOption(String question, int optionCap) {
         int value = -1;
         boolean invalidValue = true;
 
@@ -59,7 +55,7 @@ public class Prompter {
      * 
      * @return the int the user chose
      */
-    public int promptInt() {
+    public static int promptInt() {
         return promptOption("", 0);
     }
 
@@ -68,7 +64,7 @@ public class Prompter {
      * 
      * @return the vehicle ID the user chose
      */
-    public int promptVehicleId() {
+    public static int promptVehicleId() {
         System.out.println("\nSelect a Vehicle ID:");
         return promptInt();
     }
@@ -76,7 +72,7 @@ public class Prompter {
     /**
      * Makes the user press Enter to continue
      */
-    public void promptEnter() {
+    public static void promptEnter() {
         System.out.println("\nPress ENTER to continue:");
         reader.nextLine();
     }
@@ -86,7 +82,7 @@ public class Prompter {
      * 
      * @return Boolean of user's answer. Yes: true, No: false
      */
-    public boolean promptYesNo() {
+    public static boolean promptYesNo() {
         return (promptOption("1: Yes.\n2: No.", 2) == 1);
     }
 }
