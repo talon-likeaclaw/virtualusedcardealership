@@ -82,7 +82,7 @@ public class UsedCarDealership {
                     vehicleMakeView(dealership);
                     break;
                 case 3:
-                    // TODO: vehicleColorView(dealership)
+                    vehicleColorView(dealership);
                     break;
                 case 4:
                     // TODO: vehicleYearRangeView(dealership);
@@ -151,10 +151,22 @@ public class UsedCarDealership {
      */
     private static void vehicleMakeView(DealershipManager dealership) {
         boolean inPage = true;
+        List<Vehicle> vehicles = dealership.getInventory();
         while (inPage) {
             wipe();
+            System.out.println("Vehicle Makes Currently Available:");
+            HashSet<String> makes = new HashSet<>();
+            // Get all unique existing makes
+            for (Vehicle v : vehicles) {
+                makes.add(v.getMake());
+            }
+            // TODO: Sort vehicles by make
+            // Print all unique existing makes
+            for (String s : makes) {
+                System.out.println(s);
+            }
             switch (Prompter.promptOption(
-                    "1: Input Make\n0: Exit", 1)) {
+                    "\n1: Input Make\n0: Exit", 1)) {
                 case 0:
                     inPage = false;
                     break;
@@ -173,10 +185,22 @@ public class UsedCarDealership {
      */
     private static void vehicleColorView(DealershipManager dealership) {
         boolean inPage = true;
+        List<Vehicle> vehicles = dealership.getInventory();
         while (inPage) {
             wipe();
+            System.out.println("Vehicle Colors Currently Available:");
+            HashSet<String> colors = new HashSet<>();
+            // Get all unique existing colors
+            for (Vehicle v : vehicles) {
+                colors.add(v.getColor());
+            }
+            // TODO: Sort vehicles by color
+            // Print all unique existing colors
+            for (String s : colors) {
+                System.out.println(s);
+            }
             switch (Prompter.promptOption(
-                    "1: Input Make\n0: Exit", 1)) {
+                    "\n1: Input Color\n0: Exit", 1)) {
                 case 0:
                     inPage = false;
                     break;
@@ -235,10 +259,9 @@ public class UsedCarDealership {
      * @param make       the make of vehicle to print from inventory
      */
     private static void printVehiclesByMake(DealershipManager dealership, String make) {
-        List<Vehicle> vehicles = new ArrayList<>();
-        vehicles = dealership.getVehiclesByMake(make);
+        List<Vehicle> vehicles = dealership.getVehiclesByMake(make);
         if (vehicles.size() == 0) {
-            System.out.println("\nNo " + make + "s found.");
+            System.out.println("\nInvalid vehicle make!");
             Prompter.promptEnter();
         } else {
             selectVehiclesFromList(dealership, vehicles);
@@ -255,7 +278,7 @@ public class UsedCarDealership {
         List<Vehicle> vehicles = new ArrayList<>();
         vehicles = dealership.getVehiclesByColor(color);
         if (vehicles.size() == 0) {
-            System.out.println("\nNo " + color + " vehicles found.");
+            System.out.println("\nInvalid vehicle color!");
             Prompter.promptEnter();
         } else {
             selectVehiclesFromList(dealership, vehicles);
