@@ -324,6 +324,9 @@ public class UsedCarDealership {
      * @return the selected ID of the vehicle they want more details on
      */
     private static int selectVehicle(List<Vehicle> vehicles) {
+        if (vehicles.size() == 1) {
+            return vehicles.get(0).getID();
+        }
         int chosenId = Prompter.promptVehicleId();
         for (Vehicle v : vehicles) {
             if (chosenId == v.getID()) {
