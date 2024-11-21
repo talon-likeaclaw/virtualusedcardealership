@@ -132,10 +132,10 @@ public class UsedCarDealership {
 
                 String[] range = rangeInput.split("-");
                 try {
-                    double min = Double.parseDouble(range[0]);
-                    double max = Double.parseDouble(range[1]);
+                    String min = range[0];
+                    String max = range[1];
 
-                    // TODO: List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
+                    List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
 
                     if (filteredVehicles.size() == 0) {
                         System.out.println("No vehicles match your criteria!");
@@ -239,7 +239,7 @@ public class UsedCarDealership {
      * Applies the filter to the dealership inventory using searchInventory
      * 
      * @param dealership the DealershipManager object
-     * @param filterType the method we are filter by
+     * @param filterType the method we are filtering by
      * @param criteria   the user input criteria to pass into the filter
      * @return a list of Vehicles that are filtered by user input
      */
@@ -251,6 +251,28 @@ public class UsedCarDealership {
                 return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
             case "color":
                 return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+            default:
+                return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Applies the range filter to the dealership inventory using searchInventory
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @param min        the user input min range
+     * @param max        the user input max range
+     * @return a list of Vehicles that are filter by the crtieria
+     */
+    private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min, String max) {
+        switch (filterType) {
+            case "price":
+                return dealership.getVehicleManager().searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+            case "year":
+                return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
+            case "kilo":
+                return dealership.getVehicleManager().searchInventory(new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             default:
                 return new ArrayList<>();
         }
