@@ -182,6 +182,12 @@ public class UsedCarDealership {
         }
     }
 
+    /**
+     * Allows customer to select vehicle from list by ID
+     * 
+     * @param dealership the DealershipManager object
+     * @param vehicles the list of vehicles to select from
+     */
     private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
             boolean inPage = true;
             while (inPage) {
