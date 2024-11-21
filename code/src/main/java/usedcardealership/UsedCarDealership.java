@@ -87,7 +87,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "year");
                     break;
                 case 5:
-                    // TODO: genericFilterView(dealership, "drive");
+                    genericFilterView(dealership, "drive");
                     break;
                 case 6:
                     // TODO: genericFilterView(dealership, "price");
@@ -199,6 +199,11 @@ public class UsedCarDealership {
                     criteriaSet.add(v.getColor());
                 }
                 break;
+            case "drive":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getDriveType());
+                }
+                break;
             default:
                 System.out.println("No available criteria to display for this filter.");
                 Prompter.promptEnter();
@@ -233,6 +238,8 @@ public class UsedCarDealership {
                 return "\nEnter vehicle color or press Enter to go back:";
             case "year":
                 return "\nEnter vehicle year range or press Enter to go back:";
+            case "drive":
+                return "\nEnter vehicle drive type or press Enter to go back:";
             default:
                 return "\nEnter filter criteria or press Enter to go back:";
         }
@@ -254,6 +261,8 @@ public class UsedCarDealership {
                 return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
             case "color":
                 return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+            case "drive":
+                return dealership.getVehicleManager().searchInventory(new VehicleDriveFilter(criteria));
             default:
                 return new ArrayList<>();
         }
