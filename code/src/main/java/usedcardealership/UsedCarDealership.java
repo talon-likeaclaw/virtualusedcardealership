@@ -27,7 +27,7 @@ public class UsedCarDealership {
         while (inPage) {
             wipe();
             System.out.println("Welcome to " + dealership.getName() + "!");
-            System.out.println("\nPlease select an option:");
+            System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
                     "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
                     4)) {
@@ -60,7 +60,6 @@ public class UsedCarDealership {
         while (inPage) {
             wipe();
             System.out.println("Filter by:");
-            System.out.println("**************");
             switch (Prompter.promptOption(
                     "1: Type\n" +
                             "2: Make\n" +
