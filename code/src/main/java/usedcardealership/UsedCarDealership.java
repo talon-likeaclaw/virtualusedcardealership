@@ -119,36 +119,7 @@ public class UsedCarDealership {
             String filterPrompt = getFilterPrompt(filterType);
             System.out.println(filterPrompt);
             if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
-                System.out.println("Enter the range in the format `min-max`.");
-                String rangeInput = Prompter.promptString();
-                if (rangeInput == null) {
-                    inPage = false;
-                    break;
-                } else if (!rangeInput.contains("-")) {
-                    System.out.println("\nInvalid input! Returning to filter menu.");
-                    Prompter.promptEnter();
-                    inPage = false;
-                    break;
-                }
-
-                String[] range = rangeInput.split("-");
-                try {
-                    String min = range[0];
-                    String max = range[1];
-
-                    List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
-
-                    if (filteredVehicles.size() == 0) {
-                        System.out.println("\nNo vehicles match your criteria!");
-                        Prompter.promptEnter();
-                    } else {
-                        selectVehiclesFromList(dealership, filteredVehicles);
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid range input! Returning to menu.");
-                    Prompter.promptEnter();
-                    inPage = false;
-                }
+                inPage = handleRangeFiltering(dealership, filterType);
             } else {
                 String criteria = Prompter.promptString();
                 // If criteria null go back
@@ -167,6 +138,49 @@ public class UsedCarDealership {
                     selectVehiclesFromList(dealership, filteredVehicles);
                 }
             }
+        }
+    }
+
+    /**
+     * Handles logic necessary for range filtering
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @return boolean representing if we are still in the page or not
+     */
+    private static boolean handleRangeFiltering(DealershipManager dealership, String filterType) {
+        System.out.println("Enter the range in the format `min-max`.");
+        String rangeInput = Prompter.promptString();
+        // If range null or invalid format return false
+        if (rangeInput == null) {
+            return false;
+        } else if (!rangeInput.contains("-")) {
+            System.out.println("\nInvalid input! Returning to filter menu.");
+            Prompter.promptEnter();
+            return false;
+        }
+        // Split input by "-"
+        String[] range = rangeInput.split("-");
+        try {
+            String min = range[0];
+            String max = range[1];
+
+            // Get filtered list by range
+            List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
+
+            // If no vehicles
+            if (filteredVehicles.size() == 0) {
+                System.out.println("\nNo vehicles match your criteria!");
+                Prompter.promptEnter();
+                return false;
+            } else {
+                selectVehiclesFromList(dealership, filteredVehicles);
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid range input! Returning to menu.");
+            Prompter.promptEnter();
+            return false;
         }
     }
 
