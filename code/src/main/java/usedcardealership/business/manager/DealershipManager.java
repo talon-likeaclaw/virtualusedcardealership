@@ -95,6 +95,11 @@ public class DealershipManager {
     return this.vehicleManager.searchInventory(truckFilter);
   }
 
+  public List<Vehicle> getVehiclesByMake(String make) {
+    IFilter<Vehicle> makeFilter = new VehicleMakeFilter(make);
+    return this.vehicleManager.searchInventory(makeFilter);
+  }
+
   public Vehicle getVehicleById(int vehicleId) {
     for (Vehicle v : this.getInventory()) {
       if (v.getID() == vehicleId) {
