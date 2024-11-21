@@ -90,7 +90,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "drive");
                     break;
                 case 6:
-                    // TODO: genericFilterView(dealership, "price");
+                    genericFilterView(dealership, "price");
                     break;
                 case 7:
                     // TODO: genericFilterView(dealership, "kilo");
@@ -240,6 +240,8 @@ public class UsedCarDealership {
                 return "\nEnter vehicle year range or press Enter to go back:";
             case "drive":
                 return "\nEnter vehicle drive type or press Enter to go back:";
+            case "price":
+                return "\nEnter vehicle price range or press Enter to go back:";
             default:
                 return "\nEnter filter criteria or press Enter to go back:";
         }
@@ -283,6 +285,7 @@ public class UsedCarDealership {
                 // TODO: Sort by year
                 return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
             case "price":
+                // TODO: Sort by price
                 return dealership.getVehicleManager().searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             case "kilo":
                 return dealership.getVehicleManager().searchInventory(new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));

@@ -75,14 +75,16 @@ public class RV extends EnclosedVehicle {
 
     @Override
     public String toString() {
-        return this.getID() + " " + this.getColor() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " - " + this.getTransmission() + ", " + this.getDriveType();
+        return this.getID() + " " + this.getColor() + " " + this.getMake() + " " + this.getModel() + " "
+                + this.getYear() + " - $" + this.calculateTotalPrice() + " - " + this.getTransmission() + ", "
+                + this.getDriveType();
     }
 
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-        "Sleep Capacity: " + this.sleepCapacity + "\n" +
-        "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
+                "Sleep Capacity: " + this.sleepCapacity + "\n" +
+                "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
     }
 
     public int getSleepCapacity() {
