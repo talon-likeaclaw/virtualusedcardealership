@@ -69,12 +69,44 @@ public class Prompter {
         return promptInt();
     }
 
+    public static String promptVehicleMake() {
+        System.out.println("\nEnter Make: (Honda, Hyundai, Ford, etc)");
+        return promptString();
+    }
+
     /**
      * Makes the user press Enter to continue
      */
     public static void promptEnter() {
         System.out.println("\nPress ENTER to continue:");
         reader.nextLine();
+    }
+
+    /**
+     * Gets the user's input, null if empty
+     * 
+     * @return User input
+     */
+    public static String promptString() {
+        String input = prompt();
+        if (removeSpace(input) == null) {
+            return null;
+        }
+        return input;
+    }
+
+
+    /**
+     * Helper method to see if strings spaces and removes them to return null
+     * 
+     * @return the input, or null if input is spaces
+     */
+    private static String removeSpace(String input) {
+        if (input.replaceAll("\\s", "").equals("")) {
+            return null;
+        } else {
+            return input;
+        }
     }
 
     /**
