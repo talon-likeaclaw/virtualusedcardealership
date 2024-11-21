@@ -84,7 +84,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "color");
                     break;
                 case 4:
-                    // TODO: genericFilterView(dealership, "year");
+                    genericFilterView(dealership, "year");
                     break;
                 case 5:
                     // TODO: genericFilterView(dealership, "drive");
@@ -119,15 +119,16 @@ public class UsedCarDealership {
             String filterPrompt = getFilterPrompt(filterType);
             System.out.println(filterPrompt);
             if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
-                System.out.println("Enter the range in the format: mix-max (5000-20000) or press Enter to go back:");
+                System.out.println("Enter the range in the format `min-max`");
                 String rangeInput = Prompter.promptString();
                 if (rangeInput == null) {
                     inPage = false;
                     break;
                 } else if (!rangeInput.contains("-")) {
-                    System.out.println("Invalid input! Returning to menu.");
+                    System.out.println("\nInvalid input! Returning to filter menu.");
                     Prompter.promptEnter();
                     inPage = false;
+                    break;
                 }
 
                 String[] range = rangeInput.split("-");
@@ -138,7 +139,7 @@ public class UsedCarDealership {
                     List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
 
                     if (filteredVehicles.size() == 0) {
-                        System.out.println("No vehicles match your criteria!");
+                        System.out.println("\nNo vehicles match your criteria!");
                         Prompter.promptEnter();
                     } else {
                         selectVehiclesFromList(dealership, filteredVehicles);
@@ -230,6 +231,8 @@ public class UsedCarDealership {
                 return "\nEnter vehicle make or press Enter to go back:";
             case "color":
                 return "\nEnter vehicle color or press Enter to go back:";
+            case "year":
+                return "\nEnter vehicle year range or press Enter to go back:";
             default:
                 return "\nEnter filter criteria or press Enter to go back:";
         }
@@ -267,10 +270,11 @@ public class UsedCarDealership {
      */
     private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min, String max) {
         switch (filterType) {
+            case "year":
+                // TODO: Sort by year
+                return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
             case "price":
                 return dealership.getVehicleManager().searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
-            case "year":
-                return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
             case "kilo":
                 return dealership.getVehicleManager().searchInventory(new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             default:
