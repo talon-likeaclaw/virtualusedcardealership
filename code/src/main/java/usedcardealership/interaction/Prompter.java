@@ -52,7 +52,9 @@ public class Prompter {
                     }
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Illegal input!");
+                System.out.println("\nIllegal input!");
+                promptEnter();
+                invalidValue = false;
             }
         }
         return value;
