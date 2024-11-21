@@ -105,8 +105,9 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return this.id + " " + this.color + " " + this.make + " " + this.model + " " + this.year + " - $"
-                + this.calculateTotalPrice() + " - " + this.transmission + ", " + this.driveType + " - " + this.getKilometerage() + "km";
+        return "[" + this.id + "] " + this.year + " " + this.color + " " + this.make + " " + this.model + "\n"
+                + "Price: $" + this.calculateTotalPrice() + " | Transmission: " + this.transmission + ", "
+                + this.driveType + " | Kilometrage: " + this.kilometerage + " km\n";
     }
 
     /**
