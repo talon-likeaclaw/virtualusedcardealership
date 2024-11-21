@@ -121,22 +121,7 @@ public class UsedCarDealership {
             if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
                 inPage = handleRangeFiltering(dealership, filterType);
             } else {
-                String criteria = Prompter.promptString();
-                // If criteria null go back
-                if (criteria == null) {
-                    inPage = false;
-                    break;
-                }
-                // Apply user input filter to get list of filtered vehicles
-                List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
-                // If no vehicles print warning and prompt enter
-                if (filteredVehicles.size() == 0) {
-                    System.out.println("\nNo vehicles match your criteria!");
-                    Prompter.promptEnter();
-                } else {
-                    // Allow user to choose a vehicle by ID for more details
-                    selectVehiclesFromList(dealership, filteredVehicles);
-                }
+                inPage = handleStringFiltering(dealership, filterType);
             }
         }
     }
@@ -181,6 +166,33 @@ public class UsedCarDealership {
             System.out.println("Invalid range input! Returning to menu.");
             Prompter.promptEnter();
             return false;
+        }
+    }
+
+    /**
+     * Handles logic necessary for string filtering
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @return boolean representing if we are still in the page or not
+     */
+    private static boolean handleStringFiltering(DealershipManager dealership, String filterType) {
+        String criteria = Prompter.promptString();
+        // If criteria null go back
+        if (criteria == null) {
+            return false;
+        }
+        // Apply user input filter to get list of filtered vehicles
+        List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
+        // If no vehicles print warning and prompt enter
+        if (filteredVehicles.size() == 0) {
+            System.out.println("\nNo vehicles match your criteria!");
+            Prompter.promptEnter();
+            return false;
+        } else {
+            // Allow user to choose a vehicle by ID for more details
+            selectVehiclesFromList(dealership, filteredVehicles);
+            return true;
         }
     }
 
