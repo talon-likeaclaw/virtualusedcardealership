@@ -112,25 +112,59 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            // Display all availble criteria and prompt user to choose one
-            displayAvailableCriteria(dealership, filterType);
+            if (!filterType.equals("price") && !filterType.equals("year") && !filterType.equals("kilo")) {
+                // Display all availble criteria and prompt user to choose one
+                displayAvailableCriteria(dealership, filterType);
+            }
             String filterPrompt = getFilterPrompt(filterType);
             System.out.println(filterPrompt);
-            String criteria = Prompter.promptString();
-            // If criteria null go back
-            if (criteria == null) {
-                inPage = false;
-                break;
-            }
-            // Apply user input filter to get list of filtered vehicles
-            List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
-            // If no vehicles print warning and prompt enter
-            if (filteredVehicles.size() == 0) {
-                System.out.println("\nNo vehicles match your criteria!");
-                Prompter.promptEnter();
+            if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
+                System.out.println("Enter the range in the format: mix-max (5000-20000) or press Enter to go back:");
+                String rangeInput = Prompter.promptString();
+                if (rangeInput == null) {
+                    inPage = false;
+                    break;
+                } else if (!rangeInput.contains("-")) {
+                    System.out.println("Invalid input! Returning to menu.");
+                    Prompter.promptEnter();
+                    inPage = false;
+                }
+
+                String[] range = rangeInput.split("-");
+                try {
+                    double min = Double.parseDouble(range[0]);
+                    double max = Double.parseDouble(range[1]);
+
+                    // TODO: List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
+
+                    if (filteredVehicles.size() == 0) {
+                        System.out.println("No vehicles match your criteria!");
+                        Prompter.promptEnter();
+                    } else {
+                        selectVehiclesFromList(dealership, filteredVehicles);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid range input! Returning to menu.");
+                    Prompter.promptEnter();
+                    inPage = false;
+                }
             } else {
-                // Allow user to choose a vehicle by ID for more details
-                selectVehiclesFromList(dealership, filteredVehicles);
+                String criteria = Prompter.promptString();
+                // If criteria null go back
+                if (criteria == null) {
+                    inPage = false;
+                    break;
+                }
+                // Apply user input filter to get list of filtered vehicles
+                List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
+                // If no vehicles print warning and prompt enter
+                if (filteredVehicles.size() == 0) {
+                    System.out.println("\nNo vehicles match your criteria!");
+                    Prompter.promptEnter();
+                } else {
+                    // Allow user to choose a vehicle by ID for more details
+                    selectVehiclesFromList(dealership, filteredVehicles);
+                }
             }
         }
     }
@@ -206,7 +240,7 @@ public class UsedCarDealership {
      * 
      * @param dealership the DealershipManager object
      * @param filterType the method we are filter by
-     * @param criteria the user input criteria to pass into the filter
+     * @param criteria   the user input criteria to pass into the filter
      * @return a list of Vehicles that are filtered by user input
      */
     private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
