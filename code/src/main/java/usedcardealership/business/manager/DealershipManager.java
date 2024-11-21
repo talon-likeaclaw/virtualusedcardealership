@@ -69,46 +69,6 @@ public class DealershipManager {
     return this.vehicleManager;
   }
 
-  public List<Vehicle> getCars() {
-    IFilter<Vehicle> carFilter = new VehicleTypeFilter("Car");
-    return this.vehicleManager.searchInventory(carFilter);
-  }
-
-  public List<Vehicle> getSUVs() {
-    IFilter<Vehicle> suvFilter = new VehicleTypeFilter("SUV");
-    return this.vehicleManager.searchInventory(suvFilter);
-  }
-
-  public List<Vehicle> getVans() {
-    IFilter<Vehicle> vanFilter = new VehicleTypeFilter("Van");
-    return this.vehicleManager.searchInventory(vanFilter);
-  }
-
-  public List<Vehicle> getRVs() {
-    IFilter<Vehicle> rvFilter = new VehicleTypeFilter("RV");
-    return this.vehicleManager.searchInventory(rvFilter);
-  }
-
-  public List<Vehicle> getMotorcycles() {
-    IFilter<Vehicle> motorcycleFilter = new VehicleTypeFilter("Motorcycle");
-    return this.vehicleManager.searchInventory(motorcycleFilter);
-  }
-
-  public List<Vehicle> getTrucks() {
-    IFilter<Vehicle> truckFilter = new VehicleTypeFilter("PickupTruck");
-    return this.vehicleManager.searchInventory(truckFilter);
-  }
-
-  public List<Vehicle> getVehiclesByMake(String make) {
-    IFilter<Vehicle> makeFilter = new VehicleMakeFilter(make);
-    return this.vehicleManager.searchInventory(makeFilter);
-  }
-
-  public List<Vehicle> getVehiclesByColor(String color) {
-    IFilter<Vehicle> colorFilter = new VehicleColorFilter(color);
-    return this.vehicleManager.searchInventory(colorFilter);
-  }
-
   public Vehicle getVehicleById(int vehicleId) {
     for (Vehicle v : this.getInventory()) {
       if (v.getID() == vehicleId) {
