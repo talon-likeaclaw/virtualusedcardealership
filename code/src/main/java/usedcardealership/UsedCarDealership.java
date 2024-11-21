@@ -153,7 +153,6 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            System.out.println("Select Vehicle Type:");
             switch (Prompter.promptOption(
                     "1: Input Make\n0: Exit", 1)) {
                 case 0:
@@ -162,6 +161,28 @@ public class UsedCarDealership {
                 case 1:
                     String make = Prompter.promptVehicleMake();
                     printVehiclesByMake(dealership, make);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * View that allows user to choose to input a make or exit
+     * 
+     * @param dealership
+     */
+    private static void vehicleColorView(DealershipManager dealership) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            switch (Prompter.promptOption(
+                    "1: Input Make\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    String color = Prompter.promptVehicleColor();
+                    printVehiclesByColor(dealership, color);
                     break;
             }
         }
@@ -211,13 +232,30 @@ public class UsedCarDealership {
      * Prints vehicles of a specified make
      * 
      * @param dealership the DealershipManager object
-     * @param make the make of vehicle to print from inventory
+     * @param make       the make of vehicle to print from inventory
      */
     private static void printVehiclesByMake(DealershipManager dealership, String make) {
         List<Vehicle> vehicles = new ArrayList<>();
         vehicles = dealership.getVehiclesByMake(make);
         if (vehicles.size() == 0) {
             System.out.println("\nNo " + make + "s found.");
+            Prompter.promptEnter();
+        } else {
+            selectVehiclesFromList(dealership, vehicles);
+        }
+    }
+
+    /**
+     * Prints vehicles of a specified color
+     * 
+     * @param dealership the DealershipManager object
+     * @param color      the color of vehicle to print from inventory
+     */
+    private static void printVehiclesByColor(DealershipManager dealership, String color) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles = dealership.getVehiclesByColor(color);
+        if (vehicles.size() == 0) {
+            System.out.println("\nNo " + color + " vehicles found.");
             Prompter.promptEnter();
         } else {
             selectVehiclesFromList(dealership, vehicles);
