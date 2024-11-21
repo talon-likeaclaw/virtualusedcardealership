@@ -11,7 +11,6 @@ import usedcardealership.business.manager.*;
 public class UsedCarDealership {
     private static Prompter prompter;
     private static Customer currentCustomer;
-    private static Random rand;
 
     public static void main(String[] args) {
         prompter = new Prompter();
@@ -41,11 +40,13 @@ public class UsedCarDealership {
                     browseVehiclesView(dealership);
                     break;
                 case 2:
-                    //viewAccountView(dealership);
+                    viewAccountView(dealership);
                     break;
                 case 3:
                     // TODO: sellVehicleView()
                     break;
+                default:
+                    System.out.println("I hope you're proud of yourself, you broke");
             }
         }
     }
@@ -61,7 +62,7 @@ public class UsedCarDealership {
             wipe();
             System.out.println("Select Vehicle Type:");
             switch (prompter.promptOption(
-                    "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Return to Main Menu",
+                    "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Main Menu",
                     7)) {
                 case 0:
                     inPage = false;
@@ -94,7 +95,7 @@ public class UsedCarDealership {
     /**
      * Prints the list of vehicles by chosen type
      * 
-     * @param dealership  the DealershipManager object
+     * @param dealership the DealershipManager object
      * @param vehicleType the type of vehicle to get a list of
      */
     private static void viewVehicles(DealershipManager dealership, String vehicleType) {
@@ -127,29 +128,32 @@ public class UsedCarDealership {
         if (vehicles.isEmpty()) {
             System.out.println("No vehicles available in inventory.");
         } else {
-            boolean inPage = true;
-            while (inPage) {
-                wipe();
-                // TODO: sort vehicles by ID
-                for (Vehicle v : vehicles) {
-                    System.out.println(v);
-                }
-                System.out.println("\nPlease select an option:");
-                switch (prompter.promptOption(
-                        "1: Select Vehicle by ID\n0: Exit", 1)) {
-                    case 0:
-                        inPage = false;
-                        break;
-                    case 1:
-                        int vehicleID = selectVehicle(vehicles);
-                        if (vehicleID == -1) {
-                            System.out.println("\nInvalid Vehicle ID!");
-                            prompter.promptEnter(); 
-                        } else {
-                            viewVehicleDetails(dealership, vehicleID);
-                        }
-                        break;
-                }
+            // TODO: sort vehicles by ID
+            wipe();
+            for (Vehicle v : vehicles) {
+                System.out.println(v);
+            }
+            vehicleViewMenu();
+        }
+    }
+
+    /**
+     * Menu that allows user to select a vehicle or exit
+     * 
+     */
+    private static void vehicleViewMenu() {
+        boolean inPage = true;
+        while (inPage) {
+            System.out.println("\nPlease select an option:");
+            switch (prompter.promptOption(
+                    "1: Select Vehicle\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    int vehicleID = selectVehicle();
+                    // TODO: viewVehicleDetails(vehicleID);
+                    break;
             }
         }
     }
@@ -159,14 +163,8 @@ public class UsedCarDealership {
      * 
      * @return the selected ID of the vehicle they want more details on
      */
-    private static int selectVehicle(List<Vehicle> vehicles) {
-        int chosenId = prompter.promptVehicleId();
-        for (Vehicle v : vehicles) {
-            if (chosenId == v.getID()) {
-                return chosenId;
-            }
-        }
-        return -1;
+    private static int selectVehicle() {
+        return prompter.promptVehicleId();
     }
 
     /**
@@ -175,31 +173,17 @@ public class UsedCarDealership {
      * @param vehicleID the ID of the Vehicle to print details for
      */
     private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
-        Vehicle vehicle = dealership.getVehicleById(vehicleID);
-        wipe();
-        System.out.println(vehicle.getFullDetails());
-        vehicleDetailsMenu(dealership);
+        // TODO: Print vehicle's full details
+        // TODO: Create a getFullDetails method for each Vehicle type
+        // vehicleDetailsMenu():
     }
 
     /**
      * Menu that asks user if they want to purchase vehicle or go back
      * 
-     * @param dealership the DealershipManager object
      */
-    private static void vehicleDetailsMenu(DealershipManager dealership) {
-        boolean inPage = true;
-        while (inPage) {
-            System.out.println("\nWould you like to:");
-            switch (prompter.promptOption(
-                    "1: Purchase this Vehicle\n0: Return to Vehicle List", 1)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
-                    // TODO: Implement method for initiating purchase
-                    break;
-            }
-        }
+    private static void vehicleDetailsMenu() {
+        // TODO: Create a menu that allows for purchase, go back, or go to main menu
     }
 
     /**
@@ -211,8 +195,6 @@ public class UsedCarDealership {
         String dealershipName = "Talon & Juan's Used Car Emporium";
         double dealershipAccountBalance = 567234.54;
 
-        rand = new Random();
-        
         
 
         // Load vehicles
@@ -238,6 +220,9 @@ public class UsedCarDealership {
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+
+
+        initializeCurrentCustomer(customers);
         return dealership;
     }
 
@@ -292,9 +277,27 @@ public class UsedCarDealership {
         System.out.print("\033[H\033[2J");
     }
 
+    private static void initializeCurrentCustomer(List<Customer> customers){
+        Random rand = new Random();
+        currentCustomer = customers.get(rand.nextInt(customers.size()));
+    }
 
     private static void viewAccountView(DealershipManager dealer){
-        throw new UnsupportedOperationException();
+        wipe();
+
+        System.out.println(currentCustomer);
+        boolean inPage = true;
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "\n0: Exit",
+                    1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                default:
+                    System.out.println("You may only select 0");
+            }
+        }
     }
 
 }
