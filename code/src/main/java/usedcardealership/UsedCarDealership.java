@@ -1,14 +1,14 @@
 package usedcardealership;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
+
+import java.util.*;
 
 public class UsedCarDealership {
     public static void main(String[] args) {
@@ -76,212 +76,150 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    vehicleTypeView(dealership);
+                    genericFilterView(dealership, "type");
                     break;
                 case 2:
-                    vehicleMakeView(dealership);
+                    genericFilterView(dealership, "make");
                     break;
                 case 3:
-                    vehicleColorView(dealership);
+                    genericFilterView(dealership, "color");
                     break;
                 case 4:
-                    // TODO: vehicleYearRangeView(dealership);
+                    // TODO: genericFilterView(dealership, "year");
                     break;
                 case 5:
-                    // TODO: vehicleDriveView(dealership);
+                    // TODO: genericFilterView(dealership, "drive");
                     break;
                 case 6:
-                    // TODO: vehiclePriceRangeView(dealership);
+                    // TODO: genericFilterView(dealership, "price");
                     break;
                 case 7:
-                    // TODO: vehicleKilometrageRangeView(dealership);
+                    // TODO: genericFilterView(dealership, "kilo");
                     break;
                 case 8:
-                    // TODO: vehicleTransmissionView(dealership);
+                    // TODO: genericFilterView(dealership, "trans");
                     break;
             }
         }
     }
 
     /**
-     * Menu that allows user to choose between vehicle type
+     * Generic view for allowing user to choose from filtered criteria
      * 
      * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by (type, make, color, etc)
      */
-    private static void vehicleTypeView(DealershipManager dealership) {
+    private static void genericFilterView(DealershipManager dealership, String filterType) {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            System.out.println("Select Vehicle Type:");
-            switch (Prompter.promptOption(
-                    "1: All\n2: Car\n3: SUV\n4: Van\n5: RV\n6: Motorcycle\n7: Pickup Truck\n0: Return to Main Menu",
-                    7)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
-                    printVehiclesByType(dealership, "All");
-                    break;
-                case 2:
-                    printVehiclesByType(dealership, "Car");
-                    break;
-                case 3:
-                    printVehiclesByType(dealership, "SUV");
-                    break;
-                case 4:
-                    printVehiclesByType(dealership, "Van");
-                    break;
-                case 5:
-                    printVehiclesByType(dealership, "RV");
-                    break;
-                case 6:
-                    printVehiclesByType(dealership, "Motorcycle");
-                    break;
-                case 7:
-                    printVehiclesByType(dealership, "Truck");
-                    break;
+            // Display all availble criteria and prompt user to choose one
+            displayAvailableCriteria(dealership, filterType);
+            String filterPrompt = getFilterPrompt(filterType);
+            System.out.println(filterPrompt);
+            String criteria = Prompter.promptString();
+            // If criteria null go back
+            if (criteria == null) {
+                inPage = false;
+                break;
+            }
+            // Apply user input filter to get list of filtered vehicles
+            List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
+            // If no vehicles print warning and prompt enter
+            if (filteredVehicles.size() == 0) {
+                System.out.println("\nNo vehicles match your criteria!");
+                Prompter.promptEnter();
+            } else {
+                // Allow user to choose a vehicle by ID for more details
+                selectVehiclesFromList(dealership, filteredVehicles);
             }
         }
     }
 
     /**
-     * View that allows user to choose to input a make or exit
+     * Displays the all of the unique available criteria to choose from
      * 
      * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
      */
-    private static void vehicleMakeView(DealershipManager dealership) {
-        boolean inPage = true;
-        List<Vehicle> vehicles = dealership.getInventory();
-        while (inPage) {
-            wipe();
-            System.out.println("Vehicle Makes Currently Available:");
-            HashSet<String> makes = new HashSet<>();
-            // Get all unique existing makes
-            for (Vehicle v : vehicles) {
-                makes.add(v.getMake());
-            }
-            // TODO: Sort vehicles by make
-            // Print all unique existing makes
-            for (String s : makes) {
-                System.out.println(s);
-            }
-            switch (Prompter.promptOption(
-                    "\n1: Input Make\n0: Exit", 1)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
-                    String make = Prompter.promptVehicleMake();
-                    printVehiclesByMake(dealership, make);
-                    break;
-            }
+    private static void displayAvailableCriteria(DealershipManager dealership, String filterType) {
+        // Create String hash set for unique values only
+        HashSet<String> criteriaSet = new HashSet<>();
+        // Depending on filterType, print unique values to choose from
+        switch (filterType) {
+            case "type":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getType());
+                }
+                break;
+            case "make":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getMake());
+                }
+                break;
+            case "color":
+                // TODO: Sort alphabetically
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getColor());
+                }
+                break;
+            default:
+                System.out.println("No available criteria to display for this filter.");
+                Prompter.promptEnter();
+                return;
         }
-    }
-
-    /**
-     * View that allows user to choose to input a make or exit
-     * 
-     * @param dealership
-     */
-    private static void vehicleColorView(DealershipManager dealership) {
-        boolean inPage = true;
-        List<Vehicle> vehicles = dealership.getInventory();
-        while (inPage) {
-            wipe();
-            System.out.println("Vehicle Colors Currently Available:");
-            HashSet<String> colors = new HashSet<>();
-            // Get all unique existing colors
-            for (Vehicle v : vehicles) {
-                colors.add(v.getColor());
-            }
-            // TODO: Sort vehicles by color
-            // Print all unique existing colors
-            for (String s : colors) {
-                System.out.println(s);
-            }
-            switch (Prompter.promptOption(
-                    "\n1: Input Color\n0: Exit", 1)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
-                    String color = Prompter.promptVehicleColor();
-                    printVehiclesByColor(dealership, color);
-                    break;
-            }
-        }
-    }
-
-    /**
-     * Prints the list of vehicles by chosen type
-     * 
-     * @param dealership  the DealershipManager object
-     * @param vehicleType the type of vehicle to get a list of
-     */
-    private static void printVehiclesByType(DealershipManager dealership, String vehicleType) {
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        if (vehicleType.equals("All")) {
-            vehicles = dealership.getInventory();
-        } else {
-            switch (vehicleType) {
-                case "Car":
-                    vehicles = dealership.getCars();
-                    break;
-                case "SUV":
-                    vehicles = dealership.getSUVs();
-                    break;
-                case "Van":
-                    vehicles = dealership.getVans();
-                    break;
-                case "RV":
-                    vehicles = dealership.getRVs();
-                    break;
-                case "Motorcycle":
-                    vehicles = dealership.getMotorcycles();
-                    break;
-                case "Truck":
-                    vehicles = dealership.getTrucks();
-                    break;
-            }
-        }
-        if (vehicles.isEmpty()) {
-            System.out.println("No vehicles available in inventory.");
-        } else {
-            selectVehiclesFromList(dealership, vehicles);
-        }
-    }
-
-    /**
-     * Prints vehicles of a specified make
-     * 
-     * @param dealership the DealershipManager object
-     * @param make       the make of vehicle to print from inventory
-     */
-    private static void printVehiclesByMake(DealershipManager dealership, String make) {
-        List<Vehicle> vehicles = dealership.getVehiclesByMake(make);
-        if (vehicles.size() == 0) {
-            System.out.println("\nInvalid vehicle make!");
+        // If there are no options to choose from print warning
+        if (criteriaSet.size() == 0) {
+            System.out.println("No options available.");
             Prompter.promptEnter();
         } else {
-            selectVehiclesFromList(dealership, vehicles);
+            // Print unique available options to choose from
+            System.out.println("Available options:");
+            for (String criteria : criteriaSet) {
+                System.out.println(criteria);
+            }
         }
     }
 
     /**
-     * Prints vehicles of a specified color
+     * Returns a unique prompt depending on the filter type
+     * 
+     * @param filterType the method we are filtering by
+     * @return the prompt from the particular type of filter
+     */
+    private static String getFilterPrompt(String filterType) {
+        switch (filterType) {
+            case "type":
+                return "\nEnter vehicle type or press Enter to go back:";
+            case "make":
+                return "\nEnter vehicle make or press Enter to go back:";
+            case "color":
+                return "\nEnter vehicle color or press Enter to go back:";
+            default:
+                return "\nEnter filter criteria or press Enter to go back:";
+        }
+    }
+
+    /**
+     * Applies the filter to the dealership inventory using searchInventory
      * 
      * @param dealership the DealershipManager object
-     * @param color      the color of vehicle to print from inventory
+     * @param filterType the method we are filter by
+     * @param criteria the user input criteria to pass into the filter
+     * @return a list of Vehicles that are filtered by user input
      */
-    private static void printVehiclesByColor(DealershipManager dealership, String color) {
-        List<Vehicle> vehicles = new ArrayList<>();
-        vehicles = dealership.getVehiclesByColor(color);
-        if (vehicles.size() == 0) {
-            System.out.println("\nInvalid vehicle color!");
-            Prompter.promptEnter();
-        } else {
-            selectVehiclesFromList(dealership, vehicles);
+    private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
+        switch (filterType) {
+            case "type":
+                return dealership.getVehicleManager().searchInventory(new VehicleTypeFilter(criteria));
+            case "make":
+                return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
+            case "color":
+                return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+            default:
+                return new ArrayList<>();
         }
     }
 
@@ -295,7 +233,7 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            // TODO: sort vehicles by ID
+            // TODO: sort vehicles numerically by ID
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
@@ -358,11 +296,14 @@ public class UsedCarDealership {
         while (inPage) {
             System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
-                    "1: Add Vehicle to Cart\n0: Return to Vehicle List", 1)) {
+                    "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
                 case 0:
                     inPage = false;
                     break;
                 case 1:
+                    // TODO: Implement method to test drive vehicle
+                    break;
+                case 2:
                     // TODO: Implement method to add vehicle to cart
                     break;
             }
