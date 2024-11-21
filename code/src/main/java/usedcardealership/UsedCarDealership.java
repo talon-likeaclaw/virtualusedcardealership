@@ -1,6 +1,8 @@
 package usedcardealership;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
@@ -60,15 +62,15 @@ public class UsedCarDealership {
             System.out.println("Filter by:");
             System.out.println("**************");
             switch (Prompter.promptOption(
-                    "1: Type\n" + 
-                    "2: Make\n" + 
-                    "3: Color\n" +
-                    "4: Year Range\n" +
-                    "5: Drive Type\n" +
-                    "6: Price Range\n" +
-                    "7: Kiometrage Range\n" +
-                    "8: Transmission Type\n" +
-                    "0: Exit",
+                    "1: Type\n" +
+                            "2: Make\n" +
+                            "3: Color\n" +
+                            "4: Year Range\n" +
+                            "5: Drive Type\n" +
+                            "6: Price Range\n" +
+                            "7: Kiometrage Range\n" +
+                            "8: Transmission Type\n" +
+                            "0: Exit",
                     8)) {
                 case 0:
                     inPage = false;
@@ -77,7 +79,7 @@ public class UsedCarDealership {
                     vehicleTypeView(dealership);
                     break;
                 case 2:
-                    // TODO: vehicleMakeView(dealership);
+                    vehicleMakeView(dealership);
                     break;
                 case 3:
                     // TODO: vehicleColorView(dealership)
@@ -143,6 +145,29 @@ public class UsedCarDealership {
     }
 
     /**
+     * View that allows user to choose to input a make or exit
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void vehicleMakeView(DealershipManager dealership) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            System.out.println("Select Vehicle Type:");
+            switch (Prompter.promptOption(
+                    "1: Input Make\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    String make = Prompter.promptVehicleMake();
+                    printVehiclesByMake(dealership, make);
+                    break;
+            }
+        }
+    }
+
+    /**
      * Prints the list of vehicles by chosen type
      * 
      * @param dealership  the DealershipManager object
@@ -183,36 +208,53 @@ public class UsedCarDealership {
     }
 
     /**
+     * Prints vehicles of a specified make
+     * 
+     * @param dealership the DealershipManager object
+     * @param make the make of vehicle to print from inventory
+     */
+    private static void printVehiclesByMake(DealershipManager dealership, String make) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles = dealership.getVehiclesByMake(make);
+        if (vehicles.size() == 0) {
+            System.out.println("\nNo " + make + "s found.");
+            Prompter.promptEnter();
+        } else {
+            selectVehiclesFromList(dealership, vehicles);
+        }
+    }
+
+    /**
      * Allows customer to select vehicle from list by ID
      * 
      * @param dealership the DealershipManager object
-     * @param vehicles the list of vehicles to select from
+     * @param vehicles   the list of vehicles to select from
      */
     private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
-            boolean inPage = true;
-            while (inPage) {
-                wipe();
-                // TODO: sort vehicles by ID
-                for (Vehicle v : vehicles) {
-                    System.out.println(v);
-                }
-                System.out.println("\nPlease select an option:");
-                switch (Prompter.promptOption(
-                        "1: Select Vehicle by ID\n0: Exit", 1)) {
-                    case 0:
-                        inPage = false;
-                        break;
-                    case 1:
-                        int vehicleID = selectVehicle(vehicles);
-                        if (vehicleID == -1) {
-                            System.out.println("\nInvalid Vehicle ID!");
-                            Prompter.promptEnter();
-                        } else {
-                            viewVehicleDetails(dealership, vehicleID);
-                        }
-                        break;
-                }
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            // TODO: sort vehicles by ID
+            for (Vehicle v : vehicles) {
+                System.out.println(v);
             }
+            System.out.println("\nPlease select an option:");
+            switch (Prompter.promptOption(
+                    "1: Select Vehicle by ID\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    int vehicleID = selectVehicle(vehicles);
+                    if (vehicleID == -1) {
+                        System.out.println("\nInvalid Vehicle ID!");
+                        Prompter.promptEnter();
+                    } else {
+                        viewVehicleDetails(dealership, vehicleID);
+                    }
+                    break;
+            }
+        }
     }
 
     /**
