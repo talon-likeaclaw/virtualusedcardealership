@@ -18,7 +18,7 @@ public class VehicleTransmissionFilter extends VehicleFilter {
      * @param transmission - the transmission to filter by
      */
     public VehicleTransmissionFilter(String transmission) {
-        this.transmission = transmission;
+        this.transmission = transmission.toLowerCase();
     }
 
     /**
@@ -29,6 +29,6 @@ public class VehicleTransmissionFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
-        return vehicle.getTransmission().equals(this.transmission);
+        return vehicle.getTransmission().toLowerCase().equals(this.transmission);
     }
 }
