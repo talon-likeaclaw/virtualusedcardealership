@@ -68,7 +68,7 @@ public class UsedCarDealership {
                             "4: Year Range\n" +
                             "5: Drive Type\n" +
                             "6: Price Range\n" +
-                            "7: Kiometrage Range\n" +
+                            "7: Kilometrage Range\n" +
                             "8: Transmission Type\n" +
                             "0: Exit",
                     8)) {
