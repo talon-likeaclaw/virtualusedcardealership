@@ -43,7 +43,7 @@ public class UsedCarDealership {
                     viewAccountView(dealership);
                     break;
                 case 3:
-                    // TODO: sellVehicleView()
+                    sellVehicleView(dealership);
                     break;
                 default:
                     System.out.println("I hope you're proud of yourself, you broke");
@@ -298,6 +298,10 @@ public class UsedCarDealership {
                     System.out.println("You may only select 0");
             }
         }
+    }
+
+    private static void sellVehicleView(DealershipManager dealership){
+        
     }
 
 }
