@@ -65,6 +65,10 @@ public class DealershipManager {
     return this.vehicleManager.getDatabase();
   }
 
+  public VehicleManager getVehicleManager() {
+    return this.vehicleManager;
+  }
+
   public List<Vehicle> getCars() {
     IFilter<Vehicle> carFilter = new VehicleTypeFilter("Car");
     return this.vehicleManager.searchInventory(carFilter);
