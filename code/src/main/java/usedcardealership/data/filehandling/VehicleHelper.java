@@ -36,56 +36,29 @@ public class VehicleHelper {
         double kilometerage = Double.parseDouble(fields[11]);
         double damage = Double.parseDouble(fields[12]);
         boolean isElectric = Boolean.parseBoolean(fields[13]);
+        
         // Check for each type of Vehicle and fill fields/return Vehicle subtype.
-        if (type.equals("Motorcycle")) {
-            double engineCC = Double.parseDouble(fields[14]);
-            String handlebarType = fields[15];
-            return new Motorcycle(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, engineCC, handlebarType);
-        } else if (type.equals("RV")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            int sleepCapacity = Integer.parseInt(fields[17]);
-            boolean hasBathroom = Boolean.parseBoolean(fields[18]);
-            return new RV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity,
-                    hasBathroom);
-        } else if (type.equals("Car")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            boolean isConvertible = Boolean.parseBoolean(fields[17]);
-            return new Car(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
-        } else if (type.equals("SUV")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
-            return new SUV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
-        } else if (type.equals("PickupTruck")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            double cargoCapacity = Double.parseDouble(fields[17]);
-            double bedLength = Double.parseDouble(fields[18]);
-            double towingCapacity = Double.parseDouble(fields[19]);
-            return new PickupTruck(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof,
-                    cargoCapacity, bedLength, towingCapacity);
-        } else if (type.equals("Van")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            double cargoCapacity = Double.parseDouble(fields[17]);
-            boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
-            return new Van(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity,
-                    hasSlidingDoors);
-        } else {
-            return null;
+        switch (type) {
+            case "Motorcycle":
+                return parseMotorcycle(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "RV":
+                return parseRV(fields, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric);
+            case "Car":
+                return parseCar(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "SUV":
+                return parseSUV(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "PickupTruck":
+                return parsePickupTruck(fields, id, make, model, year, price, color, transmission, driveType,
+                        horsepower, weight, kilometerage, damage, isElectric);
+            case "Van":
+                return parseVan(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            default:
+                return null;
         }
     }
 
