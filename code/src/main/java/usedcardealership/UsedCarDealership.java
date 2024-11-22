@@ -281,9 +281,11 @@ public class UsedCarDealership {
      * @param vehicleID the ID of the Vehicle to print details for
      */
     private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
-        // TODO: Print vehicle's full details
-        // TODO: Create a getFullDetails method for each Vehicle type
-        // vehicleDetailsMenu():
+        Vehicle vehicle = dealership.getVehicleById(vehicleID);
+        wipe();
+        System.out.println(vehicle.getFullDetails());
+        vehicleDetailsMenu(dealership);
+
     }
 
     /**
