@@ -85,7 +85,7 @@ public class Transaction {
      * @return double
      */
     // public double calculateTotal() {
-    //     double depreciation = this.getVehicle().calculateDepreciation();
-    //     return (this.getPrice() - depreciation) * this.getTax();
+    // double depreciation = this.getVehicle().calculateDepreciation();
+    // return (this.getPrice() - depreciation) * this.getTax();
     // }
 }
