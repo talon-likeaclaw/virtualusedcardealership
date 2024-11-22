@@ -180,4 +180,18 @@ public class VehicleManager {
             }
         }
     }
+
+    /**
+     * Sorts the list of vehicles based on the given comparator and order
+     *
+     * @param vehicles   the list of vehicles to sort
+     * @param comparator the comparator to use for sorting
+     * @param ascending  true for ascending order, false for descending
+     */
+    public void sortVehicles(List<Vehicle> vehicles, Comparator<Vehicle> comparator, boolean ascending) {
+        if (!ascending) {
+            comparator = comparator.reversed(); // found in javadocs for compartor
+        }
+        Collections.sort(vehicles, comparator);
+    }
 }

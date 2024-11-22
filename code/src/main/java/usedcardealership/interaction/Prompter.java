@@ -150,7 +150,10 @@ public class Prompter {
             case "trans":
                 return "\nEnter vehicle transmission type or press Enter to go back:";
             case "id-sort":
-                return "Enter a vehicle [ID] or sorting type (id, year, kilometrage, damage), or press Enter to go back.";
+                return "Sort Options:\n" +
+                        "- Type: id, year, kilometrage, damage\n" +
+                        "- Add 'desc' for descending order ('id desc')\n" +
+                        "To select a vehicle, enter its [ID] or press Enter to go back.";
             default:
                 return "No prompt available";
         }

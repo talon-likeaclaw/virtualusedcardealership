@@ -215,19 +215,16 @@ public class UsedCarDealership {
         // Depending on filterType, print unique values to choose from
         switch (filterType) {
             case "type":
-                // TODO: Sort alphabetically
                 for (Vehicle v : dealership.getInventory()) {
                     criteriaSet.add(v.getType());
                 }
                 break;
             case "make":
-                // TODO: Sort alphabetically
                 for (Vehicle v : dealership.getInventory()) {
                     criteriaSet.add(v.getMake());
                 }
                 break;
             case "color":
-                // TODO: Sort alphabetically
                 for (Vehicle v : dealership.getInventory()) {
                     criteriaSet.add(v.getColor());
                 }
@@ -254,6 +251,7 @@ public class UsedCarDealership {
         } else {
             // Convert HashSet to List for sorting
             List<String> sortedCriteria = new ArrayList<>(criteriaSet);
+            // Sort alphabetically
             Collections.sort(sortedCriteria);
             System.out.println("Available options:");
             for (String criteria : sortedCriteria) {
@@ -264,6 +262,7 @@ public class UsedCarDealership {
 
     /**
      * Applies the filter to the dealership inventory using searchInventory
+     * Automatically sorts vehicle list by ID
      * 
      * @param dealership the DealershipManager object
      * @param filterType the method we are filtering by
@@ -294,6 +293,7 @@ public class UsedCarDealership {
 
     /**
      * Applies the range filter to the dealership inventory using searchInventory
+     * Automatically sorts vehicle list by ID
      * 
      * @param dealership the DealershipManager object
      * @param filterType the method we are filtering by
@@ -332,7 +332,7 @@ public class UsedCarDealership {
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
-            // Print out prompt and get user input
+            // Print out prompt and get user input for sorting
             System.out.println(Prompter.getPrompt("id-sort"));
             String input = Prompter.promptString();
             // If null go back else trim and set to lowercase
@@ -353,22 +353,27 @@ public class UsedCarDealership {
                     Prompter.promptEnter();
                 }
             } catch (NumberFormatException e) {
-                switch (input) {
+                // Get sorting type and order
+                String[] sortingInfo = input.split(" ");
+                String sortType = sortingInfo[0];
+                // Default to ascending if no "desc"
+                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc"); 
+                switch (sortType) {
                     case "id":
-                        Collections.sort(vehicles, new VehicleIdCompare());
-                        System.out.println("\nSorting by ID.");
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleIdCompare(), ascending);
+                        System.out.println("\nSorting by ID " + (ascending ? "ascending." : "descending."));
                         break;
                     case "year":
-                        Collections.sort(vehicles, new VehicleYearCompare());
-                        System.out.println("\nSorting by Year.");
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleYearCompare(), ascending);
+                        System.out.println("\nSorting by Year " + (ascending ? "ascending." : "descending."));
                         break;
                     case "kilometrage":
-                        Collections.sort(vehicles, new VehicleKilometerageCompare());
-                        System.out.println("\nSorting by Kilometrage.");
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(), ascending);
+                        System.out.println("\nSorting by Kilometrage " + (ascending ? "ascending." : "descending."));
                         break;
                     case "damage":
-                        Collections.sort(vehicles, new VehicleDamageCompare());
-                        System.out.println("\nSorting by Damage.");
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleDamageCompare(), ascending);
+                        System.out.println("\nSorting by Damage " + (ascending ? "ascending." : "descending."));
                         break;
                     default:
                         System.out.println("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
@@ -377,6 +382,7 @@ public class UsedCarDealership {
             }
         }
     }
+
 
     /**
      * Menu that asks user if they want to purchase vehicle or go back
