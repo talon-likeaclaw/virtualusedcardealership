@@ -90,6 +90,34 @@ public class VehicleHelper {
     }
 
     /**
+     * Parses a Motorcycle from the given fields array.
+     */
+    private static Motorcycle parseMotorcycle(String[] fields, int id, String make, String model, int year,
+            double price, String color, String transmission, String driveType, int horsepower,
+            double weight, double kilometerage, double damage, boolean isElectric) {
+        double engineCC = Double.parseDouble(fields[14]);
+        String handlebarType = fields[15];
+        return new Motorcycle("Motorcycle", id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+    }
+
+    /**
+     * Parses an RV from the given fields array.
+     */
+    private static RV parseRV(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        int sleepCapacity = Integer.parseInt(fields[17]);
+        boolean hasBathroom = Boolean.parseBoolean(fields[18]);
+        return new RV("RV", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage,
+                damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+    }
+
+    /**
      * Converts a Vehicle object to a CSV string based on its type and getters.
      * 
      * @param Vehicle vehicle - The Vehicle to convert.
