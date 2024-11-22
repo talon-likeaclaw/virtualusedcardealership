@@ -38,7 +38,7 @@ public class UsedCarDealership {
                     chooseVehicleFilterView(dealership);
                     break;
                 case 2:
-                    //viewAccountView(dealership);
+                    viewAccountView(dealership);
                     break;
                 case 3:
                     sellVehicleView(dealership);
@@ -523,30 +523,11 @@ public class UsedCarDealership {
 
     private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership){
         Random rand = new Random();
-        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+        dealership.setCurrentCustomer(customers.get(27));
     }
 
     private static void viewAccountView(DealershipManager dealer){
         wipe();
-
-        System.out.println(currentCustomer);
-        boolean inPage = true;
-        while (inPage) {
-            switch (prompter.promptOption(
-                    "\n0: Exit",
-                    1)) {
-                case 0:
-                    inPage = false;
-                    break;
-                default:
-                    System.out.println("You may only select 0");
-            }
-        }
-    }
-
-    private static void sellVehicleView(DealershipManager dealer){
-        System.out.println(dealer.getCurrentCustomer().getVehicles());
-        System.out.println("What car will you sell to us?");
 
         System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
@@ -559,6 +540,47 @@ public class UsedCarDealership {
                     break;
                 default:
                     System.out.println("You may only select 0");
+            }
+        }
+    }
+
+    private static void sellVehicleView(DealershipManager dealer){
+        wipe();
+        System.out.println("You own: \n");
+
+        List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
+        List<Integer> ids = new ArrayList<Integer>();  
+
+        for(int i = 0; i < vehicles.size(); i++){
+            System.out.println((i+1) + ": " + vehicles.get(i).getImportantDetails());
+            ids.add(vehicles.get(i).getID());
+        }
+
+        boolean inPage = true;
+        while(inPage){
+            switch (Prompter.promptOption(
+                    "1: Select Vehicle by ID\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    System.out.println("Which vehicle will you sell to us?");
+                    int vehicleID = Prompter.promptVehicleId();
+                    if (!(ids.contains(vehicleID))) {
+                        System.out.println("\nInvalid Vehicle ID!");
+                        break;
+                    }else{
+                        System.out.println("You selected vehicle: " + vehicleID);
+                        System.out.println("Do you want to sell this vehicle?");
+                        boolean confirmed = Prompter.promptYesNo();
+                        if (confirmed) {
+                            //TODO: handle sale or add to shoppingcart, handle removing from the customers vehicleList
+                            System.out.println("The vehicle has been marked for sale.");
+                        } else {
+                            System.out.println("Vehicle selection cancelled.");
+                        }
+                    }
+                    break;
             }
         }
     }
