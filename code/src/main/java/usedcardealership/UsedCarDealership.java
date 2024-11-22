@@ -407,23 +407,23 @@ public class UsedCarDealership {
         dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
     }
 
-    // private static void viewAccountView(DealershipManager dealer){
-    //     wipe();
+    private static void viewAccountView(DealershipManager dealer){
+        wipe();
 
-    //     System.out.println(currentCustomer);
-    //     boolean inPage = true;
-    //     while (inPage) {
-    //         switch (prompter.promptOption(
-    //                 "\n0: Exit",
-    //                 1)) {
-    //             case 0:
-    //                 inPage = false;
-    //                 break;
-    //             default:
-    //                 System.out.println("You may only select 0");
-    //         }
-    //     }
-    // }
+        System.out.println(currentCustomer);
+        boolean inPage = true;
+        while (inPage) {
+            switch (prompter.promptOption(
+                    "\n0: Exit",
+                    1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                default:
+                    System.out.println("You may only select 0");
+            }
+        }
+    }
 
     private static void sellVehicleView(DealershipManager dealer){
         System.out.println(dealer.getCurrentCustomer().getVehicles());
