@@ -523,7 +523,7 @@ public class UsedCarDealership {
 
     private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership){
         Random rand = new Random();
-        dealership.setCurrentCustomer(customers.get(27));
+        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
     }
 
     private static void viewAccountView(DealershipManager dealer){
