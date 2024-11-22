@@ -38,14 +38,16 @@ public class UsedCarDealership {
                     chooseVehicleFilterView(dealership);
                     break;
                 case 2:
-                    // TODO: viewAccountView()
+                    viewAccountView(dealership);
                     break;
                 case 3:
-                    // TODO: sellVehicleView()
+                    sellVehicleView(dealership);
                     break;
                 case 4:
                     // TODO: viewShoppingCart()
                     break;
+                default:
+                    System.out.println("I hope you're proud of yourself, you broke");
             }
         }
     }
@@ -392,7 +394,6 @@ public class UsedCarDealership {
     /**
      * Menu that asks user if they want to purchase vehicle or go back
      * 
-     * @param dealership the DealershipManager object
      */
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
         boolean inPage = true;
@@ -438,6 +439,8 @@ public class UsedCarDealership {
         String dealershipName = "Talon & Juan's Used Car Emporium";
         double dealershipAccountBalance = 567234.54;
 
+        
+
         // Load vehicles
         String vehicleDatabasePath = "resources/database.csv";
         List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
@@ -461,6 +464,9 @@ public class UsedCarDealership {
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+
+
+        initializeCurrentCustomer(customers, dealership);
         return dealership;
     }
 
@@ -513,6 +519,33 @@ public class UsedCarDealership {
      */
     public static void wipe() {
         System.out.print("\033[H\033[2J");
+    }
+
+    private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership){
+        Random rand = new Random();
+        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+    }
+
+    private static void viewAccountView(DealershipManager dealer){
+        wipe();
+
+        System.out.println(dealer.getCurrentCustomer());
+        boolean inPage = true;
+        while (inPage) {
+            switch (Prompter.promptOption(
+                    "\n0: Exit",
+                    0)) {
+                case 0:
+                    inPage = false;
+                    break;
+                default:
+                    System.out.println("You may only select 0");
+            }
+        }
+    }
+
+    private static void sellVehicleView(DealershipManager dealership){
+        
     }
 
 }

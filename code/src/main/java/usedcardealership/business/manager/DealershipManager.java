@@ -20,6 +20,7 @@ public class DealershipManager {
   private TransactionManager transactionManager;
   private VehicleManager vehicleManager;
   private CustomerManager customerManager;
+  private Customer currentCustomer;
 
   /**
    * DealershipManager Constructor
@@ -86,6 +87,14 @@ public class DealershipManager {
    */
   public void updateAccountBalance(double balanceChange) {
     this.accountBalance += balanceChange;
+  }
+
+
+  public Customer getCurrentCustomer(){
+    return this.currentCustomer;
+  }
+  public void setCurrentCustomer(Customer customer) {
+    this.currentCustomer = customer;
   }
 
 }
