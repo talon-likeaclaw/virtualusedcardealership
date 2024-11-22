@@ -154,18 +154,29 @@ public class UsedCarDealership {
             List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
 
             // If no vehicles
-            if (filteredVehicles.size() == 0) {
-                System.out.println("\nNo vehicles match your criteria!");
-                Prompter.promptEnter();
-                return false;
-            } else {
-                selectVehiclesFromList(dealership, filteredVehicles);
-                return true;
-            }
+            return handleFilteredVehicles(dealership, filteredVehicles);
         } catch (NumberFormatException e) {
             System.out.println("Invalid range input! Returning to menu.");
             Prompter.promptEnter();
             return false;
+        }
+    }
+
+    /**
+     * Checks to see if vehicle list is empty or not and opens vehicle selection view
+     * 
+     * @param dealership the DealershipManager object
+     * @param filteredVehicles the list of filtered vehicles
+     * @return true if list is not empty false if list is empty.
+     */
+    private static boolean handleFilteredVehicles(DealershipManager dealership, List<Vehicle> filteredVehicles) {
+        if (filteredVehicles.size() == 0) {
+            System.out.println("\nNo vehicles match your criteria!");
+            Prompter.promptEnter();
+            return false;
+        } else {
+            selectVehiclesFromList(dealership, filteredVehicles);
+            return true;
         }
     }
 
@@ -185,15 +196,7 @@ public class UsedCarDealership {
         // Apply user input filter to get list of filtered vehicles
         List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
         // If no vehicles print warning and prompt enter
-        if (filteredVehicles.size() == 0) {
-            System.out.println("\nNo vehicles match your criteria!");
-            Prompter.promptEnter();
-            return false;
-        } else {
-            // Allow user to choose a vehicle by ID for more details
-            selectVehiclesFromList(dealership, filteredVehicles);
-            return true;
-        }
+        return handleFilteredVehicles(dealership, filteredVehicles);
     }
 
     /**
