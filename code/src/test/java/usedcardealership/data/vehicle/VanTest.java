@@ -131,25 +131,8 @@ public class VanTest {
                 14.0,
                 true);
 
-        String expectedOutput = "Type: Van\n" +
-                "ID: 51\n" +
-                "Make: Honda\n" +
-                "Model: Odyssey\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $35000.0\n" +
-                "Color: Silver\n" +
-                "Transmission: Automatic\n" +
-                "Drive Type: FWD\n" +
-                "Horsepower: 280\n" +
-                "Weight: 4500.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Seats: 8\n" +
-                "Doors: 4\n" +
-                "Sunroof: Yes\n" +
-                "Cargo Capacity: 14.0 cu ft\n" +
-                "Sliding Doors: Yes";
+        String expectedOutput = "[51] " + Year.now().getValue() + " Silver Honda Odyssey\n" +
+                "Price: $35000.0 | Transmission: Automatic, FWD | Kilometrage: 0.0 km\n";
 
         // Act
         String actualOutput = test.toString();

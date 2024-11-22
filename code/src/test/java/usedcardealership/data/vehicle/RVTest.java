@@ -131,25 +131,8 @@ public class RVTest {
                 4,
                 true);
 
-        String expectedOutput = "Type: RV\n" +
-                "ID: 11\n" +
-                "Make: Winnebago\n" +
-                "Model: Outlook\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $60000.0\n" +
-                "Color: White\n" +
-                "Transmission: Automatic\n" +
-                "Drive Type: RWD\n" +
-                "Horsepower: 320\n" +
-                "Weight: 9500.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Seats: 6\n" +
-                "Doors: 2\n" +
-                "Sunroof: Yes\n" +
-                "Sleep Capacity: 4\n" +
-                "Bathroom: Yes";
+        String expectedOutput = "[11] " + Year.now().getValue() + " White Winnebago Outlook\n" +
+                "Price: $60000.0 | Transmission: Automatic, RWD | Kilometrage: 0.0 km\n";
 
         // Act
         String actualOutput = test.toString();
