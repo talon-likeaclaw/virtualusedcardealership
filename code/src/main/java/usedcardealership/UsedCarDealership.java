@@ -316,14 +316,18 @@ public class UsedCarDealership {
      * @param max        the user input max range
      * @return a list of Vehicles that are filter by the crtieria
      */
-    private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min, String max) {
+    private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min,
+            String max) {
         switch (filterType) {
             case "year":
-                return dealership.getVehicleManager().searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
+                return dealership.getVehicleManager()
+                        .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
             case "price":
-                return dealership.getVehicleManager().searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+                return dealership.getVehicleManager()
+                        .searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             case "kilo":
-                return dealership.getVehicleManager().searchInventory(new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+                return dealership.getVehicleManager().searchInventory(
+                        new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             default:
                 return new ArrayList<>();
         }
@@ -345,7 +349,7 @@ public class UsedCarDealership {
             }
             // TODO: possibly could add type based menu option for sorting by filter type
             // For example: price, kilometrage, year, id, etc
-            System.out.println("\nPlease select an option:");
+            System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
                     "1: Select Vehicle by ID\n0: Exit", 1)) {
                 case 0:
@@ -357,7 +361,7 @@ public class UsedCarDealership {
                         System.out.println("\nInvalid Vehicle ID!");
                         Prompter.promptEnter();
                     } else {
-                        viewVehicleDetails(dealership, vehicleID);
+                        vehicleDetailsMenu(dealership, vehicleID);
                     }
                     break;
             }
@@ -383,25 +387,17 @@ public class UsedCarDealership {
     }
 
     /**
-     * Gets and prints the Vehicle's full details
-     * 
-     * @param vehicleID the ID of the Vehicle to print details for
-     */
-    private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
-        Vehicle vehicle = dealership.getVehicleById(vehicleID);
-        wipe();
-        System.out.println(vehicle.getFullDetails());
-        vehicleDetailsMenu(dealership);
-    }
-
-    /**
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      * @param dealership the DealershipManager object
      */
-    private static void vehicleDetailsMenu(DealershipManager dealership) {
+    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
         boolean inPage = true;
+        int testDriveCount = 0;
+        Vehicle vehicle = dealership.getVehicleById(vehicleId);
         while (inPage) {
+            wipe();
+            System.out.println(vehicle.getFullDetails());
             System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
                     "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
@@ -409,7 +405,19 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: Implement method to test drive vehicle
+                    if (testDriveCount < 1) {
+                        try {
+                            dealership.getVehicleManager().getVehicleById(vehicleId).testDrive();
+                            Prompter.promptEnter();
+                            testDriveCount++;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        System.out.println("\nYou just test drove this vehicle!");
+                        Prompter.promptEnter();
+                        wipe();
+                    }
                     break;
                 case 2:
                     // TODO: Implement method to add vehicle to cart
