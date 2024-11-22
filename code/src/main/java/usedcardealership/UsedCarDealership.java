@@ -63,11 +63,13 @@ public class UsedCarDealership {
             wipe();
             System.out.println("Filter by:");
             System.out.println("Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
-            System.out.println(getFilterPrompt("filter"));
-            String input = Prompter.promptString().trim().toLowerCase();
+            System.out.println(Prompter.getPrompt("filter"));
+            String input = Prompter.promptString();
             if (input == null) {
                 inPage = false;
                 break;
+            } else {
+                input.trim().toLowerCase();
             }
             switch (input) {
                 case "type":
@@ -115,7 +117,7 @@ public class UsedCarDealership {
                 // Display all availble criteria and prompt user to choose one
                 displayAvailableCriteria(dealership, filterType);
             }
-            String filterPrompt = getFilterPrompt(filterType);
+            String filterPrompt = Prompter.getPrompt(filterType);
             System.out.println(filterPrompt);
             if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
                 inPage = handleRangeFiltering(dealership, filterType);
@@ -252,37 +254,6 @@ public class UsedCarDealership {
             for (String criteria : criteriaSet) {
                 System.out.println(criteria);
             }
-        }
-    }
-
-    /**
-     * Returns a unique prompt depending on the filter type
-     * 
-     * @param filterType the method we are filtering by
-     * @return the prompt from the particular type of filter
-     */
-    private static String getFilterPrompt(String filterType) {
-        switch (filterType) {
-            case "filter":
-                return "\nEnter filter type or press Enter to go back:";
-            case "type":
-                return "\nEnter vehicle type or press Enter to go back:";
-            case "make":
-                return "\nEnter vehicle make or press Enter to go back:";
-            case "color":
-                return "\nEnter vehicle color or press Enter to go back:";
-            case "year":
-                return "\nEnter vehicle year range or press Enter to go back:";
-            case "drive":
-                return "\nEnter vehicle drive type or press Enter to go back:";
-            case "price":
-                return "\nEnter vehicle price range or press Enter to go back:";
-            case "kilo":
-                return "\nEnter vehicle kilometrage range or press Enter to go back:";
-            case "trans":
-                return "\nEnter vehicle transmission type or press Enter to go back:";
-            default:
-                return "\nEnter filter criteria or press Enter to go back:";
         }
     }
 
