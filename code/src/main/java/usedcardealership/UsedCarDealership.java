@@ -415,7 +415,7 @@ public class UsedCarDealership {
         while (inPage) {
             switch (Prompter.promptOption(
                     "\n0: Exit",
-                    1)) {
+                    0)) {
                 case 0:
                     inPage = false;
                     break;
