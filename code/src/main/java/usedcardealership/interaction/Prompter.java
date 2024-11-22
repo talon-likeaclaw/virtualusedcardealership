@@ -26,7 +26,7 @@ public class Prompter {
     /**
      * Prompts users with a list of options and validates input
      * 
-     * @param question the question/menu options
+     * @param question  the question/menu options
      * @param optionCap the total amount of options (that are not 0)
      * @return the number the user has chosen
      */
@@ -101,7 +101,6 @@ public class Prompter {
         return input.toLowerCase();
     }
 
-
     /**
      * Helper method to see if strings spaces and removes them to return null
      * 
@@ -122,5 +121,36 @@ public class Prompter {
      */
     public static boolean promptYesNo() {
         return (promptOption("1: Yes.\n2: No.", 2) == 1);
+    }
+
+    /**
+     * Returns a unique prompt depending on the filter type
+     * 
+     * @param promptType the method we are filtering by
+     * @return the prompt from the particular type of filter
+     */
+    public static String getPrompt(String promptType) {
+        switch (promptType) {
+            case "filter":
+                return "\nEnter filter type or press Enter to go back:";
+            case "type":
+                return "\nEnter vehicle type or press Enter to go back:";
+            case "make":
+                return "\nEnter vehicle make or press Enter to go back:";
+            case "color":
+                return "\nEnter vehicle color or press Enter to go back:";
+            case "year":
+                return "\nEnter vehicle year range or press Enter to go back:";
+            case "drive":
+                return "\nEnter vehicle drive type or press Enter to go back:";
+            case "price":
+                return "\nEnter vehicle price range or press Enter to go back:";
+            case "kilo":
+                return "\nEnter vehicle kilometrage range or press Enter to go back:";
+            case "trans":
+                return "\nEnter vehicle transmission type or press Enter to go back:";
+            default:
+                return "No prompt available";
+        }
     }
 }
