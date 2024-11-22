@@ -145,6 +145,38 @@ public class VehicleHelper {
     }
 
     /**
+     * Parses a PickupTruck from the given fields array.
+     */
+    private static PickupTruck parsePickupTruck(String[] fields, int id, String make, String model, int year,
+            double price, String color, String transmission, String driveType, int horsepower,
+            double weight, double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        double cargoCapacity = Double.parseDouble(fields[17]);
+        double bedLength = Double.parseDouble(fields[18]);
+        double towingCapacity = Double.parseDouble(fields[19]);
+        return new PickupTruck("PickupTruck", id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity,
+                bedLength, towingCapacity);
+    }
+
+    /**
+     * Parses a Van from the given fields array.
+     */
+    private static Van parseVan(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        double cargoCapacity = Double.parseDouble(fields[17]);
+        boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
+        return new Van("Van", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity, hasSlidingDoors);
+    }
+
+    /**
      * Converts a Vehicle object to a CSV string based on its type and getters.
      * 
      * @param Vehicle vehicle - The Vehicle to convert.
