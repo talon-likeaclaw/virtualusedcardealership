@@ -9,8 +9,8 @@ package usedcardealership.business.manager;
 
 import java.util.*;
 
+import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
-import usedcardealership.comparators.VehicleIdCompare;
 import usedcardealership.data.vehicle.*;
 
 public class VehicleManager {

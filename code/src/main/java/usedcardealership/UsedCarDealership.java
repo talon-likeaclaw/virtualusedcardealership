@@ -5,6 +5,7 @@ import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
 
@@ -62,7 +63,8 @@ public class UsedCarDealership {
         while (inPage) {
             wipe();
             System.out.println("Filter by:");
-            System.out.println("Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
+            System.out.println(
+                    "Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
             System.out.println(Prompter.getPrompt("filter"));
             String input = Prompter.promptString();
             if (input == null) {
@@ -164,9 +166,10 @@ public class UsedCarDealership {
     }
 
     /**
-     * Checks to see if vehicle list is empty or not and opens vehicle selection view
+     * Checks to see if vehicle list is empty or not and opens vehicle selection
+     * view
      * 
-     * @param dealership the DealershipManager object
+     * @param dealership       the DealershipManager object
      * @param filteredVehicles the list of filtered vehicles
      * @return true if list is not empty false if list is empty.
      */
@@ -268,15 +271,20 @@ public class UsedCarDealership {
     private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
         switch (filterType) {
             case "type":
-                return dealership.getVehicleManager().searchInventory(new VehicleTypeFilter(criteria));
+                return dealership.getVehicleManager().sortVehiclesById(
+                        dealership.getVehicleManager().searchInventory(new VehicleTypeFilter(criteria)));
             case "make":
-                return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
+                return dealership.getVehicleManager().sortVehiclesById(
+                        dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria)));
             case "color":
-                return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+                return dealership.getVehicleManager().sortVehiclesById(
+                        dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria)));
             case "drive":
-                return dealership.getVehicleManager().searchInventory(new VehicleDriveFilter(criteria));
+                return dealership.getVehicleManager().sortVehiclesById(
+                        dealership.getVehicleManager().searchInventory(new VehicleDriveFilter(criteria)));
             case "trans":
-                return dealership.getVehicleManager().searchInventory(new VehicleTransmissionFilter(criteria));
+                return dealership.getVehicleManager().sortVehiclesById(
+                        dealership.getVehicleManager().searchInventory(new VehicleTransmissionFilter(criteria)));
             default:
                 return new ArrayList<>();
         }
@@ -295,14 +303,15 @@ public class UsedCarDealership {
             String max) {
         switch (filterType) {
             case "year":
-                return dealership.getVehicleManager()
-                        .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
+                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
+                        .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max))));
             case "price":
-                return dealership.getVehicleManager()
-                        .searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
+                        .searchInventory(
+                                new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max))));
             case "kilo":
-                return dealership.getVehicleManager().searchInventory(
-                        new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager().searchInventory(
+                        new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max))));
             default:
                 return new ArrayList<>();
         }
@@ -318,47 +327,53 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            // TODO: sort vehicles numerically by ID
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
-            // TODO: possibly could add type based menu option for sorting by filter type
-            // For example: price, kilometrage, year, id, etc
-            System.out.println("\nWould you like to:");
-            switch (Prompter.promptOption(
-                    "1: Select Vehicle by ID\n0: Exit", 1)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
-                    int vehicleID = selectVehicle(vehicles);
-                    if (vehicleID == -1) {
-                        System.out.println("\nInvalid Vehicle ID!");
-                        Prompter.promptEnter();
-                    } else {
-                        vehicleDetailsMenu(dealership, vehicleID);
-                    }
-                    break;
+            // Print out prompt and get user input
+            System.out.println(Prompter.getPrompt("id-sort"));
+            String input = Prompter.promptString();
+            // If null go back else trim and set to lowercase
+            if (input == null) {
+                inPage = false;
+                break;
+            } else {
+                input = input.trim().toLowerCase();
+            }
+            try {
+                // Check if input is numeric (assumes it's a vehicle ID)
+                int vehicleID = Integer.parseInt(input);
+                Vehicle selectedVehicle = dealership.getVehicleById(vehicleID);
+                if (selectedVehicle != null) {
+                    vehicleDetailsMenu(dealership, vehicleID);
+                } else {
+                    System.out.println("\nInvalid Vehicle ID!");
+                    Prompter.promptEnter();
+                }
+            } catch (NumberFormatException e) {
+                switch (input) {
+                    case "id":
+                        Collections.sort(vehicles, new VehicleIdCompare());
+                        System.out.println("\nSorting by ID.");
+                        break;
+                    case "year":
+                        Collections.sort(vehicles, new VehicleYearCompare());
+                        System.out.println("\nSorting by Year.");
+                        break;
+                    case "kilometrage":
+                        Collections.sort(vehicles, new VehicleKilometerageCompare());
+                        System.out.println("\nSorting by Kilometrage.");
+                        break;
+                    case "damage":
+                        Collections.sort(vehicles, new VehicleDamageCompare());
+                        System.out.println("\nSorting by Damage.");
+                        break;
+                    default:
+                        System.out.println("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
+                }
+                Prompter.promptEnter();
             }
         }
-    }
-
-    /**
-     * Allows the user to select a vehicle by ID
-     * 
-     * @return the selected ID of the vehicle they want more details on
-     */
-    private static int selectVehicle(List<Vehicle> vehicles) {
-        if (vehicles.size() == 1) {
-            return vehicles.get(0).getID();
-        }
-        int chosenId = Prompter.promptVehicleId();
-        for (Vehicle v : vehicles) {
-            if (chosenId == v.getID()) {
-                return chosenId;
-            }
-        }
-        return -1;
     }
 
     /**
@@ -409,8 +424,6 @@ public class UsedCarDealership {
         String dealershipName = "Talon & Juan's Used Car Emporium";
         double dealershipAccountBalance = 567234.54;
 
-        
-
         // Load vehicles
         String vehicleDatabasePath = "resources/database.csv";
         List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
@@ -434,7 +447,6 @@ public class UsedCarDealership {
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
-
 
         initializeCurrentCustomer(customers, dealership);
         return dealership;
@@ -491,12 +503,12 @@ public class UsedCarDealership {
         System.out.print("\033[H\033[2J");
     }
 
-    private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership){
+    private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
         Random rand = new Random();
         dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
     }
 
-    private static void viewAccountView(DealershipManager dealer){
+    private static void viewAccountView(DealershipManager dealer) {
         wipe();
 
         System.out.println(dealer.getCurrentCustomer());
@@ -514,8 +526,8 @@ public class UsedCarDealership {
         }
     }
 
-    private static void sellVehicleView(DealershipManager dealership){
-        
+    private static void sellVehicleView(DealershipManager dealership) {
+
     }
 
 }
