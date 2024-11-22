@@ -113,8 +113,35 @@ public class VehicleHelper {
         int sleepCapacity = Integer.parseInt(fields[17]);
         boolean hasBathroom = Boolean.parseBoolean(fields[18]);
         return new RV("RV", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
-                kilometerage,
-                damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+    }
+
+    /**
+     * Parses a Car from the given fields array.
+     */
+    private static Car parseCar(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        boolean isConvertible = Boolean.parseBoolean(fields[17]);
+        return new Car("Car", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
+    }
+
+    /**
+     * Parses an SUV from the given fields array.
+     */
+    private static SUV parseSUV(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
+        return new SUV("SUV", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
     }
 
     /**
