@@ -86,19 +86,19 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "color");
                     break;
                 case 4:
-                    // TODO: genericFilterView(dealership, "year");
+                    genericFilterView(dealership, "year");
                     break;
                 case 5:
-                    // TODO: genericFilterView(dealership, "drive");
+                    genericFilterView(dealership, "drive");
                     break;
                 case 6:
-                    // TODO: genericFilterView(dealership, "price");
+                    genericFilterView(dealership, "price");
                     break;
                 case 7:
-                    // TODO: genericFilterView(dealership, "kilo");
+                    genericFilterView(dealership, "kilo");
                     break;
                 case 8:
-                    // TODO: genericFilterView(dealership, "trans");
+                    genericFilterView(dealership, "trans");
                     break;
             }
         }
@@ -114,27 +114,91 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             wipe();
-            // Display all availble criteria and prompt user to choose one
-            displayAvailableCriteria(dealership, filterType);
+            if (!filterType.equals("price") && !filterType.equals("year") && !filterType.equals("kilo")) {
+                // Display all availble criteria and prompt user to choose one
+                displayAvailableCriteria(dealership, filterType);
+            }
             String filterPrompt = getFilterPrompt(filterType);
             System.out.println(filterPrompt);
-            String criteria = Prompter.promptString();
-            // If criteria null go back
-            if (criteria == null) {
-                inPage = false;
-                break;
-            }
-            // Apply user input filter to get list of filtered vehicles
-            List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
-            // If no vehicles print warning and prompt enter
-            if (filteredVehicles.size() == 0) {
-                System.out.println("\nNo vehicles match your criteria!");
-                Prompter.promptEnter();
+            if (filterType.equals("price") || filterType.equals("year") || filterType.equals("kilo")) {
+                inPage = handleRangeFiltering(dealership, filterType);
             } else {
-                // Allow user to choose a vehicle by ID for more details
-                selectVehiclesFromList(dealership, filteredVehicles);
+                inPage = handleStringFiltering(dealership, filterType);
             }
         }
+    }
+
+    /**
+     * Handles logic necessary for range filtering
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @return boolean representing if we are still in the page or not
+     */
+    private static boolean handleRangeFiltering(DealershipManager dealership, String filterType) {
+        System.out.println("Enter the range in the format `min-max`.");
+        String rangeInput = Prompter.promptString();
+        // If range null or invalid format return false
+        if (rangeInput == null) {
+            return false;
+        } else if (!rangeInput.contains("-")) {
+            System.out.println("\nInvalid input! Returning to filter menu.");
+            Prompter.promptEnter();
+            return false;
+        }
+        // Split input by "-"
+        String[] range = rangeInput.split("-");
+        try {
+            String min = range[0];
+            String max = range[1];
+
+            // Get filtered list by range
+            List<Vehicle> filteredVehicles = applyRangeFilter(dealership, filterType, min, max);
+
+            // If no vehicles
+            return handleFilteredVehicles(dealership, filteredVehicles);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid range input! Returning to menu.");
+            Prompter.promptEnter();
+            return false;
+        }
+    }
+
+    /**
+     * Checks to see if vehicle list is empty or not and opens vehicle selection view
+     * 
+     * @param dealership the DealershipManager object
+     * @param filteredVehicles the list of filtered vehicles
+     * @return true if list is not empty false if list is empty.
+     */
+    private static boolean handleFilteredVehicles(DealershipManager dealership, List<Vehicle> filteredVehicles) {
+        if (filteredVehicles.size() == 0) {
+            System.out.println("\nNo vehicles match your criteria!");
+            Prompter.promptEnter();
+            return false;
+        } else {
+            selectVehiclesFromList(dealership, filteredVehicles);
+            return true;
+        }
+    }
+
+    /**
+     * Handles logic necessary for string filtering
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @return boolean representing if we are still in the page or not
+     */
+    private static boolean handleStringFiltering(DealershipManager dealership, String filterType) {
+        String criteria = Prompter.promptString();
+        // If criteria null go back
+        if (criteria == null) {
+            return false;
+        }
+        // Apply user input filter to get list of filtered vehicles
+        List<Vehicle> filteredVehicles = applyFilter(dealership, filterType, criteria);
+        // If no vehicles print warning and prompt enter
+        return handleFilteredVehicles(dealership, filteredVehicles);
     }
 
     /**
@@ -164,6 +228,16 @@ public class UsedCarDealership {
                 // TODO: Sort alphabetically
                 for (Vehicle v : dealership.getInventory()) {
                     criteriaSet.add(v.getColor());
+                }
+                break;
+            case "drive":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getDriveType());
+                }
+                break;
+            case "trans":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getTransmission());
                 }
                 break;
             default:
@@ -198,6 +272,16 @@ public class UsedCarDealership {
                 return "\nEnter vehicle make or press Enter to go back:";
             case "color":
                 return "\nEnter vehicle color or press Enter to go back:";
+            case "year":
+                return "\nEnter vehicle year range or press Enter to go back:";
+            case "drive":
+                return "\nEnter vehicle drive type or press Enter to go back:";
+            case "price":
+                return "\nEnter vehicle price range or press Enter to go back:";
+            case "kilo":
+                return "\nEnter vehicle kilometrage range or press Enter to go back:";
+            case "trans":
+                return "\nEnter vehicle transmission type or press Enter to go back:";
             default:
                 return "\nEnter filter criteria or press Enter to go back:";
         }
@@ -207,8 +291,8 @@ public class UsedCarDealership {
      * Applies the filter to the dealership inventory using searchInventory
      * 
      * @param dealership the DealershipManager object
-     * @param filterType the method we are filter by
-     * @param criteria the user input criteria to pass into the filter
+     * @param filterType the method we are filtering by
+     * @param criteria   the user input criteria to pass into the filter
      * @return a list of Vehicles that are filtered by user input
      */
     private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
@@ -219,6 +303,36 @@ public class UsedCarDealership {
                 return dealership.getVehicleManager().searchInventory(new VehicleMakeFilter(criteria));
             case "color":
                 return dealership.getVehicleManager().searchInventory(new VehicleColorFilter(criteria));
+            case "drive":
+                return dealership.getVehicleManager().searchInventory(new VehicleDriveFilter(criteria));
+            case "trans":
+                return dealership.getVehicleManager().searchInventory(new VehicleTransmissionFilter(criteria));
+            default:
+                return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Applies the range filter to the dealership inventory using searchInventory
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     * @param min        the user input min range
+     * @param max        the user input max range
+     * @return a list of Vehicles that are filter by the crtieria
+     */
+    private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min,
+            String max) {
+        switch (filterType) {
+            case "year":
+                return dealership.getVehicleManager()
+                        .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max)));
+            case "price":
+                return dealership.getVehicleManager()
+                        .searchInventory(new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
+            case "kilo":
+                return dealership.getVehicleManager().searchInventory(
+                        new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max)));
             default:
                 return new ArrayList<>();
         }
@@ -238,7 +352,9 @@ public class UsedCarDealership {
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
-            System.out.println("\nPlease select an option:");
+            // TODO: possibly could add type based menu option for sorting by filter type
+            // For example: price, kilometrage, year, id, etc
+            System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
                     "1: Select Vehicle by ID\n0: Exit", 1)) {
                 case 0:
@@ -250,7 +366,7 @@ public class UsedCarDealership {
                         System.out.println("\nInvalid Vehicle ID!");
                         Prompter.promptEnter();
                     } else {
-                        viewVehicleDetails(dealership, vehicleID);
+                        vehicleDetailsMenu(dealership, vehicleID);
                     }
                     break;
             }
@@ -276,25 +392,16 @@ public class UsedCarDealership {
     }
 
     /**
-     * Gets and prints the Vehicle's full details
-     * 
-     * @param vehicleID the ID of the Vehicle to print details for
-     */
-    private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
-        Vehicle vehicle = dealership.getVehicleById(vehicleID);
-        wipe();
-        System.out.println(vehicle.getFullDetails());
-        vehicleDetailsMenu(dealership);
-
-    }
-
-    /**
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      */
-    private static void vehicleDetailsMenu(DealershipManager dealership) {
+    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
         boolean inPage = true;
+        int testDriveCount = 0;
+        Vehicle vehicle = dealership.getVehicleById(vehicleId);
         while (inPage) {
+            wipe();
+            System.out.println(vehicle.getFullDetails());
             System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
                     "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
@@ -302,7 +409,19 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 case 1:
-                    // TODO: Implement method to test drive vehicle
+                    if (testDriveCount < 1) {
+                        try {
+                            dealership.getVehicleManager().getVehicleById(vehicleId).testDrive();
+                            Prompter.promptEnter();
+                            testDriveCount++;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        System.out.println("\nYou just test drove this vehicle!");
+                        Prompter.promptEnter();
+                        wipe();
+                    }
                     break;
                 case 2:
                     // TODO: Implement method to add vehicle to cart

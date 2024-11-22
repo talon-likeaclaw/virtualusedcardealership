@@ -81,26 +81,6 @@ public class Prompter {
     }
 
     /**
-     * Prompts user to input a vehicle Make
-     * 
-     * @return the String the user input
-     */
-    public static String promptVehicleMake() {
-        System.out.println("\nEnter Make:");
-        return promptString();
-    }
-
-    /**
-     * Prompts user to input a vehicle Color
-     * 
-     * @return the String the user input
-     */
-    public static String promptVehicleColor() {
-        System.out.println("\nEnter Color: (Red, Blue, Green)");
-        return promptString();
-    }
-
-    /**
      * Makes the user press Enter to continue
      */
     public static void promptEnter() {

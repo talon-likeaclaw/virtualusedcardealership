@@ -18,7 +18,7 @@ public class VehicleDriveFilter extends VehicleFilter {
      * @param driveType - the driveType to filter by
      */
     public VehicleDriveFilter(String driveType) {
-        this.driveType = driveType;
+        this.driveType = driveType.toLowerCase();
     }
 
     /**
@@ -29,6 +29,6 @@ public class VehicleDriveFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
-        return vehicle.getDriveType().equals(this.driveType);
+        return vehicle.getDriveType().toLowerCase().equals(this.driveType);
     }
 }
