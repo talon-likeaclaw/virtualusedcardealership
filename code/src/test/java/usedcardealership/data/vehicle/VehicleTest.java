@@ -78,8 +78,7 @@ public class VehicleTest {
                 false);
 
         // Act
-        Vehicle copy = new Vehicle(original) {
-        };
+        Vehicle copy = new Car(original);
 
         // Assert
         assertEquals(original.getType(), copy.getType());
