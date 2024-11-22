@@ -252,9 +252,11 @@ public class UsedCarDealership {
             System.out.println("No options available.");
             Prompter.promptEnter();
         } else {
-            // Print unique available options to choose from
+            // Convert HashSet to List for sorting
+            List<String> sortedCriteria = new ArrayList<>(criteriaSet);
+            Collections.sort(sortedCriteria);
             System.out.println("Available options:");
-            for (String criteria : criteriaSet) {
+            for (String criteria : sortedCriteria) {
                 System.out.println(criteria);
             }
         }
