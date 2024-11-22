@@ -62,44 +62,41 @@ public class UsedCarDealership {
         while (inPage) {
             wipe();
             System.out.println("Filter by:");
-            switch (Prompter.promptOption(
-                    "1: Type\n" +
-                            "2: Make\n" +
-                            "3: Color\n" +
-                            "4: Year Range\n" +
-                            "5: Drive Type\n" +
-                            "6: Price Range\n" +
-                            "7: Kilometrage Range\n" +
-                            "8: Transmission Type\n" +
-                            "0: Exit",
-                    8)) {
-                case 0:
-                    inPage = false;
-                    break;
-                case 1:
+            System.out.println("Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
+            System.out.println(getFilterPrompt("filter"));
+            String input = Prompter.promptString().trim().toLowerCase();
+            if (input == null) {
+                inPage = false;
+                break;
+            }
+            switch (input) {
+                case "type":
                     genericFilterView(dealership, "type");
                     break;
-                case 2:
+                case "make":
                     genericFilterView(dealership, "make");
                     break;
-                case 3:
+                case "color":
                     genericFilterView(dealership, "color");
                     break;
-                case 4:
+                case "year range":
                     genericFilterView(dealership, "year");
                     break;
-                case 5:
+                case "drive type":
                     genericFilterView(dealership, "drive");
                     break;
-                case 6:
+                case "price range":
                     genericFilterView(dealership, "price");
                     break;
-                case 7:
+                case "kilometrage range":
                     genericFilterView(dealership, "kilo");
                     break;
-                case 8:
+                case "transmission type":
                     genericFilterView(dealership, "trans");
                     break;
+                default:
+                    System.out.println("\nInvalid filter name. Please try again.");
+                    Prompter.promptEnter();
             }
         }
     }
@@ -266,6 +263,8 @@ public class UsedCarDealership {
      */
     private static String getFilterPrompt(String filterType) {
         switch (filterType) {
+            case "filter":
+                return "\nEnter filter type or press Enter to go back:";
             case "type":
                 return "\nEnter vehicle type or press Enter to go back:";
             case "make":
