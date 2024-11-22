@@ -37,6 +37,25 @@ public class VehicleManager {
   }
 
   /**
+   * Gets a vehicle based on id input
+   * 
+   * @param vehicleId the id of the vehicle to check for
+   * @return the vehicle with the specified id
+   */
+  public Vehicle getVehicleById(int vehicleId) {
+    if (vehicleId <= 0) {
+      throw new IllegalArgumentException("vehicleId must be positive integer.");
+    } else {
+      for (Vehicle v : this.inventory) {
+        if (v.getID() == vehicleId) {
+          return v;
+        }
+      }
+      return null;
+    }
+  }
+
+  /**
    * Prints each vehicle in the specified list in short form.
    * 
    * @param vehicleList the list of vehicles to print.

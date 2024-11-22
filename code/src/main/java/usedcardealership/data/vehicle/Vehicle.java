@@ -105,7 +105,9 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return this.id + " " + this.color + " " + this.make + " " + this.model + " " + this.year + " - " + this.transmission + ", " + this.driveType;
+        return "[" + this.id + "] " + this.year + " " + this.color + " " + this.make + " " + this.model + "\n"
+                + "Price: $" + this.calculateTotalPrice() + " | Transmission: " + this.transmission + ", "
+                + this.driveType + " | Kilometrage: " + this.kilometerage + " km\n";
     }
 
     /**
@@ -274,6 +276,8 @@ public abstract class Vehicle {
         // Generate random damage and kilometers
         double randomDamage = rng.nextDouble() * MAX_DAMAGE;
         double randomKilometers = rng.nextDouble() * MAX_KILOMETER;
+        randomDamage = Math.round(randomDamage * 100.0) / 100.0;
+        randomKilometers = Math.round(randomKilometers * 100.0) / 100.0; 
 
         // Check for crash
         boolean hasCrashed = rng.nextDouble() < CRASH_PROBABILITY;
@@ -282,7 +286,8 @@ public abstract class Vehicle {
             double multiplierRange = MAX_CRASH_DAMAGE - MIN_CRASH_DAMAGE;
             double crashMultiplier = MIN_CRASH_DAMAGE + (rng.nextDouble() * multiplierRange);
             randomDamage *= crashMultiplier;
-            System.out.println("You crashed the vehicle during the test drive!");
+            randomDamage = Math.round(randomDamage * 100.0) / 100.0;
+            System.out.println("\nYou crashed the vehicle during the test drive!");
             System.out.println("Damage increased by " + crashMultiplier + "%");
         }
 
@@ -290,8 +295,8 @@ public abstract class Vehicle {
         addDamage(randomDamage);
         addKilometerage(randomKilometers);
 
-        System.out.println("Test drive completed:");
-        System.out.println("Damage applied: " + randomDamage);
+        System.out.println("\nTest drive completed:");
+        System.out.println("Damage applied: " + randomDamage + "%");
         System.out.println("Kilometers driven: " + randomKilometers + " km");
     }
 
