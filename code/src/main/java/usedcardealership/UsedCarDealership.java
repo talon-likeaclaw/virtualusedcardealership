@@ -41,11 +41,13 @@ public class UsedCarDealership {
                     //viewAccountView(dealership);
                     break;
                 case 3:
-                    sellVehicleView(dealership)
+                    sellVehicleView(dealership);
                     break;
                 case 4:
                     // TODO: viewShoppingCart()
                     break;
+                default:
+                    System.out.println("I hope you're proud of yourself, you broke");
             }
         }
     }
@@ -279,9 +281,11 @@ public class UsedCarDealership {
      * @param vehicleID the ID of the Vehicle to print details for
      */
     private static void viewVehicleDetails(DealershipManager dealership, int vehicleID) {
-        // TODO: Print vehicle's full details
-        // TODO: Create a getFullDetails method for each Vehicle type
-        // vehicleDetailsMenu():
+        Vehicle vehicle = dealership.getVehicleById(vehicleID);
+        wipe();
+        System.out.println(vehicle.getFullDetails());
+        vehicleDetailsMenu(dealership);
+
     }
 
     /**
@@ -343,7 +347,7 @@ public class UsedCarDealership {
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
 
 
-        //initializeCurrentCustomer(customers);
+        initializeCurrentCustomer(customers, dealership);
         return dealership;
     }
 
@@ -398,10 +402,10 @@ public class UsedCarDealership {
         System.out.print("\033[H\033[2J");
     }
 
-    // private static void initializeCurrentCustomer(List<Customer> customers){
-    //     Random rand = new Random();
-    //     currentCustomer = customers.get(rand.nextInt(customers.size()));
-    // }
+    private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership){
+        Random rand = new Random();
+        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+    }
 
     // private static void viewAccountView(DealershipManager dealer){
     //     wipe();
@@ -425,11 +429,12 @@ public class UsedCarDealership {
         System.out.println(dealer.getCurrentCustomer().getVehicles());
         System.out.println("What car will you sell to us?");
 
+        System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
         while (inPage) {
             switch (Prompter.promptOption(
                     "\n0: Exit",
-                    1)) {
+                    0)) {
                 case 0:
                     inPage = false;
                     break;

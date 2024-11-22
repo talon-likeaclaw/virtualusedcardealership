@@ -21,7 +21,20 @@ public class ShoppingCart {
      * @param vehicle
      * @return void
      */
-    //NOT A DEEP COPY IN CART
+    //Only way i see we could make a deep copy
+    /**
+     *public void addVehicle(Vehicle vehicle) {
+        if (vehicle instanceof Car) {
+            this.productsList.add(new Car((Car) vehicle));
+        } else if (vehicle instanceof Truck) {
+            this.productsList.add(new Truck((Truck) vehicle));
+        } else if (vehicle instanceof Motorcycle) {
+            this.productsList.add(new Motorcycle((Motorcycle) vehicle));
+        } .......
+    }
+
+     * @param vehicle
+     */
     public void addVehicle(Vehicle vehicle){
         this.productsList.add(vehicle);
     }
