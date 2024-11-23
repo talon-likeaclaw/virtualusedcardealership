@@ -56,8 +56,8 @@ public class DealershipManager {
     return this.customerManager.getCustomers();
   }
 
-  public List<Transaction> getTransactions() {
-    return this.transactionManager.getTransactions();
+  public TransactionManager getTransactionManager() {
+    return this.transactionManager;
   }
 
   public List<Vehicle> getInventory() {
@@ -72,13 +72,8 @@ public class DealershipManager {
     return this.vehicleManager;
   }
 
-  public Vehicle getVehicleById(int vehicleId) {
-    for (Vehicle v : this.getInventory()) {
-      if (v.getID() == vehicleId) {
-        return v;
-      }
-    }
-    return null;
+  public ShoppingCart getCurrentCart() {
+    return this.currentCart;
   }
 
   /**

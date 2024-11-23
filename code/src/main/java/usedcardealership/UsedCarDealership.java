@@ -398,7 +398,7 @@ public class UsedCarDealership {
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
         boolean inPage = true;
         int testDriveCount = 0;
-        Vehicle vehicle = dealership.getVehicleById(vehicleId);
+        Vehicle vehicle = dealership.getVehicleManager().getVehicleById(vehicleId);
         while (inPage) {
             wipe();
             System.out.println(vehicle.getFullDetails());
@@ -464,8 +464,6 @@ public class UsedCarDealership {
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
-
-
         initializeCurrentCustomer(customers, dealership);
         return dealership;
     }
@@ -506,7 +504,7 @@ public class UsedCarDealership {
 
         // Save transactions
         String transactionPath = "resources/transactions.csv";
-        List<Transaction> transactions = dealership.getTransactions();
+        List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
         TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
         transactionSaver.save(transactions);
 
@@ -540,7 +538,6 @@ public class UsedCarDealership {
      */
     private static void viewAccountView(DealershipManager dealer) {
         wipe();
-
         System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
         while (inPage) {
@@ -586,12 +583,11 @@ public class UsedCarDealership {
                         System.out.println("\nInvalid Vehicle ID!");
                         Prompter.promptEnter();
                     } else {
-                        System.out.println("\nYou selected vehicle: " + vehicleID);
-                        System.out.println("\nDo you want to sell this vehicle?");
+                        wipe();
+                        System.out.println("\nAre you sure you want to sell vehicle "+ vehicleID + "?");
                         boolean confirmed = Prompter.promptYesNo();
                         if (confirmed) {
-                            // TODO: handle sale or add to shopping cart, handle removing from the customer's vehicleList
-                            System.out.println("\nThe vehicle has been marked for sale.");
+                            manageVehicleTransaction(dealer, vehicleID);
                             Prompter.promptEnter();
                         } else {
                             System.out.println("\nVehicle selection cancelled.");
@@ -604,5 +600,31 @@ public class UsedCarDealership {
             }
         }
     }
+
+    private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID){
+        Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
+        Customer customer = dealer.getCurrentCustomer();
+
+        if (vehicle == null || customer == null) {
+            System.out.println("Error: Vehicle or Customer not found!");
+            return;
+        }
+
+        System.out.println("The dealership offers you $" + vehicle.calculateTotalPrice() + " for the vehicle.");
+
+        System.out.println("Do you accept this offer? (Y/N)");
+        boolean confirmed = Prompter.promptYesNo();
+        wipe();
+        List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+        if (confirmed) {
+            dealer.getTransactionManager().sellVehicle(vehicle, customer);
+            System.out.println("Sale successful");
+            System.out.println(transactions.get(transactions.size() - 1));
+        } else {
+            System.out.println("Sale canceled.");
+        }
+
+
+    } 
 
 }

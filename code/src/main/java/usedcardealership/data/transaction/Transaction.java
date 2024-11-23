@@ -8,11 +8,12 @@ package usedcardealership.data.transaction;
 
 import usedcardealership.data.customer.*;
 import usedcardealership.data.vehicle.*;
+import java.time.*;
 
 public class Transaction {
     private int id;
     private String type;
-    private String date;
+    private LocalDate date;
     private double price;
     private double tax;
     private Customer customer;
@@ -27,10 +28,10 @@ public class Transaction {
      * @param customer
      * @param vehicle
      */
-    public Transaction(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle) {
+    public Transaction(int id, String type, LocalDate localDate, double price, Customer customer, Vehicle vehicle) {
         this.id = id;
         this.type = type;
-        this.date = date;
+        this.date = localDate;
         this.price = price;
         this.tax = 1.15;
         this.customer = customer;
@@ -46,7 +47,7 @@ public class Transaction {
         return this.type;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
@@ -66,8 +67,7 @@ public class Transaction {
         return this.vehicle;
     }
 
-    // Adding necessary setters
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -85,8 +85,7 @@ public class Transaction {
      * 
      * @return double
      */
-    // public double calculateTotal() {
-    // double depreciation = this.getVehicle().calculateDepreciation();
-    // return (this.getPrice() - depreciation) * this.getTax();
-    // }
+    public double calculateTotal() {
+        return this.getVehicle().calculateTotalPrice() * this.getTax();
+    }
 }
