@@ -4,7 +4,7 @@
  * @author Juan Badel Sebastian - 2338127
  * @version 11/18/2024
  */
-package usedcardealership.comparators;
+package usedcardealership.business.comparators;
 import usedcardealership.data.vehicle.*;
 
 /**
@@ -17,5 +17,5 @@ import usedcardealership.data.vehicle.*;
 public abstract class VehicleCompare implements ICompare<Vehicle>{
 
     @Override
-    public abstract int compareTo(Vehicle vehicle1, Vehicle vehicle2);
+    public abstract int compare(Vehicle vehicle1, Vehicle vehicle2);
 }
