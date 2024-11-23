@@ -77,4 +77,34 @@ public class Car extends EnclosedVehicle {
     public boolean isConvertible() {
         return this.isConvertible;
     }
+
+    /**
+     * Returns an array of strings representing the fields of the Car
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the Car
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(this.getNumSeats()),
+                String.valueOf(this.getNumDoors()),
+                String.valueOf(this.hasSunRoof()),
+                String.valueOf(this.isConvertible)
+        };
+    }
 }

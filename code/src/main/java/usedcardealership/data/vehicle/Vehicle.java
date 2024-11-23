@@ -355,4 +355,12 @@ public abstract class Vehicle {
         final double DAMAGE_DEPRECIATION_RATE = 0.50;
         return (this.damage / 100) * this.price * DAMAGE_DEPRECIATION_RATE; // 50% impact of damage on price
     }
+
+    /**
+     * Returns an array of strings representing the fields of the vehicle 
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the vehicle
+     */
+    public abstract String[] toCSVFields();
 }

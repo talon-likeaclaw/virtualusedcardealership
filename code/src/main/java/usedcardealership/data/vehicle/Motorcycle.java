@@ -81,4 +81,32 @@ public class Motorcycle extends Vehicle {
     public String getHandleType() {
         return this.handlebarType;
     }
+
+    /**
+     * Returns an array of strings representing the fields of the Motorcycle
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the Motorcycle
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getEngineCC()),
+                getHandleType()
+        };
+    }
 }
