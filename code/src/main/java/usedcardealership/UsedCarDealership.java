@@ -29,9 +29,14 @@ public class UsedCarDealership {
             PrettyUtils.wipe();
             System.out.println("Welcome to " + dealership.getName() + "!");
             System.out.println("\nWould you like to:");
-            switch (Prompter.promptOption(
+            int choice = Prompter.promptOption(
                     "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
-                    4)) {
+                    4);
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
@@ -48,7 +53,7 @@ public class UsedCarDealership {
                     // TODO: viewShoppingCart()
                     break;
                 default:
-                    PrettyUtils.printRed("I hope you're proud of yourself, you broke");
+                    PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
             }
         }
     }
@@ -99,7 +104,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "trans");
                     break;
                 default:
-                    PrettyUtils.printRed("\nInvalid filter name. Please try again.");
+                    PrettyUtils.printRed("\nInvalid filter name. Please try again.\n");
                     Prompter.promptEnter();
             }
         }
@@ -357,7 +362,7 @@ public class UsedCarDealership {
                 String[] sortingInfo = input.split(" ");
                 String sortType = sortingInfo[0];
                 // Default to ascending if no "desc"
-                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc"); 
+                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc");
                 switch (sortType) {
                     case "id":
                         dealership.getVehicleManager().sortVehicles(vehicles, new VehicleIdCompare(), ascending);
@@ -372,7 +377,8 @@ public class UsedCarDealership {
                         System.out.println("\nSorting by Year " + (ascending ? "ascending." : "descending."));
                         break;
                     case "kilometrage":
-                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(), ascending);
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(),
+                                ascending);
                         System.out.println("\nSorting by Kilometrage " + (ascending ? "ascending." : "descending."));
                         break;
                     case "damage":
@@ -386,7 +392,6 @@ public class UsedCarDealership {
             }
         }
     }
-
 
     /**
      * Menu that asks user if they want to purchase vehicle or go back
@@ -508,14 +513,13 @@ public class UsedCarDealership {
         Prompter.close();
     }
 
-
-
     /**
-     * Initializes the current customer for the dealership by randomly selecting a customer 
+     * Initializes the current customer for the dealership by randomly selecting a
+     * customer
      * from the provided list of customers.
      * 
-     * @param customers   the list of customers available
-     * @param dealership  the dealership manager object to set the current customer
+     * @param customers  the list of customers available
+     * @param dealership the dealership manager object to set the current customer
      */
     private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
         Random rand = new Random();
@@ -523,22 +527,28 @@ public class UsedCarDealership {
     }
 
     /**
-     * Displays the account details of the current customer and allows navigation back to the main menu.
+     * Displays the account details of the current customer and allows navigation
+     * back to the main menu.
      * 
-     * @param dealer  the dealership manager containing the current customer's information
+     * @param dealer the dealership manager containing the current customer's
+     *               information
      */
     private static void viewAccountView(DealershipManager dealer) {
-        PrettyUtils.wipe();
-
-        System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
         while (inPage) {
-            switch (Prompter.promptOption(
-                    "\n0: Exit",
-                    0)) {
+            PrettyUtils.wipe();
+            System.out.println(dealer.getCurrentCustomer());
+            int choice = Prompter.promptOption("\n1: Sell Vehicle\n0: Exit", 1);
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            } 
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
+                case 1:
+                    sellVehicleView(dealer);
                 default:
                     PrettyUtils.printRed("You may only select 0");
             }
@@ -551,20 +561,26 @@ public class UsedCarDealership {
      * - Select a vehicle by its ID to sell.
      * - Confirm whether to proceed with the sale.
      * 
-     * @param dealer  the dealership manager containing the current customer's vehicles
+     * @param dealer the dealership manager containing the current customer's
+     *               vehicles
      */
     private static void sellVehicleView(DealershipManager dealer) {
         boolean inPage = true;
         while (inPage) {
             PrettyUtils.wipe();
             List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
-            List<Integer> ids = new ArrayList<Integer>();  
+            List<Integer> ids = new ArrayList<Integer>();
             System.out.println("You own: \n");
             for (int i = 0; i < vehicles.size(); i++) {
                 System.out.println(vehicles.get(i));
                 ids.add(vehicles.get(i).getID());
             }
-            switch (Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1)) {
+            int choice = Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1);
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
@@ -572,14 +588,15 @@ public class UsedCarDealership {
                     System.out.println("\nWhich vehicle will you sell to us?");
                     int vehicleID = Prompter.promptVehicleId();
                     if (!(ids.contains(vehicleID))) {
-                        System.out.println("\nInvalid Vehicle ID!");
+                        PrettyUtils.printRed("\nInvalid Vehicle ID!\n");
                         Prompter.promptEnter();
                     } else {
                         System.out.println("\nYou selected vehicle: " + vehicleID);
                         System.out.println("\nDo you want to sell this vehicle?");
                         boolean confirmed = Prompter.promptYesNo();
                         if (confirmed) {
-                            // TODO: handle sale or add to shopping cart, handle removing from the customer's vehicleList
+                            // TODO: handle sale or add to shopping cart, handle removing from the
+                            // customer's vehicleList
                             System.out.println("\nThe vehicle has been marked for sale.");
                             Prompter.promptEnter();
                         } else {
