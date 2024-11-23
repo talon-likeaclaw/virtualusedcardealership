@@ -15,7 +15,7 @@ public class PrettyUtils {
      * @param colorCode the ANSI color code for the text
      */
     private static void printColor(String message, String colorCode) {
-        System.out.print(colorCode + message + RESET);
+        System.out.print(colorCode + message + RESET + "\n");
     }
 
     /**
@@ -39,6 +39,19 @@ public class PrettyUtils {
         printColor(message, YELLOW);
     }
 
+    public static String returnYellow(String message) {
+        return YELLOW + message + RESET;
+    }
+
+    /**
+     * Returns ENTER in yellow
+     * 
+     * @return String - ENTER in yellow
+     */
+    public static String returnYellowEnter() {
+        return YELLOW + "Enter" + RESET;
+    }
+
     /**
      * Prints a message in blue
      */
@@ -51,6 +64,13 @@ public class PrettyUtils {
      */
     public static void printCyan(String message) {
         printColor(message, CYAN);
+    }
+
+    public static String returnCars() {
+        return "      ______                   ______\n" +
+                "   __//__|__\\___           ___/__|__\\\\___\n" +
+                " _|  _     _    |          |  _     _    |_\n" +
+                "|_|-(_)-------(_)----------(_)-------(_)-|_|\n";
     }
 
     /**
