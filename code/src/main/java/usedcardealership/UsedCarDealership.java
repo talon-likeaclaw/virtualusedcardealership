@@ -26,7 +26,7 @@ public class UsedCarDealership {
     private static void mainMenuView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             System.out.println("Welcome to " + dealership.getName() + "!");
             System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
@@ -61,7 +61,7 @@ public class UsedCarDealership {
     private static void chooseVehicleFilterView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             System.out.println("Filter by:");
             System.out.println(
                     "Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
@@ -114,7 +114,7 @@ public class UsedCarDealership {
     private static void genericFilterView(DealershipManager dealership, String filterType) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             if (!filterType.equals("price") && !filterType.equals("year") && !filterType.equals("kilo")) {
                 // Display all availble criteria and prompt user to choose one
                 displayAvailableCriteria(dealership, filterType);
@@ -328,7 +328,7 @@ public class UsedCarDealership {
     private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
@@ -397,7 +397,7 @@ public class UsedCarDealership {
         int testDriveCount = 0;
         Vehicle vehicle = dealership.getVehicleById(vehicleId);
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             System.out.println(vehicle.getFullDetails());
             System.out.println("\nWould you like to:");
             switch (Prompter.promptOption(
@@ -417,7 +417,7 @@ public class UsedCarDealership {
                     } else {
                         System.out.println("\nYou just test drove this vehicle!");
                         Prompter.promptEnter();
-                        wipe();
+                        PrettyUtils.wipe();
                     }
                     break;
                 case 2:
@@ -508,12 +508,7 @@ public class UsedCarDealership {
         Prompter.close();
     }
 
-    /**
-     * Wipes the console screen
-     */
-    public static void wipe() {
-        System.out.print("\033[H\033[2J");
-    }
+
 
     /**
      * Initializes the current customer for the dealership by randomly selecting a customer 
@@ -533,7 +528,7 @@ public class UsedCarDealership {
      * @param dealer  the dealership manager containing the current customer's information
      */
     private static void viewAccountView(DealershipManager dealer) {
-        wipe();
+        PrettyUtils.wipe();
 
         System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
@@ -561,7 +556,7 @@ public class UsedCarDealership {
     private static void sellVehicleView(DealershipManager dealer) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
             List<Integer> ids = new ArrayList<Integer>();  
             System.out.println("You own: \n");
