@@ -36,6 +36,7 @@ public class Transaction {
         this.customer = customer;
         this.vehicle = vehicle;
     }
+    public Transaction(){}
 
     public int getID() {
         return this.id;

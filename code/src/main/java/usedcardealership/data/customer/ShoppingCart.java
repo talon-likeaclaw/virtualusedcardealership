@@ -57,4 +57,17 @@ public class ShoppingCart {
             this.productsList.remove(i);
         }
     }
+
+    @Override
+    public String toString() {
+        if (productsList.isEmpty()) {
+            return "Your shopping cart is empty.";
+        }
+
+        StringBuilder cartContents = new StringBuilder("Shopping Cart:\n");
+        for (int i = 0; i < productsList.size(); i++) {
+            cartContents.append(i + 1).append(". ").append(productsList.get(i).toString()).append("\n");
+        }
+        return cartContents.toString();
+    }
 }

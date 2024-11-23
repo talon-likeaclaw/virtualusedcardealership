@@ -521,88 +521,88 @@ public class UsedCarDealership {
         System.out.print("\033[H\033[2J");
     }
 
-/**
- * Initializes the current customer for the dealership by randomly selecting a customer 
- * from the provided list of customers.
- * 
- * @param customers   the list of customers available
- * @param dealership  the dealership manager object to set the current customer
- */
-private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
-    Random rand = new Random();
-    dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
-}
+    /**
+     * Initializes the current customer for the dealership by randomly selecting a customer 
+     * from the provided list of customers.
+     * 
+     * @param customers   the list of customers available
+     * @param dealership  the dealership manager object to set the current customer
+     */
+    private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
+        Random rand = new Random();
+        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+    }
 
-/**
- * Displays the account details of the current customer and allows navigation back to the main menu.
- * 
- * @param dealer  the dealership manager containing the current customer's information
- */
-private static void viewAccountView(DealershipManager dealer) {
-    wipe();
+    /**
+     * Displays the account details of the current customer and allows navigation back to the main menu.
+     * 
+     * @param dealer  the dealership manager containing the current customer's information
+     */
+    private static void viewAccountView(DealershipManager dealer) {
+        wipe();
 
-    System.out.println(dealer.getCurrentCustomer());
-    boolean inPage = true;
-    while (inPage) {
-        switch (Prompter.promptOption(
-                "\n0: Exit",
-                0)) {
-            case 0:
-                inPage = false;
-                break;
-            default:
-                System.out.println("You may only select 0");
+        System.out.println(dealer.getCurrentCustomer());
+        boolean inPage = true;
+        while (inPage) {
+            switch (Prompter.promptOption(
+                    "\n0: Exit",
+                    0)) {
+                case 0:
+                    inPage = false;
+                    break;
+                default:
+                    System.out.println("You may only select 0");
+            }
         }
     }
-}
 
-/**
- * Allows the current customer to view and sell their vehicles. The user can:
- * - View a list of owned vehicles.
- * - Select a vehicle by its ID to sell.
- * - Confirm whether to proceed with the sale.
- * 
- * @param dealer  the dealership manager containing the current customer's vehicles
- */
-private static void sellVehicleView(DealershipManager dealer) {
-    boolean inPage = true;
-    while (inPage) {
-        wipe();
-        List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
-        List<Integer> ids = new ArrayList<Integer>();  
-        System.out.println("You own: \n");
-        for (int i = 0; i < vehicles.size(); i++) {
-            System.out.println(vehicles.get(i));
-            ids.add(vehicles.get(i).getID());
-        }
-        switch (Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1)) {
-            case 0:
-                inPage = false;
-                break;
-            case 1:
-                System.out.println("\nWhich vehicle will you sell to us?");
-                int vehicleID = Prompter.promptVehicleId();
-                if (!(ids.contains(vehicleID))) {
-                    System.out.println("\nInvalid Vehicle ID!");
-                    Prompter.promptEnter();
-                } else {
-                    System.out.println("\nYou selected vehicle: " + vehicleID);
-                    System.out.println("\nDo you want to sell this vehicle?");
-                    boolean confirmed = Prompter.promptYesNo();
-                    if (confirmed) {
-                        // TODO: handle sale or add to shopping cart, handle removing from the customer's vehicleList
-                        System.out.println("\nThe vehicle has been marked for sale.");
+    /**
+     * Allows the current customer to view and sell their vehicles. The user can:
+     * - View a list of owned vehicles.
+     * - Select a vehicle by its ID to sell.
+     * - Confirm whether to proceed with the sale.
+     * 
+     * @param dealer  the dealership manager containing the current customer's vehicles
+     */
+    private static void sellVehicleView(DealershipManager dealer) {
+        boolean inPage = true;
+        while (inPage) {
+            wipe();
+            List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
+            List<Integer> ids = new ArrayList<Integer>();  
+            System.out.println("You own: \n");
+            for (int i = 0; i < vehicles.size(); i++) {
+                System.out.println(vehicles.get(i));
+                ids.add(vehicles.get(i).getID());
+            }
+            switch (Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1)) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    System.out.println("\nWhich vehicle will you sell to us?");
+                    int vehicleID = Prompter.promptVehicleId();
+                    if (!(ids.contains(vehicleID))) {
+                        System.out.println("\nInvalid Vehicle ID!");
                         Prompter.promptEnter();
                     } else {
-                        System.out.println("\nVehicle selection cancelled.");
-                        Prompter.promptEnter();
+                        System.out.println("\nYou selected vehicle: " + vehicleID);
+                        System.out.println("\nDo you want to sell this vehicle?");
+                        boolean confirmed = Prompter.promptYesNo();
+                        if (confirmed) {
+                            // TODO: handle sale or add to shopping cart, handle removing from the customer's vehicleList
+                            System.out.println("\nThe vehicle has been marked for sale.");
+                            Prompter.promptEnter();
+                        } else {
+                            System.out.println("\nVehicle selection cancelled.");
+                            Prompter.promptEnter();
+                        }
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
-}
 
 }
