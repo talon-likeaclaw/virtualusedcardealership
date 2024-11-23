@@ -21,6 +21,7 @@ public class DealershipManager {
   private VehicleManager vehicleManager;
   private CustomerManager customerManager;
   private Customer currentCustomer;
+  private ShoppingCart currentCart;
 
   /**
    * DealershipManager Constructor
@@ -40,6 +41,7 @@ public class DealershipManager {
     this.transactionManager = new TransactionManager(transactions);
     this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
+    this.currentCart = new ShoppingCart();
   }
 
   public String getName() {

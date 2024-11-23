@@ -21,7 +21,21 @@ public class ShoppingCart {
      * @param vehicle
      * @return void
      */
-    //NOT A DEEP COPY IN CART
+    
+    //Only way i see we could make a deep copy
+    /**
+     *public void addVehicle(Vehicle vehicle) {
+        if (vehicle instanceof Car) {
+            this.productsList.add(new Car((Car) vehicle));
+        } else if (vehicle instanceof Truck) {
+            this.productsList.add(new Truck((Truck) vehicle));
+        } else if (vehicle instanceof Motorcycle) {
+            this.productsList.add(new Motorcycle((Motorcycle) vehicle));
+        } .......
+    }
+
+     * @param vehicle
+     */
     public void addVehicle(Vehicle vehicle){
         this.productsList.add(vehicle);
     }
@@ -42,5 +56,18 @@ public class ShoppingCart {
         for(int i = 0; i < this.productsList.size(); i++){
             this.productsList.remove(i);
         }
+    }
+
+    @Override
+    public String toString() {
+        if (productsList.isEmpty()) {
+            return "Your shopping cart is empty.";
+        }
+
+        StringBuilder cartContents = new StringBuilder("Shopping Cart:\n");
+        for (int i = 0; i < productsList.size(); i++) {
+            cartContents.append(i + 1).append(". ").append(productsList.get(i).toString()).append("\n");
+        }
+        return cartContents.toString();
     }
 }
