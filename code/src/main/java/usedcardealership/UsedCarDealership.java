@@ -26,18 +26,26 @@ public class UsedCarDealership {
     private static void mainMenuView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
+            // Print welcome message
             PrettyUtils.wipe();
-            System.out.println("Welcome to " + dealership.getName() + "!");
-            System.out.println("\nWould you like to:");
-            int choice = Prompter.promptOption(
-                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
-                    4);
+            PrettyUtils.printCyan(PrettyUtils.returnCars());
+            PrettyUtils.printCyan("Welcome to " + dealership.getName() + "!");
+            // Print menu
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Browse Vehicles\n" +
+                    PrettyUtils.returnYellow("2:") + " View Account and Owned Vehicles\n" +
+                    PrettyUtils.returnYellow("3:") + " Sell Vehicle to Dealership\n" +
+                    PrettyUtils.returnYellow("4:") + " View Shopping Cart\n" +
+                    PrettyUtils.returnYellow("0:") + " Exit";
+            // Prompt user for input
+            int choice = Prompter.promptOption(menu, 4);
             if (choice == -1) {
-                // Invalid input; loop restarts automatically
+                // Invalid input, restart loop
                 continue;
             }
             switch (choice) {
                 case 0:
+                    // User decided to exit
                     inPage = false;
                     break;
                 case 1:
@@ -67,9 +75,9 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             PrettyUtils.wipe();
-            System.out.println("Filter by:");
+            PrettyUtils.printYellow("Filter Types:");
             System.out.println(
-                    "Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
+                    "- Type\n- Make\n- Color\n- Year Range\n- Drive Type\n- Price Range\n- Kilometrage Range\n- Transmission Type");
             System.out.println(Prompter.getPrompt("filter"));
             String input = Prompter.promptString();
             if (input == null) {
@@ -142,7 +150,7 @@ public class UsedCarDealership {
      * @return boolean representing if we are still in the page or not
      */
     private static boolean handleRangeFiltering(DealershipManager dealership, String filterType) {
-        System.out.println("Enter the range in the format `min-max`.");
+        System.out.println("Enter the range in the format " + PrettyUtils.returnYellow("`min-max`") + ".");
         String rangeInput = Prompter.promptString();
         // If range null or invalid format return false
         if (rangeInput == null) {
@@ -258,9 +266,9 @@ public class UsedCarDealership {
             List<String> sortedCriteria = new ArrayList<>(criteriaSet);
             // Sort alphabetically
             Collections.sort(sortedCriteria);
-            System.out.println("Available options:");
+            PrettyUtils.printYellow("Available options:");
             for (String criteria : sortedCriteria) {
-                System.out.println(criteria);
+                System.out.println("- " + criteria);
             }
         }
     }
@@ -404,9 +412,15 @@ public class UsedCarDealership {
         while (inPage) {
             PrettyUtils.wipe();
             System.out.println(vehicle.getFullDetails());
-            System.out.println("\nWould you like to:");
-            switch (Prompter.promptOption(
-                    "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Test Drive Vehicle\n" +
+                    PrettyUtils.returnYellow("2:") + " Add Vehicle to Cart\n" +
+                    PrettyUtils.returnYellow("0:") + " Return to Vehicle List";
+            int choice = Prompter.promptOption(menu, 2);
+            if (choice == -1) {
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
@@ -537,12 +551,16 @@ public class UsedCarDealership {
         boolean inPage = true;
         while (inPage) {
             PrettyUtils.wipe();
+            PrettyUtils.printYellow("Account Details:");
             System.out.println(dealer.getCurrentCustomer());
-            int choice = Prompter.promptOption("\n1: Sell Vehicle\n0: Exit", 1);
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
+                    PrettyUtils.returnYellow("2:") + " Exit";
+            int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
                 // Invalid input; loop restarts automatically
                 continue;
-            } 
+            }
             switch (choice) {
                 case 0:
                     inPage = false;
@@ -570,12 +588,15 @@ public class UsedCarDealership {
             PrettyUtils.wipe();
             List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
             List<Integer> ids = new ArrayList<Integer>();
-            System.out.println("You own: \n");
+            PrettyUtils.printYellow("Current Vehicles:");
             for (int i = 0; i < vehicles.size(); i++) {
                 System.out.println(vehicles.get(i));
                 ids.add(vehicles.get(i).getID());
             }
-            int choice = Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1);
+            PrettyUtils.printYellow("Would you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
+                        PrettyUtils.returnYellow("0:") + " Exit";
+            int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
                 // Invalid input; loop restarts automatically
                 continue;
