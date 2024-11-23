@@ -31,37 +31,27 @@ public class Prompter {
      * @return the number the user has chosen
      */
     public static int promptOption(String question, int optionCap) {
-        int value = -1;
-        boolean invalidValue = true;
-
-        if (!question.equals("")) {
-            System.out.println(question);
-            System.out.println("\nPlease select a number:");
-        }
-
-        while (invalidValue) {
-            String input = prompt();
-            try {
-                if (!input.equals("")) {
-                    int pendingValue = Integer.parseInt(input);
-                    if ((pendingValue >= 0 && pendingValue <= optionCap) || optionCap == 0) {
-                        value = pendingValue;
-                        invalidValue = false;
-                    } else {
-                        System.out.println("\nInvalid input! Please choose a valid option.");
-                        // I noticed this line messes up the code when there's invalid input in both
-                        // browsing and selling
-                        // Idk if you changed it but I'll comment it out for now
-                        // promptEnter();
-                    }
+        System.out.println(question);
+        System.out.println("\nPlease select a number:");
+        String input = prompt();
+        try {
+            if (!input.equals("")) {
+                int pendingValue = Integer.parseInt(input);
+                if ((pendingValue >= 0 && pendingValue <= optionCap) || optionCap == 0) {
+                    return pendingValue;
+                } else {
+                    PrettyUtils.printRed("\nInvalid option! Please choose a number from the list.\n");
+                    promptEnter();
                 }
-            } catch (NumberFormatException e) {
-                PrettyUtils.printRed("\nIllegal input!\n");
+            } else {
+                PrettyUtils.printRed("\nInput cannot be empty!\n");
                 promptEnter();
-                invalidValue = false;
             }
+        } catch (NumberFormatException e) {
+            PrettyUtils.printRed("\nIllegal input! Input must be a number from the list.\n");
+            promptEnter();
         }
-        return value;
+        return -1; // Return -1 for invalid input
     }
 
     /**
@@ -70,7 +60,14 @@ public class Prompter {
      * @return the int the user chose
      */
     public static int promptInt() {
-        return promptOption("", 0);
+        while (true) {
+            String input = prompt();
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e){
+                PrettyUtils.printRed("\nInvalid input! Please enter a valid integer.\n");
+            }
+        }
     }
 
     /**
@@ -135,25 +132,26 @@ public class Prompter {
      * @return the prompt from the particular type of filter
      */
     public static String getPrompt(String promptType) {
+
         switch (promptType) {
             case "filter":
-                return "\nEnter filter type or press Enter to go back:";
+                return "\nEnter filter type or press ENTER to go back:";
             case "type":
-                return "\nEnter vehicle type or press Enter to go back:";
+                return "\nEnter vehicle type or press ENTER to go back:";
             case "make":
-                return "\nEnter vehicle make or press Enter to go back:";
+                return "\nEnter vehicle make or press ENTER to go back:";
             case "color":
-                return "\nEnter vehicle color or press Enter to go back:";
+                return "\nEnter vehicle color or press ENTER to go back:";
             case "year":
-                return "\nEnter vehicle year range or press Enter to go back:";
+                return "\nEnter vehicle year range or press ENTER to go back:";
             case "drive":
-                return "\nEnter vehicle drive type or press Enter to go back:";
+                return "\nEnter vehicle drive type or press ENTER to go back:";
             case "price":
-                return "\nEnter vehicle price range or press Enter to go back:";
+                return "\nEnter vehicle price range or press ENTER to go back:";
             case "kilo":
-                return "\nEnter vehicle kilometrage range or press Enter to go back:";
+                return "\nEnter vehicle kilometrage range or press ENTER to go back:";
             case "trans":
-                return "\nEnter vehicle transmission type or press Enter to go back:";
+                return "\nEnter vehicle transmission type or press ENTER to go back:";
             case "id-sort":
                 return "Sort Options:\n" +
                         "- Type: id, price, year, kilometrage, damage\n" +
