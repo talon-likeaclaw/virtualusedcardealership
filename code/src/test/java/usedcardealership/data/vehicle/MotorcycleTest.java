@@ -116,23 +116,8 @@ public class MotorcycleTest {
                 599.00,
                 "Sport");
 
-        String expectedOutput = "Type: Motorcycle\n" +
-                "ID: 1\n" +
-                "Make: Honda\n" +
-                "Model: CBR600RR\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $12000.0\n" +
-                "Color: Red\n" +
-                "Transmission: Manual\n" +
-                "Drive Type: Chain\n" +
-                "Horsepower: 120\n" +
-                "Weight: 200.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Engine Capacity: 599.0 cc\n" +
-                "Handlebar Type: Sport";
-
+        String expectedOutput = "[1] " + Year.now().getValue() + " Red Honda CBR600RR\n" +
+                "Price: $12000.0 | Transmission: Manual, Chain | Kilometrage: 0.0 km\n";
         // Act
         String actualOutput = test.toString();
 

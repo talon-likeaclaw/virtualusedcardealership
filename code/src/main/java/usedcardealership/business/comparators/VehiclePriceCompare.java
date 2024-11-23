@@ -4,7 +4,7 @@
  * @author Juan Badel Sebastian - 2338127
  * @version 11/18/2024
  */
-package usedcardealership.comparators;
+package usedcardealership.business.comparators;
 import usedcardealership.data.vehicle.Vehicle;
 
 /**
@@ -16,8 +16,8 @@ import usedcardealership.data.vehicle.Vehicle;
  */
 public class VehiclePriceCompare extends VehicleCompare{
     @Override
-    public int compareTo(Vehicle vehicle1, Vehicle vehicle2){
-        if(vehicle1.getPrice() >= vehicle1.getPrice()){
+    public int compare(Vehicle vehicle1, Vehicle vehicle2){
+        if(vehicle1.getPrice() >= vehicle2.getPrice()){
             return 1;
         }
         return -1;

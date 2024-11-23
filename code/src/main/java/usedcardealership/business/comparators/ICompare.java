@@ -4,7 +4,9 @@
  * @author Juan Badel Sebastian - 2338127
  * @version 11/18/2024
  */
-package usedcardealership.comparators;
+package usedcardealership.business.comparators;
+
+import java.util.Comparator;
 
 /**
  * Compares two Objects, used for sorting.
@@ -13,7 +15,8 @@ package usedcardealership.comparators;
  * @param obj2 Object to compare with
  * @return int
  */
-public interface ICompare<T>{
-    int compareTo(T obj1, T obj2);
+public interface ICompare<T> extends Comparator<T> {
+    @Override
+    int compare(T obj1, T obj2);
 }
 

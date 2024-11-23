@@ -126,24 +126,8 @@ public class SUVTest {
                 true,
                 false);
 
-        String expectedOutput = "Type: SUV\n" +
-                "ID: 404\n" +
-                "Make: Hyundai\n" +
-                "Model: Kona\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $21000.0\n" +
-                "Color: White\n" +
-                "Transmission: Automatic\n" +
-                "Drive Type: AWD\n" +
-                "Horsepower: 147\n" +
-                "Weight: 3200.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Seats: 5\n" +
-                "Doors: 4\n" +
-                "Sunroof: Yes\n" +
-                "Third Row Seating: No";
+        String expectedOutput = "[404] " + Year.now().getValue() + " White Hyundai Kona\n" +
+                "Price: $21000.0 | Transmission: Automatic, AWD | Kilometrage: 0.0 km\n";
 
         // Act
         String actualOutput = test.toString();
