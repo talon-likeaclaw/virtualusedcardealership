@@ -609,7 +609,6 @@ public class UsedCarDealership {
             System.out.println("Error: Vehicle or Customer not found!");
             return;
         }
-
         System.out.println("The dealership offers you $" + vehicle.calculateTotalPrice() + " for the vehicle.");
 
         System.out.println("Do you accept this offer? (Y/N)");
@@ -618,13 +617,12 @@ public class UsedCarDealership {
         List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
         if (confirmed) {
             dealer.getTransactionManager().sellVehicle(vehicle, customer);
-            System.out.println("Sale successful");
+            System.out.println("Sale successful!");
             System.out.println("Updated Account Balance: " + customer.getAccountBalance());
             System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
         } else {
             System.out.println("Sale canceled.");
         }
-
 
     } 
 
