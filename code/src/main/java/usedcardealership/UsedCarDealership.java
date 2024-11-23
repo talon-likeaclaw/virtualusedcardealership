@@ -619,7 +619,8 @@ public class UsedCarDealership {
         if (confirmed) {
             dealer.getTransactionManager().sellVehicle(vehicle, customer);
             System.out.println("Sale successful");
-            System.out.println(transactions.get(transactions.size() - 1));
+            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
+            System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
         } else {
             System.out.println("Sale canceled.");
         }
