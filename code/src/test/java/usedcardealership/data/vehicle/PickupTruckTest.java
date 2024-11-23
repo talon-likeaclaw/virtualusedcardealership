@@ -8,6 +8,9 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
 
@@ -136,8 +139,8 @@ public class PickupTruckTest {
                 5.5,
                 1000.00);
 
-        String expectedOutput = "[41] " + Year.now().getValue() + " Blue Ford F-150\n" +
-                "Price: $45000.0 | Transmission: Automatic, 4WD | Kilometrage: 0.0 km\n";
+        String expectedOutput = PrettyUtils.returnYellow("[41] ") + Year.now().getValue() + " Blue Ford F-150\n" +
+                "Price: $45000.00 | Transmission: Automatic, 4WD | Kilometrage: 0.00 km\n";
         // Act
         String actualOutput = test.toString();
 

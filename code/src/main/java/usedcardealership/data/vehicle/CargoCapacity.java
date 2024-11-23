@@ -95,7 +95,7 @@ public abstract class CargoCapacity extends EnclosedVehicle {
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +
-                "Cargo Capacity: " + this.cargoCapacity + " cu ft";
+                "Cargo Capacity: " + String.format("%.2f", this.cargoCapacity) + " cu ft";
     }
 
     public abstract String getFullDetails();

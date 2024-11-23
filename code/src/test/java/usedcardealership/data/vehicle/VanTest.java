@@ -8,6 +8,9 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
 
@@ -131,8 +134,8 @@ public class VanTest {
                 14.0,
                 true);
 
-        String expectedOutput = "[51] " + Year.now().getValue() + " Silver Honda Odyssey\n" +
-                "Price: $35000.0 | Transmission: Automatic, FWD | Kilometrage: 0.0 km\n";
+        String expectedOutput = PrettyUtils.returnYellow("[51] ") + Year.now().getValue() + " Silver Honda Odyssey\n" +
+                "Price: $35000.00 | Transmission: Automatic, FWD | Kilometrage: 0.00 km\n";
 
         // Act
         String actualOutput = test.toString();
