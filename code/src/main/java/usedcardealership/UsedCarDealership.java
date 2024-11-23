@@ -363,6 +363,10 @@ public class UsedCarDealership {
                         dealership.getVehicleManager().sortVehicles(vehicles, new VehicleIdCompare(), ascending);
                         System.out.println("\nSorting by ID " + (ascending ? "ascending." : "descending."));
                         break;
+                    case "price":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehiclePriceCompare(), ascending);
+                        System.out.println("\nSorting by Price " + (ascending ? "ascending." : "descending."));
+                        break;
                     case "year":
                         dealership.getVehicleManager().sortVehicles(vehicles, new VehicleYearCompare(), ascending);
                         System.out.println("\nSorting by Year " + (ascending ? "ascending." : "descending."));

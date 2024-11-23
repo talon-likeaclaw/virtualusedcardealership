@@ -86,7 +86,7 @@ public class Prompter {
      * Makes the user press Enter to continue
      */
     public static void promptEnter() {
-        System.out.println("\nPress ENTER to continue:");
+        System.out.println("Press ENTER to continue:");
         reader.nextLine();
     }
 
@@ -153,7 +153,7 @@ public class Prompter {
                 return "\nEnter vehicle transmission type or press Enter to go back:";
             case "id-sort":
                 return "Sort Options:\n" +
-                        "- Type: id, year, kilometrage, damage\n" +
+                        "- Type: id, price, year, kilometrage, damage\n" +
                         "- Add 'desc' for descending order ('id desc')\n" +
                         "To select a vehicle, enter its [ID] or press Enter to go back.";
             default:
