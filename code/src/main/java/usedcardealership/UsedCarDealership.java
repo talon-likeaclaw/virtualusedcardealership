@@ -48,7 +48,7 @@ public class UsedCarDealership {
                     // TODO: viewShoppingCart()
                     break;
                 default:
-                    System.out.println("I hope you're proud of yourself, you broke");
+                    PrettyUtils.printRed("I hope you're proud of yourself, you broke");
             }
         }
     }
@@ -99,7 +99,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "trans");
                     break;
                 default:
-                    System.out.println("\nInvalid filter name. Please try again.");
+                    PrettyUtils.printRed("\nInvalid filter name. Please try again.");
                     Prompter.promptEnter();
             }
         }
@@ -143,7 +143,7 @@ public class UsedCarDealership {
         if (rangeInput == null) {
             return false;
         } else if (!rangeInput.contains("-")) {
-            System.out.println("\nInvalid input! Returning to filter menu.");
+            PrettyUtils.printRed("\nInvalid input! Returning to filter menu.");
             Prompter.promptEnter();
             return false;
         }
@@ -159,7 +159,7 @@ public class UsedCarDealership {
             // If no vehicles
             return handleFilteredVehicles(dealership, filteredVehicles);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid range input! Returning to menu.");
+            PrettyUtils.printRed("Invalid range input! Returning to menu.");
             Prompter.promptEnter();
             return false;
         }
@@ -175,7 +175,7 @@ public class UsedCarDealership {
      */
     private static boolean handleFilteredVehicles(DealershipManager dealership, List<Vehicle> filteredVehicles) {
         if (filteredVehicles.size() == 0) {
-            System.out.println("\nNo vehicles match your criteria!");
+            PrettyUtils.printRed("\nNo vehicles match your criteria!");
             Prompter.promptEnter();
             return false;
         } else {
@@ -240,13 +240,13 @@ public class UsedCarDealership {
                 }
                 break;
             default:
-                System.out.println("No available criteria to display for this filter.");
+                PrettyUtils.printRed("No available criteria to display for this filter.");
                 Prompter.promptEnter();
                 return;
         }
         // If there are no options to choose from print warning
         if (criteriaSet.size() == 0) {
-            System.out.println("No options available.");
+            PrettyUtils.printRed("No options available.");
             Prompter.promptEnter();
         } else {
             // Convert HashSet to List for sorting
@@ -349,7 +349,7 @@ public class UsedCarDealership {
                 if (selectedVehicle != null) {
                     vehicleDetailsMenu(dealership, vehicleID);
                 } else {
-                    System.out.println("\nInvalid Vehicle ID!");
+                    PrettyUtils.printRed("\nInvalid Vehicle ID!");
                     Prompter.promptEnter();
                 }
             } catch (NumberFormatException e) {
@@ -380,7 +380,7 @@ public class UsedCarDealership {
                         System.out.println("\nSorting by Damage " + (ascending ? "ascending." : "descending."));
                         break;
                     default:
-                        System.out.println("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
+                        PrettyUtils.printRed("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
                 }
                 Prompter.promptEnter();
             }
@@ -415,7 +415,7 @@ public class UsedCarDealership {
                             System.out.println(e.getMessage());
                         }
                     } else {
-                        System.out.println("\nYou just test drove this vehicle!");
+                        PrettyUtils.printRed("\nYou just test drove this vehicle!");
                         Prompter.promptEnter();
                         PrettyUtils.wipe();
                     }
@@ -540,7 +540,7 @@ public class UsedCarDealership {
                     inPage = false;
                     break;
                 default:
-                    System.out.println("You may only select 0");
+                    PrettyUtils.printRed("You may only select 0");
             }
         }
     }

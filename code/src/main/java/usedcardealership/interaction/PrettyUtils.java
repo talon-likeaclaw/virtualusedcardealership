@@ -15,7 +15,7 @@ public class PrettyUtils {
      * @param colorCode the ANSI color code for the text
      */
     private static void printColor(String message, String colorCode) {
-        System.out.println(colorCode + message + RESET);
+        System.out.print(colorCode + message + RESET);
     }
 
     /**

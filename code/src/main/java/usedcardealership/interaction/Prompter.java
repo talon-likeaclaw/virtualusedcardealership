@@ -49,13 +49,14 @@ public class Prompter {
                         invalidValue = false;
                     } else {
                         System.out.println("\nInvalid input! Please choose a valid option.");
-                        //I noticed this line messes up the code when there's invalid input in both browsing and selling
-                        //Idk if you changed it but I'll comment it out for now
-                        //promptEnter();
+                        // I noticed this line messes up the code when there's invalid input in both
+                        // browsing and selling
+                        // Idk if you changed it but I'll comment it out for now
+                        // promptEnter();
                     }
                 }
             } catch (NumberFormatException e) {
-                System.out.println("\nIllegal input!");
+                PrettyUtils.printRed("\nIllegal input!\n");
                 promptEnter();
                 invalidValue = false;
             }
@@ -86,7 +87,9 @@ public class Prompter {
      * Makes the user press Enter to continue
      */
     public static void promptEnter() {
-        System.out.println("Press ENTER to continue:");
+        System.out.print("Press ");
+        PrettyUtils.printYellow("ENTER");
+        System.out.print(" to continue:");
         reader.nextLine();
     }
 
