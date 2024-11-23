@@ -49,7 +49,9 @@ public class Prompter {
                         invalidValue = false;
                     } else {
                         System.out.println("\nInvalid input! Please choose a valid option.");
-                        promptEnter();
+                        //I noticed this line messes up the code when there's invalid input in both browsing and selling
+                        //Idk if you changed it but I'll comment it out for now
+                        //promptEnter();
                     }
                 }
             } catch (NumberFormatException e) {
