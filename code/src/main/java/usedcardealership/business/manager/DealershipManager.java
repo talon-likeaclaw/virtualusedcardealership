@@ -138,6 +138,15 @@ public class DealershipManager {
    * @param transactionType type of transaction
    */
     public void processCustomerVehicleSale(Vehicle vehicle, Customer customer, String transactionType) {
+      if (vehicle == null || customer == null || transactionType == null || transactionType.length() == 0) {
+        throw new IllegalArgumentException("Vehicle, customer, or transaction type cannot be null");
+      }
+      if (!transactionType.equalsIgnoreCase("sale")) {
+        throw new IllegalArgumentException("Transaction must be of type 'sale'.");
+      }
+      if (!customer.getVehicles().contains(vehicle)) {
+        throw new IllegalArgumentException("Customer does not own the vehicle being sold.");
+      }
       this.getTransactionManager().handleTransaction(vehicle, customer, transactionType);
       this.getVehicleManager().addVehicle(vehicle);
       customer.getVehicles().remove(vehicle);

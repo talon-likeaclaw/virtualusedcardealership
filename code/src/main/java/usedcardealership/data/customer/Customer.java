@@ -134,20 +134,23 @@ public class Customer {
     }
 
     public void setPhoneNumber(String number) {
-        if (number == null || number.isEmpty()) {
+        if (number == null || number.length() == 0) {
             throw new IllegalArgumentException("Phone number cannot be null or empty.");
         }
         this.phoneNumber = number;
     }
 
     public void setAddress(String address) {
-        if (address == null || address.isEmpty()) {
+        if (address == null || address.length() == 0) {
             throw new IllegalArgumentException("Address cannot be null or empty.");
         }
         this.address = address;
     }
 
     public Vehicle getVehicleById(int vehicleID) {
+        if (vehicleID <= 0) {
+            throw new IllegalArgumentException("Vehicle ID must be positive integer.");
+        }
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getID() == vehicleID) {
                 return vehicle;

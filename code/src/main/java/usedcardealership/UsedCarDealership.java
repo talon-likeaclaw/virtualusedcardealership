@@ -112,7 +112,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "trans");
                     break;
                 default:
-                    PrettyUtils.printRed("\nInvalid filter name. Please try again.\n");
+                    PrettyUtils.printRed("\nInvalid filter name. Please try again.");
                     Prompter.promptEnter();
             }
         }
@@ -171,8 +171,8 @@ public class UsedCarDealership {
 
             // If no vehicles
             return handleFilteredVehicles(dealership, filteredVehicles);
-        } catch (NumberFormatException e) {
-            PrettyUtils.printRed("Invalid range input! Returning to menu.");
+        } catch (Exception e) {
+            PrettyUtils.printRed("\nInvalid range input! Returning to menu.");
             Prompter.promptEnter();
             return false;
         }
@@ -465,10 +465,6 @@ public class UsedCarDealership {
         String customerPath = "resources/customers.csv";
         CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
         List<Customer> customers = customerLoader.load();
-        // TODO: Select a random customer from the list to assign the the currentUser on
-        // init
-        // Thought it would be cool if each time you start up the program you are a
-        // random customer
 
         // Load transactions
         String transactionPath = "resources/transactions.csv";
@@ -489,8 +485,14 @@ public class UsedCarDealership {
      * @return a list of vehicles loaded from file
      */
     private static List<Vehicle> initializeListVehicle(String filePath) {
-        VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
-        return vehicleLoader.load();
+        try {
+            VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
+            return vehicleLoader.load();
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error loading vehicles from file: " + filePath);
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -500,30 +502,36 @@ public class UsedCarDealership {
      * @param dealership the DealershipManager object
      */
     private static void shutdown(DealershipManager dealership) {
-        // Save inventory and database
-        String vehicleDatabasePath = "resources/database.csv";
-        String vehicleInventoryPath = "resources/inventory.csv";
-        List<Vehicle> database = dealership.getDatabase();
-        List<Vehicle> inventory = dealership.getInventory();
-        VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
-        VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
-        vehicleDatabaseSaver.save(database);
-        vehicleInventorySaver.save(inventory);
+        try {
+            // Save inventory and database
+            String vehicleDatabasePath = "resources/database.csv";
+            String vehicleInventoryPath = "resources/inventory.csv";
+            List<Vehicle> database = dealership.getDatabase();
+            List<Vehicle> inventory = dealership.getInventory();
+            VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
+            VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
+            vehicleDatabaseSaver.save(database);
+            vehicleInventorySaver.save(inventory);
 
-        // Save customers
-        String customerPath = "resources/customers.csv";
-        List<Customer> customers = dealership.getCustomers();
-        CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
-        customerSaver.save(customers);
+            // Save customers
+            String customerPath = "resources/customers.csv";
+            List<Customer> customers = dealership.getCustomers();
+            CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
+            customerSaver.save(customers);
 
-        // Save transactions
-        String transactionPath = "resources/transactions.csv";
-        List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
-        TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
-        transactionSaver.save(transactions);
+            // Save transactions
+            String transactionPath = "resources/transactions.csv";
+            List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
+            TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
+            transactionSaver.save(transactions);
 
-        System.out.println("\nShutting down. Please come again! :)");
-        Prompter.close();
+            System.out.println("\nShutting down. Please come again! :)");
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error saving data. Your changes may not have been saved.");
+            e.printStackTrace();
+        } finally {
+            Prompter.close();
+        }
     }
 
     /**
@@ -618,8 +626,8 @@ public class UsedCarDealership {
                         PrettyUtils.printRed("\nInvalid Vehicle ID!\n");
                         Prompter.promptEnter();
                     } else {
-                        wipe();
-                        System.out.println("\nAre you sure you want to sell vehicle "+ vehicleID + "?");
+                        PrettyUtils.wipe();
+                        System.out.println("\nAre you sure you want to sell vehicle " + vehicleID + "?");
                         boolean confirmed = Prompter.promptYesNo();
                         if (confirmed) {
                             manageVehicleTransaction(dealer, vehicleID);
@@ -636,15 +644,15 @@ public class UsedCarDealership {
         }
     }
 
-
     /**
-     * Manages the vehicle transaction process, offering a vehicle to the customer, 
+     * Manages the vehicle transaction process, offering a vehicle to the customer,
      * confirming the offer, and processing the sale if accepted.
      *
-     * @param dealer the DealershipManager responsible for managing the dealership operations
+     * @param dealer    the DealershipManager responsible for managing the
+     *                  dealership operations
      * @param vehicleID the ID of the vehicle being offered for sale
-    */
-    private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID){
+     */
+    private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID) {
         Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
         Customer customer = dealer.getCurrentCustomer();
 
@@ -656,7 +664,7 @@ public class UsedCarDealership {
 
         System.out.println("Do you accept this offer? (Y/N)");
         boolean confirmed = Prompter.promptYesNo();
-        wipe();
+        PrettyUtils.wipe();
         if (confirmed) {
             dealer.processCustomerVehicleSale(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
@@ -668,6 +676,6 @@ public class UsedCarDealership {
             System.out.println("Sale cancelled.");
         }
 
-    } 
+    }
 
 }
