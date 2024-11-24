@@ -22,6 +22,9 @@ public class CustomerManager {
      * @param customerList a List<Customer> with all customers 
      */
     public CustomerManager(List<Customer> customerList){
+        if (customerList == null) {
+            throw new IllegalArgumentException("Customer list cannot be null.");
+        }
         this.customerList = customerList;
     }
 
@@ -36,6 +39,9 @@ public class CustomerManager {
      * @return void
      */
     public void addCustomer(Customer customer){
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
+        }
         if (!this.customerList.contains(customer)) {
             this.customerList.add(customer);
         }
@@ -48,6 +54,9 @@ public class CustomerManager {
      * @return boolean
      */
     public boolean searchCustomer(Customer customer){
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
+        }
         return this.customerList.contains(customer);
     }
 
@@ -58,6 +67,9 @@ public class CustomerManager {
      * @return void
      */
     public void updateCustomer(Customer customer){
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
+        }
         for (int i = 0; i < this.customerList.size(); i++) {
             if (this.customerList.get(i).equals(customer)) {
                 this.customerList.set(i, new Customer(customer));
@@ -65,7 +77,4 @@ public class CustomerManager {
             }
         }
     }
-
-    
-    
 }
