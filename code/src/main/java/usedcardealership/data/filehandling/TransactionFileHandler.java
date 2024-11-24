@@ -51,7 +51,6 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
         LocalDate date = LocalDate.parse(dateString);
 
         double price = Double.parseDouble(transactionFields[3]);
-        double tax = Double.parseDouble(transactionFields[4]);
 
         // Customer section
         String[] customerFields = sections[1].split(",");

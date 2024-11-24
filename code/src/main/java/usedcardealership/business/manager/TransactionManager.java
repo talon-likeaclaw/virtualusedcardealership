@@ -8,7 +8,6 @@ package usedcardealership.business.manager;
 
 import java.util.*;
 import java.time.*;
-import usedcardealership.business.filter.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
