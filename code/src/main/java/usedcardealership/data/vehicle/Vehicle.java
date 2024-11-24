@@ -241,7 +241,11 @@ public abstract class Vehicle {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        if (price >= 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        } else {
+            this.price = price;
+        }
     }
 
     /**
