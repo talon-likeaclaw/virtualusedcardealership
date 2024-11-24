@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class RV extends EnclosedVehicle {
     private int sleepCapacity;
     private boolean hasBathroom;
@@ -76,8 +78,9 @@ public class RV extends EnclosedVehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Sleep Capacity: " + this.sleepCapacity + "\n" +
-                "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
+                PrettyUtils.returnCyan("Sleep Capacity: ") + String.valueOf(this.sleepCapacity)
+                + "\n" + PrettyUtils.returnCyan("Bathroom: ")
+                + (this.hasBathroom ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public int getSleepCapacity() {

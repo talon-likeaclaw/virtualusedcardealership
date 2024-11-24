@@ -133,15 +133,17 @@ public abstract class Vehicle {
      */
     public String getCommonDetails() {
         return getImportantDetails() +
-                "Color: " + this.color + "\n" +
-                "Transmission: " + this.transmission + "\n" +
-                "Drive Type: " + this.driveType + "\n" +
-                "Horsepower: " + this.horsepower + "\n" +
-                "Weight: " + this.weight + " lbs\n" +
-                "Kilometerage: " + String.format("%.2f", this.kilometerage) + " km\n" +
-                "Damage: " + String.format("%.2f", this.damage) + "%\n" +
-                "Electric: " + (this.isElectric ? "True" : "False");
+                PrettyUtils.returnCyan("Color: ") + this.color + "\n" +
+                PrettyUtils.returnCyan("Transmission: ") + this.transmission + "\n" +
+                PrettyUtils.returnCyan("Drive Type: ") + this.driveType + "\n" +
+                PrettyUtils.returnCyan("Horsepower: ") + String.valueOf(this.horsepower) + "\n" +
+                PrettyUtils.returnCyan("Weight: ") + String.format("%.2f", this.weight) + " lbs\n" +
+                PrettyUtils.returnCyan("Kilometerage: ") + String.format("%.2f", this.kilometerage) + " km\n" +
+                PrettyUtils.returnCyan("Damage: ") + String.format("%.2f", this.damage) + "%\n" +
+                PrettyUtils.returnCyan("Electric: ") + 
+                (this.isElectric ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
+    
 
     /**
      * Provides a formatted string containing the important details of the vehicle.
@@ -155,12 +157,12 @@ public abstract class Vehicle {
      *         Price: $<calculated total price>
      */
     public String getImportantDetails() {
-        return "\nType: " + this.type + "\n" +
-                "ID: " + this.id + "\n" +
-                "Make: " + this.make + "\n" +
-                "Model: " + this.model + "\n" +
-                "Year: " + this.year + "\n" +
-                "Price: $" + String.format("%.2f", calculateTotalPrice()) + "\n";
+        return PrettyUtils.returnCyan("\nType: ") + this.type + "\n" +
+                PrettyUtils.returnCyan("ID: ") + String.valueOf(this.id) + "\n" +
+                PrettyUtils.returnCyan("Make: ") + this.make + "\n" +
+                PrettyUtils.returnCyan("Model: ") + this.model + "\n" +
+                PrettyUtils.returnCyan("Year: ") + String.valueOf(this.year) + "\n" +
+                PrettyUtils.returnCyan("Price: ") + "$" + String.format("%.2f", calculateTotalPrice()) + "\n";
     }
 
     @Override
