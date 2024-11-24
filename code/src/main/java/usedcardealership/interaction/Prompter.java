@@ -131,28 +131,28 @@ public class Prompter {
     public static String getPrompt(String promptType) {
         switch (promptType) {
             case "filter":
-                return "\nType " + PrettyUtils.returnYellow("filter type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("filter type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "type":
-                return "\nType " + PrettyUtils.returnYellow("vehicle type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "make":
-                return "\nType " + PrettyUtils.returnYellow("vehicle make") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle make") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "color":
-                return "\nType " + PrettyUtils.returnYellow("vehicle color") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle color") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "year":
-                return "\nType " + PrettyUtils.returnYellow("vehicle year range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle year range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "drive":
-                return "\nType " + PrettyUtils.returnYellow("vehicle drive type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle drive type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "price":
-                return "\nType " + PrettyUtils.returnYellow("vehicle price range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle price range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "kilo":
-                return "\nType " + PrettyUtils.returnYellow("vehicle kilometrage range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle kilometrage range") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "trans":
-                return "\nType " + PrettyUtils.returnYellow("vehicle transmission type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
+                return "\nType a " + PrettyUtils.returnYellow("vehicle transmission type") + " or press " + PrettyUtils.returnYellowEnter() + " to go back:";
             case "id-sort":
                 return PrettyUtils.returnYellow("Sort Options:\n") +
                         "- Type: " + PrettyUtils.returnYellow("id, price, year, kilometrage, damage\n") +
                         "- Add " + PrettyUtils.returnYellow("`desc`") + " for descending order (`id desc`)\n" +
-                        "Select a vehicle with it's " + PrettyUtils.returnYellow("[ID]") + ", or press " + PrettyUtils.returnYellowEnter() + " to go back.";
+                        "Select a vehicle with it's " + PrettyUtils.returnYellow("[ID]") + ", type a " + PrettyUtils.returnYellow("sorting") + " option, or press " + PrettyUtils.returnYellowEnter() + " to go back.";
             default:
                 return "No prompt available";
         }
