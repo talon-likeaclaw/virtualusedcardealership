@@ -71,34 +71,6 @@ public class VehicleManager {
     }
 
     /**
-     * Prints each vehicle in the specified list in short form.
-     * 
-     * @param vehicleList the list of vehicles to print.
-     */
-    public void printVehiclesShort(List<Vehicle> vehicleList) {
-        if (vehicleList == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null.");
-        }
-        for (Vehicle v : vehicleList) {
-            System.out.println(v.getImportantDetails());
-        }
-    }
-
-    /**
-     * Prints each vehicle in the specified list in short form.
-     * 
-     * @param vehicleList the list of vehicles to print.
-     */
-    public void printVehiclesFull(List<Vehicle> vehicleList) {
-        if (vehicleList == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null.");
-        }
-        for (Vehicle v : vehicleList) {
-            System.out.println(v);
-        }
-    }
-
-    /**
      * Method for adding a vehicle to the dealership's inventory or database.
      * Only adds if it doesn't already exitst.
      * 
