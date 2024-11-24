@@ -61,6 +61,14 @@ public class PickupTruck extends CargoCapacity {
             double towingCapacity) {
         super(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
                 kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
+        final double MAX_BED_LENGTH = 30;
+        final double MAX_TOWING_CAPACITY = 30000;
+        if (bedLength <= 0 || bedLength >= MAX_BED_LENGTH) {
+            throw new IllegalArgumentException("Bed length must be between 1 and 30 feet.");
+        }
+        if (towingCapacity < 0 || towingCapacity > MAX_TOWING_CAPACITY) {
+            throw new IllegalArgumentException("Towing capacity must be between 0 and 30,000 lbs.");
+        }
         this.bedLength = bedLength;
         this.towingCapacity = towingCapacity;
     }
@@ -73,6 +81,9 @@ public class PickupTruck extends CargoCapacity {
      */
     public PickupTruck(PickupTruck p) {
         super(p);
+        if (p == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Pickup Truck.");
+        }
         this.bedLength = p.bedLength;
         this.towingCapacity = p.towingCapacity;
     }

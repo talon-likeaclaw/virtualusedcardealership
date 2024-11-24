@@ -59,6 +59,10 @@ public class RV extends EnclosedVehicle {
             boolean hasBathroom) {
         super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
+        final int MAX_SLEEP_CAPACITY = 12;
+        if (sleepCapacity < 1 || sleepCapacity > MAX_SLEEP_CAPACITY) {
+            throw new IllegalArgumentException("Sleep capacity must be between 1 and 12.");
+        }
         this.sleepCapacity = sleepCapacity;
         this.hasBathroom = hasBathroom;
     }
@@ -71,6 +75,9 @@ public class RV extends EnclosedVehicle {
      */
     public RV(RV r) {
         super(r);
+        if (r == null) {
+            throw new IllegalArgumentException("Cannot copy from a null RV.");
+        }
         this.sleepCapacity = r.sleepCapacity;
         this.hasBathroom = r.hasBathroom;
     }

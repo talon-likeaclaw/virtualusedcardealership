@@ -18,6 +18,10 @@ public class VehicleHelper {
      * @return a Vehicle instance or null if the type is not valid.
      */
     public static Vehicle parseVehicle(String[] fields) {
+        final int MAX_FIELDS = 14;
+        if (fields == null || fields.length < MAX_FIELDS) {
+            throw new IllegalArgumentException("Invalid fields array: null or insufficient data.");
+        }
         if (fields[0].equals("[]")) {
             return null;
         }

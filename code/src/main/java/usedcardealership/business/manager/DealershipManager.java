@@ -10,7 +10,6 @@ package usedcardealership.business.manager;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
-import usedcardealership.business.filter.*;
 
 import java.util.*;
 
@@ -36,6 +35,24 @@ public class DealershipManager {
    */
   public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
       List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
+    if (name == null || name.length() == 0) {
+      throw new IllegalArgumentException("Dealership name cannot be null or empty.");
+    }
+    if (accountBalance < 0) {
+      throw new IllegalArgumentException("Account balance cannot be negative.");
+    }
+    if (transactions == null) {
+      throw new IllegalArgumentException("Transactions name cannot be null or empty.");
+    }
+    if (inventory == null) {
+      throw new IllegalArgumentException("Inventory list cannot be null.");
+    }
+    if (database == null) {
+      throw new IllegalArgumentException("Database list cannot be null.");
+    }
+    if (customers == null) {
+      throw new IllegalArgumentException("Customers list cannot be null.");
+    }
     this.name = name;
     this.accountBalance = accountBalance;
     this.transactionManager = new TransactionManager(transactions);
@@ -75,9 +92,22 @@ public class DealershipManager {
   public ShoppingCart getCurrentCart() {
     return this.currentCart;
   }
+  
+  public Vehicle getVehicleById(int vehicleId) {
+    if (vehicleId <= 0) {
+      throw new IllegalArgumentException("Vehicle ID must be a positive integer.");
+    }
+    for (Vehicle v : this.getInventory()) {
+      if (v.getID() == vehicleId) {
+        return v;
+      }
+    }
+    return null;
+  }
 
   /**
    * Method for adding or removing money from the dealership's account balance.
+   * No validation necessary as the dealership can go into debt (for fun).
    * 
    * @param balanceChange the amount that the account balance will change
    *                      (negative or postive).
@@ -91,6 +121,9 @@ public class DealershipManager {
     return this.currentCustomer;
   }
   public void setCurrentCustomer(Customer customer) {
+    if (customer == null) {
+      throw new IllegalArgumentException("Customer cannot be null.");
+    }
     this.currentCustomer = customer;
   }
 
@@ -104,7 +137,16 @@ public class DealershipManager {
    * @param customer customer selling the vehicle
    * @param transactionType type of transaction
    */
-    public void processCustomerVehicleSale(Vehicle vehicle, Customer customer, String transactionType) {
+    public void processCustomerVehiclePurchase(Vehicle vehicle, Customer customer, String transactionType) {
+      if (vehicle == null || customer == null || transactionType == null || transactionType.length() == 0) {
+        throw new IllegalArgumentException("Vehicle, customer, or transaction type cannot be null");
+      }
+      if (!transactionType.equalsIgnoreCase("purchase")) {
+        throw new IllegalArgumentException("Transaction must be of type 'purchase'.");
+      }
+      if (!customer.getVehicles().contains(vehicle)) {
+        throw new IllegalArgumentException("Customer does not own the vehicle being sold.");
+      }
       this.getTransactionManager().handleTransaction(vehicle, customer, transactionType);
       this.getVehicleManager().addVehicle(vehicle);
       customer.getVehicles().remove(vehicle);

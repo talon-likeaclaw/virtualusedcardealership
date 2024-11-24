@@ -120,7 +120,7 @@ public class TransactionManagerTest {
     public void testTransactionHistoryConsistency() {
         List<Transaction> transactionHistory = new ArrayList<>();
         TransactionManager transactionManager = new TransactionManager(transactionHistory);
-        Customer customer = new Customer(1, "John", "Doe", "1980-01-01", "123-456-7890", "123 Main St", 20000.0, new ArrayList<>());
+        Customer customer = new Customer(1, "John", "Doe", "1980-01-01", "123-456-7890", "123 Main St", 80000.0, new ArrayList<>());
         Vehicle vehicle1 = new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
                 250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false);
         Vehicle vehicle2 = new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
