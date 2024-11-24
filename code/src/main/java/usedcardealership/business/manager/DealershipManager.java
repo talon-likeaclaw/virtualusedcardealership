@@ -10,6 +10,7 @@ package usedcardealership.business.manager;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.business.filter.*;
 
 import java.util.*;
 
@@ -19,6 +20,8 @@ public class DealershipManager {
   private TransactionManager transactionManager;
   private VehicleManager vehicleManager;
   private CustomerManager customerManager;
+  private Customer currentCustomer;
+  private ShoppingCart currentCart;
 
   /**
    * DealershipManager Constructor
@@ -38,6 +41,7 @@ public class DealershipManager {
     this.transactionManager = new TransactionManager(transactions);
     this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
+    this.currentCart = new ShoppingCart();
   }
 
   public String getName() {
@@ -64,6 +68,19 @@ public class DealershipManager {
     return this.vehicleManager.getDatabase();
   }
 
+  public VehicleManager getVehicleManager() {
+    return this.vehicleManager;
+  }
+
+  public Vehicle getVehicleById(int vehicleId) {
+    for (Vehicle v : this.getInventory()) {
+      if (v.getID() == vehicleId) {
+        return v;
+      }
+    }
+    return null;
+  }
+
   /**
    * Method for adding or removing money from the dealership's account balance.
    * 
@@ -73,4 +90,13 @@ public class DealershipManager {
   public void updateAccountBalance(double balanceChange) {
     this.accountBalance += balanceChange;
   }
+
+
+  public Customer getCurrentCustomer(){
+    return this.currentCustomer;
+  }
+  public void setCurrentCustomer(Customer customer) {
+    this.currentCustomer = customer;
+  }
+
 }

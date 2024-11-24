@@ -105,7 +105,9 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return getCommonDetails();
+        return "[" + this.id + "] " + this.year + " " + this.color + " " + this.make + " " + this.model + "\n"
+                + "Price: $" + this.calculateTotalPrice() + " | Transmission: " + this.transmission + ", "
+                + this.driveType + " | Kilometrage: " + this.kilometerage + " km\n";
     }
 
     /**
@@ -134,8 +136,8 @@ public abstract class Vehicle {
                 "Drive Type: " + this.driveType + "\n" +
                 "Horsepower: " + this.horsepower + "\n" +
                 "Weight: " + this.weight + " lbs\n" +
-                "Kilometerage: " + this.kilometerage + " km\n" +
-                "Damage: " + this.damage + "%\n" +
+                "Kilometerage: " + String.format("%.2f", this.kilometerage) + " km\n" +
+                "Damage: " + String.format("%.2f", this.damage) + "%\n" +
                 "Electric: " + (this.isElectric ? "True" : "False");
     }
 
@@ -167,6 +169,8 @@ public abstract class Vehicle {
         }
         return false;
     }
+
+    public abstract String getFullDetails();
 
     public String getType() {
         return this.type;
@@ -263,7 +267,7 @@ public abstract class Vehicle {
      * Applies random damage and kilometerage to the Vehicle.
      */
     public void testDrive() {
-        final double MAX_DAMAGE = 1.0;
+        final double MAX_DAMAGE = 0.1;
         final double MAX_KILOMETER = 50.0;
         final double CRASH_PROBABILITY = 0.01;
         final double MAX_CRASH_DAMAGE = 90.0;
@@ -272,24 +276,27 @@ public abstract class Vehicle {
         // Generate random damage and kilometers
         double randomDamage = rng.nextDouble() * MAX_DAMAGE;
         double randomKilometers = rng.nextDouble() * MAX_KILOMETER;
+        randomDamage = Math.round(randomDamage * 100.0) / 100.0;
+        randomKilometers = Math.round(randomKilometers * 100.0) / 100.0;
 
         // Check for crash
         boolean hasCrashed = rng.nextDouble() < CRASH_PROBABILITY;
         if (hasCrashed) {
             // Generate crash damage multiplier
             double multiplierRange = MAX_CRASH_DAMAGE - MIN_CRASH_DAMAGE;
-            double crashMultiplier = MIN_CRASH_DAMAGE + (rng.nextDouble() * multiplierRange);
-            randomDamage *= crashMultiplier;
-            System.out.println("You crashed the vehicle during the test drive!");
-            System.out.println("Damage increased by " + crashMultiplier + "%");
+            double crashAddition = MIN_CRASH_DAMAGE + (rng.nextDouble() * multiplierRange);
+            randomDamage += crashAddition;
+            randomDamage = Math.round(randomDamage * 100.0) / 100.0;
+            System.out.println("\nYou crashed the vehicle during the test drive!");
+            System.out.println("This caused " + String.format("%.2f", crashAddition) + "% additional damage.");
         }
 
         // Apply damage
         addDamage(randomDamage);
         addKilometerage(randomKilometers);
 
-        System.out.println("Test drive completed:");
-        System.out.println("Damage applied: " + randomDamage);
+        System.out.println("\nTest drive completed:");
+        System.out.println("Damage applied: " + randomDamage + "%");
         System.out.println("Kilometers driven: " + randomKilometers + " km");
     }
 
@@ -348,4 +355,12 @@ public abstract class Vehicle {
         final double DAMAGE_DEPRECIATION_RATE = 0.50;
         return (this.damage / 100) * this.price * DAMAGE_DEPRECIATION_RATE; // 50% impact of damage on price
     }
+
+    /**
+     * Returns an array of strings representing the fields of the vehicle 
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the vehicle
+     */
+    public abstract String[] toCSVFields();
 }

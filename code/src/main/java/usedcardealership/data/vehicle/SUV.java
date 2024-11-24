@@ -69,12 +69,42 @@ public class SUV extends EnclosedVehicle {
     }
 
     @Override
-    public String toString() {
+    public String getFullDetails() {
         return getCommonDetails() + "\n" +
                 "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");
     }
 
     public boolean hasThirdRowSeating() {
         return this.hasThirdRowSeating;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the SUV
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the SUV
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getNumSeats()),
+                String.valueOf(getNumDoors()),
+                String.valueOf(hasSunRoof()),
+                String.valueOf(hasThirdRowSeating())
+        };
     }
 }

@@ -103,6 +103,8 @@ public abstract class EnclosedVehicle extends Vehicle {
                 "Sunroof: " + (this.hasSunRoof ? "Yes" : "No");
     }
 
+    public abstract String getFullDetails();
+
     public int getNumSeats() {
         return this.numSeats;
     }

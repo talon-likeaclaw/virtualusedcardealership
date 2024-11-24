@@ -136,27 +136,8 @@ public class PickupTruckTest {
                 5.5,
                 1000.00);
 
-        String expectedOutput = "Type: PickupTruck\n" +
-                "ID: 41\n" +
-                "Make: Ford\n" +
-                "Model: F-150\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $45000.0\n" +
-                "Color: Blue\n" +
-                "Transmission: Automatic\n" +
-                "Drive Type: 4WD\n" +
-                "Horsepower: 400\n" +
-                "Weight: 6000.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Seats: 5\n" +
-                "Doors: 4\n" +
-                "Sunroof: Yes\n" +
-                "Cargo Capacity: 3000.0 cu ft\n" +
-                "Bed Length: 5.5 feet\n" +
-                "Towing Capacity: 1000.0 lbs";
-
+        String expectedOutput = "[41] " + Year.now().getValue() + " Blue Ford F-150\n" +
+                "Price: $45000.0 | Transmission: Automatic, 4WD | Kilometrage: 0.0 km\n";
         // Act
         String actualOutput = test.toString();
 
