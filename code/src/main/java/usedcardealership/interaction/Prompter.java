@@ -64,7 +64,8 @@ public class Prompter {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                PrettyUtils.printRed("\nInvalid input! Please enter a valid integer.\n");
+                PrettyUtils.printRed("\nInvalid input! Please enter a valid integer.");
+                return -1;
             }
         }
     }

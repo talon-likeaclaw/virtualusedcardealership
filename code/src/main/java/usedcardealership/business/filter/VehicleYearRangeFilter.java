@@ -20,6 +20,12 @@ public class VehicleYearRangeFilter extends VehicleFilter {
      * @param maxYear the maximum year to filter by
      */
     public VehicleYearRangeFilter(int minYear, int maxYear) {
+        if (minYear < 1800) {
+            throw new IllegalArgumentException("Minimum year cannot be less than 1800.");
+        }
+        if (minYear > maxYear) {
+            throw new IllegalArgumentException("Minimum year cannot be greater than maximum year.");
+        }
         this.minYear = minYear;
         this.maxYear = maxYear;
     }
@@ -32,6 +38,9 @@ public class VehicleYearRangeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getYear() >= minYear && vehicle.getYear() <= maxYear;
     }
 }

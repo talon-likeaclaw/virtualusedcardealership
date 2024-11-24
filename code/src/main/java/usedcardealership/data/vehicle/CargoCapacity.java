@@ -67,6 +67,9 @@ public abstract class CargoCapacity extends EnclosedVehicle {
      */
     public CargoCapacity(CargoCapacity c) {
         super(c);
+        if (c == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Cargo Capacity.");
+        }
         this.cargoCapacity = c.cargoCapacity;
     }
 

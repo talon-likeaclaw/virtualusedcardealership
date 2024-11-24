@@ -5,6 +5,7 @@
  * @version 11/18/2024
  */
 package usedcardealership.business.comparators;
+
 import usedcardealership.data.vehicle.Vehicle;
 
 /**
@@ -14,9 +15,12 @@ import usedcardealership.data.vehicle.Vehicle;
  * @param vehicle2 vehicle to compare with
  * @return int: positive if vehicle1's ID is greater, negative if it's smaller, otherwise 0
  */
-public class VehicleIdCompare extends VehicleCompare{
+public class VehicleIdCompare extends VehicleCompare {
     @Override
-    public int compare(Vehicle vehicle1, Vehicle vehicle2){
-        return vehicle1.getID() - vehicle2.getID();
+    public int compare(Vehicle vehicle1, Vehicle vehicle2) {
+        if (vehicle1 == null || vehicle2 == null) {
+            throw new IllegalArgumentException("Vehicles cannot be null.");
+        }
+        return vehicle1.getID()  - vehicle2.getID();
     }
 }

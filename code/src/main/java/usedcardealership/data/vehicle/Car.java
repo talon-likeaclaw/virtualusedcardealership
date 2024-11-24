@@ -67,6 +67,9 @@ public class Car extends EnclosedVehicle {
      */
     public Car(Car c) {
         super(c);
+        if (c == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Car.");
+        }
         this.isConvertible = c.isConvertible;
     }
 

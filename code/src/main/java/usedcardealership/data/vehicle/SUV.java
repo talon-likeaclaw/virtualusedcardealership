@@ -67,6 +67,9 @@ public class SUV extends EnclosedVehicle {
      */
     public SUV(SUV s) {
         super(s);
+        if (s == null) {
+            throw new IllegalArgumentException("Cannot copy from a null SUV.");
+        }
         this.hasThirdRowSeating = s.hasThirdRowSeating;
     }
 

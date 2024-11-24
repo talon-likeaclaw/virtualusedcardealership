@@ -21,6 +21,9 @@ public class TransactionManager {
      * @param transactionHistory a List<Transaction> 
      */
     public TransactionManager(List<Transaction> transactionHistory){
+        if (transactionHistory == null) {
+            throw new IllegalArgumentException("Transaction history cannot be null.");
+        }
         this.transactionHistory = transactionHistory;
     }
 
@@ -34,6 +37,9 @@ public class TransactionManager {
      * @param transaction a Transaction object
      */
     public void addTransaction(Transaction transaction){
+        if (transaction == null) {
+            throw new IllegalArgumentException("Transaction cannot be null.");
+        }
         this.transactionHistory.add(transaction);
     }
 
@@ -48,6 +54,9 @@ public class TransactionManager {
      * @throws IllegalArgumentException if the transactionType is invalid
     */
     public void handleTransaction(Vehicle vehicle, Customer customer, String transactionType) {
+        if (vehicle == null || customer == null || transactionType == null || transactionType.length() == 0) {
+            throw new IllegalArgumentException("Vehicle, customer, and transaction type cannot be null.");
+        }
         int newId = transactionHistory.size() + 1;
         LocalDate currentDate = LocalDate.now();
         double price = vehicle.calculateTotalPrice();
@@ -71,10 +80,15 @@ public class TransactionManager {
      * @return void
     */
     public void processTransaction(Transaction transaction, Customer customer) {
+        if (transaction == null || customer == null) {
+            throw new IllegalArgumentException("Transaction and customer cannot be null.");
+        }
         if (transaction instanceof Purchase) {
             processPurchase((Purchase) transaction, customer);
         } else if (transaction instanceof Sale) {
             processSale((Sale) transaction, customer);
+        } else {
+            throw new IllegalArgumentException("Unsupported transaction type.");
         }
     }
 

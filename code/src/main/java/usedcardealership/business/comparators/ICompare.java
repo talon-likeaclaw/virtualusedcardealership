@@ -19,4 +19,3 @@ public interface ICompare<T> extends Comparator<T> {
     @Override
     int compare(T obj1, T obj2);
 }
-

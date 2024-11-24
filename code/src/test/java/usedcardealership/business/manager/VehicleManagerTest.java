@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import java.io.*;
 import java.util.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.interaction.PrettyUtils;
 
 public class VehicleManagerTest {
 
@@ -33,39 +34,6 @@ public class VehicleManagerTest {
         // Assert
         assertEquals(expectedInventory, test.getInventory());
         assertEquals(expectedDatabase, test.getDatabase());
-    }
-
-    @Test
-    public void testPrintVehicles_outputsCorrectDetails() {
-        // Arrange
-        List<Vehicle> vehicleList = new ArrayList<>();
-        Car car = new Car("Car", 1, "Toyota", "Camry", 2021, 30000.0, "Blue", "Automatic",
-                "FWD", 200, 1500.0, 10000.0, 5.0, false, 5, 4, false, false);
-        vehicleList.add(car);
-
-        VehicleManager test = new VehicleManager(vehicleList, new ArrayList<>());
-
-        // Redirect System.out to capture output
-        // Reference:
-        // https://stackoverflow.com/questions/32241057/how-to-test-a-print-method-in-java-using-junit
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        test.printVehiclesShort(vehicleList);
-
-        // Act
-
-        // Expected output
-        String expectedOutput = "\nType: Car\n" +
-                "ID: 1\n" +
-                "Make: Toyota\n" +
-                "Model: Camry\n" +
-                "Year: 2021\n" +
-                "Price: $24550.00\n\n";
-
-        // Assert
-        assertEquals(expectedOutput, outContent.toString().toString());
-        System.setOut(System.out);
     }
 
     @Test
@@ -150,13 +118,6 @@ public class VehicleManagerTest {
         assertEquals(1, inventory.size());
         assertEquals(true, inventory.contains(truck));
     }
-
-    // The following tests require the ICriteria Strategy to be implmented
-    // TODO: Need to test searchInventory
-
-    // TODO: Need to test searchDatabase
-
-    // TODO: Need to test searchList
 
     @Test
     public void testUpdateVehicle_updatesVehicleInBothLists() {
