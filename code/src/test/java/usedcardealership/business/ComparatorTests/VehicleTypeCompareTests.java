@@ -11,7 +11,6 @@ public class VehicleTypeCompareTests {
 
     @Test
     public void testCompareWhenVehicle1TypeIsLexicographicallyGreater() {
-        // Arrange
         VehicleTypeCompare comparator = new VehicleTypeCompare();
         Vehicle truck = new PickupTruck("PickupTruck", 2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic",
                 "AWD",
@@ -21,13 +20,11 @@ public class VehicleTypeCompareTests {
                 "Car", 504, "Honda", "Civic", 2020, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertTrue(comparator.compare(truck, car) > 0);
     }
 
     @Test
     public void testCompareWhenVehicle1TypeIsLexicographicallySmaller() {
-        // Arrange
         VehicleTypeCompare comparator = new VehicleTypeCompare();
         Vehicle truck = new PickupTruck("PickupTruck", 2, "Ford", "F-150", 2020, 45000.0, "Red", "Automatic",
                 "AWD",
@@ -37,13 +34,11 @@ public class VehicleTypeCompareTests {
                 "Car", 504, "Honda", "Civic", 2020, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertTrue(comparator.compare(car, truck) < 0);
     }
 
     @Test
     public void testCompareWhenTypesAreEqual() {
-        // Arrange
         VehicleTypeCompare comparator = new VehicleTypeCompare();
         Vehicle vehicle1 = new Car(
                 "Car", 505, "Toyota", "Corolla", 2017, 15000.00, "Red", "Manual", "FWD",
@@ -52,7 +47,6 @@ public class VehicleTypeCompareTests {
                 "Car", 505, "Honda", "Civic", 2020, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertEquals(0, comparator.compare(vehicle1, vehicle2));
     }
 }

@@ -5,12 +5,8 @@ import static org.junit.Assert.*;
 import usedcardealership.data.customer.Customer;
 
 public class CustomerClassTests {
-    
-    // Existing tests...
-
     @Test
     public void testToString() {
-        // Create a Customer instance
         Customer customer = new Customer(1, "Alice", "Smith", "1985-07-15", "987654321", 
                                           "456 Oak St", 1500.0, null);
 
@@ -23,7 +19,6 @@ public class CustomerClassTests {
 
         assertEquals(expected, customer.toString());
     }
-
     @Test
     public void testUpdateAccountBalance() {
         Customer customer = new Customer(1, "Bob", "Jones", "1992-05-20", "555123456", 

@@ -17,23 +17,19 @@ public class CustomerManagerTests {
         assertTrue(customerManager.searchCustomer(customer3));
     }
 
-
     @Test
     public void testUpdateCustomer() {
         Customer customer1 = new Customer(1, "John", "John", "01/01/1990", "1111111111", "123 Street", 1000.00, new ArrayList<>());
         List<Customer> customerList = new ArrayList<>();
         customerList.add(customer1);
 
-        // Create the CustomerManager
         CustomerManager customerManager = new CustomerManager(customerList);
 
         customer1.setPhoneNumber("2223334444");
         customer1.setAddress("999 Avenue");
 
-        // Perform update
         customerManager.updateCustomer(customer1);
 
-        // Verify the update by checking if the customer information is correctly updated
         assertEquals("2223334444", customer1.getPhoneNumber());
         assertEquals("999 Avenue", customer1.getAddress());
     }

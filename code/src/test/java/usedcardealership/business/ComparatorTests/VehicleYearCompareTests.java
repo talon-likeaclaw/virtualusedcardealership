@@ -10,7 +10,6 @@ public class VehicleYearCompareTests {
 
     @Test
     public void testCompareWhenVehicle1YearIsGreater() {
-        // Arrange
         VehicleYearCompare comparator = new VehicleYearCompare();
         Vehicle vehicle1 = new Car(
                 "Car", 505, "Mitsubishi", "Lancer", 2018, 18000.00, "White", "Manual", "FWD",
@@ -19,13 +18,11 @@ public class VehicleYearCompareTests {
                 "Car", 504, "Honda", "Civic", 2020, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertTrue("Vehicle 1 Year should be greater than Vehicle 2 Year", comparator.compare(vehicle1, vehicle2) < 0);
     }
 
     @Test
     public void testCompareWhenVehicle1YearIsSmaller() {
-        // Arrange
         VehicleYearCompare comparator = new VehicleYearCompare();
         Vehicle vehicle1 = new Car(
                 "Car", 503, "Toyota", "Corolla", 2017, 15000.00, "Red", "Manual", "FWD",
@@ -34,13 +31,11 @@ public class VehicleYearCompareTests {
                 "Car", 504, "Honda", "Civic", 2020, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertTrue("Vehicle 1 Year should be smaller than Vehicle 2 Year", comparator.compare(vehicle1, vehicle2) < 0);
     }
 
     @Test
     public void testCompareWhenYearsAreEqual() {
-        // Arrange
         VehicleYearCompare comparator = new VehicleYearCompare();
         Vehicle vehicle1 = new Car(
                 "Car", 505, "Toyota", "Corolla", 2017, 15000.00, "Red", "Manual", "FWD",
@@ -49,7 +44,6 @@ public class VehicleYearCompareTests {
                 "Car", 505, "Honda", "Civic", 2017, 22000.00, "Black", "Automatic", "FWD",
                 160, 2800.00, 40000.00, 4.7, false, 5, 4, true, false);
 
-        // Act & Assert
         assertEquals("Years should be equal, so comparison should return 0", 0, comparator.compare(vehicle1, vehicle2));
     }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 import usedcardealership.data.customer.Customer;
 import usedcardealership.data.transaction.Purchase;
-import usedcardealership.data.transaction.Sale;
 import usedcardealership.data.transaction.Transaction;
 import usedcardealership.data.vehicle.SUV;
 import usedcardealership.data.vehicle.Vehicle;
@@ -39,9 +38,8 @@ public class TransactionManagerTest {
         Customer customer = new Customer(1, "John", "Doe", "1980-01-01", "123-456-7890", "123 Main St", 20000.0, new ArrayList<>());
         Vehicle vehicle = new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
         250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false);
-        customer.getVehicles().add(vehicle); // Customer owns the vehicle
-
-        double initialBalance = customer.getAccountBalance();
+        customer.getVehicles().add(vehicle);
+        customer.getAccountBalance();
 
         transactionManager.handleTransaction(vehicle, customer, "purchase");
 
@@ -56,8 +54,7 @@ public class TransactionManagerTest {
         Customer customer = new Customer(1, "John", "Doe", "1980-01-01", "123-456-7890", "123 Main St", 50000.0, new ArrayList<>());
         Vehicle vehicle = new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
         250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false);
-
-        double initialBalance = customer.getAccountBalance();
+        customer.getAccountBalance();
 
         transactionManager.handleTransaction(vehicle, customer, "sale");
 
