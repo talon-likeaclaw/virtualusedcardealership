@@ -9,10 +9,8 @@ package usedcardealership.business.manager;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.io.*;
 import java.util.*;
 import usedcardealership.data.vehicle.*;
-import usedcardealership.interaction.PrettyUtils;
 
 public class VehicleManagerTest {
 
