@@ -57,7 +57,7 @@ public class ShoppingCart {
             this.productsList.remove(i);
         }
     }
-
+    
     @Override
     public String toString() {
         if (productsList.isEmpty()) {

@@ -6,6 +6,8 @@
  */
 package usedcardealership.data.transaction;
 
+import java.time.LocalDate;
+
 import usedcardealership.data.customer.*;
 import usedcardealership.data.vehicle.*;
 
@@ -21,24 +23,7 @@ public class Purchase extends Transaction{
      * 
      * Constructor: uses parent constructor
      */
-    public Purchase(int id, String type, String date, double price, double tax, Customer customer, Vehicle vehicle){
-        super(id, "Purchase", date, price, tax, customer, vehicle);
-    }
-    public Purchase(){}
-    /**
-     * Initializes the transaction
-     * 
-     * @return void
-     */
-    public void initializePurchase(){
-        //?
-    }
-    /**
-     * Verifies the purchase
-     * 
-     * @return void
-     */
-    public void verifyPurchase(){
-        //?
+    public Purchase(int id, LocalDate date, double price, Customer customer, Vehicle vehicle){
+        super(id, "Purchase", date, price, customer, vehicle);
     }
 }

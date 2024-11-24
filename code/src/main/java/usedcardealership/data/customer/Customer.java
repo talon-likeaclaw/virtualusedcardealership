@@ -120,6 +120,15 @@ public class Customer {
         this.address = address;
     }
 
+    public Vehicle getVehicleById(int vehicleID) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getID() == vehicleID) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
      /** 
      * Overrides toString method
      * 

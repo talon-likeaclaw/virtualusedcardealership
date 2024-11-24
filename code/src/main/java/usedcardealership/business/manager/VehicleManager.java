@@ -190,7 +190,7 @@ public class VehicleManager {
      */
     public void sortVehicles(List<Vehicle> vehicles, Comparator<Vehicle> comparator, boolean ascending) {
         if (!ascending) {
-            comparator = comparator.reversed(); // found in javadocs for compartor
+            comparator = comparator.reversed(); // found in javadocs for comparator
         }
         Collections.sort(vehicles, comparator);
     }
