@@ -9,11 +9,12 @@ import usedcardealership.data.vehicle.SUV;
 import usedcardealership.data.vehicle.Vehicle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TransactionTests{
     @Test
     public void testTransactionConstructorAndGetters() {
-        Customer customer = new Customer(1, "John", "Doe", "2014-01-01", "514-999-9999", "", 5000.0, null);
+        Customer customer = new Customer(1, "John", "Doe", "2014-01-01", "514-999-9999", "362 Wallaby Way", 5000.0, new ArrayList<>());
         Vehicle vehicle = new SUV("SUV", 2, "Ford", "Explorer", 2019, 35000.0, "Black", "Automatic", "AWD",
                 250, 2000.0, 15000.0, 10.0, false, 7, 4, true, false);
         LocalDate date = LocalDate.of(2024, 11, 6);
