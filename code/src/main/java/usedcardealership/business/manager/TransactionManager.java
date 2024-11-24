@@ -39,25 +39,31 @@ public class TransactionManager {
     }
 
     /**
-     * Function sells Vehicle to a Customer, updates the transactionHistory
+     * Handles a transaction for either purchasing or selling a vehicle.
+     * Creates the appropriate transaction object (Purchase or Sale),
+     * Updates the transaction history, and processes transaction adequatly.
      * 
-     * @param vehicle a Vehicle Object
-     * @param customer a Customer object
-     * @return Transaction
-     */
-    /*id, date, price, tax, customer, vehicle */
-    public Transaction sellVehicle(Vehicle vehicle, Customer customer){
-
+     * @param vehicle       the Vehicle object involved in the transaction
+     * @param customer      the Customer object involved in the transaction
+     * @param transactionType the type of transaction, either "purchase" or "sale"
+     * @throws IllegalArgumentException if the transactionType is invalid
+    */
+    public void handleTransaction(Vehicle vehicle, Customer customer, String transactionType) {
         int newId = transactionHistory.size() + 1;
         LocalDate currentDate = LocalDate.now();
         double price = vehicle.calculateTotalPrice();
-
-        Transaction sale = new Sale(newId, currentDate, price, customer, vehicle);
-        addTransaction(sale);
-
-
-        processTransaction(sale, customer);
-        return sale;
+    
+        Transaction transaction;
+        if ("purchase".equalsIgnoreCase(transactionType)) {
+            transaction = new Purchase(newId, currentDate, price, customer, vehicle);
+        } else if ("sale".equalsIgnoreCase(transactionType)) {
+            transaction = new Sale(newId, currentDate, price, customer, vehicle);
+        } else {
+            throw new IllegalArgumentException("Invalid transaction type: " + transactionType);
+        }
+    
+        addTransaction(transaction);
+        processTransaction(transaction, customer);
     }
 
     /**
@@ -66,10 +72,10 @@ public class TransactionManager {
      * @return void
     */
     public void processTransaction(Transaction transaction, Customer customer) {
-        if (transaction instanceof Sale) {
-            processSale((Sale) transaction, customer);
-        } else if (transaction instanceof Purchase) {
+        if (transaction instanceof Purchase) {
             processPurchase((Purchase) transaction, customer);
+        } else if (transaction instanceof Sale) {
+            processSale((Sale) transaction, customer);
         }
     }
 
@@ -82,12 +88,12 @@ public class TransactionManager {
      * @param customer  the Customer who is selling the vehicle
      * @throws IllegalArgumentException if the customer does not own the vehicle being sold
     */
-    private void processSale(Sale sale, Customer customer) {
-        Vehicle vehicle = sale.getVehicle();
+    private void processPurchase(Purchase purchase, Customer customer) {
+        Vehicle vehicle = purchase.getVehicle();
         if (!customer.getVehicles().contains(vehicle)) {
             throw new IllegalArgumentException("Customer does not own the vehicle being sold");
         }
-        customer.updateAccountBalance(customer.getAccountBalance() + sale.getPrice());
+        customer.updateAccountBalance(customer.getAccountBalance() + purchase.getPrice());
         customer.getVehicles().remove(vehicle);
     }
 
@@ -99,37 +105,18 @@ public class TransactionManager {
      * @param customer   the Customer making the purchase
      * @throws IllegalArgumentException if the customer's balance is insufficient
     */
-    private void processPurchase(Purchase purchase, Customer customer) {
-        Vehicle vehicle = purchase.getVehicle();
-        double price = purchase.calculateTotal();
+    private void processSale(Sale sale, Customer customer) {
+        Vehicle vehicle = sale.getVehicle();
+        double price = sale.calculateTotal();
 
         // Check if the customer has enough balance
         if (customer.getAccountBalance() < price) {
-            throw new IllegalArgumentException("Insufficient balance for the purchase.");
+            throw new IllegalArgumentException("Insufficient balance for the sale.");
         }
 
         // Deduct the price and add the vehicle to the customer's list
         customer.updateAccountBalance(customer.getAccountBalance() - price);
         customer.getVehicles().add(vehicle);
     }
-
-    /**
-     * Function searches transactions based on specified criteria (e.g., filter or sorting criteria )
-     * 
-     * @param criteria a IFilter sub-type object
-     * @return List<Transaction>
-     */
-
-    //Do we keep this?
-    public List<Transaction> searchTransaction(IFilter criteria){
-        List<Transaction> result = new ArrayList<>();
-        for (Transaction t : transactionHistory) {
-            if (criteria.filter(t)) {
-            result.add(t);
-            }
-        }
-        return result;
-    }
-
     
 }

@@ -94,4 +94,19 @@ public class DealershipManager {
     this.currentCustomer = customer;
   }
 
+
+  /**
+   * Processes a customer's vehicle sale to the dealership.
+   * Handles the transaction, adds the vehicle to the dealership inventory,
+   * and removes the vehicle from the customer's owned vehicles.
+   * 
+   * @param vehicle vehicle being sold by the customer
+   * @param customer customer selling the vehicle
+   * @param transactionType type of transaction
+   */
+    public void processCustomerVehicleSale(Vehicle vehicle, Customer customer, String transactionType) {
+      this.getTransactionManager().handleTransaction(vehicle, customer, transactionType);
+      this.getVehicleManager().addVehicle(vehicle);
+      customer.getVehicles().remove(vehicle);
+    }
 }

@@ -592,6 +592,14 @@ public class UsedCarDealership {
         }
     }
 
+
+    /**
+     * Manages the vehicle transaction process, offering a vehicle to the customer, 
+     * confirming the offer, and processing the sale if accepted.
+     *
+     * @param dealer the DealershipManager responsible for managing the dealership operations
+     * @param vehicleID the ID of the vehicle being offered for sale
+    */
     private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID){
         Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
         Customer customer = dealer.getCurrentCustomer();
@@ -605,14 +613,15 @@ public class UsedCarDealership {
         System.out.println("Do you accept this offer? (Y/N)");
         boolean confirmed = Prompter.promptYesNo();
         wipe();
-        List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
         if (confirmed) {
-            dealer.getTransactionManager().sellVehicle(vehicle, customer);
+            dealer.processCustomerVehicleSale(vehicle, customer, "purchase");
+            List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+
             System.out.println("Sale successful!");
             System.out.println("Updated Account Balance: " + customer.getAccountBalance());
             System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
         } else {
-            System.out.println("Sale canceled.");
+            System.out.println("Sale cancelled.");
         }
 
     } 
