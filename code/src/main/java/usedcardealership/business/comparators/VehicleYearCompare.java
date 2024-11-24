@@ -5,6 +5,7 @@
  * @version 11/18/2024
  */
 package usedcardealership.business.comparators;
+
 import usedcardealership.data.vehicle.Vehicle;
 
 /**
@@ -12,11 +13,15 @@ import usedcardealership.data.vehicle.Vehicle;
  * 
  * @param vehicle1 vehicle that gets compared to
  * @param vehicle2 vehicle to compare with
- * @return int: positive if vehicle1's year is greater or equals, negative if it's smaller
+ * @return int: positive if vehicle1's year is greater or equals, negative if
+ *         it's smaller
  */
-public class VehicleYearCompare extends VehicleCompare{
+public class VehicleYearCompare extends VehicleCompare {
     @Override
-    public int compare(Vehicle vehicle1, Vehicle vehicle2){
+    public int compare(Vehicle vehicle1, Vehicle vehicle2) {
+        if (vehicle1 == null || vehicle2 == null) {
+            throw new IllegalArgumentException("Vehicles cannot be null.");
+        }
         return vehicle1.getYear() - vehicle2.getYear();
     }
 }
