@@ -61,6 +61,18 @@ public abstract class Vehicle {
             double kilometerage,
             double damage,
             boolean isElectric) {
+        if (damage < 0 || damage > 100) {
+            throw new IllegalArgumentException("Damage percentage must be between 0.00 and 100.00");
+        }
+        if (year < 1886) {
+            throw new IllegalArgumentException("Year must be 1886 or later.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        }
+        if (kilometerage < 0) {
+            throw new IllegalArgumentException("Kilometrage cannot be negative.");
+        }
         this.rng = new Random();
         this.type = type;
         this.id = id;
@@ -357,7 +369,7 @@ public abstract class Vehicle {
     }
 
     /**
-     * Returns an array of strings representing the fields of the vehicle 
+     * Returns an array of strings representing the fields of the vehicle
      * for CSV conversion
      *
      * @return String[] representing the fields of the vehicle
