@@ -18,6 +18,9 @@ public class VehicleHelper {
      * @return a Vehicle instance or null if the type is not valid.
      */
     public static Vehicle parseVehicle(String[] fields) {
+        if (fields == null || fields.length < 14) {
+            throw new IllegalArgumentException("Invalid fields array: null or insufficient data.");
+        }
         if (fields[0].equals("[]")) {
             return null;
         }
