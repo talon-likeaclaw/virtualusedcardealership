@@ -9,6 +9,7 @@
 package usedcardealership.data.filehandling;
 
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.io.*;
 import java.util.*;
 import usedcardealership.data.customer.*;
@@ -46,7 +47,9 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
         String[] transactionFields = sections[0].split(",");
         int id = Integer.parseInt(transactionFields[0]);
         String type = transactionFields[1];
-        String date = transactionFields[2];
+        String dateString = transactionFields[2];
+        LocalDate date = LocalDate.parse(dateString);
+
         double price = Double.parseDouble(transactionFields[3]);
         double tax = Double.parseDouble(transactionFields[4]);
 
@@ -58,7 +61,7 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
         String[] vehicleFields = sections[2].split(",");
         Vehicle vehicle = VehicleHelper.parseVehicle(vehicleFields);
 
-        Transaction transaction = new Transaction(id, type, date, price, tax, customer, vehicle);
+        Transaction transaction = new Transaction(id, type, date, price, customer, vehicle);
         transactions.add(transaction);
       }
     } catch (IOException e) {
@@ -80,7 +83,7 @@ public class TransactionFileHandler implements IDataHandler<Transaction> {
       String transactionLine = String.join(",",
           String.valueOf(transaction.getID()),
           transaction.getType(),
-          transaction.getDate(),
+          String.valueOf(transaction.getDate()),
           String.valueOf(transaction.getPrice()),
           String.valueOf(transaction.getTax()));
 
