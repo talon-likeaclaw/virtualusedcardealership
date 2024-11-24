@@ -14,12 +14,15 @@ import usedcardealership.data.vehicle.Vehicle;
  * @param vehicle2 vehicle to compare with
  * @return int: positive if vehicle1's kilometerage is greater or equals, negative if it's smaller
  */
-public class VehicleKilometerageCompare extends VehicleCompare{
+public class VehicleKilometerageCompare extends VehicleCompare {
     @Override
-    public int compare(Vehicle vehicle1, Vehicle vehicle2){
-        if(vehicle1.getKilometerage() >= vehicle2.getKilometerage()){
+    public int compare(Vehicle vehicle1, Vehicle vehicle2) {
+        if (vehicle1.getKilometerage() > vehicle2.getKilometerage()) {
             return 1;
+        } else if (vehicle1.getKilometerage() < vehicle2.getKilometerage()) {
+            return -1;
+        } else {
+            return 0;
         }
-        return -1;
     }
 }

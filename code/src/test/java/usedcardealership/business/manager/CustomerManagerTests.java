@@ -1,9 +1,8 @@
-package usedcardealership.CustomerTests;
+package usedcardealership.business.manager;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import usedcardealership.data.customer.*;
-import usedcardealership.business.manager.CustomerManager;
 import java.util.*;
 
 public class CustomerManagerTests {
