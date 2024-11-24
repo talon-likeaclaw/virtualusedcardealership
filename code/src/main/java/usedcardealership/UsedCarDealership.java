@@ -555,7 +555,7 @@ public class UsedCarDealership {
             System.out.println(dealer.getCurrentCustomer());
             PrettyUtils.printYellow("\nWould you like to:");
             String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
-                    PrettyUtils.returnYellow("2:") + " Exit";
+                    PrettyUtils.returnYellow("0:") + " Exit";
             int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
                 // Invalid input; loop restarts automatically
@@ -588,15 +588,22 @@ public class UsedCarDealership {
             PrettyUtils.wipe();
             List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
             List<Integer> ids = new ArrayList<Integer>();
-            PrettyUtils.printYellow("Current Vehicles:");
-            for (int i = 0; i < vehicles.size(); i++) {
-                System.out.println(vehicles.get(i));
-                ids.add(vehicles.get(i).getID());
-            }
-            PrettyUtils.printYellow("Would you like to:");
-            String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
+            int choice;
+            if (vehicles.size() > 0) {
+                PrettyUtils.printYellow("Current Vehicles:");
+                for (int i = 0; i < vehicles.size(); i++) {
+                    System.out.println(vehicles.get(i));
+                    ids.add(vehicles.get(i).getID());
+                }
+                PrettyUtils.printYellow("Would you like to:");
+                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
                         PrettyUtils.returnYellow("0:") + " Exit";
-            int choice = Prompter.promptOption(menu, 1);
+                choice = Prompter.promptOption(menu, 1);
+            } else {
+                PrettyUtils.printRed("You currently do not own any vehicles.");
+                Prompter.promptEnter();
+                choice = 0;
+            }
             if (choice == -1) {
                 // Invalid input; loop restarts automatically
                 continue;
