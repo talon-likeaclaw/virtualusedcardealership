@@ -618,7 +618,7 @@ public class UsedCarDealership {
                         PrettyUtils.printRed("\nInvalid Vehicle ID!\n");
                         Prompter.promptEnter();
                     } else {
-                        wipe();
+                        PrettyUtils.wipe();
                         System.out.println("\nAre you sure you want to sell vehicle "+ vehicleID + "?");
                         boolean confirmed = Prompter.promptYesNo();
                         if (confirmed) {
@@ -656,7 +656,7 @@ public class UsedCarDealership {
 
         System.out.println("Do you accept this offer? (Y/N)");
         boolean confirmed = Prompter.promptYesNo();
-        wipe();
+        PrettyUtils.wipe();
         if (confirmed) {
             dealer.processCustomerVehicleSale(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();

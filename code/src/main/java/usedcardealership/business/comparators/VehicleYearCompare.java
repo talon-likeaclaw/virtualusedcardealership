@@ -12,7 +12,7 @@ import usedcardealership.data.vehicle.Vehicle;
  * 
  * @param vehicle1 vehicle that gets compared to
  * @param vehicle2 vehicle to compare with
- * @return int: positive if vehicle1's year is greater or equals, negative if it's smaller
+ * @return int: positive if vehicle1's year is greater, negative if it's smaller, 0 if equal
  */
 public class VehicleYearCompare extends VehicleCompare{
     @Override
