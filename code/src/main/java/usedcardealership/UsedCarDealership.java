@@ -693,7 +693,6 @@ public class UsedCarDealership {
                         PrettyUtils.printRed("Invalid input! Please neter a numeric vehicle ID.");
                         Prompter.promptEnter();
                     } catch (IllegalArgumentException e) {
-                        System.out.println("LOL");
                         PrettyUtils.printRed(e.getMessage());
                         Prompter.promptEnter();
                     }
@@ -725,7 +724,7 @@ public class UsedCarDealership {
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
-            dealer.processCustomerVehicleSale(vehicle, customer, "purchase");
+            dealer.processCustomerVehiclePurchase(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
 
             System.out.println("Sale successful!");
