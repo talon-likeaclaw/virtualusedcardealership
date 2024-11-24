@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public abstract class EnclosedVehicle extends Vehicle {
     private int numSeats;
     private int numDoors;
@@ -98,9 +100,9 @@ public abstract class EnclosedVehicle extends Vehicle {
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +
-                "Seats: " + this.numSeats + "\n" +
-                "Doors: " + this.numDoors + "\n" +
-                "Sunroof: " + (this.hasSunRoof ? "Yes" : "No");
+                PrettyUtils.returnCyan("Seats: ") + this.numSeats + "\n" +
+                PrettyUtils.returnCyan("Doors: ") + this.numDoors + "\n" +
+                PrettyUtils.returnCyan("Sunroof: ") + (this.hasSunRoof ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public abstract String getFullDetails();

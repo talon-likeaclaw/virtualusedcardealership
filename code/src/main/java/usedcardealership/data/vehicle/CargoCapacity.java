@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public abstract class CargoCapacity extends EnclosedVehicle {
     private double cargoCapacity;
 
@@ -95,7 +97,8 @@ public abstract class CargoCapacity extends EnclosedVehicle {
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +
-                "Cargo Capacity: " + this.cargoCapacity + " cu ft";
+                PrettyUtils.returnCyan("Cargo Capacity: ")
+                + String.format("%.2f", this.cargoCapacity) + " cu ft";
     }
 
     public abstract String getFullDetails();
