@@ -63,9 +63,7 @@ public class VehicleManager {
     }
 
     public List<Vehicle> sortVehiclesById(List<Vehicle> vehicles) {
-        if (vehicles == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null.");
-        }
+        validateListVehiclesNull(vehicles);
         Collections.sort(vehicles, new VehicleIdCompare());
         return vehicles;
     }
@@ -77,9 +75,7 @@ public class VehicleManager {
      * @param v the vehicle that is being added.
      */
     public void addVehicle(Vehicle v) {
-        if (v == null) {
-            throw new IllegalArgumentException("Vehicle cannot be null.");
-        }
+        validateVehicleNull(v);
         if (!inventory.contains(v)) {
             inventory.add(v);
         }
@@ -94,9 +90,7 @@ public class VehicleManager {
      * @param v the vehicle that is being removed.
      */
     public void removeVehicle(Vehicle v) {
-        if (v == null) {
-            throw new IllegalArgumentException("Vehicle cannot be null.");
-        }
+        validateVehicleNull(v);
         inventory.remove(v);
     }
 
@@ -129,9 +123,7 @@ public class VehicleManager {
         if (criteria == null) {
             throw new IllegalArgumentException("Criteria cannot be null.");
         }
-        if (list == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null.");
-        }
+        validateListVehiclesNull(list);
         List<Vehicle> result = new ArrayList<>();
         for (Vehicle v : list) {
             if (criteria.filter(v)) {
@@ -147,9 +139,7 @@ public class VehicleManager {
      * @param v vehicle with updated data.
      */
     public void updateVehicle(Vehicle v) {
-        if (v == null) {
-            throw new IllegalArgumentException("Vehicle cannot be null.");
-        }
+        validateVehicleNull(v);
         updateVehicleInList(inventory, v);
         updateVehicleInList(database, v);
     }
@@ -160,12 +150,8 @@ public class VehicleManager {
      * @param updatedVehicle the vehicle with updated data.
      */
     private void updateVehicleInList(List<Vehicle> vehicleList, Vehicle updatedVehicle) {
-        if (vehicleList == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null");
-        }
-        if (updatedVehicle == null) {
-            throw new IllegalArgumentException("Updated vehicle cannot be null");
-        }
+        validateListVehiclesNull(vehicleList);
+        validateVehicleNull(updatedVehicle);
         for (int i = 0; i < vehicleList.size(); i++) {
             if (vehicleList.get(i).equals(updatedVehicle)) {
                 // Check the type of updatedVehicle and call correct copy constructor
@@ -197,9 +183,7 @@ public class VehicleManager {
      * @param ascending  true for ascending order, false for descending
      */
     public void sortVehicles(List<Vehicle> vehicles, Comparator<Vehicle> comparator, boolean ascending) {
-        if (vehicles == null) {
-            throw new IllegalArgumentException("Vehicle list cannot be null.");
-        }
+        validateListVehiclesNull(vehicles);
         if (comparator == null) {
             throw new IllegalArgumentException("Comparator cannot be null.");
         }
@@ -207,5 +191,29 @@ public class VehicleManager {
             comparator = comparator.reversed(); // found in javadocs for comparator
         }
         Collections.sort(vehicles, comparator);
+    }
+
+    /**
+     * Validates that vehicle is not null
+     * 
+     * @param v the vehicle to check
+     * @throws IllegalArgumentException if null
+     */
+    public void validateVehicleNull(Vehicle v) {
+        if (v == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
+    }
+
+    /**
+     * Validate that vehicle list is not null
+     * 
+     * @param vehicles the list of vehicles to check
+     * @throws IllegalArgumentException if list is null
+     */
+    public void validateListVehiclesNull(List<Vehicle> vehicles) {
+        if (vehicles == null) {
+            throw new IllegalArgumentException("Vehicle list cannot be null.");
+        }
     }
 }
