@@ -51,6 +51,12 @@ public class Motorcycle extends Vehicle {
             String handlebarType) {
         super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
+        if (engineCC <= 0) {
+            throw new IllegalArgumentException("Engine capacity must be greater than zero.");
+        }
+        if (handlebarType == null || handlebarType.length() == 0) {
+            throw new IllegalArgumentException("Handlebar type cannot be null or empty");
+        }
         this.engineCC = engineCC;
         this.handlebarType = handlebarType;
     }
@@ -63,6 +69,9 @@ public class Motorcycle extends Vehicle {
      */
     public Motorcycle(Motorcycle m) {
         super(m);
+        if (m == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Motorcycle.");
+        }
         this.engineCC = m.engineCC;
         this.handlebarType = m.handlebarType;
     }

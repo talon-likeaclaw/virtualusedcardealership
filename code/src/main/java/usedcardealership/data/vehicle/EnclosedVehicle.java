@@ -54,6 +54,12 @@ public abstract class EnclosedVehicle extends Vehicle {
             boolean hasSunRoof) {
         super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
+        if (numSeats < 1 || numSeats > 30) {
+            throw new IllegalArgumentException("Number of seats must be between 1 and 30.");
+        }
+        if (numDoors < 1 || numDoors > 10) {
+            throw new IllegalArgumentException("Number of doors must be between 1 and 10.");
+        }
         this.numSeats = numSeats;
         this.numDoors = numDoors;
         this.hasSunRoof = hasSunRoof;
@@ -67,6 +73,9 @@ public abstract class EnclosedVehicle extends Vehicle {
      */
     public EnclosedVehicle(EnclosedVehicle e) {
         super(e);
+        if (e == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Enclosed Vehicle.");
+        }
         this.numSeats = e.numSeats;
         this.numDoors = e.numDoors;
         this.hasSunRoof = e.hasSunRoof;

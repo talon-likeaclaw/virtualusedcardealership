@@ -67,6 +67,9 @@ public class Van extends CargoCapacity {
      */
     public Van(Van v) {
         super(v);
+        if (v == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Van.");
+        }
         this.hasSlidingDoors = v.hasSlidingDoors;
     }
 
