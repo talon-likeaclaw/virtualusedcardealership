@@ -18,6 +18,9 @@ public class VehicleColorFilter extends VehicleFilter {
      * @param color - the color to filter by
      */
     public VehicleColorFilter(String color) {
+        if (color == null || color.length() == 0) {
+            throw new IllegalArgumentException("Color cannot be null or empty.");
+        }
         this.color = color.toLowerCase();
     }
 
@@ -29,6 +32,9 @@ public class VehicleColorFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getColor().toLowerCase().equals(this.color);
     }
 }

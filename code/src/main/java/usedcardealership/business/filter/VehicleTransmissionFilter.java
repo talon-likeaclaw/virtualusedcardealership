@@ -18,6 +18,9 @@ public class VehicleTransmissionFilter extends VehicleFilter {
      * @param transmission - the transmission to filter by
      */
     public VehicleTransmissionFilter(String transmission) {
+        if (transmission == null || transmission.length() == 0) {
+            throw new IllegalArgumentException("Transmission cannot be null or empty.");
+        }
         this.transmission = transmission.toLowerCase();
     }
 
@@ -29,6 +32,9 @@ public class VehicleTransmissionFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getTransmission().toLowerCase().equals(this.transmission);
     }
 }

@@ -20,17 +20,27 @@ public class VehiclePriceRangeFilter extends VehicleFilter {
      * @param maxPrice the maximum price to filter by
      */
     public VehiclePriceRangeFilter(double minPrice, double maxPrice) {
+        if (minPrice < 0) {
+            throw new IllegalArgumentException("Minimum price cannot be negative.");
+        }
+        if (minPrice > maxPrice) {
+            throw new IllegalArgumentException("Minimum price cannot be greater than maximum price.");
+        }
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
     }
-    
+
     /**
      * Checks if Vehicle's price (current value) is within specified range
      * 
      * @param vehicles - the Vehicle object to check
      * @return true if within price range, false otherwise
      */
-    @Override public boolean filter(Vehicle vehicle) {
+    @Override
+    public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         double totalPrice = vehicle.calculateTotalPrice();
         return totalPrice >= minPrice && totalPrice <= maxPrice;
     }
