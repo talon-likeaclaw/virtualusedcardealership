@@ -9,7 +9,6 @@ package usedcardealership.data.customer;
 import java.util.*;
 import usedcardealership.data.vehicle.Vehicle;
 
-//Wasn't I supposed to make this abstract? It would change FileHandling among others to do it now
 public class Customer {
     private int id;
     private String firstName;
