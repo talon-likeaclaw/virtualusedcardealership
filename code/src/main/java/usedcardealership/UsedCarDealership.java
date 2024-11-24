@@ -566,7 +566,7 @@ public class UsedCarDealership {
             TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
             transactionSaver.save(transactions);
 
-            System.out.println("\nShutting down. Please come again! :)");
+            PrettyUtils.printCyan("\nShutting down. Please come again! :)");
         } catch (Exception e) {
             PrettyUtils.printRed("Error saving data. Your changes may not have been saved.");
             PrettyUtils.printRed(e.getMessage());
@@ -606,6 +606,13 @@ public class UsedCarDealership {
             PrettyUtils.wipe();
             PrettyUtils.printYellow("Account Details:");
             System.out.println(dealer.getCurrentCustomer());
+            List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
+            List<Integer> ids = new ArrayList<Integer>();
+            PrettyUtils.printYellow("\nCurrent Vehicles:");
+            for (int i = 0; i < vehicles.size(); i++) {
+                System.out.println(vehicles.get(i));
+                ids.add(vehicles.get(i).getID());
+            }
             PrettyUtils.printYellow("\nWould you like to:");
             String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
                     PrettyUtils.returnYellow("0:") + " Exit";
@@ -649,7 +656,7 @@ public class UsedCarDealership {
                     ids.add(vehicles.get(i).getID());
                 }
                 PrettyUtils.printYellow("Would you like to:");
-                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
+                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle to Sell\n" +
                         PrettyUtils.returnYellow("0:") + " Exit";
                 choice = Prompter.promptOption(menu, 1);
             } else {
@@ -678,13 +685,13 @@ public class UsedCarDealership {
                             Prompter.promptEnter();
                         } else {
                             PrettyUtils.wipe();
-                            System.out.println("\nAre you sure you want to sell vehicle " + vehicleID + "?");
+                            System.out.println("\nAre you sure you want to sell vehicle " + PrettyUtils.returnYellow("[" + vehicleID + "]") + "?");
                             boolean confirmed = Prompter.promptYesNo();
                             if (confirmed) {
                                 manageVehicleTransaction(dealer, vehicleID);
                                 Prompter.promptEnter();
                             } else {
-                                System.out.println("\nVehicle selection cancelled.");
+                                PrettyUtils.printRed("\nVehicle selection cancelled.");
                                 Prompter.promptEnter();
                             }
                         }
@@ -715,23 +722,23 @@ public class UsedCarDealership {
         Customer customer = dealer.getCurrentCustomer();
 
         if (vehicle == null || customer == null) {
-            System.out.println("Error: Vehicle or Customer not found!");
+            PrettyUtils.printRed("Error: Vehicle or Customer not found!");
             return;
         }
-        System.out.println("The dealership offers you $" + vehicle.calculateTotalPrice() + " for the vehicle.");
+        System.out.println("\nThe dealership offers you " + PrettyUtils.returnYellow("$" + String.format("%.2f", vehicle.calculateTotalPrice())) + " for the vehicle.");
 
-        System.out.println("Do you accept this offer? (Y/N)");
+        System.out.println("\nDo you accept this offer? " + PrettyUtils.returnYellow("(Y/N)") + ".");
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
             dealer.processCustomerVehiclePurchase(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
 
-            System.out.println("Sale successful!");
-            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
-            System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
+            PrettyUtils.printGreen("Sale successful!");
+            System.out.println("Updated Account Balance: " + PrettyUtils.returnYellow("$" + String.format("%.2f", customer.getAccountBalance())));
+            System.out.println("\n" + PrettyUtils.returnYellow("Receipt:") + "\n" + transactions.get(transactions.size() - 1));
         } else {
-            System.out.println("Sale cancelled.");
+            PrettyUtils.printRed("Sale cancelled.");
         }
 
     }
