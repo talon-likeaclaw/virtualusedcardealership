@@ -13,8 +13,7 @@ import usedcardealership.data.vehicle.Vehicle;
  * 
  * @param vehicle1 vehicle that gets compared to
  * @param vehicle2 vehicle to compare with
- * @return int: positive if vehicle1's ID is greater or equals, negative if it's
- *         smaller
+ * @return int: positive if vehicle1's ID is greater, negative if it's smaller, otherwise 0
  */
 public class VehicleIdCompare extends VehicleCompare {
     @Override
@@ -22,6 +21,6 @@ public class VehicleIdCompare extends VehicleCompare {
         if (vehicle1 == null || vehicle2 == null) {
             throw new IllegalArgumentException("Vehicles cannot be null.");
         }
-        return vehicle1.getID() - vehicle2.getID();
+        return vehicle1.getID()  - vehicle2.getID();
     }
 }

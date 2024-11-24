@@ -13,7 +13,6 @@ import usedcardealership.interaction.PrettyUtils;
 
 import static org.junit.Assert.*;
 import java.time.*;
-import java.util.function.Predicate;
 
 public class MotorcycleTest {
     @Test

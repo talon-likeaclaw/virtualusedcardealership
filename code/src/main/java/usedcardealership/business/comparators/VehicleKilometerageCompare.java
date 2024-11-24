@@ -18,13 +18,16 @@ import usedcardealership.data.vehicle.Vehicle;
  */
 public class VehicleKilometerageCompare extends VehicleCompare {
     @Override
-    public int compare(Vehicle vehicle1, Vehicle vehicle2) {
+    public int compare(Vehicle vehicle1, Vehicle vehicle2)  {
         if (vehicle1 == null || vehicle2 == null) {
             throw new IllegalArgumentException("Vehicles cannot be null.");
         }
-        if (vehicle1.getKilometerage() >= vehicle2.getKilometerage()) {
+        if  (vehicle1.getKilometerage() > vehicle2.getKilometerage())  {
             return 1;
+        } else if (vehicle1.getKilometerage() < vehicle2.getKilometerage()) {
+            return -1;
+        } else {
+            return 0;
         }
-        return -1;
     }
 }
