@@ -232,7 +232,7 @@ public class VehicleManager {
             throw new IllegalArgumentException("Comparator cannot be null.");
         }
         if (!ascending) {
-            comparator = comparator.reversed(); // found in javadocs for compartor
+            comparator = comparator.reversed(); // found in javadocs for comparator
         }
         Collections.sort(vehicles, comparator);
     }

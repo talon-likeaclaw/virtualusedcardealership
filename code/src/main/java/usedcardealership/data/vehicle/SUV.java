@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class SUV extends EnclosedVehicle {
     private boolean hasThirdRowSeating;
 
@@ -74,7 +76,8 @@ public class SUV extends EnclosedVehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");
+                PrettyUtils.returnCyan("Third Row Seating: ") +
+                (this.hasThirdRowSeating ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean hasThirdRowSeating() {

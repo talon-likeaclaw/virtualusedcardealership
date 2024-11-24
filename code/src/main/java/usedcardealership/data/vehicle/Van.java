@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Van extends CargoCapacity {
     private boolean hasSlidingDoors;
 
@@ -76,7 +78,8 @@ public class Van extends CargoCapacity {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
+                PrettyUtils.returnCyan("Sliding Doors: ") +
+                (this.hasSlidingDoors ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean hasSlidingDoors() {

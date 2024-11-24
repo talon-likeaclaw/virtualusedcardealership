@@ -8,6 +8,9 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
 
@@ -126,8 +129,8 @@ public class SUVTest {
                 true,
                 false);
 
-        String expectedOutput = "[404] " + Year.now().getValue() + " White Hyundai Kona\n" +
-                "Price: $21000.0 | Transmission: Automatic, AWD | Kilometrage: 0.0 km\n";
+        String expectedOutput = PrettyUtils.returnYellow("[404] ") + Year.now().getValue() + " White Hyundai Kona\n" +
+                "Price: $21000.00 | Transmission: Automatic, AWD | Kilometrage: 0.00 km\n";
 
         // Act
         String actualOutput = test.toString();

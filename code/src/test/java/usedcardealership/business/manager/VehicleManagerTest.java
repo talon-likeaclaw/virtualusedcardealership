@@ -61,7 +61,7 @@ public class VehicleManagerTest {
                 "Make: Toyota\n" +
                 "Model: Camry\n" +
                 "Year: 2021\n" +
-                "Price: $24550.0\n\n";
+                "Price: $24550.00\n\n";
 
         // Assert
         assertEquals(expectedOutput, outContent.toString().toString());

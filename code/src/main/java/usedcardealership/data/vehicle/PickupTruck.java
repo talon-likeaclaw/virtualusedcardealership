@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class PickupTruck extends CargoCapacity {
     private double bedLength;
     private double towingCapacity;
@@ -84,12 +86,12 @@ public class PickupTruck extends CargoCapacity {
         this.towingCapacity = p.towingCapacity;
     }
 
-    @Override
-    public String getFullDetails() {
-        return getCommonDetails() + "\n" +
-                "Bed Length: " + this.bedLength + " feet\n" +
-                "Towing Capacity: " + this.towingCapacity + " lbs";
-    }
+@Override
+public String getFullDetails() {
+    return getCommonDetails() + "\n" +
+            PrettyUtils.returnCyan("Bed Length: ") + String.format("%.1f", this.bedLength) + " feet\n" +
+            PrettyUtils.returnCyan("Towing Capacity: ") + String.format("%.2f", this.towingCapacity) + " lbs";
+}
 
     public double getBedLength() {
         return this.bedLength;

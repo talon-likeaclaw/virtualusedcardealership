@@ -73,8 +73,8 @@ public class DealershipManager {
     return this.customerManager.getCustomers();
   }
 
-  public List<Transaction> getTransactions() {
-    return this.transactionManager.getTransactions();
+  public TransactionManager getTransactionManager() {
+    return this.transactionManager;
   }
 
   public List<Vehicle> getInventory() {
@@ -89,6 +89,10 @@ public class DealershipManager {
     return this.vehicleManager;
   }
 
+  public ShoppingCart getCurrentCart() {
+    return this.currentCart;
+  }
+  
   public Vehicle getVehicleById(int vehicleId) {
     if (vehicleId <= 0) {
       throw new IllegalArgumentException("Vehicle ID must be a positive integer.");
@@ -123,4 +127,19 @@ public class DealershipManager {
     this.currentCustomer = customer;
   }
 
+
+  /**
+   * Processes a customer's vehicle sale to the dealership.
+   * Handles the transaction, adds the vehicle to the dealership inventory,
+   * and removes the vehicle from the customer's owned vehicles.
+   * 
+   * @param vehicle vehicle being sold by the customer
+   * @param customer customer selling the vehicle
+   * @param transactionType type of transaction
+   */
+    public void processCustomerVehicleSale(Vehicle vehicle, Customer customer, String transactionType) {
+      this.getTransactionManager().handleTransaction(vehicle, customer, transactionType);
+      this.getVehicleManager().addVehicle(vehicle);
+      customer.getVehicles().remove(vehicle);
+    }
 }

@@ -26,13 +26,26 @@ public class UsedCarDealership {
     private static void mainMenuView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
-            System.out.println("Welcome to " + dealership.getName() + "!");
-            System.out.println("\nWould you like to:");
-            switch (Prompter.promptOption(
-                    "1: Browse Vehicles\n2: View Account and Owned Vehicles\n3: Sell Vehicle to Dealership\n4: View Shopping Cart\n0: Exit",
-                    4)) {
+            // Print welcome message
+            PrettyUtils.wipe();
+            PrettyUtils.printCyan(PrettyUtils.returnCars());
+            PrettyUtils.printCyan("Welcome to " + dealership.getName() + "!");
+            // Print menu
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Browse Vehicles\n" +
+                    PrettyUtils.returnYellow("2:") + " View Account and Owned Vehicles\n" +
+                    PrettyUtils.returnYellow("3:") + " Sell Vehicle to Dealership\n" +
+                    PrettyUtils.returnYellow("4:") + " View Shopping Cart\n" +
+                    PrettyUtils.returnYellow("0:") + " Exit";
+            // Prompt user for input
+            int choice = Prompter.promptOption(menu, 4);
+            if (choice == -1) {
+                // Invalid input, restart loop
+                continue;
+            }
+            switch (choice) {
                 case 0:
+                    // User decided to exit
                     inPage = false;
                     break;
                 case 1:
@@ -48,7 +61,7 @@ public class UsedCarDealership {
                     // TODO: viewShoppingCart()
                     break;
                 default:
-                    System.out.println("I hope you're proud of yourself, you broke");
+                    PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
             }
         }
     }
@@ -61,10 +74,10 @@ public class UsedCarDealership {
     private static void chooseVehicleFilterView(DealershipManager dealership) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
-            System.out.println("Filter by:");
+            PrettyUtils.wipe();
+            PrettyUtils.printYellow("Filter Types:");
             System.out.println(
-                    "Type\nMake\nColor\nYear Range\nDrive Type\nPrice Range\nKilometrage Range\nTransmission Type");
+                    "- Type\n- Make\n- Color\n- Year Range\n- Drive Type\n- Price Range\n- Kilometrage Range\n- Transmission Type");
             System.out.println(Prompter.getPrompt("filter"));
             String input = Prompter.promptString();
             if (input == null) {
@@ -99,7 +112,7 @@ public class UsedCarDealership {
                     genericFilterView(dealership, "trans");
                     break;
                 default:
-                    System.out.println("\nInvalid filter name. Please try again.");
+                    PrettyUtils.printRed("\nInvalid filter name. Please try again.\n");
                     Prompter.promptEnter();
             }
         }
@@ -114,7 +127,7 @@ public class UsedCarDealership {
     private static void genericFilterView(DealershipManager dealership, String filterType) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             if (!filterType.equals("price") && !filterType.equals("year") && !filterType.equals("kilo")) {
                 // Display all availble criteria and prompt user to choose one
                 displayAvailableCriteria(dealership, filterType);
@@ -137,13 +150,13 @@ public class UsedCarDealership {
      * @return boolean representing if we are still in the page or not
      */
     private static boolean handleRangeFiltering(DealershipManager dealership, String filterType) {
-        System.out.println("Enter the range in the format `min-max`.");
+        System.out.println("Enter the range in the format " + PrettyUtils.returnYellow("`min-max`") + ".");
         String rangeInput = Prompter.promptString();
         // If range null or invalid format return false
         if (rangeInput == null) {
             return false;
         } else if (!rangeInput.contains("-")) {
-            System.out.println("\nInvalid input! Returning to filter menu.");
+            PrettyUtils.printRed("\nInvalid input! Returning to filter menu.");
             Prompter.promptEnter();
             return false;
         }
@@ -159,7 +172,7 @@ public class UsedCarDealership {
             // If no vehicles
             return handleFilteredVehicles(dealership, filteredVehicles);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid range input! Returning to menu.");
+            PrettyUtils.printRed("Invalid range input! Returning to menu.");
             Prompter.promptEnter();
             return false;
         }
@@ -175,7 +188,7 @@ public class UsedCarDealership {
      */
     private static boolean handleFilteredVehicles(DealershipManager dealership, List<Vehicle> filteredVehicles) {
         if (filteredVehicles.size() == 0) {
-            System.out.println("\nNo vehicles match your criteria!");
+            PrettyUtils.printRed("\nNo vehicles match your criteria!");
             Prompter.promptEnter();
             return false;
         } else {
@@ -240,22 +253,22 @@ public class UsedCarDealership {
                 }
                 break;
             default:
-                System.out.println("No available criteria to display for this filter.");
+                PrettyUtils.printRed("No available criteria to display for this filter.");
                 Prompter.promptEnter();
                 return;
         }
         // If there are no options to choose from print warning
         if (criteriaSet.size() == 0) {
-            System.out.println("No options available.");
+            PrettyUtils.printRed("No options available.");
             Prompter.promptEnter();
         } else {
             // Convert HashSet to List for sorting
             List<String> sortedCriteria = new ArrayList<>(criteriaSet);
             // Sort alphabetically
             Collections.sort(sortedCriteria);
-            System.out.println("Available options:");
+            PrettyUtils.printYellow("Available options:");
             for (String criteria : sortedCriteria) {
-                System.out.println(criteria);
+                System.out.println("- " + criteria);
             }
         }
     }
@@ -328,7 +341,7 @@ public class UsedCarDealership {
     private static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
@@ -345,11 +358,11 @@ public class UsedCarDealership {
             try {
                 // Check if input is numeric (assumes it's a vehicle ID)
                 int vehicleID = Integer.parseInt(input);
-                Vehicle selectedVehicle = dealership.getVehicleById(vehicleID);
+                Vehicle selectedVehicle = dealership.getVehicleManager().getVehicleById(vehicleID);
                 if (selectedVehicle != null) {
                     vehicleDetailsMenu(dealership, vehicleID);
                 } else {
-                    System.out.println("\nInvalid Vehicle ID!");
+                    PrettyUtils.printRed("\nInvalid Vehicle ID!");
                     Prompter.promptEnter();
                 }
             } catch (NumberFormatException e) {
@@ -357,18 +370,23 @@ public class UsedCarDealership {
                 String[] sortingInfo = input.split(" ");
                 String sortType = sortingInfo[0];
                 // Default to ascending if no "desc"
-                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc"); 
+                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc");
                 switch (sortType) {
                     case "id":
                         dealership.getVehicleManager().sortVehicles(vehicles, new VehicleIdCompare(), ascending);
                         System.out.println("\nSorting by ID " + (ascending ? "ascending." : "descending."));
+                        break;
+                    case "price":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehiclePriceCompare(), ascending);
+                        System.out.println("\nSorting by Price " + (ascending ? "ascending." : "descending."));
                         break;
                     case "year":
                         dealership.getVehicleManager().sortVehicles(vehicles, new VehicleYearCompare(), ascending);
                         System.out.println("\nSorting by Year " + (ascending ? "ascending." : "descending."));
                         break;
                     case "kilometrage":
-                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(), ascending);
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(),
+                                ascending);
                         System.out.println("\nSorting by Kilometrage " + (ascending ? "ascending." : "descending."));
                         break;
                     case "damage":
@@ -376,13 +394,12 @@ public class UsedCarDealership {
                         System.out.println("\nSorting by Damage " + (ascending ? "ascending." : "descending."));
                         break;
                     default:
-                        System.out.println("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
+                        PrettyUtils.printRed("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
                 }
                 Prompter.promptEnter();
             }
         }
     }
-
 
     /**
      * Menu that asks user if they want to purchase vehicle or go back
@@ -391,13 +408,19 @@ public class UsedCarDealership {
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
         boolean inPage = true;
         int testDriveCount = 0;
-        Vehicle vehicle = dealership.getVehicleById(vehicleId);
+        Vehicle vehicle = dealership.getVehicleManager().getVehicleById(vehicleId);
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             System.out.println(vehicle.getFullDetails());
-            System.out.println("\nWould you like to:");
-            switch (Prompter.promptOption(
-                    "1: Test Drive Vehicle\n2: Add Vehicle to Cart\n0: Return to Vehicle List", 2)) {
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Test Drive Vehicle\n" +
+                    PrettyUtils.returnYellow("2:") + " Add Vehicle to Cart\n" +
+                    PrettyUtils.returnYellow("0:") + " Return to Vehicle List";
+            int choice = Prompter.promptOption(menu, 2);
+            if (choice == -1) {
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
@@ -411,9 +434,9 @@ public class UsedCarDealership {
                             System.out.println(e.getMessage());
                         }
                     } else {
-                        System.out.println("\nYou just test drove this vehicle!");
+                        PrettyUtils.printRed("\nYou just test drove this vehicle!");
                         Prompter.promptEnter();
-                        wipe();
+                        PrettyUtils.wipe();
                     }
                     break;
                 case 2:
@@ -455,7 +478,6 @@ public class UsedCarDealership {
         // Initialize and return the DealershipManager
         DealershipManager dealership = new DealershipManager(
                 dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
-
         initializeCurrentCustomer(customers, dealership);
         return dealership;
     }
@@ -496,7 +518,7 @@ public class UsedCarDealership {
 
         // Save transactions
         String transactionPath = "resources/transactions.csv";
-        List<Transaction> transactions = dealership.getTransactions();
+        List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
         TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
         transactionSaver.save(transactions);
 
@@ -505,18 +527,12 @@ public class UsedCarDealership {
     }
 
     /**
-     * Wipes the console screen
-     */
-    public static void wipe() {
-        System.out.print("\033[H\033[2J");
-    }
-
-    /**
-     * Initializes the current customer for the dealership by randomly selecting a customer 
+     * Initializes the current customer for the dealership by randomly selecting a
+     * customer
      * from the provided list of customers.
      * 
-     * @param customers   the list of customers available
-     * @param dealership  the dealership manager object to set the current customer
+     * @param customers  the list of customers available
+     * @param dealership the dealership manager object to set the current customer
      */
     private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
         Random rand = new Random();
@@ -524,24 +540,34 @@ public class UsedCarDealership {
     }
 
     /**
-     * Displays the account details of the current customer and allows navigation back to the main menu.
+     * Displays the account details of the current customer and allows navigation
+     * back to the main menu.
      * 
-     * @param dealer  the dealership manager containing the current customer's information
+     * @param dealer the dealership manager containing the current customer's
+     *               information
      */
     private static void viewAccountView(DealershipManager dealer) {
-        wipe();
-
-        System.out.println(dealer.getCurrentCustomer());
         boolean inPage = true;
         while (inPage) {
-            switch (Prompter.promptOption(
-                    "\n0: Exit",
-                    0)) {
+            PrettyUtils.wipe();
+            PrettyUtils.printYellow("Account Details:");
+            System.out.println(dealer.getCurrentCustomer());
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
+                    PrettyUtils.returnYellow("0:") + " Exit";
+            int choice = Prompter.promptOption(menu, 1);
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
+                case 1:
+                    sellVehicleView(dealer);
                 default:
-                    System.out.println("You may only select 0");
+                    PrettyUtils.printRed("You may only select 0");
             }
         }
     }
@@ -552,20 +578,36 @@ public class UsedCarDealership {
      * - Select a vehicle by its ID to sell.
      * - Confirm whether to proceed with the sale.
      * 
-     * @param dealer  the dealership manager containing the current customer's vehicles
+     * @param dealer the dealership manager containing the current customer's
+     *               vehicles
      */
     private static void sellVehicleView(DealershipManager dealer) {
         boolean inPage = true;
         while (inPage) {
-            wipe();
+            PrettyUtils.wipe();
             List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
-            List<Integer> ids = new ArrayList<Integer>();  
-            System.out.println("You own: \n");
-            for (int i = 0; i < vehicles.size(); i++) {
-                System.out.println(vehicles.get(i));
-                ids.add(vehicles.get(i).getID());
+            List<Integer> ids = new ArrayList<Integer>();
+            int choice;
+            if (vehicles.size() > 0) {
+                PrettyUtils.printYellow("Current Vehicles:");
+                for (int i = 0; i < vehicles.size(); i++) {
+                    System.out.println(vehicles.get(i));
+                    ids.add(vehicles.get(i).getID());
+                }
+                PrettyUtils.printYellow("Would you like to:");
+                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
+                        PrettyUtils.returnYellow("0:") + " Exit";
+                choice = Prompter.promptOption(menu, 1);
+            } else {
+                PrettyUtils.printRed("You currently do not own any vehicles.");
+                Prompter.promptEnter();
+                choice = 0;
             }
-            switch (Prompter.promptOption("1: Select Vehicle by ID\n0: Exit", 1)) {
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            }
+            switch (choice) {
                 case 0:
                     inPage = false;
                     break;
@@ -573,15 +615,14 @@ public class UsedCarDealership {
                     System.out.println("\nWhich vehicle will you sell to us?");
                     int vehicleID = Prompter.promptVehicleId();
                     if (!(ids.contains(vehicleID))) {
-                        System.out.println("\nInvalid Vehicle ID!");
+                        PrettyUtils.printRed("\nInvalid Vehicle ID!\n");
                         Prompter.promptEnter();
                     } else {
-                        System.out.println("\nYou selected vehicle: " + vehicleID);
-                        System.out.println("\nDo you want to sell this vehicle?");
+                        wipe();
+                        System.out.println("\nAre you sure you want to sell vehicle "+ vehicleID + "?");
                         boolean confirmed = Prompter.promptYesNo();
                         if (confirmed) {
-                            // TODO: handle sale or add to shopping cart, handle removing from the customer's vehicleList
-                            System.out.println("\nThe vehicle has been marked for sale.");
+                            manageVehicleTransaction(dealer, vehicleID);
                             Prompter.promptEnter();
                         } else {
                             System.out.println("\nVehicle selection cancelled.");
@@ -594,5 +635,39 @@ public class UsedCarDealership {
             }
         }
     }
+
+
+    /**
+     * Manages the vehicle transaction process, offering a vehicle to the customer, 
+     * confirming the offer, and processing the sale if accepted.
+     *
+     * @param dealer the DealershipManager responsible for managing the dealership operations
+     * @param vehicleID the ID of the vehicle being offered for sale
+    */
+    private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID){
+        Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
+        Customer customer = dealer.getCurrentCustomer();
+
+        if (vehicle == null || customer == null) {
+            System.out.println("Error: Vehicle or Customer not found!");
+            return;
+        }
+        System.out.println("The dealership offers you $" + vehicle.calculateTotalPrice() + " for the vehicle.");
+
+        System.out.println("Do you accept this offer? (Y/N)");
+        boolean confirmed = Prompter.promptYesNo();
+        wipe();
+        if (confirmed) {
+            dealer.processCustomerVehicleSale(vehicle, customer, "purchase");
+            List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+
+            System.out.println("Sale successful!");
+            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
+            System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
+        } else {
+            System.out.println("Sale cancelled.");
+        }
+
+    } 
 
 }

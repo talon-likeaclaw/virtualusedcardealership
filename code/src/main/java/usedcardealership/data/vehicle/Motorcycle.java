@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Motorcycle extends Vehicle {
     private double engineCC;
     private String handlebarType;
@@ -79,8 +81,8 @@ public class Motorcycle extends Vehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Engine Capacity: " + this.engineCC + " cc\n" +
-                "Handlebar Type: " + this.handlebarType;
+                PrettyUtils.returnCyan("Engine Capacity: ") + this.engineCC + " cc" + "\n" +
+                PrettyUtils.returnCyan("Handlebar Type: ") + this.handlebarType;
     }
 
     public double getEngineCC() {
