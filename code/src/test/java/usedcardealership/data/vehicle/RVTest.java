@@ -8,6 +8,9 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
 
@@ -131,8 +134,8 @@ public class RVTest {
                 4,
                 true);
 
-        String expectedOutput = "[11] " + Year.now().getValue() + " White Winnebago Outlook\n" +
-                "Price: $60000.0 | Transmission: Automatic, RWD | Kilometrage: 0.0 km\n";
+        String expectedOutput = PrettyUtils.returnYellow("[11] ") + Year.now().getValue() + " White Winnebago Outlook\n" +
+                "Price: $60000.00 | Transmission: Automatic, RWD | Kilometrage: 0.00 km\n";
 
         // Act
         String actualOutput = test.toString();

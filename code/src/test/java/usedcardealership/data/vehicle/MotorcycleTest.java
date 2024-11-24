@@ -8,8 +8,12 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
+import java.util.function.Predicate;
 
 public class MotorcycleTest {
     @Test
@@ -116,8 +120,8 @@ public class MotorcycleTest {
                 599.00,
                 "Sport");
 
-        String expectedOutput = "[1] " + Year.now().getValue() + " Red Honda CBR600RR\n" +
-                "Price: $12000.0 | Transmission: Manual, Chain | Kilometrage: 0.0 km\n";
+        String expectedOutput = PrettyUtils.returnYellow("[1] ") + Year.now().getValue() + " Red Honda CBR600RR\n" +
+                "Price: $12000.00 | Transmission: Manual, Chain | Kilometrage: 0.00 km\n";
         // Act
         String actualOutput = test.toString();
 

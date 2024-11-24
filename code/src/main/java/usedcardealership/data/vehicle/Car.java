@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Car extends EnclosedVehicle {
     private boolean isConvertible;
 
@@ -71,7 +73,7 @@ public class Car extends EnclosedVehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Convertible: " + (this.isConvertible ? "Yes" : "No");
+                PrettyUtils.returnCyan("Convertible: ") + (this.isConvertible ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean isConvertible() {
