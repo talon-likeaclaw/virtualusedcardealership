@@ -54,6 +54,18 @@ public class Car extends EnclosedVehicle {
             boolean isConvertible) {
         super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
+        if (damage < 0 || damage > 100) {
+            throw new IllegalArgumentException("Damage percentage must be between 0.00 and 100.00");
+        }
+        if (year < 1886) {
+            throw new IllegalArgumentException("Year must be 1886 or later.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        }
+        if (kilometerage < 0) {
+            throw new IllegalArgumentException("Kilometrage cannot be negative.");
+        }
         this.isConvertible = isConvertible;
     }
 
@@ -65,6 +77,9 @@ public class Car extends EnclosedVehicle {
      */
     public Car(Car c) {
         super(c);
+        if (c == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Car.");
+        }
         this.isConvertible = c.isConvertible;
     }
 
