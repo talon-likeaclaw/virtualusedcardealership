@@ -84,12 +84,12 @@ public class Customer {
      */
     @Override
     public String toString() {
-        return "Customer ID: " + id + "\n" +
-                "Name: " + firstName + " " + lastName + "\n" +
-                "Birthday: " + birthday + "\n" +
-                "Phone: " + phoneNumber + "\n" +
-                "Address: " + address + "\n" +
-                "Account Balance: $" + accountBalance;
+        return "Customer ID: " + this.id + "\n" +
+                "Name: " + this.firstName + " " + this.lastName + "\n" +
+                "Birthday: " + this.birthday + "\n" +
+                "Phone: " + this.phoneNumber + "\n" +
+                "Address: " + this.address + "\n" +
+                "Account Balance: $" + String.format("%.2f", this.accountBalance);
     }
 
     public int getID() {
