@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import usedcardealership.data.filehandling.CustomerDatabaseHandler;
-import usedcardealership.data.filehandling.CustomerFileHandler;
-import usedcardealership.data.filehandling.VehicleDatabaseHandler;
-import usedcardealership.data.filehandling.VehicleFileHandler;
+import usedcardealership.data.transaction.Transaction;
 import usedcardealership.data.vehicle.Vehicle;
 import usedcardealership.data.customer.*;
+import usedcardealership.data.databasehandling.CustomerDatabaseHandler;
+import usedcardealership.data.databasehandling.TransactionDatabaseHandler;
+import usedcardealership.data.databasehandling.VehicleDatabaseHandler;
 import usedcardealership.interaction.PrettyUtils;
 
 public class DealershipDatabaseTest {
@@ -34,6 +34,12 @@ public class DealershipDatabaseTest {
       for (Customer c : cust) {
         System.out.println(c);
         System.out.println(c.getVehicles());
+      }
+
+      TransactionDatabaseHandler transDbHandler = new TransactionDatabaseHandler(connection);
+      List<Transaction> trans = transDbHandler.load();
+      for (Transaction t : trans) {
+        System.out.println(t);
       }
 
       PrettyUtils.printGreen("Inventory successfully saved to the database!");
