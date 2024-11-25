@@ -57,37 +57,52 @@ public class CustomerDatabaseHandler implements IDataHandler<Customer> {
         return customers;
     }
 
-    @Override
-    public void save(List<Customer> customers) {
-        String customerInsert = "INSERT INTO customers (id, first_name, last_name, birthday, phone_number, address, account_balance) "
-                + "VALUES (?, ?, ?, ?::DATE, ?, ?, ?)";
-        String customerVehicleInsert = "INSERT INTO customers_vehicles (customer_id, vehicle_id) VALUES (?, ?)";
+    /**
+     * Clears the customers table before writing
+     */
+    private void clearCustomersTables() {
+        String query = "DELETE FROM customers";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query2 = "DELETE FROM customers_vehicles";
+        try (PreparedStatement pstmt = connection.prepareStatement(query2)) {
+            pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        try {
-            connection.setAutoCommit(false);
+    public void save(List<Customer> customers) {
+        String queryCustomer = "INSERT INTO customers (id, first_name, last_name, birthday, phone_number, address, account_balance) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String queryVehicles = "INSERT INTO customers_vehicles (customer_id, vehicle_id) VALUES (?, ?)";
+
+        try (PreparedStatement pstmtCustomer = connection.prepareStatement(queryCustomer);
+                PreparedStatement pstmtVehicles = connection.prepareStatement(queryVehicles)) {
 
             for (Customer customer : customers) {
-                try (PreparedStatement customerStmt = connection.prepareStatement(customerInsert)) {
-                    customerStmt.setInt(1, customer.getID());
-                    customerStmt.setString(2, customer.getFirstName());
-                    customerStmt.setString(3, customer.getLastName());
-                    customerStmt.setString(4, customer.getBirthday());
-                    customerStmt.setString(5, customer.getPhoneNumber());
-                    customerStmt.setString(6, customer.getAddress());
-                    customerStmt.setDouble(7, customer.getAccountBalance());
-                    customerStmt.executeUpdate();
-                }
+                // Insert customer
+                pstmtCustomer.setInt(1, customer.getID());
+                pstmtCustomer.setString(2, customer.getFirstName());
+                pstmtCustomer.setString(3, customer.getLastName());
+                pstmtCustomer.setDate(4, java.sql.Date.valueOf(customer.getBirthday()));
+                pstmtCustomer.setString(5, customer.getPhoneNumber());
+                pstmtCustomer.setString(6, customer.getAddress());
+                pstmtCustomer.setDouble(7, customer.getAccountBalance());
+                pstmtCustomer.addBatch();
 
-                // Insert customer-vehicle relationships
-                try (PreparedStatement vehicleStmt = connection.prepareStatement(customerVehicleInsert)) {
-                    for (Vehicle vehicle : customer.getVehicles()) {
-                        vehicleStmt.setInt(1, customer.getID());
-                        vehicleStmt.setInt(2, vehicle.getID());
-                        vehicleStmt.addBatch();
-                    }
-                    vehicleStmt.executeBatch();
+                // Insert vehicles associated with the customer
+                for (Vehicle vehicle : customer.getVehicles()) {
+                    pstmtVehicles.setInt(1, customer.getID());
+                    pstmtVehicles.setInt(2, vehicle.getID());
+                    pstmtVehicles.addBatch();
                 }
             }
+
+            pstmtCustomer.executeBatch();
+            pstmtVehicles.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
