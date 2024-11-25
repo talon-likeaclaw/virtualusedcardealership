@@ -36,12 +36,24 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
     }
 
     /**
-     * Clears the vehicles table before writing
+     * Clears all relevant tables
      */
-    private void clearVehiclesTable() {
-        String query = "DELETE FROM vehicles";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.execute();
+    private void clearAllTables() {
+        String deleteCustomersVehiclesQuery = "DELETE FROM customers_vehicles";
+        String deleteTransactionsQuery = "DELETE FROM transactions";
+        String deleteVehiclesQuery = "DELETE FROM vehicles";
+        String deleteCustomersQuery = "DELETE FROM customers";
+
+        try (PreparedStatement pstmt1 = connection.prepareStatement(deleteCustomersVehiclesQuery);
+                PreparedStatement pstmt2 = connection.prepareStatement(deleteTransactionsQuery);
+                PreparedStatement pstmt3 = connection.prepareStatement(deleteVehiclesQuery);
+                PreparedStatement pstmt4 = connection.prepareStatement(deleteCustomersQuery)) {
+
+            pstmt1.executeUpdate();
+            pstmt2.executeUpdate();
+            pstmt3.executeUpdate();
+            pstmt4.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,7 +61,7 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
 
     @Override
     public void save(List<Vehicle> vehicles) {
-        clearVehiclesTable();
+        clearAllTables();
         String query = "INSERT INTO vehicles (id, type, make, model, year, price, color, transmission, drive_type, horsepower, weight, kilometerage, damage,"
                 + " is_electric, engine_cc, handlebar_type, num_doors, num_seats, has_sunroof, sleep_capacity, has_bathroom, is_convertible, cargo_capacity, has_thirdrow"
                 + "_seating, has_sliding_doors, bed_length, towing_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
