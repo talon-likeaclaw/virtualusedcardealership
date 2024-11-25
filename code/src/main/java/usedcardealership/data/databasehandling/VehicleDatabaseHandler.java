@@ -10,39 +10,34 @@ import usedcardealership.data.vehicle.*;
 public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
     private final Connection connection;
 
+    /**
+     * Constructor for VehicleDatabaseHandler
+     * 
+     * @param connection the JDBC Connection object
+     */
     public VehicleDatabaseHandler(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Loads Vehicles from the database for VehicleManager inventory
+     * Only loads the Vehicles that are not associated with a Customer
+     * 
+     * @return List<Vehicle> - the List of Vehicles not associated with Customers
+     * @throws SQLException if there is a database error
+     */
     @Override
     public List<Vehicle> load() {
         List<Vehicle> vehicles = new ArrayList<>();
         // Only load vehicles not associated with customer_id
-        // Have to have singular vehicles table with customer_vehicles bridging table
         String query = "SELECT * FROM vehicles WHERE id NOT IN (SELECT vehicle_id FROM customers_vehicles)";
         try (Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
+                // Use type field to parse Vehicle using helper method
                 String type = rs.getString("type");
                 Vehicle vehicle = VehicleHelper.parseVehicleFromResultSet(type, rs);
-                if (vehicle != null) {
-                    vehicles.add(vehicle);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return vehicles;
-    }
-
-    public List<Vehicle> loadDatabase() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        String query = "SELECT * FROM vehicles";
-        try (Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                String type = rs.getString("type");
-                Vehicle vehicle = VehicleHelper.parseVehicleFromResultSet(type, rs);
+                // Only add Vehicle if it is not NULL
                 if (vehicle != null) {
                     vehicles.add(vehicle);
                 }
@@ -54,7 +49,37 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
     }
 
     /**
-     * Clears all relevant tables
+     * Loads all of the Vehicles from the database
+     * This is to fill the VehicleManager's database List
+     * 
+     * @return List<Vehicle> - the List of all Vehicles in the database
+     * @throws SQLException if there is a database error
+     */
+    public List<Vehicle> loadDatabase() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        String query = "SELECT * FROM vehicles";
+        try (Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                // Use type field to parse Vehicle using helper method
+                String type = rs.getString("type");
+                Vehicle vehicle = VehicleHelper.parseVehicleFromResultSet(type, rs);
+                // Only add Vehicle if it is not NULL
+                if (vehicle != null) {
+                    vehicles.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vehicles;
+    }
+
+    /**
+     * Clears all tables before saving updated Lists to database
+     * Vehicles are written first, so delete happens here
+     * 
+     * @throws SQLException if there is a database error
      */
     private void clearAllTables() {
         String deleteCustomersVehiclesQuery = "DELETE FROM customers_vehicles";
@@ -67,16 +92,23 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
                 PreparedStatement pstmt3 = connection.prepareStatement(deleteVehiclesQuery);
                 PreparedStatement pstmt4 = connection.prepareStatement(deleteCustomersQuery)) {
 
+            // Delete everything from all tables
             pstmt1.executeUpdate();
             pstmt2.executeUpdate();
             pstmt3.executeUpdate();
             pstmt4.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Saves a List of Vehicles to the databse using an INSERT statement
+     * Uses clearAllTables method at start before starting INSERTs
+     * 
+     * @param vehicles the List of Vehicles to save to the database
+     * @throws SQLException if there is a database errror
+     */
     @Override
     public void save(List<Vehicle> vehicles) {
         clearAllTables();
@@ -99,7 +131,7 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
      *
      * @param pstmt   The PreparedStatement object
      * @param vehicle The Vehicle object
-     * @throws SQLException
+     * @throws SQLExcpetion if there is a database error
      */
     private void setCommonFields(PreparedStatement pstmt, Vehicle v) throws SQLException {
         pstmt.setInt(1, v.getID());
@@ -123,7 +155,8 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
      * 
      * @param pstmt the PreparedStatement object
      * @param v     the Vehicle object
-     * @throws SQLException
+     * @throws SQLException             if there is a database error
+     * @throws IllegalArgumentException if the type is unknown
      */
     private void setTypeSpecificFields(PreparedStatement pstmt, Vehicle v) throws SQLException {
         if (v instanceof Motorcycle) {

@@ -12,10 +12,21 @@ import usedcardealership.data.vehicle.Vehicle;
 public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
     private Connection connection;
 
+    /**
+     * Constructor for TransactionDatabaseHandler
+     * 
+     * @param connection the JDBC Connection object
+     */
     public TransactionDatabaseHandler(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Loads all of the Transactions from the databse using a SELECT query
+     * 
+     * @return List<Transaction> - the List of Transactions loaded from the database
+     * @throws SQLException if there is a database error
+     */
     @Override
     public List<Transaction> load() {
         List<Transaction> transactions = new ArrayList<>();
@@ -25,12 +36,10 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
                 + "FROM transactions t "
                 + "JOIN customers c ON t.customer_id = c.id "
                 + "JOIN vehicles v ON t.vehicle_id = v.id";
-
-        try (Statement stmt = connection.createStatement();
+        try (Statement stmt = this.connection.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
-
             while (rs.next()) {
-                // Parse Customer
+                // Parse Customer object
                 Customer customer = new Customer(
                         rs.getInt("customer_id"),
                         rs.getString("first_name"),
@@ -41,11 +50,11 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
                         rs.getDouble("account_balance"),
                         new ArrayList<>());
 
-                // Parse Vehicle
+                // Parse Vehicle object
                 String vehicleType = rs.getString("vehicle_type");
                 Vehicle vehicle = VehicleHelper.parseVehicleFromResultSet(vehicleType, rs);
 
-                // Parse Transaction
+                // Parse Transaction object with Customer and Vehicle
                 Transaction transaction = new Transaction(
                         rs.getInt("id"),
                         rs.getString("type"),
@@ -61,6 +70,12 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
         return transactions;
     }
 
+    /**
+     * Writes an List of Transactions to the databse with an INSERT statement
+     * 
+     * @param transactions - The List of Transactions to INSERT into the database
+     * @throws SQLException if there is a database error
+     */
     @Override
     public void save(List<Transaction> transactions) {
         String query = "INSERT INTO transactions (id, type, date, price, tax, customer_id, vehicle_id) "
