@@ -1,3 +1,10 @@
+/**
+ * Class for handling reading and writing Vehicles from/to database
+ *
+ * @param <Vehicle> the input Vehicle list
+ * @author Talon Dunbar
+ * @version 11/25/2024
+ */
 package usedcardealership.data.databasehandling;
 
 import java.sql.*;

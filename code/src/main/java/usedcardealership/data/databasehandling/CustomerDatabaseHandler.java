@@ -1,3 +1,10 @@
+/**
+ * Class for handling reading and writing Customers from/to database
+ *
+ * @param <Customer> the input Customer list
+ * @author Talon Dunbar
+ * @version 11/25/2024
+ */
 package usedcardealership.data.databasehandling;
 
 import java.sql.*;

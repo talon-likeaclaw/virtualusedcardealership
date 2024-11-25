@@ -1,3 +1,10 @@
+/**
+ * Class for handling reading and writing Transactions from/to database
+ *
+ * @param <Transaction> the input Transaction list
+ * @author Talon Dunbar
+ * @version 11/25/2024
+ */
 package usedcardealership.data.databasehandling;
 
 import java.sql.*;
