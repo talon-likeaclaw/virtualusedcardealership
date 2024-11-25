@@ -61,21 +61,8 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
         return transactions;
     }
 
-    /**
-     * Clears the customers table before writing
-     */
-    private void clearTransactionsTable() {
-        String query = "DELETE FROM transactions";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void save(List<Transaction> transactions) {
-        clearTransactionsTable();
         String query = "INSERT INTO transactions (id, type, date, price, tax, customer_id, vehicle_id) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 

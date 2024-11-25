@@ -57,24 +57,6 @@ public class CustomerDatabaseHandler implements IDataHandler<Customer> {
         return customers;
     }
 
-    /**
-     * Clears the customers table before writing
-     */
-    private void clearCustomersTables() {
-        String query = "DELETE FROM customers";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        String query2 = "DELETE FROM customers_vehicles";
-        try (PreparedStatement pstmt = connection.prepareStatement(query2)) {
-            pstmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void save(List<Customer> customers) {
         String queryCustomer = "INSERT INTO customers (id, first_name, last_name, birthday, phone_number, address, account_balance) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String queryVehicles = "INSERT INTO customers_vehicles (customer_id, vehicle_id) VALUES (?, ?)";
