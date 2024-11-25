@@ -8,6 +8,7 @@ import java.util.List;
 import usedcardealership.data.filehandling.VehicleDatabaseHandler;
 import usedcardealership.data.filehandling.VehicleFileHandler;
 import usedcardealership.data.vehicle.Vehicle;
+import usedcardealership.interaction.PrettyUtils;
 
 public class DealershipDatabaseTest {
 
@@ -19,7 +20,7 @@ public class DealershipDatabaseTest {
     String inventoryFilePath = "resources/inventory.csv";
 
     try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
-      System.out.println("Connected to the database successfully!");
+      PrettyUtils.printGreen("Connected to the database successfully!");
 
       VehicleFileHandler fileHandler = new VehicleFileHandler(inventoryFilePath);
 
@@ -31,10 +32,10 @@ public class DealershipDatabaseTest {
         System.out.println(v);
       }
 
-      System.out.println("Inventory successfully saved to the database!");
+      PrettyUtils.printGreen("Inventory successfully saved to the database!");
 
     } catch (SQLException e) {
-      System.err.println("Failed to connect to the database or execute operations.");
+      PrettyUtils.printRed("Failed to connect to the database or execute operations.");
       e.printStackTrace();
     }
   }
