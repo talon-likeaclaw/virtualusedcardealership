@@ -35,6 +35,24 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
         return vehicles;
     }
 
+    public List<Vehicle> loadDatabase() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        String query = "SELECT * FROM vehicles";
+        try (Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                String type = rs.getString("type");
+                Vehicle vehicle = VehicleHelper.parseVehicleFromResultSet(type, rs);
+                if (vehicle != null) {
+                    vehicles.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vehicles;
+    }
+
     /**
      * Clears all relevant tables
      */
@@ -69,9 +87,8 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
             for (Vehicle v : vehicles) {
                 setCommonFields(pstmt, v);
                 setTypeSpecificFields(pstmt, v);
-                pstmt.addBatch();
+                pstmt.execute();
             }
-            pstmt.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }

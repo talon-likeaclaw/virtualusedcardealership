@@ -73,18 +73,15 @@ public class CustomerDatabaseHandler implements IDataHandler<Customer> {
                 pstmtCustomer.setString(5, customer.getPhoneNumber());
                 pstmtCustomer.setString(6, customer.getAddress());
                 pstmtCustomer.setDouble(7, customer.getAccountBalance());
-                pstmtCustomer.addBatch();
+                pstmtCustomer.execute();
 
                 // Insert vehicles associated with the customer
                 for (Vehicle vehicle : customer.getVehicles()) {
                     pstmtVehicles.setInt(1, customer.getID());
                     pstmtVehicles.setInt(2, vehicle.getID());
-                    pstmtVehicles.addBatch();
+                    pstmtVehicles.execute();
                 }
             }
-
-            pstmtCustomer.executeBatch();
-            pstmtVehicles.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }

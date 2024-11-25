@@ -75,9 +75,8 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
                 pstmt.setDouble(5, transaction.getTax());
                 pstmt.setInt(6, transaction.getCustomer().getID());
                 pstmt.setInt(7, transaction.getVehicle().getID());
-                pstmt.addBatch();
+                pstmt.execute();
             }
-            pstmt.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
