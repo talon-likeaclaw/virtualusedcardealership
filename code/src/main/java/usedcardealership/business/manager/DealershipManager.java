@@ -104,7 +104,7 @@ public class DealershipManager {
    * @param customer customer selling the vehicle
    * @param transactionType type of transaction
    */
-    public void processCustomerVehicleSale(Vehicle vehicle, Customer customer, String transactionType) {
+    public void processCustomerVehicleTransaction(Vehicle vehicle, Customer customer, String transactionType) {
       this.getTransactionManager().handleTransaction(vehicle, customer, transactionType);
       this.getVehicleManager().addVehicle(vehicle);
       customer.getVehicles().remove(vehicle);

@@ -21,7 +21,9 @@ public class ShoppingCart {
      * @param vehicle
      * @return void
      */
-    
+    public List<Vehicle> getProductsList(){
+        return this.productsList;
+    }
     //Only way i see we could make a deep copy
     /**
      *public void addVehicle(Vehicle vehicle) {
