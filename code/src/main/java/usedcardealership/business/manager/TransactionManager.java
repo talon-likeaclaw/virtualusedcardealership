@@ -94,7 +94,7 @@ public class TransactionManager {
 
 
     /**
-     * Processes the sale of a vehicle by updating the customer's account balance 
+     * Processes the dealership purchase of a vehicle from a customer by updating the customer's account balance 
      * and removing the sold vehicle from their list of owned vehicles.
      * 
      * @param sale      the Transaction representing the sale
@@ -120,7 +120,8 @@ public class TransactionManager {
     */
     private void processSale(Sale sale, Customer customer) {
         Vehicle vehicle = sale.getVehicle();
-        double price = sale.calculateTotal();
+        double price = sale.getPrice();
+
 
         // Check if the customer has enough balance
         if (customer.getAccountBalance() < price) {
@@ -128,7 +129,7 @@ public class TransactionManager {
         }
 
         // Deduct the price and add the vehicle to the customer's list
-        customer.updateAccountBalance(customer.getAccountBalance() - price);
+        customer.updateAccountBalance(-1*price);
         customer.getVehicles().add(vehicle);
     }
     

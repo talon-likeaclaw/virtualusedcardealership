@@ -118,7 +118,7 @@ public class UsedCarDealership {
                         sellVehicleView(dealership);
                         break;
                     case 4:
-                        // TODO: viewShoppingCart()
+                        viewShoppingCart(dealership);
                         break;
                     default:
                         PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
@@ -444,7 +444,7 @@ public class UsedCarDealership {
                 int vehicleID = Integer.parseInt(input);
                 Vehicle selectedVehicle = dealership.getVehicleManager().getVehicleById(vehicleID);
                 if (selectedVehicle != null) {
-                    vehicleDetailsMenu(dealership, vehicleID);
+                    vehicleDetailsMenu(dealership, vehicleID, vehicles);
                 } else {
                     PrettyUtils.printRed("\nInvalid Vehicle ID!");
                     Prompter.promptEnter();
@@ -489,7 +489,8 @@ public class UsedCarDealership {
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      */
-    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
+    // TODO: Add a straight to checkoout option 
+    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
         boolean inPage = true;
         int testDriveCount = 0;
         Vehicle vehicle = dealership.getVehicleManager().getVehicleById(vehicleId);
@@ -524,7 +525,7 @@ public class UsedCarDealership {
                     }
                     break;
                 case 2:
-                    // TODO: Implement method to add vehicle to cart
+                    addVehicleToCart(dealership, vehicle, vehicles);
                     break;
             }
         }
@@ -740,7 +741,6 @@ public class UsedCarDealership {
                     PrettyUtils.returnYellow("0:") + " Exit";
             int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
-                // Invalid input; loop restarts automatically
                 continue;
             }
             switch (choice) {
@@ -811,7 +811,7 @@ public class UsedCarDealership {
                                     + PrettyUtils.returnYellow("[" + vehicleID + "]") + "?");
                             boolean confirmed = Prompter.promptYesNo();
                             if (confirmed) {
-                                manageVehicleTransaction(dealer, vehicleID);
+                                manageVehicleSale(dealer, vehicleID);
                                 Prompter.promptEnter();
                             } else {
                                 PrettyUtils.printRed("\nVehicle selection cancelled.");
@@ -820,7 +820,7 @@ public class UsedCarDealership {
                         }
                         break;
                     } catch (NumberFormatException e) {
-                        PrettyUtils.printRed("Invalid input! Please neter a numeric vehicle ID.");
+                        PrettyUtils.printRed("Invalid input! Please enter a numeric vehicle ID.");
                         Prompter.promptEnter();
                     } catch (IllegalArgumentException e) {
                         PrettyUtils.printRed(e.getMessage());
@@ -839,8 +839,8 @@ public class UsedCarDealership {
      * @param dealer    the DealershipManager responsible for managing the
      *                  dealership operations
      * @param vehicleID the ID of the vehicle being offered for sale
-     */
-    private static void manageVehicleTransaction(DealershipManager dealer, int vehicleID) {
+    */
+    private static void manageVehicleSale(DealershipManager dealer, int vehicleID){
         Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
         Customer customer = dealer.getCurrentCustomer();
 
@@ -856,7 +856,7 @@ public class UsedCarDealership {
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
-            dealer.processCustomerVehiclePurchase(vehicle, customer, "purchase");
+            dealer.processCustomerVehicleTransaction(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
 
             PrettyUtils.printGreen("Sale successful!");
@@ -869,5 +869,153 @@ public class UsedCarDealership {
         }
 
     }
+
+    /**
+     * Displays the shopping cart and allows the user to proceed to checkout or exit the view.
+     * 
+     * @param dealer the DealershipManager handling the current dealership state.
+     */
+    private static void viewShoppingCart(DealershipManager dealer) {
+        boolean inPage = true;
+        while (inPage) {
+            PrettyUtils.wipe();
+            PrettyUtils.printYellow("Your ShoppingCart:");
+            inPage = checkoutPrompter(dealer);
+        }
+    }
+
+    /**
+     * Adds a vehicle to the shopping cart, removes it from available inventory,
+     * and provides options for further actions.
+     * 
+     * @param dealer the DealershipManager handling the dealership state.
+     * @param vehicle the Vehicle to be added to the shopping cart.
+     * @param vehicles the list of available vehicles to update upon addition to the cart.
+     */
+    private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle, List<Vehicle> vehicles) {
+        PrettyUtils.wipe();
+        //TODO move this to dealership
+        dealer.getCurrentCart().addVehicle(vehicle);
+        dealer.getVehicleManager().removeVehicle(vehicle);
+        vehicles.remove(vehicle);
+
+        PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
+        boolean inPage = true;
+        while (inPage) {
+            inPage = checkoutPrompter(dealer);
+        }
+    }
+
+    /**
+     * Displays options to proceed to checkout or continue shopping.
+     * Prints the current shopping cart contents for the user.
+     * 
+     * @param dealer the DealershipManager handling the dealership state.
+     * @return {@code true} to continue prompting; {@code false} to exit the prompt loop.
+     */
+    private static boolean checkoutPrompter(DealershipManager dealer) {
+        // Displaying shopping cart
+        System.out.println(dealer.getCurrentCart());
+
+        PrettyUtils.printYellow("\nWould you like to:");
+        String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
+                    PrettyUtils.returnYellow("0:") + " Keep shopping";
+        int choice = Prompter.promptOption(menu, 1);
+        if (choice == -1) {
+            return true;
+        }
+        switch (choice) {
+            case 0:
+                return false;
+            case 1:
+                checkoutView(dealer);
+                return false;
+            default:
+                PrettyUtils.printRed("You may only select 0 or 1");
+        }
+        // Continue prompting for valid input
+        return true; 
+    }
+
+    /**
+     * Handles the checkout process. Displays the shopping cart contents and checks if
+     * the cart is empty before proceeding to checkout logic.
+     * 
+     * @param dealer the DealershipManager handling the dealership state.
+     */
+    private static void checkoutView(DealershipManager dealer) {
+        PrettyUtils.wipe();
+        List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+        if (productsList.isEmpty()) {
+            PrettyUtils.printRed("Please, fill out your ShoppingCart to visit checkout.");
+            Prompter.promptEnter();
+        } else {
+            // maybe not like this
+            checkoutLogic(dealer, productsList);
+            Prompter.promptEnter();
+        }
+    }
+
+    /**
+     * Validates the customer's purchase, ensures sufficient funds, and processes the transaction.
+     * Displays the receipt and updates the account balance upon successful checkout.
+     * 
+     * @param dealer the DealershipManager handling the dealership state.
+     * @param productsList the list of vehicles in the shopping cart.
+     */
+    private static void checkoutLogic(DealershipManager dealer, List<Vehicle> productsList) {
+        int allVehiclesPrice = 0;
+        for (Vehicle v : productsList) {
+            System.out.println(v);
+            allVehiclesPrice += v.calculateTotalPrice();
+        }
+        Customer customer = dealer.getCurrentCustomer();
+
+        if (productsList == null || customer == null) {
+            System.out.println("Error: Vehicle list or Customer not found!");
+            return;
+        }
+        System.out.println("Total: " + allVehiclesPrice + "$");
+
+        System.out.println("Finalize your purchase? (Y/N)");
+        boolean confirmed = Prompter.promptYesNo();
+        PrettyUtils.wipe();
+        if (confirmed) {
+            String receipt = "Receipt:";
+            for (Vehicle vehicle : productsList) {
+                dealer.processCustomerVehicleTransaction(vehicle, customer, "sale");
+                List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+                System.out.println("Congrats on your new " + vehicle.getModel() + "!");
+                receipt += "\n" + transactions.get(transactions.size() - 1);
+            }
+
+            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
+            dealer.getCurrentCart().emptyCart();
+            viewReceipt(receipt);
+
+            // Fix pressing 0 after
+            mainMenuView(dealer);
+
+        } else {
+            System.out.println("Sale cancelled.");
+        }
+    }
+
+    /**
+     * Displays the receipt to the user if they confirm they want to view it.
+     * 
+     * @param receipt the receipt content to be displayed.
+     */
+    public static void viewReceipt(String receipt) {
+        System.out.println("Do you want to see the receipt?");
+        boolean confirmed = Prompter.promptYesNo();
+        PrettyUtils.wipe();
+        if (confirmed) {
+            System.out.println(receipt);
+        }
+        Prompter.promptEnter();
+    }
+
+
 
 }

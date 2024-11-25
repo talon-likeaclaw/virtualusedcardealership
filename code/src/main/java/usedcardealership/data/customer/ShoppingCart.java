@@ -21,7 +21,9 @@ public class ShoppingCart {
      * @param vehicle
      * @return void
      */
-    
+    public List<Vehicle> getProductsList(){
+        return this.productsList;
+    }
     //Only way i see we could make a deep copy
     /**
      *public void addVehicle(Vehicle vehicle) {
@@ -59,9 +61,7 @@ public class ShoppingCart {
      * @return void
      */
     public void emptyCart(){
-        for(int i = 0; i < this.productsList.size(); i++){
-            this.productsList.remove(i);
-        }
+        this.productsList.clear();
     }
     
     @Override
