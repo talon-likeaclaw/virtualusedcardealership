@@ -18,10 +18,52 @@ public class CustomerDatabaseHandler implements IDataHandler<Customer> {
     }
 
     @Override
+    public List<Customer> load() {
+        String customerQuery = "SELECT * FROM customers";
+        // Use bridging table to get vehicles for customer vehicle loading
+        String vehicleQuery = "SELECT v.* FROM vehicles v "
+                + "JOIN customers_vehicles cv ON v.id = cv.vehicle_id "
+                + "WHERE cv.customer_id = ?";
+        List<Customer> customers = new ArrayList<>();
+
+        try (PreparedStatement customerStmt = connection.prepareStatement(customerQuery);
+                ResultSet customerRs = customerStmt.executeQuery()) {
+
+            while (customerRs.next()) {
+                int customerId = customerRs.getInt("id");
+                String firstName = customerRs.getString("first_name");
+                String lastName = customerRs.getString("last_name");
+                String birthday = customerRs.getString("birthday");
+                String phoneNumber = customerRs.getString("phone_number");
+                String address = customerRs.getString("address");
+                double accountBalance = customerRs.getDouble("account_balance");
+
+                List<Vehicle> vehicles = new ArrayList<>();
+                try (PreparedStatement vehicleStmt = connection.prepareStatement(vehicleQuery)) {
+                    vehicleStmt.setInt(1, customerId);
+                    try (ResultSet vehicleRs = vehicleStmt.executeQuery()) {
+                        while (vehicleRs.next()) {
+                            String type = vehicleRs.getString("type");
+                            vehicles.add(VehicleHelper.parseVehicleFromResultSet(type, vehicleRs));
+                        }
+                    }
+                }
+
+                Customer customer = new Customer(customerId, firstName, lastName, birthday, phoneNumber, address,
+                        accountBalance, vehicles);
+                customers.add(customer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
+    @Override
     public void save(List<Customer> customers) {
         String customerInsert = "INSERT INTO customers (id, first_name, last_name, birthday, phone_number, address, account_balance) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String customerVehicleInsert = "INSERT INTO customer_vehicles (customer_id, vehicle_id) VALUES (?, ?)";
+                + "VALUES (?, ?, ?, ?::DATE, ?, ?, ?)";
+        String customerVehicleInsert = "INSERT INTO customers_vehicles (customer_id, vehicle_id) VALUES (?, ?)";
 
         try {
             connection.setAutoCommit(false);
