@@ -33,12 +33,14 @@ public class UsedCarDealership {
                     PrettyUtils.returnYellow("2:") + " Load from Database";
             try {
                 int choice = Prompter.promptOption(menu, 2);
-                if (choice == -1 || choice == 0) {
+                if (choice == 0) {
+                    PrettyUtils.printRed("\nIllegal input! Input must be a number from the list.");
+                    Prompter.promptEnter();
                     continue;
                 }
                 switch (choice) {
-                    // The user decided to load from the CSV
                     case 1:
+                        // The user decided to load from the CSV
                         try {
                             DealershipManager dealership = initialize();
                             if (dealership != null) {
@@ -52,8 +54,8 @@ public class UsedCarDealership {
                             PrettyUtils.printRed(e.getMessage());
                             Prompter.promptEnter();
                         }
-                    // The user decided to load from the Database
                     case 2:
+                        // The user decided to load from the Database
                         try {
                             DealershipManager dealership = initializeFromDb();
                             if (dealership != null) {
