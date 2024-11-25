@@ -591,8 +591,7 @@ public class UsedCarDealership {
             return;
         }
         Random rand = new Random();
-        // dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
-        dealership.setCurrentCustomer(customers.get(47));
+        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
     }
 
     /**
@@ -849,7 +848,6 @@ public class UsedCarDealership {
             System.out.println("Error: Vehicle list or Customer not found!");
             return;
         }
-        // Do we sell it more expensive because we are a business (use getPrice() instead)?
         System.out.println("Total: " + allVehiclesPrice + "$");
 
         System.out.println("Finalize your purchase? (Y/N)");
