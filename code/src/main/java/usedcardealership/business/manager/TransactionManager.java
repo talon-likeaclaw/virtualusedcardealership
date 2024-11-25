@@ -60,7 +60,6 @@ public class TransactionManager {
         int newId = transactionHistory.size() + 1;
         LocalDate currentDate = LocalDate.now();
         double price = vehicle.calculateTotalPrice();
-        System.out.println(price);
     
         Transaction transaction;
         if ("purchase".equalsIgnoreCase(transactionType)) {
@@ -95,7 +94,7 @@ public class TransactionManager {
 
 
     /**
-     * Processes the sale of a vehicle by updating the customer's account balance 
+     * Processes the dealership purchase of a vehicle from a customer by updating the customer's account balance 
      * and removing the sold vehicle from their list of owned vehicles.
      * 
      * @param sale      the Transaction representing the sale
@@ -120,10 +119,8 @@ public class TransactionManager {
      * @throws IllegalArgumentException if the customer's balance is insufficient
     */
     private void processSale(Sale sale, Customer customer) {
-        System.out.println("DEaler selling car");
         Vehicle vehicle = sale.getVehicle();
         double price = sale.getPrice();
-        System.out.println(price);
 
 
         // Check if the customer has enough balance

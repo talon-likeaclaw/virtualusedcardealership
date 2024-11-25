@@ -393,7 +393,7 @@ public class UsedCarDealership {
                 int vehicleID = Integer.parseInt(input);
                 Vehicle selectedVehicle = dealership.getVehicleManager().getVehicleById(vehicleID);
                 if (selectedVehicle != null) {
-                    vehicleDetailsMenu(dealership, vehicleID);
+                    vehicleDetailsMenu(dealership, vehicleID, vehicles);
                 } else {
                     PrettyUtils.printRed("\nInvalid Vehicle ID!");
                     Prompter.promptEnter();
@@ -439,7 +439,7 @@ public class UsedCarDealership {
      * 
      */
     // TODO: Add a straight to checkoout option 
-    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId) {
+    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
         boolean inPage = true;
         int testDriveCount = 0;
         Vehicle vehicle = dealership.getVehicleManager().getVehicleById(vehicleId);
@@ -474,7 +474,7 @@ public class UsedCarDealership {
                     }
                     break;
                 case 2:
-                    addVehicleToCart(dealership, vehicle);
+                    addVehicleToCart(dealership, vehicle, vehicles);
                     break;
             }
         }
@@ -698,7 +698,7 @@ public class UsedCarDealership {
                         }
                         break;
                     } catch (NumberFormatException e) {
-                        PrettyUtils.printRed("Invalid input! Please neter a numeric vehicle ID.");
+                        PrettyUtils.printRed("Invalid input! Please enter a numeric vehicle ID.");
                         Prompter.promptEnter();
                     } catch (IllegalArgumentException e) {
                         PrettyUtils.printRed(e.getMessage());
@@ -753,10 +753,12 @@ public class UsedCarDealership {
         }
     }
     
-    private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle) {
+    private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle, List<Vehicle> vehicles) {
+        PrettyUtils.wipe();
         //TODO move this to dealership
         dealer.getCurrentCart().addVehicle(vehicle);
         dealer.getVehicleManager().removeVehicle(vehicle);
+        vehicles.remove(vehicle);
 
         PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
         boolean inPage = true;
@@ -790,6 +792,7 @@ public class UsedCarDealership {
     }
     
     private static void checkoutView(DealershipManager dealer){
+        PrettyUtils.wipe();
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
         if(productsList.isEmpty()){
             PrettyUtils.printRed("Please, fill out your ShoppingCart to visit checkout.");
@@ -831,11 +834,26 @@ public class UsedCarDealership {
             }
 
             System.out.println("Updated Account Balance: " + customer.getAccountBalance());
-            System.out.println(receipt);
+            dealer.getCurrentCart().emptyCart();
+            viewReceipt(receipt);
+
+            //Fix pressing 0 after;
+            mainMenuView(dealer);
+
         } else {
             System.out.println("Sale cancelled.");
         }
 
+    }
+
+    public static void viewReceipt(String receipt){
+        System.out.println("Do you want to see the receipt?");
+        boolean confirmed = Prompter.promptYesNo();
+        PrettyUtils.wipe();
+        if (confirmed) {
+            System.out.println(receipt);
+        }
+        Prompter.promptEnter();
     }
 
 

@@ -151,10 +151,8 @@ public class DealershipManager {
     public void updateCustomerAndInventory(Vehicle vehicle, Customer customer, String transactionType){
       if(transactionType == "purchase"){
         this.getVehicleManager().addVehicle(vehicle);
-        customer.getVehicles().remove(vehicle);
       }else if(transactionType == "sale"){
         this.getVehicleManager().removeVehicle(vehicle);
-        customer.getVehicles().add(vehicle);
       }
     }
 }

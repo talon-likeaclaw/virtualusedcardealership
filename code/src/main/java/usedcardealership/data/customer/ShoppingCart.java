@@ -61,9 +61,7 @@ public class ShoppingCart {
      * @return void
      */
     public void emptyCart(){
-        for(int i = 0; i < this.productsList.size(); i++){
-            this.productsList.remove(i);
-        }
+        this.productsList.clear();
     }
     
     @Override
