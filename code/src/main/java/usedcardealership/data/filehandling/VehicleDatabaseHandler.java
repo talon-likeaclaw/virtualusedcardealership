@@ -14,7 +14,9 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
     @Override
     public List<Vehicle> load() {
         List<Vehicle> vehicles = new ArrayList<>();
-        String query = "SELECT * FROM vehicles";
+        // Only load vehicles not associated with customer_id
+        // Have to have singular vehicles table with customer_vehicles bridging table
+        String query = "SELECT * FROM vehicles WHERE id NOT IN (SELECT vehicle_id FROM customers_vehicles)";
         try (Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
