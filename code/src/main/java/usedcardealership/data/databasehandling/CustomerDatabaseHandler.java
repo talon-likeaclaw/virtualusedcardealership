@@ -1,13 +1,11 @@
-package usedcardealership.data.filehandling;
+package usedcardealership.data.databasehandling;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
+import usedcardealership.data.IDataHandler;
 import usedcardealership.data.customer.Customer;
+import usedcardealership.data.filehandling.VehicleHelper;
 import usedcardealership.data.vehicle.Vehicle;
 
 public class CustomerDatabaseHandler implements IDataHandler<Customer> {

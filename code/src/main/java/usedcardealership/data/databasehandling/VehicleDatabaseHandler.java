@@ -1,7 +1,10 @@
-package usedcardealership.data.filehandling;
+package usedcardealership.data.databasehandling;
 
 import java.sql.*;
 import java.util.*;
+
+import usedcardealership.data.IDataHandler;
+import usedcardealership.data.filehandling.VehicleHelper;
 import usedcardealership.data.vehicle.*;
 
 public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {

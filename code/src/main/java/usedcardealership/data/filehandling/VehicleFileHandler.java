@@ -11,6 +11,8 @@ package usedcardealership.data.filehandling;
 import java.nio.file.*;
 import java.io.*;
 import java.util.*;
+
+import usedcardealership.data.IDataHandler;
 import usedcardealership.data.vehicle.*;
 
 public class VehicleFileHandler implements IDataHandler<Vehicle> {
