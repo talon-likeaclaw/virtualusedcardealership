@@ -30,8 +30,21 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
         return vehicles;
     }
 
+    /**
+     * Clears the vehicles table before writing
+     */
+    private void clearVehiclesTable() {
+        String query = "DELETE FROM vehicles";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void save(List<Vehicle> vehicles) {
+        clearVehiclesTable();
         String query = "INSERT INTO vehicles (id, type, make, model, year, price, color, transmission, drive_type, horsepower, weight, kilometerage, damage, is_electric, engine_cc, handlebar_type, num_doors, num_seats, has_sunroof, sleep_capacity, has_bathroom, is_convertible, cargo_capacity, has_thirdrow_seating, has_sliding_doors, bed_length, towing_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             for (Vehicle v : vehicles) {
