@@ -58,7 +58,7 @@ public class UsedCarDealership {
                     sellVehicleView(dealership);
                     break;
                 case 4:
-                    // TODO: viewShoppingCart()
+                    viewShoppingCart(dealership);
                     break;
                 default:
                     PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
@@ -465,10 +465,6 @@ public class UsedCarDealership {
         String customerPath = "resources/customers.csv";
         CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
         List<Customer> customers = customerLoader.load();
-        // TODO: Select a random customer from the list to assign the the currentUser on
-        // init
-        // Thought it would be cool if each time you start up the program you are a
-        // random customer
 
         // Load transactions
         String transactionPath = "resources/transactions.csv";
@@ -557,7 +553,6 @@ public class UsedCarDealership {
                     PrettyUtils.returnYellow("0:") + " Exit";
             int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
-                // Invalid input; loop restarts automatically
                 continue;
             }
             switch (choice) {
@@ -668,6 +663,31 @@ public class UsedCarDealership {
             System.out.println("Sale cancelled.");
         }
 
-    } 
+    }
 
+    private static void viewShoppingCart(DealershipManager dealer){
+        boolean inPage = true;
+        while (inPage) {
+            PrettyUtils.wipe();
+            PrettyUtils.printYellow("Your ShoppingCart:");
+            System.out.println(dealer.getCurrentCustomer());
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
+                    PrettyUtils.returnYellow("0:") + " Exit";
+            int choice = Prompter.promptOption(menu, 1);
+            if (choice == -1) {
+                // Invalid input; loop restarts automatically
+                continue;
+            }
+            switch (choice) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    sellVehicleView(dealer);
+                default:
+                    PrettyUtils.printRed("You may only select 0");
+            }
+        }
+    }
 }
