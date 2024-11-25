@@ -155,4 +155,8 @@ public class DealershipManager {
         this.getVehicleManager().removeVehicle(vehicle);
       }
     }
+
+    public void updateShoppingCart(){
+      
+    }
 }
