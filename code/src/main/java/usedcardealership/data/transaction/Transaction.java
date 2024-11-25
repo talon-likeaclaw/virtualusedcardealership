@@ -8,6 +8,8 @@ package usedcardealership.data.transaction;
 
 import usedcardealership.data.customer.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.interaction.PrettyUtils;
+
 import java.time.*;
 
 public class Transaction {
@@ -102,9 +104,13 @@ public class Transaction {
     }
 
     public String toString() {
-        return "******************************\nTransaction ID: " + this.id + "\nType: " + this.type + "\nDate: "
-                + this.date + "\nPrice: " + this.price + "\n\nCustomer:\n" + this.customer + "\n\nVehicle:"
-                + this.vehicle + "\n******************************";
+        return "***************************************************************************\n"
+                + PrettyUtils.returnYellow("Transaction Info:") + "\nTransaction ID: " + this.id + "\nType: "
+                + this.type + "\nDate: "
+                + this.date + "\nPrice: $" + String.format("%.2f", this.price) + "\n\n"
+                + PrettyUtils.returnYellow("Customer Info:") + "\n" + this.customer + "\n\n"
+                + PrettyUtils.returnYellow("Vehicle Info:") + "\n"
+                + this.vehicle + "\n***************************************************************************";
     }
 
     /**

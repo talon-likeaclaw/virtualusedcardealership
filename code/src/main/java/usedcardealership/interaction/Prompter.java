@@ -76,7 +76,7 @@ public class Prompter {
      * @return the vehicle ID the user chose
      */
     public static int promptVehicleId() {
-        System.out.println("\nSelect a Vehicle ID:");
+        System.out.println("Select a Vehicle " + PrettyUtils.returnYellow("[ID]") + ".");
         return promptInt();
     }
 
@@ -120,7 +120,7 @@ public class Prompter {
      * @return Boolean of user's answer. Yes: true, No: false
      */
     public static boolean promptYesNo() {
-        return (promptOption("1: Yes.\n2: No.", 2) == 1);
+        return (promptOption(PrettyUtils.returnYellow("1:") + " Yes.\n" + PrettyUtils.returnYellow("2:") + " No.", 2) == 1);
     }
 
     /**

@@ -44,7 +44,7 @@ public class TransactionManagerTest {
         transactionManager.handleTransaction(vehicle, customer, "purchase");
 
         assertEquals(1, transactionManager.getTransactions().size());
-        assertEquals(64200, customer.getAccountBalance(), 0.01);
+        assertEquals(69450.0, customer.getAccountBalance(), 0.01);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TransactionManagerTest {
         transactionManager.handleTransaction(vehicle, customer, "sale");
 
         assertEquals(1, transactionManager.getTransactions().size());
-        assertEquals(72170.0, customer.getAccountBalance(), 0.01);
+        assertEquals(66132.5, customer.getAccountBalance(), 0.01);
     }
 
     @Test

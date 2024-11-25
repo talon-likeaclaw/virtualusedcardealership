@@ -18,7 +18,7 @@ public class CustomerClassTests {
                 "Birthday: 1985-07-15\n" +
                 "Phone: 987654321\n" +
                 "Address: 456 Oak St\n" +
-                "Account Balance: $1500.0";
+                "Account Balance: $1500.00";
 
         assertEquals(expected, customer.toString());
     }

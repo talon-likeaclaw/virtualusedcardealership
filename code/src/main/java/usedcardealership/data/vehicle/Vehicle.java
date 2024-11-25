@@ -379,7 +379,7 @@ public abstract class Vehicle {
      */
     private double calculateAgeDepreciation() {
         int currentYear = Year.now().getValue();
-        final double AGE_DEPRECIATION_RATE = 0.05;
+        final double AGE_DEPRECIATION_RATE = 0.02;
         return (currentYear - this.year) * AGE_DEPRECIATION_RATE * this.price; // 5% per year
     }
 
