@@ -45,7 +45,9 @@ public class VehicleDatabaseHandler implements IDataHandler<Vehicle> {
     @Override
     public void save(List<Vehicle> vehicles) {
         clearVehiclesTable();
-        String query = "INSERT INTO vehicles (id, type, make, model, year, price, color, transmission, drive_type, horsepower, weight, kilometerage, damage, is_electric, engine_cc, handlebar_type, num_doors, num_seats, has_sunroof, sleep_capacity, has_bathroom, is_convertible, cargo_capacity, has_thirdrow_seating, has_sliding_doors, bed_length, towing_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO vehicles (id, type, make, model, year, price, color, transmission, drive_type, horsepower, weight, kilometerage, damage,"
+                + " is_electric, engine_cc, handlebar_type, num_doors, num_seats, has_sunroof, sleep_capacity, has_bathroom, is_convertible, cargo_capacity, has_thirdrow"
+                + "_seating, has_sliding_doors, bed_length, towing_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             for (Vehicle v : vehicles) {
                 setCommonFields(pstmt, v);
