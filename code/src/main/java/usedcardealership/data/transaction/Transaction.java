@@ -8,6 +8,8 @@ package usedcardealership.data.transaction;
 
 import usedcardealership.data.customer.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.interaction.PrettyUtils;
+
 import java.time.*;
 
 public class Transaction {
@@ -29,6 +31,24 @@ public class Transaction {
      * @param vehicle
      */
     public Transaction(int id, String type, LocalDate localDate, double price, Customer customer, Vehicle vehicle) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Transaction ID must be a positive integer.");
+        }
+        if (type == null || type.length() == 0) {
+            throw new IllegalArgumentException("Transaction type cannot be null or empty.");
+        }
+        if (localDate == null) {
+            throw new IllegalArgumentException("Transaction date cannot be null.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Transaction price cannot be negative.");
+        }
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null.");
+        }
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         this.id = id;
         this.type = type;
         this.date = localDate;
@@ -37,7 +57,9 @@ public class Transaction {
         this.customer = customer;
         this.vehicle = vehicle;
     }
-    public Transaction(){}
+
+    public Transaction() {
+    }
 
     public int getID() {
         return this.id;
@@ -68,15 +90,27 @@ public class Transaction {
     }
 
     public void setDate(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date cannot be null.");
+        }
         this.date = date;
     }
 
     public void setPrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        }
         this.price = price;
     }
 
     public String toString() {
-        return "******************************\nTransaction ID: " + this.id + "\nType: " + this.type + "\nDate: " + this.date + "\nPrice: " + this.price + "\n\nCustomer:\n" + this.customer + "\n\nVehicle:" + this.vehicle + "\n******************************";
+        return "***************************************************************************\n"
+                + PrettyUtils.returnYellow("Transaction Info:") + "\nTransaction ID: " + this.id + "\nType: "
+                + this.type + "\nDate: "
+                + this.date + "\nPrice: $" + String.format("%.2f", this.price) + "\n\n"
+                + PrettyUtils.returnYellow("Customer Info:") + "\n" + this.customer + "\n\n"
+                + PrettyUtils.returnYellow("Vehicle Info:") + "\n"
+                + this.vehicle + "\n***************************************************************************";
     }
 
     /**

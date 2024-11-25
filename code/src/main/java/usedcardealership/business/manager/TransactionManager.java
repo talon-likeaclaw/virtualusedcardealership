@@ -8,7 +8,6 @@ package usedcardealership.business.manager;
 
 import java.util.*;
 import java.time.*;
-import usedcardealership.business.filter.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
@@ -22,6 +21,9 @@ public class TransactionManager {
      * @param transactionHistory a List<Transaction> 
      */
     public TransactionManager(List<Transaction> transactionHistory){
+        if (transactionHistory == null) {
+            throw new IllegalArgumentException("Transaction history cannot be null.");
+        }
         this.transactionHistory = transactionHistory;
     }
 
@@ -35,6 +37,9 @@ public class TransactionManager {
      * @param transaction a Transaction object
      */
     public void addTransaction(Transaction transaction){
+        if (transaction == null) {
+            throw new IllegalArgumentException("Transaction cannot be null.");
+        }
         this.transactionHistory.add(transaction);
     }
 
@@ -49,9 +54,13 @@ public class TransactionManager {
      * @throws IllegalArgumentException if the transactionType is invalid
     */
     public void handleTransaction(Vehicle vehicle, Customer customer, String transactionType) {
+        if (vehicle == null || customer == null || transactionType == null || transactionType.length() == 0) {
+            throw new IllegalArgumentException("Vehicle, customer, and transaction type cannot be null.");
+        }
         int newId = transactionHistory.size() + 1;
         LocalDate currentDate = LocalDate.now();
         double price = vehicle.calculateTotalPrice();
+        System.out.println(price);
     
         Transaction transaction;
         if ("purchase".equalsIgnoreCase(transactionType)) {
@@ -72,10 +81,15 @@ public class TransactionManager {
      * @return void
     */
     public void processTransaction(Transaction transaction, Customer customer) {
+        if (transaction == null || customer == null) {
+            throw new IllegalArgumentException("Transaction and customer cannot be null.");
+        }
         if (transaction instanceof Purchase) {
             processPurchase((Purchase) transaction, customer);
         } else if (transaction instanceof Sale) {
             processSale((Sale) transaction, customer);
+        } else {
+            throw new IllegalArgumentException("Unsupported transaction type.");
         }
     }
 
@@ -106,8 +120,11 @@ public class TransactionManager {
      * @throws IllegalArgumentException if the customer's balance is insufficient
     */
     private void processSale(Sale sale, Customer customer) {
+        System.out.println("DEaler selling car");
         Vehicle vehicle = sale.getVehicle();
-        double price = sale.calculateTotal();
+        double price = sale.getPrice();
+        System.out.println(price);
+
 
         // Check if the customer has enough balance
         if (customer.getAccountBalance() < price) {
@@ -115,7 +132,7 @@ public class TransactionManager {
         }
 
         // Deduct the price and add the vehicle to the customer's list
-        customer.updateAccountBalance(customer.getAccountBalance() - price);
+        customer.updateAccountBalance(-1*price);
         customer.getVehicles().add(vehicle);
     }
     

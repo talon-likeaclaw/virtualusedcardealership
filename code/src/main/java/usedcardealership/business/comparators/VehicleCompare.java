@@ -5,6 +5,7 @@
  * @version 11/18/2024
  */
 package usedcardealership.business.comparators;
+
 import usedcardealership.data.vehicle.*;
 
 /**
@@ -14,7 +15,7 @@ import usedcardealership.data.vehicle.*;
  * @param vehicle2 vehicle to compare with
  * @return int
  */
-public abstract class VehicleCompare implements ICompare<Vehicle>{
+public abstract class VehicleCompare implements ICompare<Vehicle> {
 
     @Override
     public abstract int compare(Vehicle vehicle1, Vehicle vehicle2);

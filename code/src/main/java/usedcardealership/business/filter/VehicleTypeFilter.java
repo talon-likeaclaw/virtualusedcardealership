@@ -18,6 +18,9 @@ public class VehicleTypeFilter extends VehicleFilter {
      * @param type - the type to filter by
      */
     public VehicleTypeFilter(String type) {
+        if (type == null || type.length() == 0) {
+            throw new IllegalArgumentException("Type cannot be null or empty.");
+        }
         this.type = type.toLowerCase();
     }
 
@@ -29,6 +32,9 @@ public class VehicleTypeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getType().toLowerCase().equals(this.type);
     }
 }

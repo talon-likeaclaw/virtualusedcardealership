@@ -13,9 +13,17 @@ import java.util.*;
 
 public class UsedCarDealership {
     public static void main(String[] args) {
-        DealershipManager dealership = initialize();
-        mainMenuView(dealership);
-        shutdown(dealership);
+        try {
+            DealershipManager dealership = initialize();
+            if (dealership != null) {
+                mainMenuView(dealership);
+            }
+            shutdown(dealership);
+        } catch (Exception e) {
+            PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+        }
     }
 
     /**
@@ -37,31 +45,37 @@ public class UsedCarDealership {
                     PrettyUtils.returnYellow("3:") + " Sell Vehicle to Dealership\n" +
                     PrettyUtils.returnYellow("4:") + " View Shopping Cart\n" +
                     PrettyUtils.returnYellow("0:") + " Exit";
-            // Prompt user for input
-            int choice = Prompter.promptOption(menu, 4);
-            if (choice == -1) {
-                // Invalid input, restart loop
-                continue;
-            }
-            switch (choice) {
-                case 0:
-                    // User decided to exit
-                    inPage = false;
-                    break;
-                case 1:
-                    chooseVehicleFilterView(dealership);
-                    break;
-                case 2:
-                    viewAccountView(dealership);
-                    break;
-                case 3:
-                    sellVehicleView(dealership);
-                    break;
-                case 4:
-                    viewShoppingCart(dealership);
-                    break;
-                default:
-                    PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
+            try {
+                // Prompt user for input
+                int choice = Prompter.promptOption(menu, 4);
+                if (choice == -1) {
+                    // Invalid input, restart loop
+                    continue;
+                }
+                switch (choice) {
+                    case 0:
+                        // User decided to exit
+                        inPage = false;
+                        break;
+                    case 1:
+                        chooseVehicleFilterView(dealership);
+                        break;
+                    case 2:
+                        viewAccountView(dealership);
+                        break;
+                    case 3:
+                        sellVehicleView(dealership);
+                        break;
+                    case 4:
+                        viewShoppingCart(dealership);
+                        break;
+                    default:
+                        PrettyUtils.printRed("I hope you're proud of yourself, you broke\n");
+                }
+            } catch (Exception e) {
+                PrettyUtils.printRed("An error occuyred while processing your choice.");
+                System.out.println(e.getMessage());
+                Prompter.promptEnter();
             }
         }
     }
@@ -79,41 +93,47 @@ public class UsedCarDealership {
             System.out.println(
                     "- Type\n- Make\n- Color\n- Year Range\n- Drive Type\n- Price Range\n- Kilometrage Range\n- Transmission Type");
             System.out.println(Prompter.getPrompt("filter"));
-            String input = Prompter.promptString();
-            if (input == null) {
-                inPage = false;
-                break;
-            } else {
-                input.trim().toLowerCase();
-            }
-            switch (input) {
-                case "type":
-                    genericFilterView(dealership, "type");
+            try {
+                String input = Prompter.promptString();
+                if (input == null) {
+                    inPage = false;
                     break;
-                case "make":
-                    genericFilterView(dealership, "make");
-                    break;
-                case "color":
-                    genericFilterView(dealership, "color");
-                    break;
-                case "year range":
-                    genericFilterView(dealership, "year");
-                    break;
-                case "drive type":
-                    genericFilterView(dealership, "drive");
-                    break;
-                case "price range":
-                    genericFilterView(dealership, "price");
-                    break;
-                case "kilometrage range":
-                    genericFilterView(dealership, "kilo");
-                    break;
-                case "transmission type":
-                    genericFilterView(dealership, "trans");
-                    break;
-                default:
-                    PrettyUtils.printRed("\nInvalid filter name. Please try again.\n");
-                    Prompter.promptEnter();
+                } else {
+                    input.trim().toLowerCase();
+                }
+                switch (input) {
+                    case "type":
+                        genericFilterView(dealership, "type");
+                        break;
+                    case "make":
+                        genericFilterView(dealership, "make");
+                        break;
+                    case "color":
+                        genericFilterView(dealership, "color");
+                        break;
+                    case "year range":
+                        genericFilterView(dealership, "year");
+                        break;
+                    case "drive type":
+                        genericFilterView(dealership, "drive");
+                        break;
+                    case "price range":
+                        genericFilterView(dealership, "price");
+                        break;
+                    case "kilometrage range":
+                        genericFilterView(dealership, "kilo");
+                        break;
+                    case "transmission type":
+                        genericFilterView(dealership, "trans");
+                        break;
+                    default:
+                        PrettyUtils.printRed("\nInvalid filter name. Please try again.");
+                        Prompter.promptEnter();
+                }
+            } catch (Exception e) {
+                PrettyUtils.printRed("An error occured while processing your choice.");
+                PrettyUtils.printRed(e.getMessage());
+                Prompter.promptEnter();
             }
         }
     }
@@ -171,8 +191,9 @@ public class UsedCarDealership {
 
             // If no vehicles
             return handleFilteredVehicles(dealership, filteredVehicles);
-        } catch (NumberFormatException e) {
-            PrettyUtils.printRed("Invalid range input! Returning to menu.");
+        } catch (Exception e) {
+            PrettyUtils.printRed("\nInvalid range input! Returning to menu.");
+            PrettyUtils.printRed(e.getMessage());
             Prompter.promptEnter();
             return false;
         }
@@ -283,6 +304,10 @@ public class UsedCarDealership {
      * @return a list of Vehicles that are filtered by user input
      */
     private static List<Vehicle> applyFilter(DealershipManager dealership, String filterType, String criteria) {
+        if (criteria == null || criteria.length() == 0) {
+            PrettyUtils.printRed("Invalid filter criteria");
+            return new ArrayList<>();
+        }
         switch (filterType) {
             case "type":
                 return dealership.getVehicleManager().sortVehiclesById(
@@ -316,19 +341,27 @@ public class UsedCarDealership {
      */
     private static List<Vehicle> applyRangeFilter(DealershipManager dealership, String filterType, String min,
             String max) {
-        switch (filterType) {
-            case "year":
-                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
-                        .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max))));
-            case "price":
-                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
-                        .searchInventory(
-                                new VehiclePriceRangeFilter(Double.parseDouble(min), Double.parseDouble(max))));
-            case "kilo":
-                return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager().searchInventory(
-                        new VehicleKilometerageRangeFilter(Double.parseDouble(min), Double.parseDouble(max))));
-            default:
-                return new ArrayList<>();
+        try {
+            double minValue = Double.parseDouble(min);
+            double maxValue = Double.parseDouble(max);
+            switch (filterType) {
+                case "year":
+                    return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
+                            .searchInventory(new VehicleYearRangeFilter(Integer.parseInt(min), Integer.parseInt(max))));
+                case "price":
+                    return dealership.getVehicleManager().sortVehiclesById(dealership.getVehicleManager()
+                            .searchInventory(
+                                    new VehiclePriceRangeFilter(minValue, maxValue)));
+                case "kilo":
+                    return dealership.getVehicleManager()
+                            .sortVehiclesById(dealership.getVehicleManager().searchInventory(
+                                    new VehicleKilometerageRangeFilter(minValue, maxValue)));
+                default:
+                    return new ArrayList<>();
+            }
+        } catch (NumberFormatException e) {
+            PrettyUtils.printRed("Invalid range values. Please enter numeric values.");
+            return new ArrayList<>();
         }
     }
 
@@ -441,7 +474,6 @@ public class UsedCarDealership {
                     }
                     break;
                 case 2:
-                    // TODO: Implement method to add vehicle to cart
                     addVehicleToCart(dealership, vehicle);
                     break;
             }
@@ -454,30 +486,37 @@ public class UsedCarDealership {
      * @return the DealershipManager object that was initialized
      */
     private static DealershipManager initialize() {
-        String dealershipName = "Talon & Juan's Used Car Emporium";
-        double dealershipAccountBalance = 567234.54;
+        try {
+            String dealershipName = "Talon & Juan's Used Car Emporium";
+            double dealershipAccountBalance = 567234.54;
 
-        // Load vehicles
-        String vehicleDatabasePath = "resources/database.csv";
-        List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
-        String vehicleInventoryPath = "resources/inventory.csv";
-        List<Vehicle> inventory = initializeListVehicle(vehicleInventoryPath);
+            // Load vehicles
+            String vehicleDatabasePath = "resources/database.csv";
+            List<Vehicle> database = initializeListVehicle(vehicleDatabasePath);
+            String vehicleInventoryPath = "resources/inventory.csv";
+            List<Vehicle> inventory = initializeListVehicle(vehicleInventoryPath);
 
-        // Load customers
-        String customerPath = "resources/customers.csv";
-        CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
-        List<Customer> customers = customerLoader.load();
+            // Load customers
+            String customerPath = "resources/customers.csv";
+            CustomerFileHandler customerLoader = new CustomerFileHandler(customerPath);
+            List<Customer> customers = customerLoader.load();
 
-        // Load transactions
-        String transactionPath = "resources/transactions.csv";
-        TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
-        List<Transaction> transactions = transactionLoader.load();
+            // Load transactions
+            String transactionPath = "resources/transactions.csv";
+            TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
+            List<Transaction> transactions = transactionLoader.load();
 
-        // Initialize and return the DealershipManager
-        DealershipManager dealership = new DealershipManager(
-                dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
-        initializeCurrentCustomer(customers, dealership);
-        return dealership;
+            // Initialize and return the DealershipManager
+            DealershipManager dealership = new DealershipManager(
+                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+            initializeCurrentCustomer(customers, dealership);
+            return dealership;
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error occured when reading files.");
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+            return null;
+        }
     }
 
     /**
@@ -487,8 +526,15 @@ public class UsedCarDealership {
      * @return a list of vehicles loaded from file
      */
     private static List<Vehicle> initializeListVehicle(String filePath) {
-        VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
-        return vehicleLoader.load();
+        try {
+            VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
+            return vehicleLoader.load();
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error loading vehicles from file: " + filePath);
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -498,30 +544,37 @@ public class UsedCarDealership {
      * @param dealership the DealershipManager object
      */
     private static void shutdown(DealershipManager dealership) {
-        // Save inventory and database
-        String vehicleDatabasePath = "resources/database.csv";
-        String vehicleInventoryPath = "resources/inventory.csv";
-        List<Vehicle> database = dealership.getDatabase();
-        List<Vehicle> inventory = dealership.getInventory();
-        VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
-        VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
-        vehicleDatabaseSaver.save(database);
-        vehicleInventorySaver.save(inventory);
+        try {
+            // Save inventory and database
+            String vehicleDatabasePath = "resources/database.csv";
+            String vehicleInventoryPath = "resources/inventory.csv";
+            List<Vehicle> database = dealership.getDatabase();
+            List<Vehicle> inventory = dealership.getInventory();
+            VehicleFileHandler vehicleDatabaseSaver = new VehicleFileHandler(vehicleDatabasePath);
+            VehicleFileHandler vehicleInventorySaver = new VehicleFileHandler(vehicleInventoryPath);
+            vehicleDatabaseSaver.save(database);
+            vehicleInventorySaver.save(inventory);
 
-        // Save customers
-        String customerPath = "resources/customers.csv";
-        List<Customer> customers = dealership.getCustomers();
-        CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
-        customerSaver.save(customers);
+            // Save customers
+            String customerPath = "resources/customers.csv";
+            List<Customer> customers = dealership.getCustomers();
+            CustomerFileHandler customerSaver = new CustomerFileHandler(customerPath);
+            customerSaver.save(customers);
 
-        // Save transactions
-        String transactionPath = "resources/transactions.csv";
-        List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
-        TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
-        transactionSaver.save(transactions);
+            // Save transactions
+            String transactionPath = "resources/transactions.csv";
+            List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
+            TransactionFileHandler transactionSaver = new TransactionFileHandler(transactionPath);
+            transactionSaver.save(transactions);
 
-        System.out.println("\nShutting down. Please come again! :)");
-        Prompter.close();
+            PrettyUtils.printCyan("\nShutting down. Please come again! :)");
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error saving data. Your changes may not have been saved.");
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+        } finally {
+            Prompter.close();
+        }
     }
 
     /**
@@ -533,8 +586,13 @@ public class UsedCarDealership {
      * @param dealership the dealership manager object to set the current customer
      */
     private static void initializeCurrentCustomer(List<Customer> customers, DealershipManager dealership) {
+        if (customers == null || customers.size() == 0) {
+            PrettyUtils.printRed("No customers found to initialize.");
+            return;
+        }
         Random rand = new Random();
-        dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+        // dealership.setCurrentCustomer(customers.get(rand.nextInt(customers.size())));
+        dealership.setCurrentCustomer(customers.get(47));
     }
 
     /**
@@ -550,6 +608,13 @@ public class UsedCarDealership {
             PrettyUtils.wipe();
             PrettyUtils.printYellow("Account Details:");
             System.out.println(dealer.getCurrentCustomer());
+            List<Vehicle> vehicles = dealer.getCurrentCustomer().getVehicles();
+            List<Integer> ids = new ArrayList<Integer>();
+            PrettyUtils.printYellow("\nCurrent Vehicles:");
+            for (int i = 0; i < vehicles.size(); i++) {
+                System.out.println(vehicles.get(i));
+                ids.add(vehicles.get(i).getID());
+            }
             PrettyUtils.printYellow("\nWould you like to:");
             String menu = PrettyUtils.returnYellow("1:") + " Sell Vehicle\n" +
                     PrettyUtils.returnYellow("0:") + " Exit";
@@ -592,7 +657,7 @@ public class UsedCarDealership {
                     ids.add(vehicles.get(i).getID());
                 }
                 PrettyUtils.printYellow("Would you like to:");
-                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle by ID\n" +
+                String menu = PrettyUtils.returnYellow("1:") + " Select Vehicle to Sell\n" +
                         PrettyUtils.returnYellow("0:") + " Exit";
                 choice = Prompter.promptOption(menu, 1);
             } else {
@@ -610,23 +675,35 @@ public class UsedCarDealership {
                     break;
                 case 1:
                     System.out.println("\nWhich vehicle will you sell to us?");
-                    int vehicleID = Prompter.promptVehicleId();
-                    if (!(ids.contains(vehicleID))) {
-                        PrettyUtils.printRed("\nInvalid Vehicle ID!\n");
-                        Prompter.promptEnter();
-                    } else {
-                        PrettyUtils.wipe();
-                        System.out.println("\nAre you sure you want to sell vehicle "+ vehicleID + "?");
-                        boolean confirmed = Prompter.promptYesNo();
-                        if (confirmed) {
-                            manageVehicleSale(dealer, vehicleID);
+                    try {
+                        int vehicleID = Prompter.promptVehicleId();
+                        if (vehicleID == -1) {
+                            Prompter.promptEnter();
+                            break;
+                        }
+                        if (!(ids.contains(vehicleID))) {
+                            PrettyUtils.printRed("\nInvalid Vehicle ID!");
                             Prompter.promptEnter();
                         } else {
-                            System.out.println("\nVehicle selection cancelled.");
-                            Prompter.promptEnter();
+                            PrettyUtils.wipe();
+                            System.out.println("\nAre you sure you want to sell vehicle " + PrettyUtils.returnYellow("[" + vehicleID + "]") + "?");
+                            boolean confirmed = Prompter.promptYesNo();
+                            if (confirmed) {
+                                manageVehicleSale(dealer, vehicleID);
+                                Prompter.promptEnter();
+                            } else {
+                                PrettyUtils.printRed("\nVehicle selection cancelled.");
+                                Prompter.promptEnter();
+                            }
                         }
+                        break;
+                    } catch (NumberFormatException e) {
+                        PrettyUtils.printRed("Invalid input! Please neter a numeric vehicle ID.");
+                        Prompter.promptEnter();
+                    } catch (IllegalArgumentException e) {
+                        PrettyUtils.printRed(e.getMessage());
+                        Prompter.promptEnter();
                     }
-                    break;
                 default:
                     break;
             }
@@ -634,10 +711,11 @@ public class UsedCarDealership {
     }
 
     /**
-     * Manages the vehicle transaction process, offering a vehicle to the customer, 
+     * Manages the vehicle transaction process, offering a vehicle to the customer,
      * confirming the offer, and processing the sale if accepted.
      *
-     * @param dealer the DealershipManager responsible for managing the dealership operations
+     * @param dealer    the DealershipManager responsible for managing the
+     *                  dealership operations
      * @param vehicleID the ID of the vehicle being offered for sale
     */
     private static void manageVehicleSale(DealershipManager dealer, int vehicleID){
@@ -645,23 +723,23 @@ public class UsedCarDealership {
         Customer customer = dealer.getCurrentCustomer();
 
         if (vehicle == null || customer == null) {
-            System.out.println("Error: Vehicle or Customer not found!");
+            PrettyUtils.printRed("Error: Vehicle or Customer not found!");
             return;
         }
-        System.out.println("The dealership offers you $" + vehicle.calculateTotalPrice() + " for the vehicle.");
+        System.out.println("\nThe dealership offers you " + PrettyUtils.returnYellow("$" + String.format("%.2f", vehicle.calculateTotalPrice())) + " for the vehicle.");
 
-        System.out.println("Do you accept this offer? (Y/N)");
+        System.out.println("\nDo you accept this offer? " + PrettyUtils.returnYellow("(Y/N)") + ".");
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
             dealer.processCustomerVehicleTransaction(vehicle, customer, "purchase");
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
 
-            System.out.println("Sale successful!");
-            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
-            System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
+            PrettyUtils.printGreen("Sale successful!");
+            System.out.println("Updated Account Balance: " + PrettyUtils.returnYellow("$" + String.format("%.2f", customer.getAccountBalance())));
+            System.out.println("\n" + PrettyUtils.returnYellow("Receipt:") + "\n" + transactions.get(transactions.size() - 1));
         } else {
-            System.out.println("Sale cancelled.");
+            PrettyUtils.printRed("Sale cancelled.");
         }
 
     }
@@ -676,7 +754,10 @@ public class UsedCarDealership {
     }
     
     private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle) {
+        //TODO move this to dealership
         dealer.getCurrentCart().addVehicle(vehicle);
+        dealer.getVehicleManager().removeVehicle(vehicle);
+
         PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
         boolean inPage = true;
         while (inPage) {
@@ -690,7 +771,7 @@ public class UsedCarDealership {
 
         PrettyUtils.printYellow("\nWould you like to:");
         String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
-                      PrettyUtils.returnYellow("0:") + " Exit";
+                      PrettyUtils.returnYellow("0:") + " Keep shopping";
         int choice = Prompter.promptOption(menu, 1);
         if (choice == -1) {
             return true;
@@ -712,35 +793,45 @@ public class UsedCarDealership {
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
         if(productsList.isEmpty()){
             PrettyUtils.printRed("Please, fill out your ShoppingCart to visit checkout.");
+            Prompter.promptEnter();
         }else{
             //maybe not like this
-            for(Vehicle v : productsList){
-                checkoutLogic(dealer, v);
-            }
+            
+                checkoutLogic(dealer, productsList);
+            
             Prompter.promptEnter();
         }
     }
 //validate : enough money?
-    private static void checkoutLogic(DealershipManager dealer, Vehicle vehicle){
+    private static void checkoutLogic(DealershipManager dealer, List<Vehicle> productsList){
+        int allVehiclesPrice = 0;
+        for(Vehicle v : productsList){
+            System.out.println(v);
+            allVehiclesPrice += v.calculateTotalPrice();
+        }
         Customer customer = dealer.getCurrentCustomer();
 
-        if (vehicle == null || customer == null) {
-            System.out.println("Error: Vehicle or Customer not found!");
+        if (productsList == null || customer == null) {
+            System.out.println("Error: Vehicle list or Customer not found!");
             return;
         }
         //Do we sell it more expensive because we are a business (use getPrice() instead)?
-        System.out.println("This vehicle is worth $" + vehicle.calculateTotalPrice() + ".");
+        System.out.println("Total: " + allVehiclesPrice + "$");
 
-        System.out.println("Do you want to buy this vehicle? (Y/N)");
+        System.out.println("Finalize your purchase? (Y/N)");
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
-            dealer.processCustomerVehicleTransaction(vehicle, customer, "sale");
-            List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+            String receipt = "Receipt:";
+            for(Vehicle vehicle : productsList){
+                dealer.processCustomerVehicleTransaction(vehicle, customer, "sale");
+                List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
+                System.out.println("Congrats on your new " + vehicle.getModel() + "!");
+                receipt += "\n" + transactions.get(transactions.size() - 1);
+            }
 
-            System.out.println("Congrats on your new " + vehicle.getModel() + "!");
             System.out.println("Updated Account Balance: " + customer.getAccountBalance());
-            System.out.println("\nReceipt: \n" + transactions.get(transactions.size() - 1));
+            System.out.println(receipt);
         } else {
             System.out.println("Sale cancelled.");
         }

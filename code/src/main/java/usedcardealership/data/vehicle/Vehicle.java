@@ -63,6 +63,45 @@ public abstract class Vehicle {
             double kilometerage,
             double damage,
             boolean isElectric) {
+        if (type == null || type.length() == 0) {
+            throw new IllegalArgumentException("Type cannot be null or empty.");
+        }
+        if (id < 1) {
+            throw new IllegalArgumentException("ID must be positive integer.");
+        }
+        if (make == null || make.length() == 0) {
+            throw new IllegalArgumentException("Make cannot be null or empty.");
+        }
+        if (model == null || model.length() == 0) {
+            throw new IllegalArgumentException("Model cannot be null or empty.");
+        }
+        if (year < 1886) {
+            throw new IllegalArgumentException("Year must be 1886 or later.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        }
+        if (color == null || color.length() == 0) {
+            throw new IllegalArgumentException("Color cannot be null or empty.");
+        }
+        if (transmission == null || transmission.length() == 0) {
+            throw new IllegalArgumentException("Transmission cannot be null or empty.");
+        }
+        if (driveType == null || driveType.length() == 0) {
+            throw new IllegalArgumentException("Drive type cannot be null or empty.");
+        }
+        if (horsepower <= 0) {
+            throw new IllegalArgumentException("Horsepower cannot be negative.");
+        }
+        if (weight <= 0) {
+            throw new IllegalArgumentException("Weight cannot be negative.");
+        }
+        if (kilometerage < 0) {
+            throw new IllegalArgumentException("Kilometrage cannot be negative.");
+        }
+        if (damage < 0 || damage > 100) {
+            throw new IllegalArgumentException("Damage percentage must be between 0.00 and 100.00");
+        }
         this.rng = new Random();
         this.type = type;
         this.id = id;
@@ -233,7 +272,11 @@ public abstract class Vehicle {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        if (price >= 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        } else {
+            this.price = price;
+        }
     }
 
     /**
@@ -336,7 +379,7 @@ public abstract class Vehicle {
      */
     private double calculateAgeDepreciation() {
         int currentYear = Year.now().getValue();
-        final double AGE_DEPRECIATION_RATE = 0.05;
+        final double AGE_DEPRECIATION_RATE = 0.02;
         return (currentYear - this.year) * AGE_DEPRECIATION_RATE * this.price; // 5% per year
     }
 
@@ -361,7 +404,7 @@ public abstract class Vehicle {
     }
 
     /**
-     * Returns an array of strings representing the fields of the vehicle 
+     * Returns an array of strings representing the fields of the vehicle
      * for CSV conversion
      *
      * @return String[] representing the fields of the vehicle

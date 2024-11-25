@@ -31,7 +31,29 @@ public class Customer {
      * 
      * Initialize all fields using parameters
      */
-    public Customer(int id, String firstName, String lastName, String birthday, String phoneNumber, String address, double accountBalance, List<Vehicle> vehicles){
+    public Customer(int id, String firstName, String lastName, String birthday, String phoneNumber, String address,
+            double accountBalance, List<Vehicle> vehicles) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Customer ID must be a positive integer.");
+        }
+        if (firstName == null || firstName.length() == 0) {
+            throw new IllegalArgumentException("First name cannot be null or empty.");
+        }
+        if (lastName == null || lastName.length() == 0) {
+            throw new IllegalArgumentException("Last name cannot be null or empty.");
+        }
+        if (birthday == null || birthday.length() == 0) {
+            throw new IllegalArgumentException("Birthday cannot be null or empty.");
+        }
+        if (phoneNumber == null || phoneNumber.length() == 0) {
+            throw new IllegalArgumentException("Phone number cannot be null or empty.");
+        }
+        if (address == null || address.length() == 0) {
+            throw new IllegalArgumentException("Address cannot be null or empty.");
+        }
+        if (vehicles == null) {
+            throw new IllegalArgumentException("Vehicle list cannot be null.");
+        }
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,81 +67,92 @@ public class Customer {
      * Copy constructor
     */
     public Customer(Customer c) {
-        this(c.id, 
-             c.firstName, 
-             c.lastName, 
-             c.birthday, 
-             c.phoneNumber, 
-             c.address, 
-             c.accountBalance, 
-             c.vehicles);
+        this(c.id,
+                c.firstName,
+                c.lastName,
+                c.birthday,
+                c.phoneNumber,
+                c.address,
+                c.accountBalance,
+                c.vehicles);
     }
-    /** 
+
+    /**
      * Overrides toString method
      * 
      * @return String
      */
     @Override
-    public String toString(){
-        return "Customer ID: " + id + "\n" +
-               "Name: " + firstName + " " + lastName + "\n" +
-               "Birthday: " + birthday + "\n" +
-               "Phone: " + phoneNumber + "\n" +
-               "Address: " + address + "\n" +
-               "Account Balance: $" + accountBalance;
+    public String toString() {
+        return "Customer ID: " + this.id + "\n" +
+                "Name: " + this.firstName + " " + this.lastName + "\n" +
+                "Birthday: " + this.birthday + "\n" +
+                "Phone: " + this.phoneNumber + "\n" +
+                "Address: " + this.address + "\n" +
+                "Account Balance: $" + String.format("%.2f", this.accountBalance);
     }
-    
-    public int getID(){
+
+    public int getID() {
         return this.id;
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return this.lastName;
     }
 
-    public String getBirthday(){
+    public String getBirthday() {
         return this.birthday;
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return this.address;
     }
 
-    public double getAccountBalance(){
+    public double getAccountBalance() {
         return this.accountBalance;
     }
 
-    public List<Vehicle> getVehicles(){
+    public List<Vehicle> getVehicles() {
         return this.vehicles;
     }
 
     /**
      * Updates the customers balance after making a transaction
+     * Account balance can go into negative for fun (debt)
      * 
      * @param amount (positive or negative)
      * @return void
      */
-    public void updateAccountBalance(double amount){
+    public void updateAccountBalance(double amount) {
         this.accountBalance += amount;
     }
 
-    public void setPhoneNumber(String number){
+    public void setPhoneNumber(String number) {
+        if (number == null || number.length() == 0) {
+            throw new IllegalArgumentException("Phone number cannot be null or empty.");
+        }
         this.phoneNumber = number;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
+        if (address == null || address.length() == 0) {
+            throw new IllegalArgumentException("Address cannot be null or empty.");
+        }
         this.address = address;
     }
 
     public Vehicle getVehicleById(int vehicleID) {
+        if (vehicleID <= 0) {
+            throw new IllegalArgumentException("Vehicle ID must be positive integer.");
+        }
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getID() == vehicleID) {
                 return vehicle;
@@ -128,15 +161,14 @@ public class Customer {
         return null;
     }
 
-     /** 
+    /**
      * Overrides toString method
      * 
      * @return String
      */
     @Override
-    public boolean equals(Object o)
-    {
-        if(!(o instanceof Customer)){
+    public boolean equals(Object o) {
+        if (!(o instanceof Customer)) {
             return false;
         }
         Customer c = (Customer) o;

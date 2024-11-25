@@ -39,6 +39,9 @@ public class ShoppingCart {
      * @param vehicle
      */
     public void addVehicle(Vehicle vehicle){
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         this.productsList.add(vehicle);
     }
     /**
@@ -47,6 +50,9 @@ public class ShoppingCart {
      * @return void
      */
     public void removeVehicle(int index){
+        if (index < 0 || index >= productsList.size()) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
         this.productsList.remove(index);
     }
     /**

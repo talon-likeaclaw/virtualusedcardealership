@@ -24,6 +24,6 @@ public class Purchase extends Transaction{
      * Constructor: uses parent constructor
      */
     public Purchase(int id, LocalDate date, double price, Customer customer, Vehicle vehicle){
-        super(id, "Purchase", date, price, customer, vehicle);
+        super(id, "Dealership Purchase", date, price, customer, vehicle);
     }
 }

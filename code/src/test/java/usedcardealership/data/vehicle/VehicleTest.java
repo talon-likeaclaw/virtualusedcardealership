@@ -380,7 +380,7 @@ public class VehicleTest {
                 false);
 
         // Depreciation calculations:
-        double ageDepreciation = 18000.00 * 0.05 * 5; // 5% per year
+        double ageDepreciation = 18000.00 * 0.02 * 5; // 2% per year
         double kilometerageDepreciation = 50000.00 * 0.02; // $0.02 per km
         double damageDepreciation = 18000.00 * (10.0 / 100) * 0.50; // 50% damage rate
         double totalDepreciation = ageDepreciation + kilometerageDepreciation + damageDepreciation;

@@ -15,6 +15,5 @@ Van,57,Ford,Transit,2020,45000.0,White,Automatic,RWD,275,5000.0,9000.0,0.1,false
 SUV,35,Jeep,Grand Cherokee,2021,40000.0,Red,Automatic,AWD,295,4300.0,12000.0,0.02,false,5,4,true,false
 Car,27,BMW,3 Series,2019,40000.0,Blue,Automatic,RWD,255,3600.0,14000.0,0.05,false,5,4,true,true
 Car,23,Ford,Mustang,2019,35000.0,Red,Manual,RWD,450,3700.0,8000.0,0.05,false,4,2,true,true
-Car,22,Honda,Civic,2020,22000.0,Blue,Automatic,FWD,158,2700.0,20000.0,0.1,false,5,4,false,true
 SUV,32,Honda,CR-V,2020,32000.0,Gray,Automatic,AWD,190,3500.0,20000.0,0.05,false,5,4,true,false
 PickupTruck,41,Ford,F-150,2021,45000.0,Blue,Automatic,4WD,400,6000.0,15000.0,0.05,false,5,4,true,3000.0,5.5,10000.0
