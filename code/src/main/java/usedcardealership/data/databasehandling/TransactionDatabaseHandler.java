@@ -60,4 +60,26 @@ public class TransactionDatabaseHandler implements IDataHandler<Transaction> {
         }
         return transactions;
     }
+
+    @Override
+    public void save(List<Transaction> transactions) {
+        String query = "INSERT INTO transactions (id, type, date, price, tax, customer_id, vehicle_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            for (Transaction transaction : transactions) {
+                pstmt.setInt(1, transaction.getID());
+                pstmt.setString(2, transaction.getType());
+                pstmt.setDate(3, java.sql.Date.valueOf(transaction.getDate()));
+                pstmt.setDouble(4, transaction.getPrice());
+                pstmt.setDouble(5, transaction.getTax());
+                pstmt.setInt(6, transaction.getCustomer().getID());
+                pstmt.setInt(7, transaction.getVehicle().getID());
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
