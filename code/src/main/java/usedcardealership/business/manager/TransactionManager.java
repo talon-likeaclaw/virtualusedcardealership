@@ -164,7 +164,7 @@ public class TransactionManager {
     
             if (coupon != null) {
                 System.out.println(PrettyUtils.returnGreen("Lucky you, you got a coupon: " + coupon.getCode() + "!!"));
-                System.out.println(PrettyUtils.returnYellow("Do you want to apply it for a " + coupon.getDiscount() + "$ discount? (Y/N)"));
+                System.out.println(PrettyUtils.returnYellow("Do you want to apply it for a discount? (Y/N)"));
                 boolean applyingCoupon = Prompter.promptYesNo();
     
                 if (applyingCoupon) {
