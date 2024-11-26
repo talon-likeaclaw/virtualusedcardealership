@@ -11,7 +11,10 @@ import java.util.*;
 
 import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
+import usedcardealership.data.filehandling.VehicleFileHandler;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.interaction.PrettyUtils;
+import usedcardealership.interaction.Prompter;
 
 public class VehicleManager {
     private List<Vehicle> inventory;
@@ -214,6 +217,196 @@ public class VehicleManager {
     public void validateListVehiclesNull(List<Vehicle> vehicles) {
         if (vehicles == null) {
             throw new IllegalArgumentException("Vehicle list cannot be null.");
+        }
+    }
+
+    /**
+     * Initilizes a VehicleFileLoader and loads from file path
+     * 
+     * @param filePath the file path to load from
+     * @return a list of vehicles loaded from file
+     */
+    public static List<Vehicle> initializeListVehicle(String filePath) {
+        try {
+            VehicleFileHandler vehicleLoader = new VehicleFileHandler(filePath);
+            return vehicleLoader.load();
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error loading vehicles from file: " + filePath);
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Displays the all of the unique available criteria to choose from
+     * 
+     * @param dealership the DealershipManager object
+     * @param filterType the method we are filtering by
+     */
+    public static void displayAvailableCriteria(DealershipManager dealership, String filterType) {
+        // Create String hash set for unique values only
+        HashSet<String> criteriaSet = new HashSet<>();
+        // Depending on filterType, print unique values to choose from
+        switch (filterType) {
+            case "type":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getType());
+                }
+                break;
+            case "make":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getMake());
+                }
+                break;
+            case "color":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getColor());
+                }
+                break;
+            case "drive":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getDriveType());
+                }
+                break;
+            case "trans":
+                for (Vehicle v : dealership.getInventory()) {
+                    criteriaSet.add(v.getTransmission());
+                }
+                break;
+            default:
+                PrettyUtils.printRed("No available criteria to display for this filter.");
+                Prompter.promptEnter();
+                return;
+        }
+        // If there are no options to choose from print warning
+        if (criteriaSet.size() == 0) {
+            PrettyUtils.printRed("No options available.");
+            Prompter.promptEnter();
+        } else {
+            // Convert HashSet to List for sorting
+            List<String> sortedCriteria = new ArrayList<>(criteriaSet);
+            // Sort alphabetically
+            Collections.sort(sortedCriteria);
+            PrettyUtils.printYellow("Available options:");
+            for (String criteria : sortedCriteria) {
+                System.out.println("- " + criteria);
+            }
+        }
+    }
+
+    /**
+     * Allows customer to select vehicle from list by ID
+     * 
+     * @param dealership the DealershipManager object
+     * @param vehicles   the list of vehicles to select from
+     */
+    public static void selectVehiclesFromList(DealershipManager dealership, List<Vehicle> vehicles) {
+        boolean inPage = true;
+        while (inPage) {
+            PrettyUtils.wipe();
+            for (Vehicle v : vehicles) {
+                System.out.println(v);
+            }
+            // Print out prompt and get user input for sorting
+            System.out.println(Prompter.getPrompt("id-sort"));
+            String input = Prompter.promptString();
+            // If null go back else trim and set to lowercase
+            if (input == null) {
+                inPage = false;
+                break;
+            } else {
+                input = input.trim().toLowerCase();
+            }
+            try {
+                // Check if input is numeric (assumes it's a vehicle ID)
+                int vehicleID = Integer.parseInt(input);
+                Vehicle selectedVehicle = dealership.getVehicleManager().getVehicleById(vehicleID);
+                if (selectedVehicle != null) {
+                    vehicleDetailsMenu(dealership, vehicleID, vehicles);
+                } else {
+                    PrettyUtils.printRed("\nInvalid Vehicle ID!");
+                    Prompter.promptEnter();
+                }
+            } catch (NumberFormatException e) {
+                // Get sorting type and order
+                String[] sortingInfo = input.split(" ");
+                String sortType = sortingInfo[0];
+                // Default to ascending if no "desc"
+                boolean ascending = sortingInfo.length < 2 || !sortingInfo[1].equals("desc");
+                switch (sortType) {
+                    case "id":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleIdCompare(), ascending);
+                        System.out.println("\nSorting by ID " + (ascending ? "ascending." : "descending."));
+                        break;
+                    case "price":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehiclePriceCompare(), ascending);
+                        System.out.println("\nSorting by Price " + (ascending ? "ascending." : "descending."));
+                        break;
+                    case "year":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleYearCompare(), ascending);
+                        System.out.println("\nSorting by Year " + (ascending ? "ascending." : "descending."));
+                        break;
+                    case "kilometrage":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleKilometerageCompare(),
+                                ascending);
+                        System.out.println("\nSorting by Kilometrage " + (ascending ? "ascending." : "descending."));
+                        break;
+                    case "damage":
+                        dealership.getVehicleManager().sortVehicles(vehicles, new VehicleDamageCompare(), ascending);
+                        System.out.println("\nSorting by Damage " + (ascending ? "ascending." : "descending."));
+                        break;
+                    default:
+                        PrettyUtils.printRed("\nInvalid option. Please enter a valid vehicle ID or sorting type.");
+                }
+                Prompter.promptEnter();
+            }
+        }
+    }
+
+    /**
+     * Menu that asks user if they want to purchase vehicle or go back
+     * 
+     */
+    // TODO: Add a straight to checkoout option
+    private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
+        boolean inPage = true;
+        int testDriveCount = 0;
+        Vehicle vehicle = dealership.getVehicleManager().getVehicleById(vehicleId);
+        while (inPage) {
+            PrettyUtils.wipe();
+            System.out.println(vehicle.getFullDetails());
+            PrettyUtils.printYellow("\nWould you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Test Drive Vehicle\n" +
+                    PrettyUtils.returnYellow("2:") + " Add Vehicle to Cart\n" +
+                    PrettyUtils.returnYellow("0:") + " Return to Vehicle List";
+            int choice = Prompter.promptOption(menu, 2);
+            if (choice == -1) {
+                continue;
+            }
+            switch (choice) {
+                case 0:
+                    inPage = false;
+                    break;
+                case 1:
+                    if (testDriveCount < 1) {
+                        try {
+                            dealership.getVehicleManager().getVehicleById(vehicleId).testDrive();
+                            Prompter.promptEnter();
+                            testDriveCount++;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        PrettyUtils.printRed("\nYou just test drove this vehicle!");
+                        Prompter.promptEnter();
+                        PrettyUtils.wipe();
+                    }
+                    break;
+                case 2:
+                    CustomerManager.addVehicleToCart(dealership, vehicle, vehicles);
+                    break;
+            }
         }
     }
 }
