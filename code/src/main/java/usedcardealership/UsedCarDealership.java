@@ -6,6 +6,7 @@ import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.databasehandling.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.data.coupons.*;
 import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
@@ -489,7 +490,6 @@ public class UsedCarDealership {
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      */
-    // TODO: Add a straight to checkoout option 
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
         boolean inPage = true;
         int testDriveCount = 0;
@@ -557,9 +557,17 @@ public class UsedCarDealership {
             TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
             List<Transaction> transactions = transactionLoader.load();
 
+            //Load coupons
+            String couponPath = "resources/coupons.csv";
+            CouponFileHandler couponLoader = new CouponFileHandler(couponPath);
+            List<Coupon> coupons = couponLoader.load();
+
+            //TODO remoove
+            System.out.println(coupons);
+
             // Initialize and return the DealershipManager
             DealershipManager dealership = new DealershipManager(
-                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers, coupons);
             initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (Exception e) {
@@ -894,12 +902,17 @@ public class UsedCarDealership {
      */
     private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle, List<Vehicle> vehicles) {
         PrettyUtils.wipe();
-        //TODO move this to dealership
-        dealer.getCurrentCart().addVehicle(vehicle);
-        dealer.getVehicleManager().removeVehicle(vehicle);
-        vehicles.remove(vehicle);
-
-        PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
+    
+        if (dealer.getCurrentCart().isVehicleInCart(vehicle)) {
+            PrettyUtils.printRed("\nThis vehicle is already in your shopping cart.");
+        } else {
+            dealer.getCurrentCart().addVehicle(vehicle);
+            dealer.getVehicleManager().removeVehicle(vehicle);
+            vehicles.remove(vehicle);
+    
+            PrettyUtils.printGreen("\nVehicle added to Shopping Cart");
+        }
+    
         boolean inPage = true;
         while (inPage) {
             inPage = checkoutPrompter(dealer);
@@ -919,8 +932,9 @@ public class UsedCarDealership {
 
         PrettyUtils.printYellow("\nWould you like to:");
         String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
+                    PrettyUtils.returnYellow("2: ") + "Remove items from the cart\n" +
                     PrettyUtils.returnYellow("0:") + " Keep shopping";
-        int choice = Prompter.promptOption(menu, 1);
+        int choice = Prompter.promptOption(menu, 2);
         if (choice == -1) {
             return true;
         }
@@ -930,12 +944,45 @@ public class UsedCarDealership {
             case 1:
                 checkoutView(dealer);
                 return false;
+            case 2:
+                removeFromCart(dealer);
+                return false;
             default:
-                PrettyUtils.printRed("You may only select 0 or 1");
+                PrettyUtils.printRed("You may only select 0, 1 or 2");
         }
         // Continue prompting for valid input
         return true; 
     }
+
+    public static void removeFromCart(DealershipManager dealer) {
+        PrettyUtils.wipe();
+    
+        List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+    
+        if (productsList.isEmpty()) {
+            PrettyUtils.printRed("Your Shopping Cart is currently empty.");
+            Prompter.promptEnter();
+            return;
+        }
+    
+        System.out.println("Here are the vehicles in your cart:");
+        for (Vehicle vehicle : productsList) {
+            System.out.println(vehicle);
+        }
+    
+        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:\n");
+        int vehicleIdToRemove = Prompter.promptInt();
+        boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
+
+        if (wasRemoved) {
+            PrettyUtils.printGreen("The vehicle has been successfully removed from your cart.");
+        } else {
+            PrettyUtils.printRed("Invalid ID. No vehicle found with that ID.");
+        }
+        Prompter.promptEnter(); 
+
+    }
+    
 
     /**
      * Handles the checkout process. Displays the shopping cart contents and checks if
@@ -950,7 +997,6 @@ public class UsedCarDealership {
             PrettyUtils.printRed("Please, fill out your ShoppingCart to visit checkout.");
             Prompter.promptEnter();
         } else {
-            // maybe not like this
             checkoutLogic(dealer, productsList);
             Prompter.promptEnter();
         }

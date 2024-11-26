@@ -20,7 +20,7 @@ public class DealershipManagerTest {
         double expectedBalance = 100000.00;
 
         // Act
-        DealershipManager test = new DealershipManager(expectedName, expectedBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        DealershipManager test = new DealershipManager(expectedName, expectedBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         // Assert
         assertEquals(expectedName, test.getName());
@@ -35,7 +35,7 @@ public class DealershipManagerTest {
         double expectedBalance = initialBalance + balanceChange;
 
         // Act
-        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         test.updateAccountBalance(balanceChange);
 
         // Assert
@@ -50,7 +50,7 @@ public class DealershipManagerTest {
         double expectedBalance = initialBalance + balanceChange;
 
         // Act
-        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         test.updateAccountBalance(balanceChange);
 
         // Assert
@@ -65,7 +65,7 @@ public class DealershipManagerTest {
         double expectedBalance = initialBalance;
 
         // Act
-        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        DealershipManager test = new DealershipManager("Talon's Vehicle Emporium", initialBalance, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         test.updateAccountBalance(balanceChange);
 
         // Assert
