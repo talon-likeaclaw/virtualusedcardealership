@@ -11,6 +11,12 @@ public abstract class Coupon {
      * @param code the unique code for the coupon
     */
     public Coupon(String code, double discount) {
+        if (code == null || code.length() == 0) {
+            throw new IllegalArgumentException("Code cannot be null or empty");
+        }
+        if (discount <= 0) {
+            throw new IllegalArgumentException("Discount cannot be 0 or less.");
+        }
         this.code = code;
         this.discount = discount;
     }
