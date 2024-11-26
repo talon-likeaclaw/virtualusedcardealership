@@ -109,9 +109,13 @@ public class UsedCarDealership {
             TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
             List<Transaction> transactions = transactionLoader.load();
 
+            String couponPath = "resource/coupons.csv";
+            CouponFileHandler couponLoader = new CouponFileHandler(couponPath);
+            List<Coupon> coupons = couponLoader.load();
+
             // Initialize and return the DealershipManager
             DealershipManager dealership = new DealershipManager(
-                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers, coupons);
             dealership.initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (Exception e) {
@@ -147,7 +151,7 @@ public class UsedCarDealership {
             List<Transaction> transactions = transactionHandler.load();
 
             DealershipManager dealership = new DealershipManager(dealershipName, dealershipAccountBalance, transactions,
-                    inventory, database, customers);
+                    inventory, database, customers, new ArrayList<>());
             dealership.initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (SQLException e) {
@@ -461,25 +465,7 @@ public class UsedCarDealership {
             String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
                     PrettyUtils.returnYellow("2: ") + "Remove items from the cart\n" +
                     PrettyUtils.returnYellow("0:") + " Keep shopping";
-        int choice = Prompter.promptOption(menu, 2);
-        if (choice == -1) {
-            return true;
-        }
-        switch (choice) {
-            case 0:
-                return false;
-            case 1:
-                checkoutView(dealer);
-                return false;
-            case 2:
-                removeFromCart(dealer);
-                return false;
-            default:
-                PrettyUtils.printRed("You may only select 0, 1 or 2");
-        }
-        // Continue prompting for valid input
-        return true; 
-            int choice = Prompter.promptOption(menu, 1);
+            int choice = Prompter.promptOption(menu, 2);
             if (choice == -1) {
                 return true;
             }
@@ -489,8 +475,11 @@ public class UsedCarDealership {
                 case 1:
                     checkoutView(dealer);
                     return false;
+                case 2:
+                    CustomerManager.removeFromCart(dealer);
+                    return false;
                 default:
-                    PrettyUtils.printRed("You may only select 0 or 1");
+                    PrettyUtils.printRed("You may only select 0, 1 or 2");
             }
         }
         return true;
@@ -505,9 +494,9 @@ public class UsedCarDealership {
      */
     private static void checkoutView(DealershipManager dealer) {
         PrettyUtils.wipe();
-    
+
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
-    
+
         if (productsList.isEmpty()) {
             PrettyUtils.printRed("Please fill your Shopping Cart to visit checkout.");
             Prompter.promptEnter();
