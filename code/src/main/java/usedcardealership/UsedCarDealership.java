@@ -4,25 +4,76 @@ import usedcardealership.interaction.*;
 import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
+import usedcardealership.data.databasehandling.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
 
+import java.sql.*;
 import java.util.*;
 
 public class UsedCarDealership {
     public static void main(String[] args) {
-        try {
-            DealershipManager dealership = initialize();
-            if (dealership != null) {
-                mainMenuView(dealership);
+        run();
+    }
+
+    /**
+     * Lets the user choose between CSV or Database loading
+     * then runs the Application with the loaded data
+     */
+    private static void run() {
+        boolean inPage = true;
+        while (inPage) {
+            PrettyUtils.wipe();
+            PrettyUtils.printCyan(PrettyUtils.returnCars());
+            PrettyUtils.printCyan("Welcome to the Virtual Used Car Dealership!\n");
+            String menu = PrettyUtils.returnYellow("Initialization Options:") + "\n" +
+                    PrettyUtils.returnYellow("1:") + " Load From CSV\n" +
+                    PrettyUtils.returnYellow("2:") + " Load from Database";
+            try {
+                int choice = Prompter.promptOption(menu, 2);
+                if (choice == 0) {
+                    PrettyUtils.printRed("\nIllegal input! Input must be a number from the list.");
+                    Prompter.promptEnter();
+                    continue;
+                }
+                switch (choice) {
+                    case 1:
+                        // The user decided to load from the CSV
+                        try {
+                            DealershipManager dealership = initialize();
+                            if (dealership != null) {
+                                inPage = false;
+                                mainMenuView(dealership);
+                            }
+                            shutdown(dealership);
+                            break;
+                        } catch (Exception e) {
+                            PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
+                            PrettyUtils.printRed(e.getMessage());
+                            Prompter.promptEnter();
+                        }
+                    case 2:
+                        // The user decided to load from the Database
+                        try {
+                            DealershipManager dealership = initializeFromDb();
+                            if (dealership != null) {
+                                inPage = false;
+                                mainMenuView(dealership);
+                            }
+                            shutdownFromDb(dealership);
+                            break;
+                        } catch (Exception e) {
+                            PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
+                            PrettyUtils.printRed(e.getMessage());
+                            Prompter.promptEnter();
+                        }
+                }
+            } catch (Exception e) {
+                PrettyUtils.printRed(e.getMessage());
+                Prompter.promptEnter();
             }
-            shutdown(dealership);
-        } catch (Exception e) {
-            PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
-            PrettyUtils.printRed(e.getMessage());
-            Prompter.promptEnter();
         }
     }
 
@@ -578,6 +629,77 @@ public class UsedCarDealership {
     }
 
     /**
+     * Initalized from the database connection
+     * 
+     * @return the DealershipManager object
+     */
+    private static DealershipManager initializeFromDb() {
+        String dealershipName = "Talon & Juan's Used Car Emporium";
+        double dealershipAccountBalance = 567234.54;
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/usedcardealership";
+        String dbUser = "postgres";
+        String dbPassword = "postgres";
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            // Load vehicles
+            VehicleDatabaseHandler vehicleHandler = new VehicleDatabaseHandler(connection);
+            List<Vehicle> inventory = vehicleHandler.load();
+            List<Vehicle> database = vehicleHandler.loadDatabase();
+
+            // Load customers
+            CustomerDatabaseHandler customerHandler = new CustomerDatabaseHandler(connection);
+            List<Customer> customers = customerHandler.load();
+
+            TransactionDatabaseHandler transactionHandler = new TransactionDatabaseHandler(connection);
+            List<Transaction> transactions = transactionHandler.load();
+
+            DealershipManager dealership = new DealershipManager(dealershipName, dealershipAccountBalance, transactions,
+                    inventory, database, customers);
+            initializeCurrentCustomer(customers, dealership);
+            return dealership;
+        } catch (SQLException e) {
+            PrettyUtils.printRed("Failed to connect to the database or create DealershipManager.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Shutdown the DealershipManager and saves all vehicles, customers,
+     * transactions
+     * 
+     * @param dealership the DealershipManager object
+     */
+    private static void shutdownFromDb(DealershipManager dealership) {
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/usedcardealership";
+        String dbUser = "postgres";
+        String dbPassword = "postgres";
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            // Save inventory
+            List<Vehicle> database = dealership.getDatabase();
+            VehicleDatabaseHandler vehicleInventorySaver = new VehicleDatabaseHandler(connection);
+            vehicleInventorySaver.save(database);
+
+            // Save customers
+            List<Customer> customers = dealership.getCustomers();
+            CustomerDatabaseHandler customerSaver = new CustomerDatabaseHandler(connection);
+            customerSaver.save(customers);
+
+            // Save transactions
+            List<Transaction> transactions = dealership.getTransactionManager().getTransactions();
+            TransactionDatabaseHandler transactionSaver = new TransactionDatabaseHandler(connection);
+            transactionSaver.save(transactions);
+
+            PrettyUtils.printCyan("\nShutting down. Please come again! :)");
+        } catch (Exception e) {
+            PrettyUtils.printRed("Error saving data. Your changes may not have been saved.");
+            PrettyUtils.printRed(e.getMessage());
+            Prompter.promptEnter();
+        } finally {
+            Prompter.close();
+        }
+    }
+
+    /**
      * Initializes the current customer for the dealership by randomly selecting a
      * customer
      * from the provided list of customers.
@@ -685,7 +807,8 @@ public class UsedCarDealership {
                             Prompter.promptEnter();
                         } else {
                             PrettyUtils.wipe();
-                            System.out.println("\nAre you sure you want to sell vehicle " + PrettyUtils.returnYellow("[" + vehicleID + "]") + "?");
+                            System.out.println("\nAre you sure you want to sell vehicle "
+                                    + PrettyUtils.returnYellow("[" + vehicleID + "]") + "?");
                             boolean confirmed = Prompter.promptYesNo();
                             if (confirmed) {
                                 manageVehicleSale(dealer, vehicleID);
@@ -725,7 +848,9 @@ public class UsedCarDealership {
             PrettyUtils.printRed("Error: Vehicle or Customer not found!");
             return;
         }
-        System.out.println("\nThe dealership offers you " + PrettyUtils.returnYellow("$" + String.format("%.2f", vehicle.calculateTotalPrice())) + " for the vehicle.");
+        System.out.println("\nThe dealership offers you "
+                + PrettyUtils.returnYellow("$" + String.format("%.2f", vehicle.calculateTotalPrice()))
+                + " for the vehicle.");
 
         System.out.println("\nDo you accept this offer? " + PrettyUtils.returnYellow("(Y/N)") + ".");
         boolean confirmed = Prompter.promptYesNo();
@@ -735,8 +860,10 @@ public class UsedCarDealership {
             List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
 
             PrettyUtils.printGreen("Sale successful!");
-            System.out.println("Updated Account Balance: " + PrettyUtils.returnYellow("$" + String.format("%.2f", customer.getAccountBalance())));
-            System.out.println("\n" + PrettyUtils.returnYellow("Receipt:") + "\n" + transactions.get(transactions.size() - 1));
+            System.out.println("Updated Account Balance: "
+                    + PrettyUtils.returnYellow("$" + String.format("%.2f", customer.getAccountBalance())));
+            System.out.println(
+                    "\n" + PrettyUtils.returnYellow("Receipt:") + "\n" + transactions.get(transactions.size() - 1));
         } else {
             PrettyUtils.printRed("Sale cancelled.");
         }

@@ -6,7 +6,7 @@
  * @version 11/12/2024
  */
 
-package usedcardealership.data.filehandling;
+package usedcardealership.data;
 
 import java.util.*;
 
