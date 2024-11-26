@@ -11,6 +11,7 @@ import java.time.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.data.coupons.*;
 import usedcardealership.interaction.*;
 
 public class TransactionManager {
@@ -150,10 +151,14 @@ public class TransactionManager {
         double allVehiclesPrice = 0;
         double customerAccountBalance = customer.getAccountBalance();
         for (Vehicle v : productsList) {
+            //COUPON IS CREATED, USING IT NEXT
+            Coupon coupon = dealer.getCouponManager().possibleCoupon();
+            if (coupon != null) {
+                System.out.println(PrettyUtils.returnGreen("You got a coupon: " + coupon));
+            }
             System.out.println(v);
             allVehiclesPrice += v.calculateTotalPrice();
         }
-
         if (productsList == null || customer == null) {
             PrettyUtils.printRed("Error: Vehicle list or Customer not found!");
             return;
@@ -183,6 +188,7 @@ public class TransactionManager {
             PrettyUtils.printRed("Sale cancelled.");
         }
     }
+
 
     /**
      * Displays the receipt to the user if they confirm they want to view it.

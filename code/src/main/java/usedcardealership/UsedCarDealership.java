@@ -109,6 +109,7 @@ public class UsedCarDealership {
             TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
             List<Transaction> transactions = transactionLoader.load();
 
+            //Load coupons
             String couponPath = "resources/coupons.csv";
             CouponFileHandler couponLoader = new CouponFileHandler(couponPath);
             List<Coupon> coupons = couponLoader.load();
