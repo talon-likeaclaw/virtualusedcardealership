@@ -90,7 +90,7 @@ public class CouponManager {
         Random random = new Random();
         double chance = random.nextDouble();
     
-        if (chance < 0.25) { // 25% chance
+        if (chance <= 1) { // 25% chance
             if (!this.couponList.isEmpty()) {
                 return this.couponList.get(random.nextInt(this.couponList.size()));
             } else {
@@ -99,7 +99,7 @@ public class CouponManager {
         } else {
             System.out.println(PrettyUtils.returnYellow("No coupon this time. Better luck next time!"));
         }
-        return null; // Return null if no coupon was given
+        return null;
     }
 }
 

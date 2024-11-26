@@ -150,44 +150,71 @@ public class TransactionManager {
         Customer customer = dealer.getCurrentCustomer();
         double allVehiclesPrice = 0;
         double customerAccountBalance = customer.getAccountBalance();
-        for (Vehicle v : productsList) {
-            //COUPON IS CREATED, USING IT NEXT
-            Coupon coupon = dealer.getCouponManager().possibleCoupon();
-            if (coupon != null) {
-                System.out.println(PrettyUtils.returnGreen("You got a coupon: " + coupon.getCode()));
-            }
-            System.out.println(v);
-            allVehiclesPrice += v.calculateTotalPrice();
-        }
-        if (productsList == null || customer == null) {
+    
+        if (productsList == null || productsList.isEmpty() || customer == null) {
             PrettyUtils.printRed("Error: Vehicle list or Customer not found!");
             return;
         }
+    
+        for (Vehicle v : productsList) {
+            // Possible coupon is generated
+            Coupon coupon = dealer.getCouponManager().possibleCoupon();
+            double vehiclePrice = v.calculateTotalPrice();
+    
+            if (coupon != null) {
+                System.out.println(PrettyUtils.returnGreen("Lucky you, you got a coupon: " + coupon.getCode() + " !!"));
+                System.out.println(PrettyUtils.returnYellow("Do you want to apply it? (Y/N)"));
+                boolean applyingCoupon = Prompter.promptYesNo();
+    
+                if (applyingCoupon) {
+                    try {
+                        // Apply the coupon to the vehicle price
+                        double discountedPrice = coupon.applyCoupon(vehiclePrice);
+                        System.out.println(PrettyUtils.returnGreen("Coupon applied! Original Price: $" +
+                                String.format("%.2f", vehiclePrice) + " -> Discounted Price: $" +
+                                String.format("%.2f", discountedPrice)));
+                        vehiclePrice = discountedPrice;
+                    } catch (Exception e) {
+                        PrettyUtils.printRed("Error applying coupon: " + e.getMessage());
+                    }
+                }
+            }
+    
+            // Output vehicle info and accumulate price
+            System.out.println(v);
+            allVehiclesPrice += vehiclePrice;
+        }
+    
+        // Output total price and account balance
         System.out.println(PrettyUtils.returnCyan("Total: $" + String.format("%.2f", allVehiclesPrice)));
-        System.out.println(PrettyUtils.returnCyan("Your account balance: ") + (customerAccountBalance > allVehiclesPrice
+        System.out.println(PrettyUtils.returnCyan("Your account balance: ") + 
+            (customerAccountBalance > allVehiclesPrice
                 ? PrettyUtils.returnGreen("$" + String.format("%.2f", customerAccountBalance))
                 : PrettyUtils.returnRed("$" + String.format("%.2f", customerAccountBalance))));
-
+    
+        // Ask if they want to finalize the purchase
         System.out.println(PrettyUtils.returnYellow("Finalize your purchase? (Y/N)"));
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
+    
         if (confirmed) {
             String receipt = PrettyUtils.returnYellow("Receipt:");
             for (Vehicle vehicle : productsList) {
                 dealer.processCustomerVehicleTransaction(vehicle, customer, "sale");
                 List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
-                System.out.println(PrettyUtils.returnCyan("Congrats") + " on your new " + PrettyUtils.returnCyan(vehicle.getMake() + " " + vehicle.getModel()) + "!");
+                System.out.println(PrettyUtils.returnCyan("Congrats") + " on your new " + 
+                        PrettyUtils.returnCyan(vehicle.getMake() + " " + vehicle.getModel()) + "!");
                 receipt += "\n" + transactions.get(transactions.size() - 1);
             }
-
+    
             System.out.println("Updated Account Balance: $" + String.format("%.2f", customer.getAccountBalance()));
             dealer.getCurrentCart().emptyCart();
             viewReceipt(receipt);
-
         } else {
             PrettyUtils.printRed("Sale cancelled.");
         }
     }
+    
 
 
     /**
