@@ -798,6 +798,7 @@ public class UsedCarDealership {
 
         PrettyUtils.printYellow("\nWould you like to:");
         String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
+                    PrettyUtils.returnYellow("2: ") + "Remove items from the cart" +
                     PrettyUtils.returnYellow("0:") + " Keep shopping";
         int choice = Prompter.promptOption(menu, 1);
         if (choice == -1) {
@@ -809,11 +810,19 @@ public class UsedCarDealership {
             case 1:
                 checkoutView(dealer);
                 return false;
+            case 2:
+                removeFromCart(dealer);
+                return false;
             default:
                 PrettyUtils.printRed("You may only select 0 or 1");
         }
         // Continue prompting for valid input
         return true; 
+    }
+
+    public static void removeFromCart(DealershipManager dealer){
+        int choice = Prompter.promptOption("Select which vehicle to remove", 1);
+        ShoppingCart cart = dealer.getCurrentCart();
     }
 
     /**
@@ -829,7 +838,6 @@ public class UsedCarDealership {
             PrettyUtils.printRed("Please, fill out your ShoppingCart to visit checkout.");
             Prompter.promptEnter();
         } else {
-            // maybe not like this
             checkoutLogic(dealer, productsList);
             Prompter.promptEnter();
         }
