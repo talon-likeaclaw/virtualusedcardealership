@@ -13,8 +13,23 @@ A console-based Java application that manages a virtual used car dealership. Use
 
 ## Overview
 
-When you run the Java application (`UsedCarDealership.java`) you will initally be prompted for the initialization option of loading from CSV, or loading from database. If you have not set up the database on your local PostgreSQL server the program will opt for loading from CSV instead. On initialization, the program will load the necessary data from the resource of your choice and instantiate a `DealershipManager` object. You will be assigned a random customer in the list of customers every time you run the application. This makes the application a closed economy, where any vehicles that are sold or purchased will remain in the dealership or customer's inventory the next time your run the application. Any transactions that occur will also be saved in the `transactions.csv` or `transactions` table in the database. Transactions are processed per vehicle, a transaction cannot contain multiple vehicles.
+When you run the Java application (`UsedCarDealership.java`) you will initally be prompted for the initialization option of loading from CSV files or a PostgreSQL database. If the database is not configured, the program will opt for loading from CSV files for initialization instead.
 
-### Database Set Up
+### Features
 
-In order to use the database for reading and storing the data, you must run the `usedcardealership.sql` file in your Database Management System of choice. You must also modify the `jdbcUrl`, `dbUser`, and `dbPassword` variables with your own PostgreSQL database URL, Username, and Password in the `initializeFromDb()` method in the `UsedCarDealership.java` class file.
+- **Data Loading Options**: Initialize the dealership data from either a PostgreSQL database or CSV files
+- **Random Customer Assignment**: Each session assigns you a random customer to interact with the dealership.
+- **Closed Economy**: Vehicles sold by customers remain in the dealership's inventory, and vehicles purchased by customers remain in their account for future sessions.
+- **Single-Vehicle Transactions**: Each trasnaction involves only one vehicles. If a customer purchases multiple vehicles the program will create a new transaction for each vehcile.
+
+---
+
+## Database Set Up
+
+To use the PostgreSQL database for reading and storing data:
+
+1. Run the `usedcardealership.sql` file in your Database Management System (DBMS) of choice.
+2. Update the database connection settings in the `initializeFromDb()` method in the `UsedCarDealership.java` file:
+   - `jdbcUrl`: Your PostgreSQL database URL.
+   - `dbUser`: Your PostgreSQL username.
+   - `dbPassword`: Your PostgreSQL password.
