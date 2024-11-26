@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Motorcycle extends Vehicle {
     private double engineCC;
     private String handlebarType;
@@ -51,6 +53,12 @@ public class Motorcycle extends Vehicle {
             String handlebarType) {
         super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
+        if (engineCC <= 0) {
+            throw new IllegalArgumentException("Engine capacity must be greater than zero.");
+        }
+        if (handlebarType == null || handlebarType.length() == 0) {
+            throw new IllegalArgumentException("Handlebar type cannot be null or empty");
+        }
         this.engineCC = engineCC;
         this.handlebarType = handlebarType;
     }
@@ -63,6 +71,9 @@ public class Motorcycle extends Vehicle {
      */
     public Motorcycle(Motorcycle m) {
         super(m);
+        if (m == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Motorcycle.");
+        }
         this.engineCC = m.engineCC;
         this.handlebarType = m.handlebarType;
     }
@@ -70,8 +81,8 @@ public class Motorcycle extends Vehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Engine Capacity: " + this.engineCC + " cc\n" +
-                "Handlebar Type: " + this.handlebarType;
+                PrettyUtils.returnCyan("Engine Capacity: ") + this.engineCC + " cc" + "\n" +
+                PrettyUtils.returnCyan("Handlebar Type: ") + this.handlebarType;
     }
 
     public double getEngineCC() {
@@ -80,5 +91,33 @@ public class Motorcycle extends Vehicle {
 
     public String getHandleType() {
         return this.handlebarType;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the Motorcycle
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the Motorcycle
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getEngineCC()),
+                getHandleType()
+        };
     }
 }

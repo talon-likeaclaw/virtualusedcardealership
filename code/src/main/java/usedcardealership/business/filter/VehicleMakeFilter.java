@@ -18,6 +18,9 @@ public class VehicleMakeFilter extends VehicleFilter {
      * @param make - the make to filter by
      */
     public VehicleMakeFilter(String make) {
+        if (make == null || make.length() == 0) {
+            throw new IllegalArgumentException("Make cannot be null or empty.");
+        }
         this.make = make.toLowerCase();
     }
 
@@ -29,6 +32,9 @@ public class VehicleMakeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getMake().toLowerCase().equals(this.make);
     }
 }

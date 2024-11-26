@@ -8,6 +8,9 @@
 package usedcardealership.data.vehicle;
 
 import org.junit.Test;
+
+import usedcardealership.interaction.PrettyUtils;
+
 import static org.junit.Assert.*;
 import java.time.*;
 
@@ -126,24 +129,8 @@ public class CarTest {
                 true,
                 false);
 
-        String expectedOutput = "Type: Car\n" +
-                "ID: 505\n" +
-                "Make: Mitsubishi\n" +
-                "Model: Lancer\n" +
-                "Year: " + Year.now().getValue() + "\n" +
-                "Price: $18000.0\n" +
-                "Color: White\n" +
-                "Transmission: Manual\n" +
-                "Drive Type: FWD\n" +
-                "Horsepower: 168\n" +
-                "Weight: 2900.0 lbs\n" +
-                "Kilometerage: 0.0 km\n" +
-                "Damage: 0.0%\n" +
-                "Electric: False\n" +
-                "Seats: 5\n" +
-                "Doors: 4\n" +
-                "Sunroof: Yes\n" +
-                "Convertible: No";
+        String expectedOutput = PrettyUtils.returnYellow("[505] ") + Year.now().getValue() + " White Mitsubishi Lancer\n" +
+                "Price: $18000.00 | Transmission: Manual, FWD | Kilometrage: 0.00 km\n";
 
         // Act
         String actualOutput = test.toString();

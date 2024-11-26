@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public abstract class EnclosedVehicle extends Vehicle {
     private int numSeats;
     private int numDoors;
@@ -54,6 +56,14 @@ public abstract class EnclosedVehicle extends Vehicle {
             boolean hasSunRoof) {
         super(type, id, make, model, year, price, color, transmission, driveType,
                 horsepower, weight, kilometerage, damage, isElectric);
+        final int MAX_SEATS = 30;
+        final int MAX_DOORS = 10;
+        if (numSeats < 1 || numSeats > MAX_SEATS) {
+            throw new IllegalArgumentException("Number of seats must be between 1 and 30.");
+        }
+        if (numDoors < 1 || numDoors > MAX_DOORS) {
+            throw new IllegalArgumentException("Number of doors must be between 1 and 10.");
+        }
         this.numSeats = numSeats;
         this.numDoors = numDoors;
         this.hasSunRoof = hasSunRoof;
@@ -67,6 +77,9 @@ public abstract class EnclosedVehicle extends Vehicle {
      */
     public EnclosedVehicle(EnclosedVehicle e) {
         super(e);
+        if (e == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Enclosed Vehicle.");
+        }
         this.numSeats = e.numSeats;
         this.numDoors = e.numDoors;
         this.hasSunRoof = e.hasSunRoof;
@@ -98,9 +111,9 @@ public abstract class EnclosedVehicle extends Vehicle {
     @Override
     public String getCommonDetails() {
         return super.getCommonDetails() + "\n" +
-                "Seats: " + this.numSeats + "\n" +
-                "Doors: " + this.numDoors + "\n" +
-                "Sunroof: " + (this.hasSunRoof ? "Yes" : "No");
+                PrettyUtils.returnCyan("Seats: ") + this.numSeats + "\n" +
+                PrettyUtils.returnCyan("Doors: ") + this.numDoors + "\n" +
+                PrettyUtils.returnCyan("Sunroof: ") + (this.hasSunRoof ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public abstract String getFullDetails();

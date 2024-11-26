@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Van extends CargoCapacity {
     private boolean hasSlidingDoors;
 
@@ -67,17 +69,51 @@ public class Van extends CargoCapacity {
      */
     public Van(Van v) {
         super(v);
+        if (v == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Van.");
+        }
         this.hasSlidingDoors = v.hasSlidingDoors;
     }
 
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Sliding Doors: " + (this.hasSlidingDoors ? "Yes" : "No");
+                PrettyUtils.returnCyan("Sliding Doors: ") +
+                (this.hasSlidingDoors ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean hasSlidingDoors() {
         return this.hasSlidingDoors;
     }
 
+    /**
+     * Returns an array of strings representing the fields of the Van
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the Van
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getNumSeats()),
+                String.valueOf(getNumDoors()),
+                String.valueOf(hasSunRoof()),
+                String.valueOf(getCargoCapacity()),
+                String.valueOf(hasSlidingDoors())
+        };
+    }
 }

@@ -77,7 +77,7 @@ public class MakeFilterTest {
     @Test
     public void testFilterCaseInsensitiveMatching() {
         // Arrange
-        VehicleColorFilter filter = new VehicleColorFilter("MITSUBISHI");
+        VehicleMakeFilter filter = new VehicleMakeFilter("MITSUBISHI");
         Car test = new Car(
                 "Car",
                 505,

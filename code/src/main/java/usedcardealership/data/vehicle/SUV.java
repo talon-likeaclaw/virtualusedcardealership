@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class SUV extends EnclosedVehicle {
     private boolean hasThirdRowSeating;
 
@@ -65,16 +67,50 @@ public class SUV extends EnclosedVehicle {
      */
     public SUV(SUV s) {
         super(s);
+        if (s == null) {
+            throw new IllegalArgumentException("Cannot copy from a null SUV.");
+        }
         this.hasThirdRowSeating = s.hasThirdRowSeating;
     }
 
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Third Row Seating: " + (this.hasThirdRowSeating ? "Yes" : "No");
+                PrettyUtils.returnCyan("Third Row Seating: ") +
+                (this.hasThirdRowSeating ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean hasThirdRowSeating() {
         return this.hasThirdRowSeating;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the SUV
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the SUV
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getNumSeats()),
+                String.valueOf(getNumDoors()),
+                String.valueOf(hasSunRoof()),
+                String.valueOf(hasThirdRowSeating())
+        };
     }
 }

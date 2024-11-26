@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class Car extends EnclosedVehicle {
     private boolean isConvertible;
 
@@ -65,16 +67,49 @@ public class Car extends EnclosedVehicle {
      */
     public Car(Car c) {
         super(c);
+        if (c == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Car.");
+        }
         this.isConvertible = c.isConvertible;
     }
 
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Convertible: " + (this.isConvertible ? "Yes" : "No");
+                PrettyUtils.returnCyan("Convertible: ") + (this.isConvertible ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public boolean isConvertible() {
         return this.isConvertible;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the Car
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the Car
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(this.getNumSeats()),
+                String.valueOf(this.getNumDoors()),
+                String.valueOf(this.hasSunRoof()),
+                String.valueOf(this.isConvertible)
+        };
     }
 }

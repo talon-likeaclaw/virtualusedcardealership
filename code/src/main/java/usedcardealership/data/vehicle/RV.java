@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class RV extends EnclosedVehicle {
     private int sleepCapacity;
     private boolean hasBathroom;
@@ -57,6 +59,10 @@ public class RV extends EnclosedVehicle {
             boolean hasBathroom) {
         super(type, id, make, model, year, price, color, transmission, driveType, horsepower,
                 weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof);
+        final int MAX_SLEEP_CAPACITY = 12;
+        if (sleepCapacity < 1 || sleepCapacity > MAX_SLEEP_CAPACITY) {
+            throw new IllegalArgumentException("Sleep capacity must be between 1 and 12.");
+        }
         this.sleepCapacity = sleepCapacity;
         this.hasBathroom = hasBathroom;
     }
@@ -69,6 +75,9 @@ public class RV extends EnclosedVehicle {
      */
     public RV(RV r) {
         super(r);
+        if (r == null) {
+            throw new IllegalArgumentException("Cannot copy from a null RV.");
+        }
         this.sleepCapacity = r.sleepCapacity;
         this.hasBathroom = r.hasBathroom;
     }
@@ -76,8 +85,9 @@ public class RV extends EnclosedVehicle {
     @Override
     public String getFullDetails() {
         return getCommonDetails() + "\n" +
-                "Sleep Capacity: " + this.sleepCapacity + "\n" +
-                "Bathroom: " + (this.hasBathroom ? "Yes" : "No");
+                PrettyUtils.returnCyan("Sleep Capacity: ") + String.valueOf(this.sleepCapacity)
+                + "\n" + PrettyUtils.returnCyan("Bathroom: ")
+                + (this.hasBathroom ? PrettyUtils.returnGreen("Yes") : PrettyUtils.returnRed("No"));
     }
 
     public int getSleepCapacity() {
@@ -86,5 +96,36 @@ public class RV extends EnclosedVehicle {
 
     public boolean hasBathroom() {
         return this.hasBathroom;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the RV
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the RV
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getNumSeats()),
+                String.valueOf(getNumDoors()),
+                String.valueOf(hasSunRoof()),
+                String.valueOf(getSleepCapacity()),
+                String.valueOf(hasBathroom())
+        };
     }
 }

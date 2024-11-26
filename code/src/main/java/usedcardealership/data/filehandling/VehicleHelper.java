@@ -8,6 +8,7 @@
 
 package usedcardealership.data.filehandling;
 
+import java.sql.*;
 import usedcardealership.data.vehicle.*;
 
 public class VehicleHelper {
@@ -18,6 +19,10 @@ public class VehicleHelper {
      * @return a Vehicle instance or null if the type is not valid.
      */
     public static Vehicle parseVehicle(String[] fields) {
+        final int MAX_FIELDS = 14;
+        if (fields == null || fields.length < MAX_FIELDS) {
+            throw new IllegalArgumentException("Invalid fields array: null or insufficient data.");
+        }
         if (fields[0].equals("[]")) {
             return null;
         }
@@ -36,57 +41,117 @@ public class VehicleHelper {
         double kilometerage = Double.parseDouble(fields[11]);
         double damage = Double.parseDouble(fields[12]);
         boolean isElectric = Boolean.parseBoolean(fields[13]);
+
         // Check for each type of Vehicle and fill fields/return Vehicle subtype.
-        if (type.equals("Motorcycle")) {
-            double engineCC = Double.parseDouble(fields[14]);
-            String handlebarType = fields[15];
-            return new Motorcycle(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, engineCC, handlebarType);
-        } else if (type.equals("RV")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            int sleepCapacity = Integer.parseInt(fields[17]);
-            boolean hasBathroom = Boolean.parseBoolean(fields[18]);
-            return new RV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity,
-                    hasBathroom);
-        } else if (type.equals("Car")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            boolean isConvertible = Boolean.parseBoolean(fields[17]);
-            return new Car(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
-        } else if (type.equals("SUV")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
-            return new SUV(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
-        } else if (type.equals("PickupTruck")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            double cargoCapacity = Double.parseDouble(fields[17]);
-            double bedLength = Double.parseDouble(fields[18]);
-            double towingCapacity = Double.parseDouble(fields[19]);
-            return new PickupTruck(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof,
-                    cargoCapacity, bedLength, towingCapacity);
-        } else if (type.equals("Van")) {
-            int numSeats = Integer.parseInt(fields[14]);
-            int numDoors = Integer.parseInt(fields[15]);
-            boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
-            double cargoCapacity = Double.parseDouble(fields[17]);
-            boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
-            return new Van(type, id, make, model, year, price, color, transmission, driveType, horsepower,
-                    weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity,
-                    hasSlidingDoors);
-        } else {
-            return null;
+        switch (type) {
+            case "Motorcycle":
+                return parseMotorcycle(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "RV":
+                return parseRV(fields, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric);
+            case "Car":
+                return parseCar(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "SUV":
+                return parseSUV(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            case "PickupTruck":
+                return parsePickupTruck(fields, id, make, model, year, price, color, transmission, driveType,
+                        horsepower, weight, kilometerage, damage, isElectric);
+            case "Van":
+                return parseVan(fields, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric);
+            default:
+                return null;
         }
+    }
+
+    /**
+     * Parses a Motorcycle from the given fields array.
+     */
+    private static Motorcycle parseMotorcycle(String[] fields, int id, String make, String model, int year,
+            double price, String color, String transmission, String driveType, int horsepower,
+            double weight, double kilometerage, double damage, boolean isElectric) {
+        double engineCC = Double.parseDouble(fields[14]);
+        String handlebarType = fields[15];
+        return new Motorcycle("Motorcycle", id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+    }
+
+    /**
+     * Parses an RV from the given fields array.
+     */
+    private static RV parseRV(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        int sleepCapacity = Integer.parseInt(fields[17]);
+        boolean hasBathroom = Boolean.parseBoolean(fields[18]);
+        return new RV("RV", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, sleepCapacity, hasBathroom);
+    }
+
+    /**
+     * Parses a Car from the given fields array.
+     */
+    private static Car parseCar(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        boolean isConvertible = Boolean.parseBoolean(fields[17]);
+        return new Car("Car", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, isConvertible);
+    }
+
+    /**
+     * Parses an SUV from the given fields array.
+     */
+    private static SUV parseSUV(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        boolean hasThirdRowSeating = Boolean.parseBoolean(fields[17]);
+        return new SUV("SUV", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, hasThirdRowSeating);
+    }
+
+    /**
+     * Parses a PickupTruck from the given fields array.
+     */
+    private static PickupTruck parsePickupTruck(String[] fields, int id, String make, String model, int year,
+            double price, String color, String transmission, String driveType, int horsepower,
+            double weight, double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        double cargoCapacity = Double.parseDouble(fields[17]);
+        double bedLength = Double.parseDouble(fields[18]);
+        double towingCapacity = Double.parseDouble(fields[19]);
+        return new PickupTruck("PickupTruck", id, make, model, year, price, color, transmission, driveType, horsepower,
+                weight, kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity,
+                bedLength, towingCapacity);
+    }
+
+    /**
+     * Parses a Van from the given fields array.
+     */
+    private static Van parseVan(String[] fields, int id, String make, String model, int year, double price,
+            String color, String transmission, String driveType, int horsepower, double weight,
+            double kilometerage, double damage, boolean isElectric) {
+        int numSeats = Integer.parseInt(fields[14]);
+        int numDoors = Integer.parseInt(fields[15]);
+        boolean hasSunRoof = Boolean.parseBoolean(fields[16]);
+        double cargoCapacity = Double.parseDouble(fields[17]);
+        boolean hasSlidingDoors = Boolean.parseBoolean(fields[18]);
+        return new Van("Van", id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity, hasSlidingDoors);
     }
 
     /**
@@ -96,136 +161,85 @@ public class VehicleHelper {
      * @return String - A CSV string representation of the vehicle.
      */
     public static String convertVehicleToCSV(Vehicle vehicle) {
-        if (vehicle.getType().equals("Motorcycle")) {
-            Motorcycle m = (Motorcycle) vehicle;
-            return String.join(",",
-                    m.getType(),
-                    String.valueOf(m.getID()),
-                    m.getMake(),
-                    m.getModel(),
-                    String.valueOf(m.getYear()),
-                    String.valueOf(m.getPrice()),
-                    m.getColor(),
-                    m.getTransmission(),
-                    m.getDriveType(),
-                    String.valueOf(m.getHorsepower()),
-                    String.valueOf(m.getWeight()),
-                    String.valueOf(m.getKilometerage()),
-                    String.valueOf(m.getDamage()),
-                    String.valueOf(m.isElectric()),
-                    String.valueOf(m.getEngineCC()),
-                    m.getHandleType());
-        } else if (vehicle.getType().equals("RV")) {
-            RV rv = (RV) vehicle;
-            return String.join(",",
-                    rv.getType(),
-                    String.valueOf(rv.getID()),
-                    rv.getMake(),
-                    rv.getModel(),
-                    String.valueOf(rv.getYear()),
-                    String.valueOf(rv.getPrice()),
-                    rv.getColor(),
-                    rv.getTransmission(),
-                    rv.getDriveType(),
-                    String.valueOf(rv.getHorsepower()),
-                    String.valueOf(rv.getWeight()),
-                    String.valueOf(rv.getKilometerage()),
-                    String.valueOf(rv.getDamage()),
-                    String.valueOf(rv.isElectric()),
-                    String.valueOf(rv.getNumSeats()),
-                    String.valueOf(rv.getNumDoors()),
-                    String.valueOf(rv.hasSunRoof()),
-                    String.valueOf(rv.getSleepCapacity()),
-                    String.valueOf(rv.hasBathroom()));
-        } else if (vehicle.getType().equals("Car")) {
-            Car car = (Car) vehicle;
-            return String.join(",",
-                    car.getType(),
-                    String.valueOf(car.getID()),
-                    car.getMake(),
-                    car.getModel(),
-                    String.valueOf(car.getYear()),
-                    String.valueOf(car.getPrice()),
-                    car.getColor(),
-                    car.getTransmission(),
-                    car.getDriveType(),
-                    String.valueOf(car.getHorsepower()),
-                    String.valueOf(car.getWeight()),
-                    String.valueOf(car.getKilometerage()),
-                    String.valueOf(car.getDamage()),
-                    String.valueOf(car.isElectric()),
-                    String.valueOf(car.getNumSeats()),
-                    String.valueOf(car.getNumDoors()),
-                    String.valueOf(car.hasSunRoof()),
-                    String.valueOf(car.isConvertible()));
-        } else if (vehicle.getType().equals("SUV")) {
-            SUV suv = (SUV) vehicle;
-            return String.join(",",
-                    suv.getType(),
-                    String.valueOf(suv.getID()),
-                    suv.getMake(),
-                    suv.getModel(),
-                    String.valueOf(suv.getYear()),
-                    String.valueOf(suv.getPrice()),
-                    suv.getColor(),
-                    suv.getTransmission(),
-                    suv.getDriveType(),
-                    String.valueOf(suv.getHorsepower()),
-                    String.valueOf(suv.getWeight()),
-                    String.valueOf(suv.getKilometerage()),
-                    String.valueOf(suv.getDamage()),
-                    String.valueOf(suv.isElectric()),
-                    String.valueOf(suv.getNumSeats()),
-                    String.valueOf(suv.getNumDoors()),
-                    String.valueOf(suv.hasSunRoof()),
-                    String.valueOf(suv.hasThirdRowSeating()));
-        } else if (vehicle.getType().equals("PickupTruck")) {
-            PickupTruck truck = (PickupTruck) vehicle;
-            return String.join(",",
-                    truck.getType(),
-                    String.valueOf(truck.getID()),
-                    truck.getMake(),
-                    truck.getModel(),
-                    String.valueOf(truck.getYear()),
-                    String.valueOf(truck.getPrice()),
-                    truck.getColor(),
-                    truck.getTransmission(),
-                    truck.getDriveType(),
-                    String.valueOf(truck.getHorsepower()),
-                    String.valueOf(truck.getWeight()),
-                    String.valueOf(truck.getKilometerage()),
-                    String.valueOf(truck.getDamage()),
-                    String.valueOf(truck.isElectric()),
-                    String.valueOf(truck.getNumSeats()),
-                    String.valueOf(truck.getNumDoors()),
-                    String.valueOf(truck.hasSunRoof()),
-                    String.valueOf(truck.getCargoCapacity()),
-                    String.valueOf(truck.getBedLength()),
-                    String.valueOf(truck.getTowingCapacity()));
-        } else if (vehicle.getType().equals("Van")) {
-            Van van = (Van) vehicle;
-            return String.join(",",
-                    van.getType(),
-                    String.valueOf(van.getID()),
-                    van.getMake(),
-                    van.getModel(),
-                    String.valueOf(van.getYear()),
-                    String.valueOf(van.getPrice()),
-                    van.getColor(),
-                    van.getTransmission(),
-                    van.getDriveType(),
-                    String.valueOf(van.getHorsepower()),
-                    String.valueOf(van.getWeight()),
-                    String.valueOf(van.getKilometerage()),
-                    String.valueOf(van.getDamage()),
-                    String.valueOf(van.isElectric()),
-                    String.valueOf(van.getNumSeats()),
-                    String.valueOf(van.getNumDoors()),
-                    String.valueOf(van.hasSunRoof()),
-                    String.valueOf(van.getCargoCapacity()),
-                    String.valueOf(van.hasSlidingDoors()));
-        } else {
-            return "";
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
+        return String.join(",", vehicle.toCSVFields());
+    }
+
+    /**
+     * Parses a Vehicle of given type from a SQL Result Set object
+     * 
+     * @param type the type of Vehicle to instantiate
+     * @param rs the ResultSet holding the Vehicle data
+     * @return Vehicle - the Vehicle of type type that was parsed
+     * @throws SQLException
+     */
+    public static Vehicle parseVehicleFromResultSet(String type, ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String make = rs.getString("make");
+        String model = rs.getString("model");
+        int year = rs.getInt("year");
+        double price = rs.getDouble("price");
+        String color = rs.getString("color");
+        String transmission = rs.getString("transmission");
+        String driveType = rs.getString("drive_type");
+        int horsepower = rs.getInt("horsepower");
+        double weight = rs.getDouble("weight");
+        double kilometerage = rs.getDouble("kilometerage");
+        double damage = rs.getDouble("damage");
+        boolean isElectric = rs.getBoolean("is_electric");
+
+        switch (type) {
+            case "Motorcycle":
+                double engineCC = rs.getDouble("engine_cc");
+                String handlebarType = rs.getString("handlebar_type");
+                return new Motorcycle(type, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+            case "RV":
+                int numSeatsRV = rs.getInt("num_seats");
+                int numDoorsRV = rs.getInt("num_doors");
+                boolean hasSunRoofRV = rs.getBoolean("has_sunroof");
+                int sleepCapacity = rs.getInt("sleep_capacity");
+                boolean hasBathroom = rs.getBoolean("has_bathroom");
+                return new RV(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsRV, numDoorsRV, hasSunRoofRV, sleepCapacity,
+                        hasBathroom);
+            case "Car":
+                int numSeatsCar = rs.getInt("num_seats");
+                int numDoorsCar = rs.getInt("num_doors");
+                boolean hasSunRoofCar = rs.getBoolean("has_sunroof");
+                boolean isConvertible = rs.getBoolean("is_convertible");
+                return new Car(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsCar, numDoorsCar, hasSunRoofCar, isConvertible);
+            case "SUV":
+                int numSeatsSUV = rs.getInt("num_seats");
+                int numDoorsSUV = rs.getInt("num_doors");
+                boolean hasSunRoofSUV = rs.getBoolean("has_sunroof");
+                boolean hasThirdRowSeating = rs.getBoolean("has_thirdrow_seating");
+                return new SUV(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsSUV, numDoorsSUV, hasSunRoofSUV, hasThirdRowSeating);
+            case "PickupTruck":
+                int numSeatsTruck = rs.getInt("num_seats");
+                int numDoorsTruck = rs.getInt("num_doors");
+                boolean hasSunRoofTruck = rs.getBoolean("has_sunroof");
+                double cargoCapacity = rs.getDouble("cargo_capacity");
+                double bedLength = rs.getDouble("bed_length");
+                double towingCapacity = rs.getDouble("towing_capacity");
+                return new PickupTruck(type, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric, numSeatsTruck, numDoorsTruck, hasSunRoofTruck,
+                        cargoCapacity, bedLength, towingCapacity);
+            case "Van":
+                int numSeatsVan = rs.getInt("num_seats");
+                int numDoorsVan = rs.getInt("num_doors");
+                boolean hasSunRoofVan = rs.getBoolean("has_sunroof");
+                double cargoCapacityVan = rs.getDouble("cargo_capacity");
+                boolean hasSlidingDoors = rs.getBoolean("has_sliding_doors");
+                return new Van(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsVan, numDoorsVan, hasSunRoofVan, cargoCapacityVan,
+                        hasSlidingDoors);
+            default:
+                throw new IllegalArgumentException("Unknown vehicle type: " + type);
         }
     }
 }

@@ -7,6 +7,8 @@
 
 package usedcardealership.data.vehicle;
 
+import usedcardealership.interaction.PrettyUtils;
+
 public class PickupTruck extends CargoCapacity {
     private double bedLength;
     private double towingCapacity;
@@ -59,6 +61,14 @@ public class PickupTruck extends CargoCapacity {
             double towingCapacity) {
         super(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
                 kilometerage, damage, isElectric, numSeats, numDoors, hasSunRoof, cargoCapacity);
+        final double MAX_BED_LENGTH = 30;
+        final double MAX_TOWING_CAPACITY = 30000;
+        if (bedLength <= 0 || bedLength >= MAX_BED_LENGTH) {
+            throw new IllegalArgumentException("Bed length must be between 1 and 30 feet.");
+        }
+        if (towingCapacity < 0 || towingCapacity > MAX_TOWING_CAPACITY) {
+            throw new IllegalArgumentException("Towing capacity must be between 0 and 30,000 lbs.");
+        }
         this.bedLength = bedLength;
         this.towingCapacity = towingCapacity;
     }
@@ -71,16 +81,19 @@ public class PickupTruck extends CargoCapacity {
      */
     public PickupTruck(PickupTruck p) {
         super(p);
+        if (p == null) {
+            throw new IllegalArgumentException("Cannot copy from a null Pickup Truck.");
+        }
         this.bedLength = p.bedLength;
         this.towingCapacity = p.towingCapacity;
     }
 
-    @Override
-    public String getFullDetails() {
-        return getCommonDetails() + "\n" +
-                "Bed Length: " + this.bedLength + " feet\n" +
-                "Towing Capacity: " + this.towingCapacity + " lbs";
-    }
+@Override
+public String getFullDetails() {
+    return getCommonDetails() + "\n" +
+            PrettyUtils.returnCyan("Bed Length: ") + String.format("%.1f", this.bedLength) + " feet\n" +
+            PrettyUtils.returnCyan("Towing Capacity: ") + String.format("%.2f", this.towingCapacity) + " lbs";
+}
 
     public double getBedLength() {
         return this.bedLength;
@@ -88,5 +101,37 @@ public class PickupTruck extends CargoCapacity {
 
     public double getTowingCapacity() {
         return this.towingCapacity;
+    }
+
+    /**
+     * Returns an array of strings representing the fields of the PickupTruck
+     * for CSV conversion
+     *
+     * @return String[] representing the fields of the PickupTruck
+     */
+    @Override
+    public String[] toCSVFields() {
+        return new String[] {
+                getType(),
+                String.valueOf(getID()),
+                getMake(),
+                getModel(),
+                String.valueOf(getYear()),
+                String.valueOf(getPrice()),
+                getColor(),
+                getTransmission(),
+                getDriveType(),
+                String.valueOf(getHorsepower()),
+                String.valueOf(getWeight()),
+                String.valueOf(getKilometerage()),
+                String.valueOf(getDamage()),
+                String.valueOf(isElectric()),
+                String.valueOf(getNumSeats()),
+                String.valueOf(getNumDoors()),
+                String.valueOf(hasSunRoof()),
+                String.valueOf(getCargoCapacity()),
+                String.valueOf(getBedLength()),
+                String.valueOf(getTowingCapacity())
+        };
     }
 }

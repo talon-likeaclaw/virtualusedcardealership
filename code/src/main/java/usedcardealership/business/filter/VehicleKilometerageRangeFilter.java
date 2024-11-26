@@ -20,6 +20,12 @@ public class VehicleKilometerageRangeFilter extends VehicleFilter {
      * @param maxKilometerage the maximum kilometerage to filter by
      */
     public VehicleKilometerageRangeFilter(double minKilometerage, double maxKilometerage) {
+        if (minKilometerage < 0) {
+            throw new IllegalArgumentException("Minimum kilometerage cannot be negative.");
+        }
+        if (minKilometerage > maxKilometerage) {
+            throw new IllegalArgumentException("Minimum kilometerage cannot be greater than maximum kilometerage.");
+        }
         this.minKilometerage = minKilometerage;
         this.maxKilometerage = maxKilometerage;
     }
@@ -32,6 +38,9 @@ public class VehicleKilometerageRangeFilter extends VehicleFilter {
      */
     @Override
     public boolean filter(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle cannot be null.");
+        }
         return vehicle.getKilometerage() >= minKilometerage && vehicle.getKilometerage() <= maxKilometerage;
     }
 }
