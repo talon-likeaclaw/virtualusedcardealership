@@ -8,6 +8,7 @@ package usedcardealership.data.customer;
 
 import java.util.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.interaction.PrettyUtils;
 
 public class ShoppingCart {
     private List<Vehicle> productsList;
@@ -67,7 +68,7 @@ public class ShoppingCart {
     @Override
     public String toString() {
         if (productsList.isEmpty()) {
-            return "Your shopping cart is empty.";
+            return PrettyUtils.returnRed("Your shopping cart is empty.");
         }
 
         StringBuilder cartContents = new StringBuilder("Shopping Cart:\n");
