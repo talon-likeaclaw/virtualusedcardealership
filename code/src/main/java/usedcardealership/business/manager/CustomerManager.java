@@ -239,19 +239,19 @@ public class CustomerManager {
             return;
         }
 
-        System.out.println("Here are the vehicles in your cart:");
+        PrettyUtils.printYellow("Here are the vehicles in your cart:");
         for (Vehicle vehicle : productsList) {
             System.out.println(vehicle);
         }
 
-        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:");
+        System.out.println("Enter the " + PrettyUtils.returnYellow("[ID]") + " of the vehicle you would like to remove from your cart:");
         int vehicleIdToRemove = Prompter.promptInt();
         boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
 
         if (wasRemoved) {
-            PrettyUtils.printGreen("The vehicle has been successfully removed from your cart.");
+            PrettyUtils.printGreen("\nThe vehicle has been successfully removed from your cart.");
         } else {
-            PrettyUtils.printRed("Invalid ID. No vehicle found with that ID.");
+            PrettyUtils.printRed("Invalid [ID].");
         }
         Prompter.promptEnter();
     }
