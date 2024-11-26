@@ -244,7 +244,7 @@ public class CustomerManager {
             System.out.println(vehicle);
         }
 
-        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:\n");
+        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:");
         int vehicleIdToRemove = Prompter.promptInt();
         boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
 
