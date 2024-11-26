@@ -154,7 +154,7 @@ public class TransactionManager {
             //COUPON IS CREATED, USING IT NEXT
             Coupon coupon = dealer.getCouponManager().possibleCoupon();
             if (coupon != null) {
-                System.out.println(PrettyUtils.returnGreen("You got a coupon: " + coupon));
+                System.out.println(PrettyUtils.returnGreen("You got a coupon: " + coupon.getCode()));
             }
             System.out.println(v);
             allVehiclesPrice += v.calculateTotalPrice();
