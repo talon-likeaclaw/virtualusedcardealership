@@ -151,8 +151,11 @@ public class UsedCarDealership {
             TransactionDatabaseHandler transactionHandler = new TransactionDatabaseHandler(connection);
             List<Transaction> transactions = transactionHandler.load();
 
+            CouponDatabaseHandler couponHandler = new CouponDatabaseHandler(connection);
+            List<Coupon> coupons = couponHandler.load();
+
             DealershipManager dealership = new DealershipManager(dealershipName, dealershipAccountBalance, transactions,
-                    inventory, database, customers, new ArrayList<>());
+                    inventory, database, customers, coupons);
             dealership.initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (SQLException e) {
