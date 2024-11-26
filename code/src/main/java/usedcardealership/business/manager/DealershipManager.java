@@ -10,6 +10,7 @@ package usedcardealership.business.manager;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
 import usedcardealership.data.vehicle.*;
+import usedcardealership.data.coupons.*;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class DealershipManager {
   private CustomerManager customerManager;
   private Customer currentCustomer;
   private ShoppingCart currentCart;
+  private CouponManager couponManager;
 
   /**
    * DealershipManager Constructor
@@ -34,7 +36,7 @@ public class DealershipManager {
    * @param customers      list of customers for CustomerManager.
    */
   public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
-      List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers) {
+      List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers, List<Coupon> coupons) {
     if (name == null || name.length() == 0) {
       throw new IllegalArgumentException("Dealership name cannot be null or empty.");
     }
@@ -59,6 +61,7 @@ public class DealershipManager {
     this.vehicleManager = new VehicleManager(inventory, database);
     this.customerManager = new CustomerManager(customers);
     this.currentCart = new ShoppingCart();
+    this.couponManager = new CouponManager(coupons);
   }
 
   public String getName() {
@@ -91,6 +94,10 @@ public class DealershipManager {
 
   public ShoppingCart getCurrentCart() {
     return this.currentCart;
+  }
+
+  public CouponManager getCouponManager() {
+    return this.couponManager;
   }
   
   public Vehicle getVehicleById(int vehicleId) {

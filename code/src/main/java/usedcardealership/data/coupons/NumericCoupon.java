@@ -1,4 +1,4 @@
-package usedcardealership.business.coupons;
+package usedcardealership.data.coupons;
 
 public class NumericCoupon extends Coupon {
     private double discountAmount;

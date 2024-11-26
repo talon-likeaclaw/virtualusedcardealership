@@ -1,4 +1,4 @@
-package usedcardealership.business.coupons;
+package usedcardealership.data.coupons;
 
 public abstract class Coupon {
     private String code;

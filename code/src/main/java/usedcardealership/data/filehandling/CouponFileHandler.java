@@ -1,16 +1,20 @@
-package usedcardealership.business.coupons;
+package usedcardealership.data.filehandling;
 import java.nio.file.*;
 import java.io.*;
 import java.util.*;
 
-public class CouponDataLoader {
+import usedcardealership.data.coupons.Coupon;
+import usedcardealership.data.coupons.NumericCoupon;
+import usedcardealership.data.coupons.PercentageCoupon;
+
+public class CouponFileHandler {
     private String couponFile;
 
-    public CouponDataLoader(String couponFile){
+    public CouponFileHandler(String couponFile){
         this.couponFile = couponFile;
     }
     
-    public List<Coupon> loadCoupons() throws IOException{
+    public List<Coupon> load() throws IOException{
         Path path = Paths.get(couponFile);
         List<Coupon> coupons = new ArrayList<Coupon>();
         List<String> lines = Files.readAllLines(path);

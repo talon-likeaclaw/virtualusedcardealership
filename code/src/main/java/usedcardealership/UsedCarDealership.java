@@ -5,6 +5,7 @@ import usedcardealership.data.filehandling.*;
 import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.data.coupons.*;
 import usedcardealership.business.comparators.*;
 import usedcardealership.business.filter.*;
 import usedcardealership.business.manager.*;
@@ -506,9 +507,14 @@ public class UsedCarDealership {
             TransactionFileHandler transactionLoader = new TransactionFileHandler(transactionPath);
             List<Transaction> transactions = transactionLoader.load();
 
+            //Load coupons
+            String couponPath = "resources/coupons.csv";
+            CouponFileHandler couponLoader = new CouponFileHandler(couponPath);
+            List<Coupon> coupons = couponLoader.load();
+
             // Initialize and return the DealershipManager
             DealershipManager dealership = new DealershipManager(
-                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers);
+                    dealershipName, dealershipAccountBalance, transactions, inventory, database, customers, coupons);
             initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (Exception e) {
