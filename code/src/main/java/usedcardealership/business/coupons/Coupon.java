@@ -1,8 +1,8 @@
 package usedcardealership.business.coupons;
 
-public abstract class Coupons {
-    private String type;
+public abstract class Coupon {
     private String code;
+    private double discount;
 
     /**
      * Parameterized constructor for Coupons.
@@ -10,13 +10,13 @@ public abstract class Coupons {
      * @param type the type of coupon (e.g., discount, cashback)
      * @param code the unique code for the coupon
     */
-    public Coupons(String type, String code) {
-        this.type = type;
+    public Coupon(String code, double discount) {
         this.code = code;
+        this.discount = discount;
     }
 
-    public String getType(){
-        return this.type;
+    public double getDiscount(){
+        return this.discount;
     }
 
     public String getCode(){
@@ -32,6 +32,6 @@ public abstract class Coupons {
      */
     @Override
     public String toString() {
-        return "Coupon [Type=" + type + ", Code=" + code + "]";
+        return "Coupon [Discount=" + discount + ", Code=" + code + "]";
     }
 }
