@@ -244,8 +244,14 @@ public class CustomerManager {
             System.out.println(vehicle);
         }
 
-        System.out.println("Enter the " + PrettyUtils.returnYellow("[ID]") + " of the vehicle you would like to remove from your cart:");
+        System.out.println("Enter the " + PrettyUtils.returnYellow("[ID]")
+                + " of the vehicle you would like to remove from your cart:");
         int vehicleIdToRemove = Prompter.promptInt();
+        for (Vehicle v : productsList) {
+            if (v.getID() == vehicleIdToRemove) {
+                dealer.getVehicleManager().addVehicle(v);
+            }
+        }
         boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
 
         if (wasRemoved) {
