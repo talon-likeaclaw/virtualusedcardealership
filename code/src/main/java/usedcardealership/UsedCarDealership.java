@@ -46,8 +46,8 @@ public class UsedCarDealership {
                             if (dealership != null) {
                                 inPage = false;
                                 mainMenuView(dealership);
+                                shutdown(dealership);
                             }
-                            shutdown(dealership);
                             break;
                         } catch (Exception e) {
                             PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
@@ -61,8 +61,15 @@ public class UsedCarDealership {
                             if (dealership != null) {
                                 inPage = false;
                                 mainMenuView(dealership);
+                                shutdownFromDb(dealership);
+                            } else {
+                                DealershipManager fallbackDealership = initialize();
+                                if (fallbackDealership != null) {
+                                    inPage = false;
+                                    mainMenuView(fallbackDealership);
+                                    shutdown(fallbackDealership);
+                                }
                             }
-                            shutdownFromDb(dealership);
                             break;
                         } catch (Exception e) {
                             PrettyUtils.printRed("An unexpected error occured. Exiting the program.");
@@ -489,7 +496,7 @@ public class UsedCarDealership {
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      */
-    // TODO: Add a straight to checkoout option 
+    // TODO: Add a straight to checkoout option
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
         boolean inPage = true;
         int testDriveCount = 0;
@@ -657,8 +664,8 @@ public class UsedCarDealership {
             initializeCurrentCustomer(customers, dealership);
             return dealership;
         } catch (SQLException e) {
-            PrettyUtils.printRed("Failed to connect to the database or create DealershipManager.");
-            e.printStackTrace();
+            PrettyUtils.printRed("\nFailed to connect to the database loading from CSV instead.");
+            Prompter.promptEnter();
             return null;
         }
     }
@@ -839,8 +846,8 @@ public class UsedCarDealership {
      * @param dealer    the DealershipManager responsible for managing the
      *                  dealership operations
      * @param vehicleID the ID of the vehicle being offered for sale
-    */
-    private static void manageVehicleSale(DealershipManager dealer, int vehicleID){
+     */
+    private static void manageVehicleSale(DealershipManager dealer, int vehicleID) {
         Vehicle vehicle = dealer.getCurrentCustomer().getVehicleById(vehicleID);
         Customer customer = dealer.getCurrentCustomer();
 
@@ -871,7 +878,8 @@ public class UsedCarDealership {
     }
 
     /**
-     * Displays the shopping cart and allows the user to proceed to checkout or exit the view.
+     * Displays the shopping cart and allows the user to proceed to checkout or exit
+     * the view.
      * 
      * @param dealer the DealershipManager handling the current dealership state.
      */
@@ -888,13 +896,14 @@ public class UsedCarDealership {
      * Adds a vehicle to the shopping cart, removes it from available inventory,
      * and provides options for further actions.
      * 
-     * @param dealer the DealershipManager handling the dealership state.
-     * @param vehicle the Vehicle to be added to the shopping cart.
-     * @param vehicles the list of available vehicles to update upon addition to the cart.
+     * @param dealer   the DealershipManager handling the dealership state.
+     * @param vehicle  the Vehicle to be added to the shopping cart.
+     * @param vehicles the list of available vehicles to update upon addition to the
+     *                 cart.
      */
     private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle, List<Vehicle> vehicles) {
         PrettyUtils.wipe();
-        //TODO move this to dealership
+        // TODO move this to dealership
         dealer.getCurrentCart().addVehicle(vehicle);
         dealer.getVehicleManager().removeVehicle(vehicle);
         vehicles.remove(vehicle);
@@ -911,7 +920,8 @@ public class UsedCarDealership {
      * Prints the current shopping cart contents for the user.
      * 
      * @param dealer the DealershipManager handling the dealership state.
-     * @return {@code true} to continue prompting; {@code false} to exit the prompt loop.
+     * @return {@code true} to continue prompting; {@code false} to exit the prompt
+     *         loop.
      */
     private static boolean checkoutPrompter(DealershipManager dealer) {
         // Displaying shopping cart
@@ -919,7 +929,7 @@ public class UsedCarDealership {
 
         PrettyUtils.printYellow("\nWould you like to:");
         String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
-                    PrettyUtils.returnYellow("0:") + " Keep shopping";
+                PrettyUtils.returnYellow("0:") + " Keep shopping";
         int choice = Prompter.promptOption(menu, 1);
         if (choice == -1) {
             return true;
@@ -934,11 +944,12 @@ public class UsedCarDealership {
                 PrettyUtils.printRed("You may only select 0 or 1");
         }
         // Continue prompting for valid input
-        return true; 
+        return true;
     }
 
     /**
-     * Handles the checkout process. Displays the shopping cart contents and checks if
+     * Handles the checkout process. Displays the shopping cart contents and checks
+     * if
      * the cart is empty before proceeding to checkout logic.
      * 
      * @param dealer the DealershipManager handling the dealership state.
@@ -957,10 +968,12 @@ public class UsedCarDealership {
     }
 
     /**
-     * Validates the customer's purchase, ensures sufficient funds, and processes the transaction.
-     * Displays the receipt and updates the account balance upon successful checkout.
+     * Validates the customer's purchase, ensures sufficient funds, and processes
+     * the transaction.
+     * Displays the receipt and updates the account balance upon successful
+     * checkout.
      * 
-     * @param dealer the DealershipManager handling the dealership state.
+     * @param dealer       the DealershipManager handling the dealership state.
      * @param productsList the list of vehicles in the shopping cart.
      */
     private static void checkoutLogic(DealershipManager dealer, List<Vehicle> productsList) {
@@ -1015,7 +1028,5 @@ public class UsedCarDealership {
         }
         Prompter.promptEnter();
     }
-
-
 
 }
