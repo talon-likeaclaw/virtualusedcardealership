@@ -65,6 +65,13 @@ CREATE TABLE transactions
     vehicle_id  INT REFERENCES vehicles (id) ON DELETE CASCADE
 );
 
+CREATE TABLE coupons
+(
+    type     VARCHAR(50),
+    code     VARCHAR(50),
+    discount DECIMAL(10, 2)
+);
+
 -- INSERT data into table:
 -- Dataset create by ChatGPT.
 INSERT INTO vehicles (id, type, make, model, year, price, color, transmission, drive_type, horsepower, weight,
@@ -206,6 +213,12 @@ VALUES (1, 'Dealership Purchase', '2024-01-10', 30000.00, 4500.00, 1, 5),
        (3, 'Dealership Sale', '2024-01-20', 7000.00, 1050.00, 3, 8),
        (4, 'Dealership Sale', '2024-02-01', 25000.00, 3750.00, 4, 10),
        (5, 'Dealership Purchase', '2024-02-05', 60000.00, 9000.00, 5, 20);
+
+INSERT INTO coupons (type, code, discount)
+VALUES ('Numeric', 'NUM100', 1000),
+       ('Percentage', 'PERC15', 15),
+       ('Numeric', 'NUM200', 200),
+       ('Percentage', 'PERC10', 10);
 
 -- Test queries
 -- SELECT c.first_name, c.last_name, c.account_balance, v.make, v.model, v.price FROM vehicles v
