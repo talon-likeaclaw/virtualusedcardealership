@@ -162,13 +162,14 @@ public class TransactionManager {
             double vehiclePrice = v.calculateTotalPrice();
     
             if (coupon != null) {
-                System.out.println(PrettyUtils.returnGreen("Lucky you, you got a coupon: " + coupon.getCode() + " !!"));
+                System.out.println(PrettyUtils.returnGreen("Lucky you, you got a coupon: " + coupon.getCode() + "!!"));
                 System.out.println(PrettyUtils.returnYellow("Do you want to apply it? (Y/N)"));
                 boolean applyingCoupon = Prompter.promptYesNo();
     
                 if (applyingCoupon) {
                     try {
                         // Apply the coupon to the vehicle price
+                        PrettyUtils.wipe();
                         double discountedPrice = coupon.applyCoupon(vehiclePrice);
                         System.out.println(PrettyUtils.returnGreen("Coupon applied! Original Price: $" +
                                 String.format("%.2f", vehiclePrice) + " -> Discounted Price: $" +
