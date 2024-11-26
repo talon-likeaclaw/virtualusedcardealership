@@ -8,49 +8,47 @@ package usedcardealership.data.customer;
 
 import java.util.*;
 import usedcardealership.data.vehicle.*;
-import usedcardealership.interaction.PrettyUtils;
+import usedcardealership.interaction.*;
 
 public class ShoppingCart {
     private List<Vehicle> productsList;
 
-    public ShoppingCart(){
+    public ShoppingCart() {
         this.productsList = new ArrayList<Vehicle>();
     }
+
     /**
      * Adds a vehicle taken as input to productsList
      * 
      * @param vehicle
      * @return void
      */
-    public List<Vehicle> getProductsList(){
+    public List<Vehicle> getProductsList() {
         return this.productsList;
     }
-    //Only way i see we could make a deep copy
-    /**
-     *public void addVehicle(Vehicle vehicle) {
-        if (vehicle instanceof Car) {
-            this.productsList.add(new Car((Car) vehicle));
-        } else if (vehicle instanceof Truck) {
-            this.productsList.add(new Truck((Truck) vehicle));
-        } else if (vehicle instanceof Motorcycle) {
-            this.productsList.add(new Motorcycle((Motorcycle) vehicle));
-        } .......
-    }
 
+    /**
+     * 
      * @param vehicle
      */
-    public void addVehicle(Vehicle vehicle){
+    public void addVehicle(Vehicle vehicle) {
         if (vehicle == null) {
             throw new IllegalArgumentException("Vehicle cannot be null.");
         }
-        this.productsList.add(vehicle);
+        if (!(isVehicleInCart(vehicle))) {
+            this.productsList.add(vehicle);
+        } else {
+            PrettyUtils.printRed("Vehicle is already in shopping cart.");
+            Prompter.promptEnter();
+        }
     }
+
     /**
      * Removes vehicle from the productsList at selected index
      * 
      * @return void
      */
-    public void removeVehicle(int index){
+    public void removeVehicle(int index) {
         if (index < 0 || index >= productsList.size()) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
@@ -61,7 +59,8 @@ public class ShoppingCart {
      * Removes a vehicle from the cart based on its ID.
      * 
      * @param vehicleId the ID of the vehicle to remove.
-     * @return true if the vehicle was found and removed, false if no vehicle with the given ID was found.
+     * @return true if the vehicle was found and removed, false if no vehicle with
+     *         the given ID was found.
      */
     public boolean removeVehicleById(int vehicleId) {
         for (int i = 0; i < productsList.size(); i++) {
@@ -82,29 +81,28 @@ public class ShoppingCart {
     public boolean isVehicleInCart(Vehicle vehicle) {
         for (Vehicle v : productsList) {
             if (v.getID() == vehicle.getID()) {
-                return true;  // Vehicle is already in the cart
+                return true; // Vehicle is already in the cart
             }
         }
-        return false;  // Vehicle is not in the cart
+        return false; // Vehicle is not in the cart
     }
 
-    
     /**
      * Removes every element from the productsList
      * 
      * @return void
      */
-    public void emptyCart(){
+    public void emptyCart() {
         this.productsList.clear();
     }
-    
+
     @Override
     public String toString() {
         if (productsList.isEmpty()) {
             return PrettyUtils.returnRed("Your shopping cart is empty.");
         }
 
-        StringBuilder cartContents = new StringBuilder("Shopping Cart:\n");
+        StringBuilder cartContents = new StringBuilder(PrettyUtils.returnYellow("Shopping Cart:\n"));
         for (int i = 0; i < productsList.size(); i++) {
             cartContents.append(i + 1).append(". ").append(productsList.get(i).toString()).append("\n");
         }
