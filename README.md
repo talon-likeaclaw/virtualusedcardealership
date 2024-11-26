@@ -13,7 +13,8 @@ A console-based Java application that manages a virtual used car dealership. Use
 
 ## Overview
 
-When you run the Java application (`UsedCarDealership.java`) you will initally be prompted for the initialization option of loading from CSV files or a PostgreSQL database. If the database is not configured, the program will opt for loading from CSV files for initialization instead.
+When you run the Java application (`UsedCarDealership.java`) you will initally be prompted for the initialization option of loading from CSV files or a PostgreSQL database.
+If the database is not configured, the program will opt for loading from CSV files for initialization instead.
 
 ### Features
 
