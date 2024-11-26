@@ -55,6 +55,24 @@ public class ShoppingCart {
         }
         this.productsList.remove(index);
     }
+
+    /**
+     * Removes a vehicle from the cart based on its ID.
+     * 
+     * @param vehicleId the ID of the vehicle to remove.
+     * @return true if the vehicle was found and removed, false if no vehicle with the given ID was found.
+     */
+    public boolean removeVehicleById(int vehicleId) {
+        for (int i = 0; i < productsList.size(); i++) {
+            if (productsList.get(i).getID() == vehicleId) {
+                productsList.remove(i);
+                return true; // Successfully removed the vehicle
+            }
+        }
+        return false; // Vehicle not found
+    }
+
+    
     /**
      * Removes every element from the productsList
      * 

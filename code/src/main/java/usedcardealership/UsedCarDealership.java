@@ -800,9 +800,9 @@ public class UsedCarDealership {
 
         PrettyUtils.printYellow("\nWould you like to:");
         String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
-                    PrettyUtils.returnYellow("2: ") + "Remove items from the cart" +
+                    PrettyUtils.returnYellow("2: ") + "Remove items from the cart\n" +
                     PrettyUtils.returnYellow("0:") + " Keep shopping";
-        int choice = Prompter.promptOption(menu, 1);
+        int choice = Prompter.promptOption(menu, 2);
         if (choice == -1) {
             return true;
         }
@@ -816,24 +816,41 @@ public class UsedCarDealership {
                 removeFromCart(dealer);
                 return false;
             default:
-                PrettyUtils.printRed("You may only select 0 or 1");
+                PrettyUtils.printRed("You may only select 0, 1 or 2");
         }
         // Continue prompting for valid input
         return true; 
     }
 
-    public static void removeFromCart(DealershipManager dealer){
+    public static void removeFromCart(DealershipManager dealer) {
         PrettyUtils.wipe();
+    
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+    
         if (productsList.isEmpty()) {
-            PrettyUtils.printRed("Your ShoppingCart is currently empty.");
+            PrettyUtils.printRed("Your Shopping Cart is currently empty.");
             Prompter.promptEnter();
-        } else {
-            int choice = Prompter.promptOption("Select which vehicle to remove", 1);
-            viewShoppingCart(dealer);
-            Prompter.promptEnter();
+            return;
         }
+    
+        System.out.println("Here are the vehicles in your cart:");
+        for (Vehicle vehicle : productsList) {
+            System.out.println(vehicle);
+        }
+    
+        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:\n");
+        int vehicleIdToRemove = Prompter.promptInt();
+        boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
+
+        if (wasRemoved) {
+            PrettyUtils.printGreen("The vehicle has been successfully removed from your cart.");
+        } else {
+            PrettyUtils.printRed("Invalid ID. No vehicle found with that ID.");
+        }
+        Prompter.promptEnter(); 
+
     }
+    
 
     /**
      * Handles the checkout process. Displays the shopping cart contents and checks if
