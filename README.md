@@ -1,4 +1,4 @@
-# Virtual Used Car Dealership
+# Virtual Used Car Dealership 🚗🏎️🏍️🚐🛻🚐🚙
 
 A console-based Java application that manages a virtual used car dealership. Users can browse vehicles, filter inventory, sort inventory, select vehicles to add to their shopping cart, buy vehicles from their shopping cart, and sell vehicles to the dealership. This project uses object-oriented principles and implements polymorphism for file handling, database handling, data filtering, and data sorting.
 
