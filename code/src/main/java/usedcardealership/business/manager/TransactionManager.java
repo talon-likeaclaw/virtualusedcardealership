@@ -146,37 +146,41 @@ public class TransactionManager {
      * @param productsList the list of vehicles in the shopping cart.
      */
     public static void checkoutLogic(DealershipManager dealer, List<Vehicle> productsList) {
-        int allVehiclesPrice = 0;
+        Customer customer = dealer.getCurrentCustomer();
+        double allVehiclesPrice = 0;
+        double customerAccountBalance = customer.getAccountBalance();
         for (Vehicle v : productsList) {
             System.out.println(v);
             allVehiclesPrice += v.calculateTotalPrice();
         }
-        Customer customer = dealer.getCurrentCustomer();
 
         if (productsList == null || customer == null) {
-            System.out.println("Error: Vehicle list or Customer not found!");
+            PrettyUtils.printRed("Error: Vehicle list or Customer not found!");
             return;
         }
-        System.out.println("Total: " + allVehiclesPrice + "$");
+        System.out.println(PrettyUtils.returnCyan("Total: $" + String.format("%.2f", allVehiclesPrice)));
+        System.out.println(PrettyUtils.returnCyan("Your account balance: ") + (customerAccountBalance > allVehiclesPrice
+                ? PrettyUtils.returnGreen("$" + String.format("%.2f", customerAccountBalance))
+                : PrettyUtils.returnRed("$" + String.format("%.2f", customerAccountBalance))));
 
-        System.out.println("Finalize your purchase? (Y/N)");
+        System.out.println(PrettyUtils.returnYellow("Finalize your purchase? (Y/N)"));
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
-            String receipt = "Receipt:";
+            String receipt = PrettyUtils.returnYellow("Receipt:");
             for (Vehicle vehicle : productsList) {
                 dealer.processCustomerVehicleTransaction(vehicle, customer, "sale");
                 List<Transaction> transactions = dealer.getTransactionManager().getTransactions();
-                System.out.println("Congrats on your new " + vehicle.getModel() + "!");
+                System.out.println(PrettyUtils.returnCyan("Congrats") + " on your new " + PrettyUtils.returnCyan(vehicle.getMake() + " " + vehicle.getModel()) + "!");
                 receipt += "\n" + transactions.get(transactions.size() - 1);
             }
 
-            System.out.println("Updated Account Balance: " + customer.getAccountBalance());
+            System.out.println("Updated Account Balance: $" + String.format("%.2f", customer.getAccountBalance()));
             dealer.getCurrentCart().emptyCart();
             viewReceipt(receipt);
 
         } else {
-            System.out.println("Sale cancelled.");
+            PrettyUtils.printRed("Sale cancelled.");
         }
     }
 
@@ -186,13 +190,12 @@ public class TransactionManager {
      * @param receipt the receipt content to be displayed.
      */
     private static void viewReceipt(String receipt) {
-        System.out.println("Do you want to see the receipt?");
+        PrettyUtils.printYellow("Do you want to see the receipt?");
         boolean confirmed = Prompter.promptYesNo();
         PrettyUtils.wipe();
         if (confirmed) {
             System.out.println(receipt);
         }
-        Prompter.promptEnter();
     }
 
 }

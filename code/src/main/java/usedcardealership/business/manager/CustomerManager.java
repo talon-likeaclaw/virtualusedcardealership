@@ -129,7 +129,7 @@ public class CustomerManager {
         dealer.getVehicleManager().removeVehicle(vehicle);
         vehicles.remove(vehicle);
 
-        PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
+        PrettyUtils.printGreen("\nVehicle added to Shopping Cart");
         boolean inPage = true;
         while (inPage) {
             inPage = UsedCarDealership.checkoutPrompter(dealer);
