@@ -228,6 +228,34 @@ public class CustomerManager {
         }
     }
 
+    public static void removeFromCart(DealershipManager dealer) {
+        PrettyUtils.wipe();
+
+        List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+
+        if (productsList.isEmpty()) {
+            PrettyUtils.printRed("Your Shopping Cart is currently empty.");
+            Prompter.promptEnter();
+            return;
+        }
+
+        System.out.println("Here are the vehicles in your cart:");
+        for (Vehicle vehicle : productsList) {
+            System.out.println(vehicle);
+        }
+
+        System.out.println("\nSelect the ID of the vehicle you'd like to remove from your cart:\n");
+        int vehicleIdToRemove = Prompter.promptInt();
+        boolean wasRemoved = dealer.getCurrentCart().removeVehicleById(vehicleIdToRemove);
+
+        if (wasRemoved) {
+            PrettyUtils.printGreen("The vehicle has been successfully removed from your cart.");
+        } else {
+            PrettyUtils.printRed("Invalid ID. No vehicle found with that ID.");
+        }
+        Prompter.promptEnter();
+    }
+
     /**
      * Validates that the customer parameter is not null
      * Throws exception if null
