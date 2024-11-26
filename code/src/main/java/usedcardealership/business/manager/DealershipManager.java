@@ -17,54 +17,54 @@ import usedcardealership.business.filter.*;
 import java.util.*;
 
 public class DealershipManager {
-  private String name;
-  private double accountBalance;
-  private TransactionManager transactionManager;
-  private VehicleManager vehicleManager;
-  private CustomerManager customerManager;
-  private Customer currentCustomer;
-  private ShoppingCart currentCart;
-  private CouponManager couponManager;
+    private String name;
+    private double accountBalance;
+    private TransactionManager transactionManager;
+    private VehicleManager vehicleManager;
+    private CustomerManager customerManager;
+    private Customer currentCustomer;
+    private ShoppingCart currentCart;
+    private CouponManager couponManager;
 
-  /**
-   * DealershipManager Constructor
-   * Initializes the dealership's name and account balance.
-   * 
-   * @param name           dealership's name.
-   * @param accountBalance dealership's financial account balanace.
-   * @param transactions   list of transactions for TransactionManager.
-   * @param inventory      list of vehicles in dealership's inventory.
-   * @param database       list of vehicles in dealership's database.
-   * @param customers      list of customers for CustomerManager.
-   */
-  public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
-      List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers, List<Coupon> coupons) {
-    if (name == null || name.length() == 0) {
-      throw new IllegalArgumentException("Dealership name cannot be null or empty.");
+    /**
+     * DealershipManager Constructor
+     * Initializes the dealership's name and account balance.
+     * 
+     * @param name           dealership's name.
+     * @param accountBalance dealership's financial account balanace.
+     * @param transactions   list of transactions for TransactionManager.
+     * @param inventory      list of vehicles in dealership's inventory.
+     * @param database       list of vehicles in dealership's database.
+     * @param customers      list of customers for CustomerManager.
+     */
+    public DealershipManager(String name, double accountBalance, List<Transaction> transactions,
+            List<Vehicle> inventory, List<Vehicle> database, List<Customer> customers, List<Coupon> coupons) {
+        if (name == null || name.length() == 0) {
+            throw new IllegalArgumentException("Dealership name cannot be null or empty.");
+        }
+        if (accountBalance < 0) {
+            throw new IllegalArgumentException("Account balance cannot be negative.");
+        }
+        if (transactions == null) {
+            throw new IllegalArgumentException("Transactions name cannot be null or empty.");
+        }
+        if (inventory == null) {
+            throw new IllegalArgumentException("Inventory list cannot be null.");
+        }
+        if (database == null) {
+            throw new IllegalArgumentException("Database list cannot be null.");
+        }
+        if (customers == null) {
+            throw new IllegalArgumentException("Customers list cannot be null.");
+        }
+        this.name = name;
+        this.accountBalance = accountBalance;
+        this.transactionManager = new TransactionManager(transactions);
+        this.vehicleManager = new VehicleManager(inventory, database);
+        this.customerManager = new CustomerManager(customers);
+        this.currentCart = new ShoppingCart();
+        this.couponManager = new CouponManager(coupons);
     }
-    if (accountBalance < 0) {
-      throw new IllegalArgumentException("Account balance cannot be negative.");
-    }
-    if (transactions == null) {
-      throw new IllegalArgumentException("Transactions name cannot be null or empty.");
-    }
-    if (inventory == null) {
-      throw new IllegalArgumentException("Inventory list cannot be null.");
-    }
-    if (database == null) {
-      throw new IllegalArgumentException("Database list cannot be null.");
-    }
-    if (customers == null) {
-      throw new IllegalArgumentException("Customers list cannot be null.");
-    }
-    this.name = name;
-    this.accountBalance = accountBalance;
-    this.transactionManager = new TransactionManager(transactions);
-    this.vehicleManager = new VehicleManager(inventory, database);
-    this.customerManager = new CustomerManager(customers);
-    this.currentCart = new ShoppingCart();
-    this.couponManager = new CouponManager(coupons);
-  }
 
     public String getName() {
         return this.name;
@@ -94,25 +94,25 @@ public class DealershipManager {
         return this.vehicleManager;
     }
 
-  public ShoppingCart getCurrentCart() {
-    return this.currentCart;
-  }
+    public ShoppingCart getCurrentCart() {
+        return this.currentCart;
+    }
 
-  public CouponManager getCouponManager() {
-    return this.couponManager;
-  }
-  
-  public Vehicle getVehicleById(int vehicleId) {
-    if (vehicleId <= 0) {
-      throw new IllegalArgumentException("Vehicle ID must be a positive integer.");
+    public CouponManager getCouponManager() {
+        return this.couponManager;
     }
-    for (Vehicle v : this.getInventory()) {
-      if (v.getID() == vehicleId) {
-        return v;
-      }
+
+    public Vehicle getVehicleById(int vehicleId) {
+        if (vehicleId <= 0) {
+            throw new IllegalArgumentException("Vehicle ID must be a positive integer.");
+        }
+        for (Vehicle v : this.getInventory()) {
+            if (v.getID() == vehicleId) {
+                return v;
+            }
+        }
+        return null;
     }
-    return null;
-  }
 
     /**
      * Method for adding or removing money from the dealership's account balance.
