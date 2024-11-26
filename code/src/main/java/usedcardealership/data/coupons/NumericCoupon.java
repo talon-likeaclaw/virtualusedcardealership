@@ -1,18 +1,17 @@
-package usedcardealership.business.coupons;
+package usedcardealership.data.coupons;
 
-public class NumericCoupon extends Coupons {
+public class NumericCoupon extends Coupon {
     private double discountAmount;
 
     /**
-     * Parameterized constructor for NumericCoupon.
+     * Constructor for NumericCoupon.
      * 
      * @param type the type of coupon (e.g., "Discount")
      * @param code the unique code for the coupon
      * @param discountAmount the amount to be discounted
      */
-    public NumericCoupon(String type, String code, double discountAmount) {
-        super(type, code);
-        this.discountAmount = discountAmount;
+    public NumericCoupon(String code, double discountAmount) {
+        super(code, discountAmount);
     }
 
     /**

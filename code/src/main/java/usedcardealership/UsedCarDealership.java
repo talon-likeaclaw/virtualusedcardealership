@@ -6,6 +6,7 @@ import usedcardealership.data.vehicle.*;
 import usedcardealership.data.customer.*;
 import usedcardealership.data.databasehandling.*;
 import usedcardealership.data.transaction.*;
+import usedcardealership.data.coupons.*;
 import usedcardealership.business.manager.*;
 
 import java.sql.*;
@@ -458,7 +459,26 @@ public class UsedCarDealership {
             System.out.println(dealer.getCurrentCart());
             PrettyUtils.printYellow("Would you like to:");
             String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
+                    PrettyUtils.returnYellow("2: ") + "Remove items from the cart\n" +
                     PrettyUtils.returnYellow("0:") + " Keep shopping";
+        int choice = Prompter.promptOption(menu, 2);
+        if (choice == -1) {
+            return true;
+        }
+        switch (choice) {
+            case 0:
+                return false;
+            case 1:
+                checkoutView(dealer);
+                return false;
+            case 2:
+                removeFromCart(dealer);
+                return false;
+            default:
+                PrettyUtils.printRed("You may only select 0, 1 or 2");
+        }
+        // Continue prompting for valid input
+        return true; 
             int choice = Prompter.promptOption(menu, 1);
             if (choice == -1) {
                 return true;
@@ -485,7 +505,9 @@ public class UsedCarDealership {
      */
     private static void checkoutView(DealershipManager dealer) {
         PrettyUtils.wipe();
+    
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+    
         if (productsList.isEmpty()) {
             PrettyUtils.printRed("Please fill your Shopping Cart to visit checkout.");
             Prompter.promptEnter();
