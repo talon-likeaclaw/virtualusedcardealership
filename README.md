@@ -22,7 +22,7 @@ If the database is not configured, the program will opt for loading from CSV fil
 - **Data Loading Options**: Initialize the dealership data from either a PostgreSQL database or CSV files
 - **Random Customer Assignment**: Each session assigns you a random customer to interact with the dealership.
 - **Closed Economy**: Vehicles sold by customers remain in the dealership's inventory, and vehicles purchased by customers remain in their account for future sessions.
-- **Single-Vehicle Transactions**: Each trasnaction involves only one vehicles. If a customer purchases multiple vehicles the program will create a new transaction for each vehcile.
+- **Single-Vehicle Transactions**: Each trasnaction involves only one vehicles. If a customer purchases multiple vehicles the program will create a new transaction for each vehicle.
 
 ---
 
