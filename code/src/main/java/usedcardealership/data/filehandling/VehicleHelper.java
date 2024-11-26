@@ -8,6 +8,7 @@
 
 package usedcardealership.data.filehandling;
 
+import java.sql.*;
 import usedcardealership.data.vehicle.*;
 
 public class VehicleHelper {
@@ -164,5 +165,81 @@ public class VehicleHelper {
             throw new IllegalArgumentException("Vehicle cannot be null.");
         }
         return String.join(",", vehicle.toCSVFields());
+    }
+
+    /**
+     * Parses a Vehicle of given type from a SQL Result Set object
+     * 
+     * @param type the type of Vehicle to instantiate
+     * @param rs the ResultSet holding the Vehicle data
+     * @return Vehicle - the Vehicle of type type that was parsed
+     * @throws SQLException
+     */
+    public static Vehicle parseVehicleFromResultSet(String type, ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String make = rs.getString("make");
+        String model = rs.getString("model");
+        int year = rs.getInt("year");
+        double price = rs.getDouble("price");
+        String color = rs.getString("color");
+        String transmission = rs.getString("transmission");
+        String driveType = rs.getString("drive_type");
+        int horsepower = rs.getInt("horsepower");
+        double weight = rs.getDouble("weight");
+        double kilometerage = rs.getDouble("kilometerage");
+        double damage = rs.getDouble("damage");
+        boolean isElectric = rs.getBoolean("is_electric");
+
+        switch (type) {
+            case "Motorcycle":
+                double engineCC = rs.getDouble("engine_cc");
+                String handlebarType = rs.getString("handlebar_type");
+                return new Motorcycle(type, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric, engineCC, handlebarType);
+            case "RV":
+                int numSeatsRV = rs.getInt("num_seats");
+                int numDoorsRV = rs.getInt("num_doors");
+                boolean hasSunRoofRV = rs.getBoolean("has_sunroof");
+                int sleepCapacity = rs.getInt("sleep_capacity");
+                boolean hasBathroom = rs.getBoolean("has_bathroom");
+                return new RV(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsRV, numDoorsRV, hasSunRoofRV, sleepCapacity,
+                        hasBathroom);
+            case "Car":
+                int numSeatsCar = rs.getInt("num_seats");
+                int numDoorsCar = rs.getInt("num_doors");
+                boolean hasSunRoofCar = rs.getBoolean("has_sunroof");
+                boolean isConvertible = rs.getBoolean("is_convertible");
+                return new Car(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsCar, numDoorsCar, hasSunRoofCar, isConvertible);
+            case "SUV":
+                int numSeatsSUV = rs.getInt("num_seats");
+                int numDoorsSUV = rs.getInt("num_doors");
+                boolean hasSunRoofSUV = rs.getBoolean("has_sunroof");
+                boolean hasThirdRowSeating = rs.getBoolean("has_thirdrow_seating");
+                return new SUV(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsSUV, numDoorsSUV, hasSunRoofSUV, hasThirdRowSeating);
+            case "PickupTruck":
+                int numSeatsTruck = rs.getInt("num_seats");
+                int numDoorsTruck = rs.getInt("num_doors");
+                boolean hasSunRoofTruck = rs.getBoolean("has_sunroof");
+                double cargoCapacity = rs.getDouble("cargo_capacity");
+                double bedLength = rs.getDouble("bed_length");
+                double towingCapacity = rs.getDouble("towing_capacity");
+                return new PickupTruck(type, id, make, model, year, price, color, transmission, driveType, horsepower,
+                        weight, kilometerage, damage, isElectric, numSeatsTruck, numDoorsTruck, hasSunRoofTruck,
+                        cargoCapacity, bedLength, towingCapacity);
+            case "Van":
+                int numSeatsVan = rs.getInt("num_seats");
+                int numDoorsVan = rs.getInt("num_doors");
+                boolean hasSunRoofVan = rs.getBoolean("has_sunroof");
+                double cargoCapacityVan = rs.getDouble("cargo_capacity");
+                boolean hasSlidingDoors = rs.getBoolean("has_sliding_doors");
+                return new Van(type, id, make, model, year, price, color, transmission, driveType, horsepower, weight,
+                        kilometerage, damage, isElectric, numSeatsVan, numDoorsVan, hasSunRoofVan, cargoCapacityVan,
+                        hasSlidingDoors);
+            default:
+                throw new IllegalArgumentException("Unknown vehicle type: " + type);
+        }
     }
 }
