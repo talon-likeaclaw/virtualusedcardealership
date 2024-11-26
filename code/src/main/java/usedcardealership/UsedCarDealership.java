@@ -439,7 +439,6 @@ public class UsedCarDealership {
      * Menu that asks user if they want to purchase vehicle or go back
      * 
      */
-    // TODO: Add a straight to checkoout option 
     private static void vehicleDetailsMenu(DealershipManager dealership, int vehicleId, List<Vehicle> vehicles) {
         boolean inPage = true;
         int testDriveCount = 0;
@@ -511,6 +510,9 @@ public class UsedCarDealership {
             String couponPath = "resources/coupons.csv";
             CouponFileHandler couponLoader = new CouponFileHandler(couponPath);
             List<Coupon> coupons = couponLoader.load();
+
+            //TODO remoove
+            System.out.println(coupons);
 
             // Initialize and return the DealershipManager
             DealershipManager dealership = new DealershipManager(
@@ -821,8 +823,16 @@ public class UsedCarDealership {
     }
 
     public static void removeFromCart(DealershipManager dealer){
-        int choice = Prompter.promptOption("Select which vehicle to remove", 1);
-        ShoppingCart cart = dealer.getCurrentCart();
+        PrettyUtils.wipe();
+        List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
+        if (productsList.isEmpty()) {
+            PrettyUtils.printRed("Your ShoppingCart is currently empty.");
+            Prompter.promptEnter();
+        } else {
+            int choice = Prompter.promptOption("Select which vehicle to remove", 1);
+            viewShoppingCart(dealer);
+            Prompter.promptEnter();
+        }
     }
 
     /**
