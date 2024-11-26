@@ -443,37 +443,36 @@ public class UsedCarDealership {
         return handleFilteredVehicles(dealership, filteredVehicles);
     }
 
-
-
     /**
      * Displays options to proceed to checkout or continue shopping.
      * Prints the current shopping cart contents for the user.
      * 
      * @param dealer the DealershipManager handling the dealership state.
-     * @return {@code true} to continue prompting; {@code false} to exit the prompt
-     *         loop.
+     * @return true to continue, false to stop prompting
      */
     public static boolean checkoutPrompter(DealershipManager dealer) {
-        // Displaying shopping cart
-        System.out.println(dealer.getCurrentCart());
-
-        PrettyUtils.printYellow("\nWould you like to:");
-        String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
-                PrettyUtils.returnYellow("0:") + " Keep shopping";
-        int choice = Prompter.promptOption(menu, 1);
-        if (choice == -1) {
-            return true;
+        boolean inPage = true;
+        while (inPage) {
+            PrettyUtils.wipe();
+            // Displaying shopping cart
+            System.out.println(dealer.getCurrentCart());
+            PrettyUtils.printYellow("Would you like to:");
+            String menu = PrettyUtils.returnYellow("1:") + " Go to checkout\n" +
+                    PrettyUtils.returnYellow("0:") + " Keep shopping";
+            int choice = Prompter.promptOption(menu, 1);
+            if (choice == -1) {
+                return true;
+            }
+            switch (choice) {
+                case 0:
+                    return false;
+                case 1:
+                    checkoutView(dealer);
+                    return false;
+                default:
+                    PrettyUtils.printRed("You may only select 0 or 1");
+            }
         }
-        switch (choice) {
-            case 0:
-                return false;
-            case 1:
-                checkoutView(dealer);
-                return false;
-            default:
-                PrettyUtils.printRed("You may only select 0 or 1");
-        }
-        // Continue prompting for valid input
         return true;
     }
 
@@ -488,7 +487,7 @@ public class UsedCarDealership {
         PrettyUtils.wipe();
         List<Vehicle> productsList = dealer.getCurrentCart().getProductsList();
         if (productsList.isEmpty()) {
-            PrettyUtils.printRed("Please, fill out your Shopping Cart to visit checkout.");
+            PrettyUtils.printRed("Please fill your Shopping Cart to visit checkout.");
             Prompter.promptEnter();
         } else {
             // maybe not like this
