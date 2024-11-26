@@ -40,9 +40,9 @@ public class NumericCoupon extends Coupon {
      */
     @Override
     public double applyCoupon(double originalPrice) {
-        if (originalPrice < discountAmount) {
+        if (originalPrice < this.discountAmount) {
             return 0; // If the discount is larger than the original price, return 0
         }
-        return originalPrice - discountAmount;
+        return originalPrice - this.discountAmount;
     }
 }

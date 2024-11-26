@@ -159,6 +159,8 @@ public class TransactionManager {
         for (Vehicle v : productsList) {
             // Possible coupon is generated
             Coupon coupon = dealer.getCouponManager().possibleCoupon();
+            System.out.println(coupon);
+            Prompter.promptEnter();
             double vehiclePrice = v.calculateTotalPrice();
     
             if (coupon != null) {
@@ -170,7 +172,7 @@ public class TransactionManager {
                     try {
                         // Apply the coupon to the vehicle price
                         PrettyUtils.wipe();
-                        double discountedPrice = coupon.applyCoupon(vehiclePrice);
+                        double discountedPrice = vehiclePrice-coupon.getDiscount();
                         System.out.println(PrettyUtils.returnGreen("Coupon applied! Original Price: $" +
                                 String.format("%.2f", vehiclePrice) + " -> Discounted Price: $" +
                                 String.format("%.2f", discountedPrice)));
