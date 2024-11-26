@@ -775,12 +775,17 @@ public class UsedCarDealership {
      */
     private static void addVehicleToCart(DealershipManager dealer, Vehicle vehicle, List<Vehicle> vehicles) {
         PrettyUtils.wipe();
-        //TODO move this to dealership
-        dealer.getCurrentCart().addVehicle(vehicle);
-        dealer.getVehicleManager().removeVehicle(vehicle);
-        vehicles.remove(vehicle);
-
-        PrettyUtils.printGreen("\nVehicle added to ShoppingCart");
+    
+        if (dealer.getCurrentCart().isVehicleInCart(vehicle)) {
+            PrettyUtils.printRed("\nThis vehicle is already in your shopping cart.");
+        } else {
+            dealer.getCurrentCart().addVehicle(vehicle);
+            dealer.getVehicleManager().removeVehicle(vehicle);
+            vehicles.remove(vehicle);
+    
+            PrettyUtils.printGreen("\nVehicle added to Shopping Cart");
+        }
+    
         boolean inPage = true;
         while (inPage) {
             inPage = checkoutPrompter(dealer);

@@ -72,6 +72,21 @@ public class ShoppingCart {
         return false; // Vehicle not found
     }
 
+    /**
+     * Checks if a vehicle is already in the shopping cart based on its ID.
+     * 
+     * @param vehicle the vehicle to check
+     * @return true if the vehicle is already in the cart, false otherwise
+     */
+    public boolean isVehicleInCart(Vehicle vehicle) {
+        for (Vehicle v : productsList) {
+            if (v.getID() == vehicle.getID()) {
+                return true;  // Vehicle is already in the cart
+            }
+        }
+        return false;  // Vehicle is not in the cart
+    }
+
     
     /**
      * Removes every element from the productsList
